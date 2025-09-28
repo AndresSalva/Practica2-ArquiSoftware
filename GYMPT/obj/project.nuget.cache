@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "5WS8k5YEXCU=",
+  "dgSpecHash": "CoPVOwt3gsE=",
   "success": true,
-  "projectFilePath": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\GYMPT.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "/home/gehre/Desktop/arq-soft/GYMPT/Practica2-ArquiSoftware/GYMPT/GYMPT.csproj",
+  "expectedPackageFiles": [
+    "/home/gehre/.nuget/packages/microsoft.netcore.app.ref/8.0.20/microsoft.netcore.app.ref.8.0.20.nupkg.sha512",
+    "/home/gehre/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.20/microsoft.aspnetcore.app.ref.8.0.20.nupkg.sha512",
+    "/home/gehre/.nuget/packages/microsoft.netcore.app.host.linux-x64/8.0.20/microsoft.netcore.app.host.linux-x64.8.0.20.nupkg.sha512"
+  ],
   "logs": []
 }
