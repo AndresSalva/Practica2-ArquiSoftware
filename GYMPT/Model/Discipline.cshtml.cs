@@ -19,8 +19,8 @@ namespace GYMPT.Model
         public bool? IsActive { get; set; }
 
         [MaxLength(150)]
-        public string? Name { get; set; }  
-        
+        public string? Name { get; set; }
+
         public string IdInstructor { get; set; }
 
         public DateTime? StartTime { get; set; }
@@ -28,3 +28,4 @@ namespace GYMPT.Model
         public DateTime? EndTime { get; set; }
 
     }
+}
