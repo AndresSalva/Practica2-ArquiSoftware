@@ -1,5 +1,5 @@
-﻿using Postgrest.Models;
-using Postgrest.Attributes;
+﻿using Supabase.Postgrest.Models;
+using Supabase.Postgrest.Attributes;
 
 namespace GYMPT.Models
 {
@@ -8,7 +8,7 @@ namespace GYMPT.Models
     public class Membership : BaseModel 
     {
 
-        [PrimaryKey("id", false)]
+        [PrimaryKey("id")]
         public long Id { get; set; }
 
         [Column("created_at")]
