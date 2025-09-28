@@ -1,3 +1,5 @@
 
 ./GYMPT/obj
 ./GYMPT/bin
+.vs/
+*.vsidx
