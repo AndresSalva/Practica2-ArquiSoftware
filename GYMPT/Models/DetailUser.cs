@@ -25,10 +25,10 @@ namespace GYMPT.Models
         public long IdMembership { get; set; }
 
         [Column("start_date")]
-        public DateTime startDate { get; set; }
+        public DateTime StartDate { get; set; }
 
         [Column("end_date")]
-        public DateTime endDate { get; set; }
+        public DateTime EndDate { get; set; }
 
         [Column("sessions_left")]
         public int? SessionsLeft { get; set; }

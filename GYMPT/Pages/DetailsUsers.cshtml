@@ -1,0 +1,38 @@
+﻿@page
+@model GYMPT.Pages.DetailsUsersModel
+@{
+}
+
+<h2>Details User Page</h2>
+<p>Welcome to the Details User Page!</p>
+
+@if(Model.DetailsUserList != null && Model.DetailsUserList.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID User</th>
+                <th>Membership ID</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Sessions Left</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach(Models.DetailsUser detail in Model.DetailsUserList)
+        {
+            <tr>
+                <td>@detail.IdUser</td>
+                <td>@detail.IdMembership</td>
+                <td>@detail.StartDate</td>
+                <td>@detail.EndDate</td>
+                <td>@detail.SessionsLeft</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No details users found.</p>
+}
