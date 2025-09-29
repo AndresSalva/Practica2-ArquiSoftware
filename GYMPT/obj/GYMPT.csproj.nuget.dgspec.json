@@ -1,26 +1,31 @@
 {
   "format": 1,
   "restore": {
-    "/home/gehre/Desktop/arq-soft/GYMPT/Practica2-ArquiSoftware/GYMPT/GYMPT.csproj": {}
+    "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\GYMPT.csproj": {}
   },
   "projects": {
-    "/home/gehre/Desktop/arq-soft/GYMPT/Practica2-ArquiSoftware/GYMPT/GYMPT.csproj": {
+    "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\GYMPT.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/gehre/Desktop/arq-soft/GYMPT/Practica2-ArquiSoftware/GYMPT/GYMPT.csproj",
+        "projectUniqueName": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\GYMPT.csproj",
         "projectName": "GYMPT",
-        "projectPath": "/home/gehre/Desktop/arq-soft/GYMPT/Practica2-ArquiSoftware/GYMPT/GYMPT.csproj",
-        "packagesPath": "/home/gehre/.nuget/packages/",
-        "outputPath": "/home/gehre/Desktop/arq-soft/GYMPT/Practica2-ArquiSoftware/GYMPT/obj/",
+        "projectPath": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\GYMPT.csproj",
+        "packagesPath": "C:\\Users\\andsa\\.nuget\\packages\\",
+        "outputPath": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "/home/gehre/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\andsa\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "/usr/lib/dotnet/library-packs": {},
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -39,7 +44,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.100"
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net8.0": {
@@ -61,20 +66,6 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[8.0.20, 8.0.20]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Host.linux-x64",
-              "version": "[8.0.20, 8.0.20]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Ref",
-              "version": "[8.0.20, 8.0.20]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -83,7 +74,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/9.0.110/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{51D5E0AD-22C2-449B-9447-70B76B7C4943}|GYMPT\\GYMPT.csproj|d:\\universidad\\semestre8\\arquitectura\\p2 - gpt5\\gympt\\gympt\\data\\disciplinerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{51D5E0AD-22C2-449B-9447-70B76B7C4943}|GYMPT\\GYMPT.csproj|solutionrelative:gympt\\data\\disciplinerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{51D5E0AD-22C2-449B-9447-70B76B7C4943}|GYMPT\\GYMPT.csproj|d:\\universidad\\semestre8\\arquitectura\\p2 - gpt5\\gympt\\gympt\\data\\imembershiprepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{51D5E0AD-22C2-449B-9447-70B76B7C4943}|GYMPT\\GYMPT.csproj|solutionrelative:gympt\\data\\imembershiprepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{51D5E0AD-22C2-449B-9447-70B76B7C4943}|GYMPT\\GYMPT.csproj|d:\\universidad\\semestre8\\arquitectura\\p2 - gpt5\\gympt\\gympt\\services\\remoteloggersingleton.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{51D5E0AD-22C2-449B-9447-70B76B7C4943}|GYMPT\\GYMPT.csproj|solutionrelative:gympt\\services\\remoteloggersingleton.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -21,10 +29,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{51D5E0AD-22C2-449B-9447-70B76B7C4943}|GYMPT\\GYMPT.csproj|d:\\universidad\\semestre8\\arquitectura\\p2 - gpt5\\gympt\\gympt\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{51D5E0AD-22C2-449B-9447-70B76B7C4943}|GYMPT\\GYMPT.csproj|solutionrelative:gympt\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{51D5E0AD-22C2-449B-9447-70B76B7C4943}|GYMPT\\GYMPT.csproj|d:\\universidad\\semestre8\\arquitectura\\p2 - gpt5\\gympt\\gympt\\data\\imembershiprepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{51D5E0AD-22C2-449B-9447-70B76B7C4943}|GYMPT\\GYMPT.csproj|solutionrelative:gympt\\data\\imembershiprepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{51D5E0AD-22C2-449B-9447-70B76B7C4943}|GYMPT\\GYMPT.csproj|d:\\universidad\\semestre8\\arquitectura\\p2 - gpt5\\gympt\\gympt\\pages\\memberships.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -46,11 +50,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 0,
+              "Title": "DisciplineRepository.cs",
+              "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Data\\DisciplineRepository.cs",
+              "RelativeDocumentMoniker": "GYMPT\\Data\\DisciplineRepository.cs",
+              "ToolTip": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Data\\DisciplineRepository.cs",
+              "RelativeToolTip": "GYMPT\\Data\\DisciplineRepository.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAQwBkAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-29T15:05:29.764Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "IMembershipRepository.cs",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Data\\IMembershipRepository.cs",
               "RelativeDocumentMoniker": "GYMPT\\Data\\IMembershipRepository.cs",
@@ -63,7 +80,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "Membership.cs",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Models\\Membership.cs",
               "RelativeDocumentMoniker": "GYMPT\\Models\\Membership.cs",
@@ -71,12 +88,11 @@
               "RelativeToolTip": "GYMPT\\Models\\Membership.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-28T16:21:49.347Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-28T16:21:49.347Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "LogEntry.cs",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Models\\LogEntry.cs",
               "RelativeDocumentMoniker": "GYMPT\\Models\\LogEntry.cs",
@@ -84,12 +100,11 @@
               "RelativeToolTip": "GYMPT\\Models\\LogEntry.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-28T18:44:18.508Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-28T18:44:18.508Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "MembershipRepository.cs",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Data\\MembershipRepository.cs",
               "RelativeDocumentMoniker": "GYMPT\\Data\\MembershipRepository.cs",
@@ -97,12 +112,11 @@
               "RelativeToolTip": "GYMPT\\Data\\MembershipRepository.cs",
               "ViewState": "AgIAAAgAAAAAAAAAAAAowBIAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-28T16:32:04.449Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-28T16:32:04.449Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Program.cs",
               "RelativeDocumentMoniker": "GYMPT\\Program.cs",
@@ -110,25 +124,24 @@
               "RelativeToolTip": "GYMPT\\Program.cs",
               "ViewState": "AgIAABAAAAAAAAAAAAAwwCcAAAAKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-28T16:03:44.842Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-28T16:03:44.842Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "RemoteLoggerSingleton.cs",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Services\\RemoteLoggerSingleton.cs",
               "RelativeDocumentMoniker": "GYMPT\\Services\\RemoteLoggerSingleton.cs",
               "ToolTip": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Services\\RemoteLoggerSingleton.cs",
               "RelativeToolTip": "GYMPT\\Services\\RemoteLoggerSingleton.cs",
-              "ViewState": "AgIAAFwAAAAAAAAAAAAgwGEAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFUAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-28T18:46:14.65Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "Memberships.cshtml",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Pages\\Memberships.cshtml",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Memberships.cshtml",
@@ -136,12 +149,11 @@
               "RelativeToolTip": "GYMPT\\Pages\\Memberships.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-09-28T16:38:55.21Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-28T16:38:55.21Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "Memberships.cshtml.cs",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Pages\\Memberships.cshtml.cs",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Memberships.cshtml.cs",
@@ -149,12 +161,11 @@
               "RelativeToolTip": "GYMPT\\Pages\\Memberships.cshtml.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-28T16:39:01.086Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-28T16:39:01.086Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "appsettings.json",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\appsettings.json",
               "RelativeDocumentMoniker": "GYMPT\\appsettings.json",
@@ -162,8 +173,7 @@
               "RelativeToolTip": "GYMPT\\appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-09-28T16:01:19.375Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-28T16:01:19.375Z"
             }
           ]
         }
