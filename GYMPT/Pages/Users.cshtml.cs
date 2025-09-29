@@ -6,11 +6,11 @@ namespace GYMPT.Pages
 {
     public class UsersModel : PageModel
     {
-        private readonly UserRepository _repo;
+        private readonly IRepository<User> _repo;
 
         public IEnumerable<User> UserList { get; private set; } = Enumerable.Empty<User>();
 
-        public UsersModel(UserRepository repo)
+        public UsersModel(IRepository<User> repo)
         {
             _repo = repo;
         }

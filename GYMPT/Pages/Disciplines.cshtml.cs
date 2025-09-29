@@ -6,11 +6,11 @@ namespace GYMPT.Pages
 {
     public class DisciplinesModel : PageModel
     {
-        private readonly DisciplineRepository _repo;
+        private readonly IRepository<Discipline> _repo;
 
         public IEnumerable<Discipline> DisciplineList { get; private set; } = Enumerable.Empty<Discipline>();
 
-        public DisciplinesModel(DisciplineRepository repo)
+        public DisciplinesModel(IRepository<Discipline> repo)
         {
             _repo = repo;
         }
