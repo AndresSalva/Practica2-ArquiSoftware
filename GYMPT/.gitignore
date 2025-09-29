@@ -1,10 +1,11 @@
 
 # Compilación
 bin/
-obj/
+./GYMPT/obj/
 out/
 [Bb]uild/
 [Ll]og/
+./GYMPT/obj/Debug/net8.0/GYMPT.GeneratedMSBuildEditorConfig.editorconfig
 
 # Archivos temporales y de cache de compilación
 *.cache
