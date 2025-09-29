@@ -1,0 +1,38 @@
+﻿@page
+@model GYMPT.Pages.UsersModel
+@{
+}
+
+<h2>User Page</h2>
+<p>Welcome to the User Page!</p>
+
+@if(Model.UserList != null && Model.UserList.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>CI</th>
+                <th>Name</th>
+                <th>First Lastname</th>
+                <th>Second Lastname</th>
+                <th>Date Birth</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach(Models.User user in Model.UserList)
+        {
+            <tr>
+                <td>@user.CI</td>
+                <td>@user.Name</td>
+                <td>@user.FirstLastname</td>
+                <td>@user.SecondLastname</td>
+                <td>@user.DateBirth</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No users found.</p>
+}
