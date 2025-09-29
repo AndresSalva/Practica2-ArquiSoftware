@@ -1,9 +1,10 @@
 ﻿using GYMPT.Models;
+using Supabase.Postgrest.Models;
 
 namespace GYMPT.Data
 {
-    public interface IMembershipRepository
+    public interface IMembershipRepository<T> where T : BaseModel
     {
-        Task<IEnumerable<Membership>> GetAllAsync();
+        Task<IEnumerable<T>> GetAllAsync();
     }
 }

@@ -1,5 +1,6 @@
 using GYMPT.Data;
 using GYMPT.Services;
+using GYMPT.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,8 +19,8 @@ builder.Services.AddScoped(provider =>
             AutoConnectRealtime = true
         }));
 
-builder.Services.AddScoped<IMembershipRepository, MembershipRepository>();
-
+builder.Services.AddScoped<IMembershipRepository<Membership>, MembershipRepository>();
+builder.Services.AddScoped<IMembershipRepository<Discipline>, DisciplineRepository>();
 
 var app = builder.Build();
 

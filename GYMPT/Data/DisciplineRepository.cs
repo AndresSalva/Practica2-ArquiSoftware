@@ -1,23 +1,23 @@
-﻿using GYMPT.Models;
+using GYMPT.Models;
 using GYMPT.Services;
 
 namespace GYMPT.Data
 {
-    public class MembershipRepository : IMembershipRepository<Membership>
+    public class DisciplineRepository : IMembershipRepository<Discipline>
     {
         private readonly Supabase.Client _supabase;
 
-        public MembershipRepository(Supabase.Client supabase)
+        public DisciplineRepository(Supabase.Client supabase)
         {
             _supabase = supabase;
         }
 
-        public async Task<IEnumerable<Membership>> GetAllAsync()
+        public async Task<IEnumerable<Discipline>> GetAllAsync()
         {
             try
             {
                 _ = RemoteLoggerSingleton.Instance.LogInfo("Se solicitó la lista completa de membresías.");
-                var response = await _supabase.From<Membership>().Get();
+                var response = await _supabase.From<Discipline>().Get();
                 return response.Models;
             }
             catch (Exception ex)

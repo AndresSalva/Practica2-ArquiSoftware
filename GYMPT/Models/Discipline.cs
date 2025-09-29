@@ -1,10 +1,10 @@
 using Supabase.Postgrest.Attributes;
 using Supabase.Postgrest.Models;
 
-namespace GYMPT.Model
+namespace GYMPT.Models
 {
     [Table("Discipline")]
-    public class Discipline
+    public class Discipline : BaseModel
     {
         [PrimaryKey("id")]
         public long Id { get; set; }
@@ -19,7 +19,7 @@ namespace GYMPT.Model
         public bool? IsActive { get; set; }
 
         [Column("name")]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         [Column("id_instructor")]
         public long? IdInstructor { get; set; }
