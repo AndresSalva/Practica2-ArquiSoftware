@@ -3,7 +3,7 @@ using GYMPT.Services;
 
 namespace GYMPT.Data
 {
-    public class DisciplineRepository : IMembershipRepository<Discipline>
+    public class DisciplineRepository : IRepository<Discipline>
     {
         private readonly Supabase.Client _supabase;
 

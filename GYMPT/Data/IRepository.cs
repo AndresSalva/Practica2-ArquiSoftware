@@ -3,7 +3,7 @@ using Supabase.Postgrest.Models;
 
 namespace GYMPT.Data
 {
-    public interface IMembershipRepository<T> where T : BaseModel
+    public interface IRepository<T> where T : BaseModel
     {
         Task<IEnumerable<T>> GetAllAsync();
     }
