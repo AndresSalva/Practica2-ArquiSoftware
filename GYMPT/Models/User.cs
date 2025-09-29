@@ -4,7 +4,7 @@ using Supabase.Postgrest.Attributes;
 namespace GYMPT.Models
 {
     [Table("User")]
-    public class Usuario : BaseModel
+    public class User : BaseModel
     {
         [PrimaryKey] // Clave primaria
         public long Id { get; set; }   

@@ -21,6 +21,7 @@ builder.Services.AddScoped(provider =>
 
 builder.Services.AddScoped<MembershipRepository>();
 builder.Services.AddScoped<DisciplineRepository>();
+builder.Services.AddScoped<UserRepository>();
 
 var app = builder.Build();
 
