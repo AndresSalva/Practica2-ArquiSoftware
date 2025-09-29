@@ -20,7 +20,7 @@
         </thead>
         <tbody>
             @* Este bucle recorre cada 'membership' en la lista que preparamos en el archivo .cs *@
-            @foreach (var discipline in Model.DisciplineList)
+            @foreach (Models.Discipline discipline in Model.DisciplineList)
             {
                 <tr>
                     <td>@discipline.Name</td>

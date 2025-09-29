@@ -16,13 +16,13 @@ namespace GYMPT.Data
         {
             try
             {
-                _ = RemoteLoggerSingleton.Instance.LogInfo("Se solicitó la lista completa de membresías.");
+                _ = RemoteLoggerSingleton.Instance.LogInfo("Se solicitó la lista completa de disciplinas.");
                 var response = await _supabase.From<Discipline>().Get();
                 return response.Models;
             }
             catch (Exception ex)
             {
-                await RemoteLoggerSingleton.Instance.LogError("Fallo crítico al obtener la lista de membresías.", ex);
+                await RemoteLoggerSingleton.Instance.LogError("Fallo crítico al obtener la lista de disciplinas.", ex);
                 throw;
             }
         }

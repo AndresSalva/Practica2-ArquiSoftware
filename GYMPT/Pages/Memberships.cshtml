@@ -21,7 +21,7 @@
         </thead>
         <tbody>
             @* Este bucle recorre cada 'membership' en la lista que preparamos en el archivo .cs *@
-            @foreach (var membership in Model.MembershipList)
+            @foreach (Models.Membership membership in Model.MembershipList)
             {
                 <tr>
                     <td>@membership.Name</td>

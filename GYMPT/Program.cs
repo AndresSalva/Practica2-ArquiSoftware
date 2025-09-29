@@ -19,8 +19,8 @@ builder.Services.AddScoped(provider =>
             AutoConnectRealtime = true
         }));
 
-builder.Services.AddScoped<IMembershipRepository<Membership>, MembershipRepository>();
-builder.Services.AddScoped<IMembershipRepository<Discipline>, DisciplineRepository>();
+builder.Services.AddScoped<MembershipRepository>();
+builder.Services.AddScoped<DisciplineRepository>();
 
 var app = builder.Build();
 

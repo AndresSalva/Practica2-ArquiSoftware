@@ -6,11 +6,11 @@ namespace GYMPT.Pages
 {
     public class MembershipsModel : PageModel
     {
-        private readonly IMembershipRepository<Membership> _repo;
+        private readonly MembershipRepository _repo;
 
         public IEnumerable<Membership> MembershipList { get; private set; } = Enumerable.Empty<Membership>();
 
-        public MembershipsModel(IMembershipRepository<Membership> repo)
+        public MembershipsModel(MembershipRepository repo)
         {
             _repo = repo;
         }
