@@ -1,6 +1,5 @@
-﻿using Supabase.Postgrest.Attributes;
-using Supabase.Postgrest.Models;
-using System;
+﻿using Supabase.Postgrest.Models;
+using Supabase.Postgrest.Attributes;
 
 namespace GYMPT.Models
 {
