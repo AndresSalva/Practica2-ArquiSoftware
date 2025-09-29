@@ -1,34 +1,36 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using Supabase.Postgrest.Models;
+using Supabase.Postgrest.Attributes;
 
-namespace GYMPT.Model
+namespace GYMPT.Models
 {
-    //[Table("Usuario")] // Si quieres mapear con un nombre exacto en BD
-    public class Usuario
+    [Table("User")]
+    public class Usuario : BaseModel
     {
-        [Key] // Clave primaria
+        [PrimaryKey] // Clave primaria
         public long Id { get; set; }   
 
-        [Required]
+        [Column("created_at")]
         public DateTime CreatedAt { get; set; }   // timestamptz -> DateTime
 
+        [Column("last_modification")]
         public DateTime? LastModification { get; set; }   // timestamp -> nullable
 
+        [Column("isActive")]
         public bool? IsActive { get; set; }   // int4 -> bool? (nullable)
 
-        [MaxLength(150)]
+        [Column("name")]
         public string? Name { get; set; }
 
-        [MaxLength(150)]
+        [Column("first_lastname")]
         public string? FirstLastname { get; set; }
 
-        [MaxLength(150)]
+        [Column("second_lastname")]
         public string? SecondLastname { get; set; }
 
+        [Column("date_birth")]
         public DateTime? DateBirth { get; set; }   
 
-        [MaxLength(50)]
+        [Column("CI")]
         public string? CI { get; set; }   
     }
 }
