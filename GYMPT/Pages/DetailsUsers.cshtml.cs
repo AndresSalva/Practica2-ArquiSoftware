@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using GYMPT.Data;
+using GYMPT.Data.Contracts;
 using GYMPT.Models;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 

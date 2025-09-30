@@ -1,0 +1,37 @@
+﻿@page "{id:long}"
+@model GYMPT.Pages.InstructorDetailsModel
+
+@{
+    ViewData["Title"] = "Detalles del Instructor";
+}
+
+@if (Model.Instructor != null)
+{
+    <h1>Detalles de: @Model.Instructor.Name @Model.Instructor.FirstLastname</h1>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">ID de Usuario</dt>
+        <dd class="col-sm-9">@Model.Instructor.Id</dd>
+
+        <dt class="col-sm-3">Rol</dt>
+        <dd class="col-sm-9"><span class="badge bg-success">@Model.Instructor.Role</span></dd>
+
+        <dt class="col-sm-3">Especialización</dt>
+        <dd class="col-sm-9">@(Model.Instructor.Specialization ?? "No especificada")</dd>
+
+        <dt class="col-sm-3">Fecha de Contratación</dt>
+        <dd class="col-sm-9">@(Model.Instructor.HireDate?.ToShortDateString() ?? "No especificada")</dd>
+
+        <dt class="col-sm-3">Sueldo Mensual</dt>
+        <dd class="col-sm-9">@(Model.Instructor.MonthlySalary?.ToString("C") ?? "No especificado")</dd>
+    </dl>
+}
+else
+{
+    <h1 class="text-danger">Instructor no encontrado</h1>
+    <p>El usuario con el ID especificado no existe o no tiene el rol de instructor.</p>
+}
+
+<div class="mt-4">
+    <a asp-page="/Users" class="btn btn-secondary">← Volver a la Lista de Usuarios</a>
+</div>

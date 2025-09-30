@@ -1,22 +1,24 @@
 ﻿using Supabase.Postgrest.Models;
 using Supabase.Postgrest.Attributes;
+using System;
 
 namespace GYMPT.Models
 {
+
     [Table("User")]
-    public class User : BaseModel
+    public class UserData : BaseModel
     {
-        [PrimaryKey] // Clave primaria
-        public long Id { get; set; }   
+        [PrimaryKey]
+        public long Id { get; set; }
 
         [Column("created_at")]
-        public DateTime CreatedAt { get; set; }   // timestamptz -> DateTime
+        public DateTime CreatedAt { get; set; }
 
         [Column("last_modification")]
-        public DateTime? LastModification { get; set; }   // timestamp -> nullable
+        public DateTime? LastModification { get; set; }
 
         [Column("isActive")]
-        public bool? IsActive { get; set; }   // int4 -> bool? (nullable)
+        public bool? IsActive { get; set; }
 
         [Column("name")]
         public string? Name { get; set; }
@@ -28,9 +30,12 @@ namespace GYMPT.Models
         public string? SecondLastname { get; set; }
 
         [Column("date_birth")]
-        public DateTime? DateBirth { get; set; }   
+        public DateTime? DateBirth { get; set; }
 
         [Column("CI")]
-        public string? CI { get; set; }   
+        public string? CI { get; set; }
+
+        [Column("role")]
+        public string? Role { get; set; }
     }
 }

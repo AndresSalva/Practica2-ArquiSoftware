@@ -1,6 +1,8 @@
-using GYMPT.Data;
 using GYMPT.Services;
 using GYMPT.Models;
+using GYMPT.Domain;
+using GYMPT.Data.Repositories;
+using GYMPT.Data.Contracts;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,8 +23,11 @@ builder.Services.AddScoped(provider =>
 
 builder.Services.AddScoped<IRepository<Membership>,MembershipRepository>();
 builder.Services.AddScoped<IRepository<DetailsUser>,DetailUserRepository>();
-builder.Services.AddScoped<IRepository<User>,UserRepository>();
+builder.Services.AddScoped<IRepository<UserData>,UserRepository>();
 builder.Services.AddScoped<IRepository<Discipline>,DisciplineRepository>();
+
+builder.Services.AddScoped<IClientRepository, ClientRepository>();
+builder.Services.AddScoped<IInstructorRepository, InstructorRepository>();
 
 var app = builder.Build();
 

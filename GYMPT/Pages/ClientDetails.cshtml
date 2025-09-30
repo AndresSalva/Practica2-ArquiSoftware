@@ -1,0 +1,40 @@
+﻿@page "{id:long}"
+@model GYMPT.Pages.ClientDetailsModel
+
+@{
+    ViewData["Title"] = "Detalles del Cliente";
+}
+
+@if (Model.Client != null)
+{
+    <h1>Detalles de: @Model.Client.Name @Model.Client.FirstLastname</h1>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">ID de Usuario</dt>
+        <dd class="col-sm-9">@Model.Client.Id</dd>
+
+        <dt class="col-sm-3">Rol</dt>
+        <dd class="col-sm-9"><span class="badge bg-primary">@Model.Client.Role</span></dd>
+
+        <dt class="col-sm-3">Nivel de Fitness</dt>
+        <dd class="col-sm-9">@(Model.Client.FitnessLevel ?? "No especificado")</dd>
+
+        <dt class="col-sm-3">Peso Inicial</dt>
+        <dd class="col-sm-9">@(Model.Client.InitialWeightKg?.ToString("F1") ?? "N/A") kg</dd>
+
+        <dt class="col-sm-3">Peso Actual</dt>
+        <dd class="col-sm-9">@(Model.Client.CurrentWeightKg?.ToString("F1") ?? "N/A") kg</dd>
+
+        <dt class="col-sm-3">Teléfono de Emergencia</dt>
+        <dd class="col-sm-9">@(Model.Client.EmergencyContactPhone ?? "No especificado")</dd>
+    </dl>
+}
+else
+{
+    <h1 class="text-danger">Cliente no encontrado</h1>
+    <p>El cliente con el ID especificado no existe o no tiene el rol de cliente.</p>
+}
+
+<div class="mt-4">
+    <a asp-page="/Users" class="btn btn-secondary">← Volver a la Lista de Usuarios</a>
+</div>

@@ -1,7 +1,8 @@
+using GYMPT.Data.Contracts;
 using GYMPT.Models;
 using GYMPT.Services;
 
-namespace GYMPT.Data
+namespace GYMPT.Data.Repositories
 {
     public class DisciplineRepository : IRepository<Discipline>
     {

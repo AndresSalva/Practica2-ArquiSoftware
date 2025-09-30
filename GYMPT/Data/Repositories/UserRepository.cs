@@ -1,9 +1,10 @@
+using GYMPT.Data.Contracts;
 using GYMPT.Models;
 using GYMPT.Services;
 
-namespace GYMPT.Data
+namespace GYMPT.Data.Repositories
 {
-    public class UserRepository : IRepository<User>
+    public class UserRepository : IRepository<UserData>
     {
         private readonly Supabase.Client _supabase;
 
@@ -12,12 +13,12 @@ namespace GYMPT.Data
             _supabase = supabase;
         }
 
-        public async Task<IEnumerable<User>> GetAllAsync()
+        public async Task<IEnumerable<UserData>> GetAllAsync()
         {
             try
             {
                 _ = RemoteLoggerSingleton.Instance.LogInfo("Se solicitó la lista completa de usuarios.");
-                var response = await _supabase.From<User>().Get();
+                var response = await _supabase.From<UserData>().Get();
                 return response.Models;
             }
             catch (Exception ex)
