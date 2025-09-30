@@ -3,10 +3,5 @@
 GYMPT/bin
 GYMPT/obj/
 
-# Cache de compilación
-GYMPT/obj/Debug/net8.0/GYMPT.AssemblyInfoInputs.cache
-GYMPT/obj/Debug/net8.0/GYMPT.GeneratedMSBuildEditorConfig.editorconfig
-GYMPT/obj/Debug/net8.0/GYMPT.AssemblyInfo.cs
-
-# Visual Studio
+# Visual Studio (Para el que uso Copilot)
 .vs/
