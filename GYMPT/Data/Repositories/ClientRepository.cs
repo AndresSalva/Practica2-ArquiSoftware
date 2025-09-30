@@ -3,6 +3,7 @@ using GYMPT.Domain;
 using GYMPT.Factories;
 using GYMPT.Models; 
 using GYMPT.Services;
+using GYMPT.Mappers;
 using System;
 using System.Threading.Tasks;
 
@@ -37,10 +38,7 @@ namespace GYMPT.Data.Repositories
                     return null;
                 }
 
-                var client = (Client)new ClientCreator().CreateUser();
-
-
-                MapBaseUserData(baseUserData, client); 
+                var client = UserMapper.MapToUserDomain<Client>(baseUserData);
 
                 if (details != null)
                 {
@@ -58,21 +56,6 @@ namespace GYMPT.Data.Repositories
                 await RemoteLoggerSingleton.Instance.LogError($"Fallo al ensamblar cliente con ID: {id}.", ex);
                 throw;
             }
-        }
-
-
-        private void MapBaseUserData(UserData source, User destination)
-        {
-            destination.Id = source.Id;
-            destination.CreatedAt = source.CreatedAt;
-            destination.LastModification = source.LastModification;
-            destination.IsActive = source.IsActive;
-            destination.Name = source.Name;
-            destination.FirstLastname = source.FirstLastname;
-            destination.SecondLastname = source.SecondLastname;
-            destination.DateBirth = source.DateBirth;
-            destination.CI = source.CI;
-            destination.Role = source.Role;
         }
     }
 }

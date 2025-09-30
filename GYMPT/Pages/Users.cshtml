@@ -11,6 +11,8 @@
     <thead class="thead-dark">
         <tr>
             <th>Nombre Completo</th>
+            <th>CI</th>
+            <th>Fecha de nacimiento</th>
             <th>Rol</th>
             <th style="width: 15%;">Acciones</th>
         </tr>
@@ -21,7 +23,9 @@
         {
             <tr>
                 @* Mostramos el nombre y apellido del usuario *@
-                <td>@user.Name @user.FirstLastname</td>
+                <td>@user.Name @user.FirstLastname @user.SecondLastname</td>
+                <td>@user.CI</td>
+                <td>@user.DateBirth</td>
                 <td>
                     @* Usamos un if para mostrar una insignia de color según el rol *@
                     @if (user.Role == "Client")
