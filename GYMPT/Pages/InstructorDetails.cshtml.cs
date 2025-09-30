@@ -19,7 +19,7 @@ namespace GYMPT.Pages
 
         public async Task<IActionResult> OnGetAsync(long id)
         {
-            // Llamamos al repositorio específico para instructores.
+ 
             Instructor = await _instructorRepo.GetByIdAsync(id);
 
             if (Instructor == null)

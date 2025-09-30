@@ -4,7 +4,7 @@ using System;
 
 namespace GYMPT.Models
 {
-    // Esta clase es un DTO. Su única misión es mapear 1 a 1 con la tabla "Instructor".
+
     [Table("Instructor")]
     public class InstructorData : BaseModel
     {
