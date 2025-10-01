@@ -1,30 +1,30 @@
-﻿using GYMPT.Data.Contracts;
+﻿using Dapper;
+using GYMPT.Data.Contracts;
 using GYMPT.Models;
 using GYMPT.Services;
+using Microsoft.Extensions.Configuration;
+using Npgsql;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace GYMPT.Data.Repositories
 {
     public class MembershipRepository : IRepository<Membership>
     {
-        private readonly Supabase.Client _supabase;
+        private readonly string _connectionString;
 
-        public MembershipRepository(Supabase.Client supabase)
+        public MembershipRepository(IConfiguration configuration)
         {
-            _supabase = supabase;
+            _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
         public async Task<IEnumerable<Membership>> GetAllAsync()
         {
-            try
+            await RemoteLoggerSingleton.Instance.LogInfo("Solicitando la lista completa de membresías con Dapper.");
+            using (var conn = new NpgsqlConnection(_connectionString))
             {
-                _ = RemoteLoggerSingleton.Instance.LogInfo("Se solicitó la lista completa de membresías.");
-                var response = await _supabase.From<Membership>().Get();
-                return response.Models;
-            }
-            catch (Exception ex)
-            {
-                await RemoteLoggerSingleton.Instance.LogError("Fallo crítico al obtener la lista de membresías.", ex);
-                throw;
+                var sql = "SELECT id, name, price, description, monthly_sessions AS MonthlySessions, created_at AS CreatedAt, last_modification AS LastModification, \"isActive\" as IsActive FROM \"Membership\"";
+                return await conn.QueryAsync<Membership>(sql);
             }
         }
     }

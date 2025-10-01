@@ -1,23 +1,16 @@
-﻿using Supabase.Postgrest.Attributes;
-using Supabase.Postgrest.Models;
-using System;
+﻿
 
 namespace GYMPT.Models
 {
 
-    [Table("Instructor")]
-    public class InstructorData : BaseModel
+    public class InstructorData 
     {
-        [PrimaryKey("id_user")]
         public long IdUser { get; set; }
 
-        [Column("hire_date")]
         public DateTime? HireDate { get; set; }
 
-        [Column("monthly_salary")]
         public float? MonthlySalary { get; set; }
 
-        [Column("specialization")]
         public string? Specialization { get; set; }
     }
 }

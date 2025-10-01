@@ -51,3 +51,7 @@ D:\universidad\semestre8\Arquitectura\P2 - GPT5\GYMPT\GYMPT\obj\Debug\net8.0\ref
 D:\universidad\semestre8\Arquitectura\P2 - GPT5\GYMPT\GYMPT\obj\Debug\net8.0\GYMPT.pdb
 D:\universidad\semestre8\Arquitectura\P2 - GPT5\GYMPT\GYMPT\obj\Debug\net8.0\GYMPT.genruntimeconfig.cache
 D:\universidad\semestre8\Arquitectura\P2 - GPT5\GYMPT\GYMPT\obj\Debug\net8.0\ref\GYMPT.dll
+D:\universidad\semestre8\Arquitectura\P2 - GPT5\GYMPT\GYMPT\bin\Debug\net8.0\Dapper.dll
+D:\universidad\semestre8\Arquitectura\P2 - GPT5\GYMPT\GYMPT\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+D:\universidad\semestre8\Arquitectura\P2 - GPT5\GYMPT\GYMPT\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+D:\universidad\semestre8\Arquitectura\P2 - GPT5\GYMPT\GYMPT\bin\Debug\net8.0\Npgsql.dll

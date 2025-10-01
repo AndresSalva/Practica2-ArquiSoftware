@@ -1,30 +1,30 @@
+using Dapper;
 using GYMPT.Data.Contracts;
 using GYMPT.Models;
 using GYMPT.Services;
+using Microsoft.Extensions.Configuration;
+using Npgsql;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace GYMPT.Data.Repositories
 {
     public class DisciplineRepository : IRepository<Discipline>
     {
-        private readonly Supabase.Client _supabase;
+        private readonly string _connectionString;
 
-        public DisciplineRepository(Supabase.Client supabase)
+        public DisciplineRepository(IConfiguration configuration)
         {
-            _supabase = supabase;
+            _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
         public async Task<IEnumerable<Discipline>> GetAllAsync()
         {
-            try
+            await RemoteLoggerSingleton.Instance.LogInfo("Solicitando la lista completa de disciplinas con Dapper.");
+            using (var conn = new NpgsqlConnection(_connectionString))
             {
-                _ = RemoteLoggerSingleton.Instance.LogInfo("Se solicitó la lista completa de disciplinas.");
-                var response = await _supabase.From<Discipline>().Get();
-                return response.Models;
-            }
-            catch (Exception ex)
-            {
-                await RemoteLoggerSingleton.Instance.LogError("Fallo crítico al obtener la lista de disciplinas.", ex);
-                throw;
+                var sql = "SELECT id, name, id_instructor AS IdInstructor, start_time AS StartTime, end_time AS EndTime, created_at AS CreatedAt, last_modification AS LastModification, \"isActive\" as IsActive FROM \"Discipline\"";
+                return await conn.QueryAsync<Discipline>(sql);
             }
         }
     }

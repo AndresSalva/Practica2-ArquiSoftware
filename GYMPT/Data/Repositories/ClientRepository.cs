@@ -1,9 +1,11 @@
-﻿using GYMPT.Data.Contracts;
+﻿using Dapper;
+using GYMPT.Data.Contracts;
 using GYMPT.Domain;
-using GYMPT.Factories;
-using GYMPT.Models; 
-using GYMPT.Services;
 using GYMPT.Mappers;
+using GYMPT.Models;
+using GYMPT.Services;
+using Microsoft.Extensions.Configuration;
+using Npgsql;
 using System;
 using System.Threading.Tasks;
 
@@ -11,50 +13,73 @@ namespace GYMPT.Data.Repositories
 {
     public class ClientRepository : IClientRepository
     {
-        private readonly Supabase.Client _supabase;
+        private readonly string _connectionString;
 
-        public ClientRepository(Supabase.Client supabase)
+        public ClientRepository(IConfiguration configuration)
         {
-            _supabase = supabase;
+            _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
         public async Task<Client> GetByIdAsync(long id)
         {
-            try
+            await RemoteLoggerSingleton.Instance.LogInfo($"Buscando cliente con ID: {id} en PostgreSQL con Dapper.");
+
+            using (var conn = new NpgsqlConnection(_connectionString))
             {
-                _ = RemoteLoggerSingleton.Instance.LogInfo($"Iniciando ensamblaje de cliente con ID: {id}.");
-
-                var userTask = _supabase.From<UserData>().Filter("id", Supabase.Postgrest.Constants.Operator.Equals, id.ToString()).Single();
-                var detailsTask = _supabase.From<ClientData>().Filter("id_user", Supabase.Postgrest.Constants.Operator.Equals, id.ToString()).Single();
-
-                await Task.WhenAll(userTask, detailsTask);
-
-                var baseUserData = userTask.Result;
-                var details = detailsTask.Result;
+                var userSql = "SELECT id, created_at AS CreatedAt, name, first_lastname AS FirstLastname, second_lastname AS SecondLastname, date_birth as DateBirth, \"CI\", role FROM \"User\" WHERE id = @Id";
+                var baseUserData = await conn.QuerySingleOrDefaultAsync<UserData>(userSql, new { Id = id });
 
                 if (baseUserData == null || baseUserData.Role != "Client")
                 {
-                    _ = RemoteLoggerSingleton.Instance.LogWarning($"No se encontró un usuario base con ID: {id} y rol 'Client'.");
+                    await RemoteLoggerSingleton.Instance.LogWarning($"No se encontró un usuario base con ID: {id} y rol 'Client'.");
                     return null;
                 }
 
                 var client = UserMapper.MapToUserDomain<Client>(baseUserData);
 
-                if (details != null)
+                var detailsSql = "SELECT fitness_level AS FitnessLevel, initial_weight_kg AS InitialWeightKg, current_weight_kg AS CurrentWeightKg, emergency_contact_phone AS EmergencyContactPhone FROM \"Client\" WHERE id_user = @Id";
+                var detailsData = await conn.QuerySingleOrDefaultAsync<ClientData>(detailsSql, new { Id = id });
+
+                if (detailsData != null)
                 {
-                    client.FitnessLevel = details.FitnessLevel;
-                    client.InitialWeightKg = details.InitialWeightKg;
-                    client.CurrentWeightKg = details.CurrentWeightKg;
-                    client.EmergencyContactPhone = details.EmergencyContactPhone;
+                    client.FitnessLevel = detailsData.FitnessLevel;
+                    client.InitialWeightKg = detailsData.InitialWeightKg;
+                    client.CurrentWeightKg = detailsData.CurrentWeightKg;
+                    client.EmergencyContactPhone = detailsData.EmergencyContactPhone;
                 }
 
-                _ = RemoteLoggerSingleton.Instance.LogInfo($"Ensamblaje de cliente con ID: {id} completado.");
+                await RemoteLoggerSingleton.Instance.LogInfo($"Ensamblaje de cliente con ID: {id} completado.");
                 return client;
             }
-            catch (Exception ex)
+        }
+
+        public async Task CreateAsync(Client client)
+        {
+            await RemoteLoggerSingleton.Instance.LogInfo($"Iniciando creación de un nuevo cliente: {client.Name} con Dapper.");
+            using (var conn = new NpgsqlConnection(_connectionString))
             {
-                await RemoteLoggerSingleton.Instance.LogError($"Fallo al ensamblar cliente con ID: {id}.", ex);
-                throw;
+                await conn.OpenAsync();
+                using (var transaction = await conn.BeginTransactionAsync())
+                {
+                    try
+                    {
+                        var userSql = "INSERT INTO \"User\" (name, first_lastname, second_lastname, date_birth, \"CI\", role, \"isActive\") VALUES (@Name, @FirstLastname, @SecondLastname, @DateBirth, @CI, @Role, true) RETURNING id;";
+                        var newUserId = await conn.QuerySingleAsync<long>(userSql, client, transaction);
+
+                        client.Id = newUserId;
+                        var clientSql = "INSERT INTO \"Client\" (id_user, fitness_level, initial_weight_kg, current_weight_kg, emergency_contact_phone) VALUES (@Id, @FitnessLevel, @InitialWeightKg, @CurrentWeightKg, @EmergencyContactPhone);";
+                        await conn.ExecuteAsync(clientSql, client, transaction);
+
+                        await transaction.CommitAsync();
+                        await RemoteLoggerSingleton.Instance.LogInfo($"Cliente con ID {newUserId} creado exitosamente.");
+                    }
+                    catch (Exception ex)
+                    {
+                        await transaction.RollbackAsync();
+                        await RemoteLoggerSingleton.Instance.LogError($"Error al crear cliente {client.Name}.", ex);
+                        throw;
+                    }
+                }
             }
         }
     }

@@ -1,30 +1,30 @@
+using Dapper;
 using GYMPT.Data.Contracts;
 using GYMPT.Models;
 using GYMPT.Services;
+using Microsoft.Extensions.Configuration;
+using Npgsql;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace GYMPT.Data.Repositories
 {
     public class UserRepository : IRepository<UserData>
     {
-        private readonly Supabase.Client _supabase;
+        private readonly string _connectionString;
 
-        public UserRepository(Supabase.Client supabase)
+        public UserRepository(IConfiguration configuration)
         {
-            _supabase = supabase;
+            _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
         public async Task<IEnumerable<UserData>> GetAllAsync()
         {
-            try
+            await RemoteLoggerSingleton.Instance.LogInfo("Solicitando la lista completa de usuarios con Dapper.");
+            using (var conn = new NpgsqlConnection(_connectionString))
             {
-                _ = RemoteLoggerSingleton.Instance.LogInfo("Se solicitó la lista completa de usuarios.");
-                var response = await _supabase.From<UserData>().Get();
-                return response.Models;
-            }
-            catch (Exception ex)
-            {
-                await RemoteLoggerSingleton.Instance.LogError("Fallo crítico al obtener la lista de usuarios.", ex);
-                throw;
+                var sql = "SELECT id, created_at AS CreatedAt, name, first_lastname AS FirstLastname, role FROM \"User\"";
+                return await conn.QueryAsync<UserData>(sql);
             }
         }
     }
