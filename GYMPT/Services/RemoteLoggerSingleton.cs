@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 
 namespace GYMPT.Services
 {
-
+    // TODO
+    // Modificar para que sea algo local o a un archivo de texto
     public sealed class RemoteLoggerSingleton
     {
         #region Implementación del Patrón Singleton
