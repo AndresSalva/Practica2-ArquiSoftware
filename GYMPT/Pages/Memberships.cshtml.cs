@@ -1,8 +1,12 @@
 using GYMPT.Data.Contracts;
 using GYMPT.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace GYMPT.Pages 
+namespace GYMPT.Pages
 {
     public class MembershipsModel : PageModel
     {
@@ -17,11 +21,14 @@ namespace GYMPT.Pages
 
         public async Task OnGetAsync()
         {
-            MembershipList = await _repo.GetAllAsync();
+            var allMemberships = await _repo.GetAllAsync();
+            MembershipList = allMemberships.Where(m => m.IsActive == true);
         }
-        public void OnPostAsync() 
-        { 
-        
+
+        public async Task<IActionResult> OnPostDeleteAsync(int id)
+        {
+            await _repo.DeleteByIdAsync(id);
+            return RedirectToPage();
         }
     }
 }
