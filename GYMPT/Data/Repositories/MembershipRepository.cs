@@ -77,5 +77,6 @@ namespace GYMPT.Data.Repositories
             }
             return entity;
         }
+
     }
 }

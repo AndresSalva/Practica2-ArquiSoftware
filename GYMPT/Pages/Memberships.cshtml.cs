@@ -19,5 +19,9 @@ namespace GYMPT.Pages
         {
             MembershipList = await _repo.GetAllAsync();
         }
+        public void OnPostAsync() 
+        { 
+        
+        }
     }
 }
