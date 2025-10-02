@@ -48,12 +48,12 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWVtYmVyc2hpcENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Arquitectura de Soft/Practica2-ArquiSoftware/GYMPT/Pages/Memberships.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWVtYmVyc2hpcHMuY3NodG1s
+[D:/Arquitectura de Soft/Practica2-ArquiSoftware/GYMPT/Pages/MembershipEdit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWVtYmVyc2hpcEVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Arquitectura de Soft/Practica2-ArquiSoftware/GYMPT/Pages/MembreshipEdit.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWVtYnJlc2hpcEVkaXQuY3NodG1s
+[D:/Arquitectura de Soft/Practica2-ArquiSoftware/GYMPT/Pages/Memberships.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWVtYmVyc2hpcHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Arquitectura de Soft/Practica2-ArquiSoftware/GYMPT/Pages/Privacy.cshtml]
