@@ -63,7 +63,7 @@ namespace GYMPT.Data.Repositories
         public async Task<Membership> UpdateAsync(Membership entity)
         {
             await RemoteLoggerSingleton.Instance.LogInfo($"Actualizando membresía con ID: {entity.Id}.");
-            var sql = @"UPDATE ""Membership""SET name = @Name,price = @Price,description = @Description,monthly_sessions = @MonthlySessions,last_modification = @LastModification,""isActive"" = @IsActive WHERE id = @Id;";
+            var sql = @"UPDATE ""Membership""SET name = @Name,price = @Price,description = @Description,monthly_sessions = @MonthlySessions,last_modification = @LastModification,""isActive"" = true WHERE id = @Id;";
 
             using (var conn = new NpgsqlConnection(_connectionString))
             {
