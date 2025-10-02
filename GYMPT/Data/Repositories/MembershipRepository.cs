@@ -18,6 +18,16 @@ namespace GYMPT.Data.Repositories
             _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
+        public async Task<Membership> CreateAsync(Membership entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<bool> DeleteByIdAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<IEnumerable<Membership>> GetAllAsync()
         {
             await RemoteLoggerSingleton.Instance.LogInfo("Solicitando la lista completa de membresías con Dapper.");
@@ -26,6 +36,11 @@ namespace GYMPT.Data.Repositories
                 var sql = "SELECT id, name, price, description, monthly_sessions AS MonthlySessions, created_at AS CreatedAt, last_modification AS LastModification, \"isActive\" as IsActive FROM \"Membership\"";
                 return await conn.QueryAsync<Membership>(sql);
             }
+        }
+
+        public async Task<Membership> UpdateAsync(Membership entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }
