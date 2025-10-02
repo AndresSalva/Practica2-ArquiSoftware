@@ -18,6 +18,16 @@ namespace GYMPT.Data.Repositories
             _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
+        public Task<DetailsUser> CreateAsync(DetailsUser entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> DeleteByIdAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<IEnumerable<DetailsUser>> GetAllAsync()
         {
             await RemoteLoggerSingleton.Instance.LogInfo("Solicitando la lista completa de detalles de usuarios con Dapper.");
@@ -26,6 +36,11 @@ namespace GYMPT.Data.Repositories
                 var sql = "SELECT id, id_user AS IdUser, id_membership AS IdMembership, start_date AS StartDate, end_date AS EndDate, sessions_left AS SessionsLeft, created_at AS CreatedAt, last_modification AS LastModification, \"isActive\" as IsActive FROM \"Details_user\"";
                 return await conn.QueryAsync<DetailsUser>(sql);
             }
+        }
+
+        public Task<DetailsUser> UpdateAsync(DetailsUser entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }
