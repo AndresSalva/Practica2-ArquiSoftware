@@ -59,7 +59,6 @@ namespace GYMPT.Data.Repositories
                 return await conn.QueryAsync<Membership>(sql);
             }
         }
-
         public async Task<Membership> UpdateAsync(Membership entity)
         {
             await RemoteLoggerSingleton.Instance.LogInfo($"Actualizando membresía con ID: {entity.Id}.");

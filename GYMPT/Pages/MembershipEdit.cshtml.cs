@@ -22,7 +22,8 @@ namespace GYMPT.Pages
             _repo = repo;
             _configuration = configuration;
         }
-
+        //Acá se puede mejorar pasando la consulta a un contrato de IRepository como GetById para eliminar la consulta
+        // acá y no instanciar lq connectionString, pero para que no haya conflictos al merge de las demás ramas lo dejo así por ahora
         public async Task<IActionResult> OnGetAsync(int id)
         {
             string connectionString = _configuration.GetConnectionString("DefaultConnection");

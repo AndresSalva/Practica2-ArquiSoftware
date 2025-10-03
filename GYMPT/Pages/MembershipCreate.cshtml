@@ -14,22 +14,22 @@
 
             <div class="form-group">
                 <label asp-for="Membership.Name" class="control-label">Nombre</label>
-                <input asp-for="Membership.Name" class="form-control" />
+                <input asp-for="Membership.Name" class="form-control" required />
                 <span asp-validation-for="Membership.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Membership.Price" class="control-label">Precio (Bs.)</label>
-                <input asp-for="Membership.Price" class="form-control" />
+                <input asp-for="Membership.Price" class="form-control" required />
                 <span asp-validation-for="Membership.Price" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Membership.MonthlySessions" class="control-label">Sesiones al Mes</label>
-                <input asp-for="Membership.MonthlySessions" class="form-control" />
+                <input asp-for="Membership.MonthlySessions" class="form-control" required />
                 <span asp-validation-for="Membership.MonthlySessions" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Membership.Description" class="control-label">Descripción</label>
-                <textarea asp-for="Membership.Description" class="form-control" rows="3"></textarea>
+                <textarea asp-for="Membership.Description" class="form-control" rows="3" required></textarea>
                 <span asp-validation-for="Membership.Description" class="text-danger"></span>
             </div>
 
