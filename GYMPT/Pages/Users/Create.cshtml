@@ -1,0 +1,17 @@
+﻿@page
+@model GYMPT.Pages.Users.CreateModel
+
+<h2>Crear Usuario</h2>
+
+<form method="post">
+    <div class="form-group">
+        <label>Seleccione el tipo de usuario</label>
+        <select asp-for="User.Role" class="form-control">
+            <option value="Client">Cliente</option>
+            <option value="Instructor">Instructor</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Continuar</button>
+    <a asp-page="/Users/Users" class="btn btn-secondary">Cancelar</a>
+</form>

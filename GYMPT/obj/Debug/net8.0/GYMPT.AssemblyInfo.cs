@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GYMPT")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f35c8a0c999f5d3c30599243ec2f6647e7696bbf")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+275eca61e39770e7ad4884609d33d0585889fa0e")]
 [assembly: System.Reflection.AssemblyProductAttribute("GYMPT")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GYMPT")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

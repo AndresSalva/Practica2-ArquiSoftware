@@ -65,3 +65,6 @@ _UpgradeReport_Files/
 UpgradeLog*.XML
 UpgradeLog*.htm
 ```
+# Ignorar appsettings.json de GYMPT
+GYMPT/appsettings.json
+
