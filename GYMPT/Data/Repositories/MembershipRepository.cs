@@ -20,7 +20,7 @@ namespace GYMPT.Data.Repositories
 
         public async Task<Membership> CreateAsync(Membership entity)
         {
-            await RemoteLoggerSingleton.Instance.LogInfo($"Creando nueva membresía: {entity.Name}.");
+            await RemoteLoggerSingleton.Instance.LogInfo($"Creando nueva membresía: {entity.Name}, con ID: {entity.Id}");
             var sql = @"
                 INSERT INTO ""Membership"" (name, price, description, monthly_sessions, created_at, last_modification, ""isActive"")
                 VALUES (@Name, @Price, @Description, @MonthlySessions, @CreatedAt, @LastModification, @IsActive)
@@ -61,7 +61,7 @@ namespace GYMPT.Data.Repositories
         }
         public async Task<Membership> UpdateAsync(Membership entity)
         {
-            await RemoteLoggerSingleton.Instance.LogInfo($"Actualizando membresía con ID: {entity.Id}.");
+            await RemoteLoggerSingleton.Instance.LogInfo($"Actualizando membresía: {entity.Name}, con ID: {entity.Id}.");
             var sql = @"UPDATE ""Membership""SET name = @Name,price = @Price,description = @Description,monthly_sessions = @MonthlySessions,last_modification = @LastModification,""isActive"" = true WHERE id = @Id;";
 
             using (var conn = new NpgsqlConnection(_connectionString))
