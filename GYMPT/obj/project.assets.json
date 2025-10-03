@@ -874,28 +874,29 @@
   "projectFileDependencyGroups": {
     "net8.0": [
       "Dapper >= 2.1.66",
+      "Microsoft.Extensions.Logging.Abstractions >= 8.0.2",
       "Npgsql >= 9.0.3",
       "Supabase >= 1.1.1"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\andsa\\.nuget\\packages\\": {},
+    "C:\\Users\\ISABELLA\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\GYMPT.csproj",
+      "projectUniqueName": "C:\\Users\\ISABELLA\\Practica2-ArquiSoftware\\GYMPT\\GYMPT.csproj",
       "projectName": "GYMPT",
-      "projectPath": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\GYMPT.csproj",
-      "packagesPath": "C:\\Users\\andsa\\.nuget\\packages\\",
-      "outputPath": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\obj\\",
+      "projectPath": "C:\\Users\\ISABELLA\\Practica2-ArquiSoftware\\GYMPT\\GYMPT.csproj",
+      "packagesPath": "C:\\Users\\ISABELLA\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\ISABELLA\\Practica2-ArquiSoftware\\GYMPT\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\andsa\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\ISABELLA\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -931,6 +932,10 @@
           "Dapper": {
             "target": "Package",
             "version": "[2.1.66, )"
+          },
+          "Microsoft.Extensions.Logging.Abstractions": {
+            "target": "Package",
+            "version": "[8.0.2, )"
           },
           "Npgsql": {
             "target": "Package",
