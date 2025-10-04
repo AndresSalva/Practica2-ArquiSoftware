@@ -1,6 +1,10 @@
 using GYMPT.Data.Contracts;
 using GYMPT.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace GYMPT.Pages
 {
@@ -14,9 +18,17 @@ namespace GYMPT.Pages
         {
             _repo = repo;
         }
+
         public async Task OnGetAsync()
         {
-            DisciplineList = await _repo.GetAllAsync();
+            var allDisciplines = await _repo.GetAllAsync();
+            DisciplineList = allDisciplines.Where(d => d.IsActive == true);
+        }
+
+        public async Task<IActionResult> OnPostDeleteAsync(int id)
+        {
+            await _repo.DeleteByIdAsync(id);
+            return RedirectToPage();
         }
     }
 }

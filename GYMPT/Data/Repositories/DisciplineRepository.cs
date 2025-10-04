@@ -4,9 +4,9 @@ using GYMPT.Models;
 using GYMPT.Services;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System;
 
 namespace GYMPT.Data.Repositories
 {
@@ -40,34 +40,41 @@ namespace GYMPT.Data.Repositories
             return entity;
         }
 
-        public async Task<bool> DeleteByIdAsync(int id)
+        public async Task<Discipline> GetByIdAsync(int id)
         {
-            await RemoteLoggerSingleton.Instance.LogInfo($"Dando de baja disciplina con ID: {id}.");
-            var sql = @"UPDATE ""Discipline"" 
-                        SET ""isActive"" = false, last_modification = @LastModification 
+            await RemoteLoggerSingleton.Instance.LogInfo($"Buscando disciplina con ID: {id}.");
+            var sql = @"SELECT id, 
+                               name, 
+                               id_instructor AS IdInstructor, 
+                               start_time AS StartTime, 
+                               end_time AS EndTime, 
+                               created_at AS CreatedAt, 
+                               last_modification AS LastModification, 
+                               ""isActive"" as IsActive 
+                        FROM ""Discipline"" 
                         WHERE id = @Id;";
 
             using (var conn = new NpgsqlConnection(_connectionString))
             {
-                var affectedRows = await conn.ExecuteAsync(sql, new { Id = id, LastModification = DateTime.UtcNow });
-                return affectedRows > 0;
+                return await conn.QueryFirstOrDefaultAsync<Discipline>(sql, new { Id = id });
             }
         }
 
         public async Task<IEnumerable<Discipline>> GetAllAsync()
         {
             await RemoteLoggerSingleton.Instance.LogInfo("Solicitando la lista completa de disciplinas con Dapper.");
+            var sql = @"SELECT id, 
+                               name, 
+                               id_instructor AS IdInstructor, 
+                               start_time AS StartTime, 
+                               end_time AS EndTime, 
+                               created_at AS CreatedAt, 
+                               last_modification AS LastModification, 
+                               ""isActive"" as IsActive 
+                        FROM ""Discipline"";";
+
             using (var conn = new NpgsqlConnection(_connectionString))
             {
-                var sql = @"SELECT id, 
-                                   name, 
-                                   id_instructor AS IdInstructor, 
-                                   start_time AS StartTime, 
-                                   end_time AS EndTime, 
-                                   created_at AS CreatedAt, 
-                                   last_modification AS LastModification, 
-                                   ""isActive"" as IsActive 
-                            FROM ""Discipline"";";
                 return await conn.QueryAsync<Discipline>(sql);
             }
         }
@@ -95,6 +102,20 @@ namespace GYMPT.Data.Repositories
                 }
             }
             return entity;
+        }
+
+        public async Task<bool> DeleteByIdAsync(int id)
+        {
+            await RemoteLoggerSingleton.Instance.LogInfo($"Dando de baja disciplina con ID: {id}.");
+            var sql = @"UPDATE ""Discipline"" 
+                SET ""isActive"" = false, last_modification = @LastModification 
+                WHERE id = @Id;";
+
+            using (var conn = new NpgsqlConnection(_connectionString))
+            {
+                var affectedRows = await conn.ExecuteAsync(sql, new { Id = id, LastModification = DateTime.UtcNow });
+                return affectedRows > 0;
+            }
         }
     }
 }
