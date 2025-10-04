@@ -11,7 +11,7 @@ namespace GYMPT.Models
 
         public DateTime? LastModification { get; set; }
 
-        public bool? IsActive { get; set; }
+        public bool IsActive { get; set; } = true;
 
         public string? Name { get; set; }
 

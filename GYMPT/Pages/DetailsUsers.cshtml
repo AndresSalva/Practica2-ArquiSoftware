@@ -1,38 +1,137 @@
 ﻿@page
 @model GYMPT.Pages.DetailsUsersModel
 @{
+    ViewData["Title"] = "Detalles de Usuarios";
 }
 
-<h2>Details User Page</h2>
-<p>Welcome to the Details User Page!</p>
+<h1>Usuarios con Membresías</h1>
 
-@if(Model.DetailsUserList != null && Model.DetailsUserList.Any())
+<!-- Mensajes -->
+@if (TempData["SuccessMessage"] != null)
 {
-    <table class="table">
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+<!-- Botón para mostrar formulario -->
+<button id="btnShowForm" class="btn btn-success mb-3">Agregar Usuario</button>
+
+<!-- Formulario oculto inicialmente -->
+<div id="formContainer" style="display:none;">
+    <form method="post" id="detailUserForm">
+        <input type="hidden" asp-for="DetailUser.Id" />
+        <div class="mb-3">
+            <label asp-for="DetailUser.IdUser">ID Usuario</label>
+            <input asp-for="DetailUser.IdUser" class="form-control" required />
+        </div>
+        <div class="mb-3">
+            <label asp-for="DetailUser.IdMembership">ID Membresía</label>
+            <input asp-for="DetailUser.IdMembership" class="form-control" required />
+        </div>
+        <div class="mb-3">
+            <label asp-for="DetailUser.StartDate">Fecha Inicio</label>
+            <input asp-for="DetailUser.StartDate" type="date" class="form-control" required />
+        </div>
+        <div class="mb-3">
+            <label asp-for="DetailUser.EndDate">Fecha Fin</label>
+            <input asp-for="DetailUser.EndDate" type="date" class="form-control" required />
+        </div>
+        <div class="mb-3">
+            <label asp-for="DetailUser.SessionsLeft">Sesiones Restantes</label>
+            <input asp-for="DetailUser.SessionsLeft" class="form-control" required />
+        </div>
+        <div class="form-check mb-3">
+            <input type="checkbox" asp-for="DetailUser.IsActive" class="form-check-input" />
+            <label asp-for="DetailUser.IsActive" class="form-check-label">Activo</label>
+        </div>
+
+        <button type="submit" id="saveButton" class="btn btn-success">Guardar</button>
+        <button type="button" class="btn btn-secondary" onclick="hideForm()">Cancelar</button>
+    </form>
+</div>
+
+<!-- Tabla de detalles de usuario -->
+@if (Model.DetailsUserList.Any())
+{
+    <table class="table mt-4">
         <thead>
             <tr>
-                <th>ID User</th>
-                <th>Membership ID</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Sessions</th>
+                <th>ID Usuario</th>
+                <th>ID Membresía</th>
+                <th>Inicio</th>
+                <th>Fin</th>
+                <th>Sesiones</th>
+                <th>Activo</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
-        @foreach(Models.DetailsUser detail in Model.DetailsUserList)
-        {
-            <tr>
-                <td>@detail.IdUser</td>
-                <td>@detail.IdMembership</td>
-                <td>@detail.StartDate</td>
-                <td>@detail.EndDate</td>
-                <td>@detail.SessionsLeft</td>
-            </tr>
-        }
+            @foreach (var detail in Model.DetailsUserList)
+            {
+                <tr>
+                    <td>@detail.IdUser</td>
+                    <td>@detail.IdMembership</td>
+                    <td>@detail.StartDate.ToShortDateString()</td>
+                    <td>@detail.EndDate.ToShortDateString()</td>
+                    <td>@detail.SessionsLeft</td>
+                    <td>@(detail.IsActive ? "Sí" : "No")</td>
+                    <td>
+                        <form method="post" asp-page-handler="Delete" asp-route-id="@detail.Id" style="display:inline">
+                            <button class="btn btn-sm btn-danger" onclick="return confirm('¿Eliminar este detalle?')">Eliminar</button>
+                        </form>
+                        <button class="btn btn-sm btn-primary" onclick="fillEditForm(@detail.Id, @detail.IdUser, @detail.IdMembership, '@detail.StartDate:yyyy-MM-dd', '@detail.EndDate:yyyy-MM-dd', @detail.SessionsLeft, @(detail.IsActive.ToString().ToLower()))">Editar</button>
+                    </td>
+                </tr>
+            }
         </tbody>
     </table>
 }
 else
 {
-    <p>No details users found.</p>
+    <div class="alert alert-info mt-4">No hay detalles registrados.</div>
+}
+
+@section Scripts {
+    <script>
+        const formContainer = document.getElementById('formContainer');
+        const btnShowForm = document.getElementById('btnShowForm');
+        const detailUserForm = document.getElementById('detailUserForm');
+        const saveButton = document.getElementById('saveButton');
+
+        // Mostrar formulario para crear nuevo detalle
+        btnShowForm.addEventListener('click', ()=> {
+            detailUserForm.reset();
+            document.querySelector('[name="DetailUser.Id"]').value = '0';
+            saveButton.textContent = 'Guardar';
+            detailUserForm.setAttribute('asp-page-handler', 'Create');
+            formContainer.style.display = 'block';
+            btnShowForm.style.display = 'none';
+        });
+
+        // Ocultar formulario
+        function hideForm(){
+            formContainer.style.display = 'none';
+            btnShowForm.style.display = 'inline-block';
+        }
+
+        // Llenar formulario para editar
+        function fillEditForm(id, userId, membershipId, startDate, endDate, sessionsLeft, isActive){
+            formContainer.style.display = 'block';
+            btnShowForm.style.display = 'none';
+
+            document.querySelector('[name="DetailUser.Id"]').value = id;
+            document.querySelector('[name="DetailUser.IdUser"]').value = userId;
+            document.querySelector('[name="DetailUser.IdMembership"]').value = membershipId;
+            document.querySelector('[name="DetailUser.StartDate"]').value = startDate;
+            document.querySelector('[name="DetailUser.EndDate"]').value = endDate;
+            document.querySelector('[name="DetailUser.SessionsLeft"]').value = sessionsLeft;
+            document.querySelector('[name="DetailUser.IsActive"]').checked = isActive === 'true';
+
+            saveButton.textContent = 'Actualizar';
+            detailUserForm.setAttribute('asp-page-handler', 'Update');
+        }
+    </script>
 }
