@@ -33,13 +33,13 @@ namespace GYMPT.Data.Repositories
                 entity.LastModification = DateTime.UtcNow;
                 entity.IsActive = true;
 
-                var newId = await conn.QuerySingleAsync<int>(sql, entity);
+                var newId = await conn.QuerySingleAsync<long>(sql, entity);
                 entity.Id = newId;
             }
             return entity;
         }
 
-        public async Task<bool> DeleteByIdAsync(int id)
+        public async Task<bool> DeleteByIdAsync(long id)
         {
             await RemoteLoggerSingleton.Instance.LogInfo($"Dando de baja membresía con ID: {id}.");
             var sql = @"UPDATE ""Membership"" SET ""isActive"" = false, last_modification = @LastModification WHERE id = @Id;";
@@ -61,8 +61,7 @@ namespace GYMPT.Data.Repositories
             }
         }
 
-        // Add this method to implement IRepository<Membership>.GetByIdAsync(int)
-        public async Task<Membership> GetByIdAsync(int id)
+        public async Task<Membership> GetByIdAsync(long id)
         {
             await RemoteLoggerSingleton.Instance.LogInfo($"Solicitando membresía con ID: {id} con Dapper.");
             using (var conn = new NpgsqlConnection(_connectionString))
@@ -75,7 +74,7 @@ namespace GYMPT.Data.Repositories
         public async Task<Membership> UpdateAsync(Membership entity)
         {
             await RemoteLoggerSingleton.Instance.LogInfo($"Actualizando membresía: {entity.Name}, con ID: {entity.Id}.");
-            var sql = @"UPDATE ""Membership""SET name = @Name,price = @Price,description = @Description,monthly_sessions = @MonthlySessions,last_modification = @LastModification,""isActive"" = true WHERE id = @Id;";
+            var sql = @"UPDATE ""Membership""SET name = @Name,price = @Price,description = @Description,monthly_sessions = @MonthlySessions,last_modification = @LastModification,""isActive"" = @IsActive WHERE id = @Id;";
 
             using (var conn = new NpgsqlConnection(_connectionString))
             {

@@ -1,16 +1,16 @@
 using Dapper;
 using GYMPT.Data.Contracts;
 using GYMPT.Models;
-using GYMPT.Services; // Asegúrate de que esto incluye RemoteLoggerSingleton
+using GYMPT.Services;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
-using System; // Necesario para Exception
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace GYMPT.Data.Repositories
 {
-    public class DisciplineRepository : IRepository<Discipline> // Esta línea indica que debe implementar todos los métodos de IRepository<Discipline>
+    public class DisciplineRepository : IRepository<Discipline>
     {
         private readonly string _connectionString;
 
@@ -26,22 +26,20 @@ namespace GYMPT.Data.Repositories
                 await RemoteLoggerSingleton.Instance.LogInfo("Solicitando la lista completa de disciplinas con Dapper.");
                 using (var conn = new NpgsqlConnection(_connectionString))
                 {
-                    // Ajusta los alias si tus nombres de columna en la BD son diferentes de snake_case
-                    var sql = "SELECT id, name, id_instructor AS IdInstructor, start_time AS StartTime, end_time AS EndTime, created_at AS CreatedAt, last_modification AS LastModification, \"isActive\" as IsActive FROM \"Discipline\"";
+                    var sql = @"SELECT id, name, id_instructor AS IdInstructor, start_time AS StartTime, end_time AS EndTime, 
+                                       created_at AS CreatedAt, last_modification AS LastModification, ""isActive"" as IsActive 
+                                FROM ""Discipline""";
                     return await conn.QueryAsync<Discipline>(sql);
                 }
             }
             catch (Exception ex)
             {
                 await RemoteLoggerSingleton.Instance.LogError($"Error al obtener todas las disciplinas: {ex.Message}", ex);
-                throw; // Re-lanza la excepción o maneja de otra forma
+                throw;
             }
         }
 
-        // --- IMPLEMENTACIÓN DE LOS MÉTODOS FALTANTES PARA CUMPLIR CON IRepository<Discipline> ---
-
-        // Agrega este método para implementar IRepository<Discipline>.GetByIdAsync(int)
-        public async Task<Discipline> GetByIdAsync(int id)
+        public async Task<Discipline> GetByIdAsync(long id)
         {
             try
             {
@@ -49,7 +47,7 @@ namespace GYMPT.Data.Repositories
                 using (var conn = new NpgsqlConnection(_connectionString))
                 {
                     var sql = @"SELECT id, name, id_instructor AS IdInstructor, start_time AS StartTime, end_time AS EndTime,
-                                created_at AS CreatedAt, last_modification AS LastModification, ""isActive"" as IsActive
+                                       created_at AS CreatedAt, last_modification AS LastModification, ""isActive"" as IsActive
                                 FROM ""Discipline""
                                 WHERE id = @Id;";
                     return await conn.QuerySingleOrDefaultAsync<Discipline>(sql, new { Id = id });
@@ -70,10 +68,15 @@ namespace GYMPT.Data.Repositories
                 using (var conn = new NpgsqlConnection(_connectionString))
                 {
                     var sql = @"INSERT INTO ""Discipline""
-                                (name, id_instructor, start_time, end_time, created_at, ""isActive"")
-                                VALUES (@Name, @IdInstructor, @StartTime, @EndTime, NOW(), @IsActive)
-                                RETURNING id;"; // Asume que 'id' es SERIAL/BIGSERIAL y la BD lo genera
-                    entity.Id = await conn.ExecuteScalarAsync<long>(sql, entity); // Asumo que Id es de tipo long
+                                (name, id_instructor, start_time, end_time, created_at, last_modification, ""isActive"")
+                                VALUES (@Name, @IdInstructor, @StartTime, @EndTime, @CreatedAt, @LastModification, @IsActive)
+                                RETURNING id;";
+
+                    entity.CreatedAt = DateTime.UtcNow;
+                    entity.LastModification = DateTime.UtcNow;
+                    entity.IsActive = true;
+
+                    entity.Id = await conn.ExecuteScalarAsync<long>(sql, entity);
                     return entity;
                 }
             }
@@ -96,10 +99,18 @@ namespace GYMPT.Data.Repositories
                                     id_instructor = @IdInstructor,
                                     start_time = @StartTime,
                                     end_time = @EndTime,
-                                    last_modification = NOW(),
+                                    last_modification = @LastModification,
                                     ""isActive"" = @IsActive
                                 WHERE id = @Id;";
-                    await conn.ExecuteAsync(sql, entity);
+
+                    entity.LastModification = DateTime.UtcNow;
+
+                    var affectedRows = await conn.ExecuteAsync(sql, entity);
+                    if (affectedRows == 0)
+                    {
+                        throw new KeyNotFoundException("No se encontró una disciplina con el ID proporcionado para actualizar.");
+                    }
+
                     return entity;
                 }
             }
@@ -110,7 +121,7 @@ namespace GYMPT.Data.Repositories
             }
         }
 
-        public async Task<bool> DeleteByIdAsync(int id)
+        public async Task<bool> DeleteByIdAsync(long id)
         {
             try
             {

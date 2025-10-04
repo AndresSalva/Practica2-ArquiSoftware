@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace GYMPT.Data.Repositories
 {
-    public class UserRepository : IRepository<UserData> // Esta es la clase que causaba el error CS0535
+    public class UserRepository : IRepository<UserData>
     {
         private readonly string _connectionString;
 
@@ -25,12 +25,10 @@ namespace GYMPT.Data.Repositories
             {
                 await RemoteLoggerSingleton.Instance.LogInfo("Solicitando la lista completa de usuarios con Dapper.");
                 using var conn = new NpgsqlConnection(_connectionString);
-                // Ajusta los nombres de las columnas SQL para que coincidan con tu base de datos
-                // y usa alias (AS) para que Dapper mapee correctamente a las propiedades de UserData
                 var sql = @"SELECT id, name, first_lastname AS FirstLastname, second_lastname AS SecondLastname,
                                    date_birth AS DateBirth, ci AS CI, role AS Role,
                                    created_at AS CreatedAt, last_modification AS LastModification, ""isActive"" as IsActive
-                            FROM ""Users"""; // <-- Asegúrate de que "Users" sea el nombre correcto de tu tabla
+                            FROM ""Users""";
                 return await conn.QueryAsync<UserData>(sql);
             }
             catch (Exception ex)
@@ -40,8 +38,7 @@ namespace GYMPT.Data.Repositories
             }
         }
 
-        // Add this method to implement IRepository<UserData>.GetByIdAsync(int)
-        public async Task<UserData> GetByIdAsync(int id)
+        public async Task<UserData> GetByIdAsync(long id)
         {
             try
             {
@@ -68,10 +65,14 @@ namespace GYMPT.Data.Repositories
                 await RemoteLoggerSingleton.Instance.LogInfo($"Creando un nuevo usuario: {entity.Name} {entity.FirstLastname}");
                 using var conn = new NpgsqlConnection(_connectionString);
                 var sql = @"INSERT INTO ""Users""
-                               (name, first_lastname, second_lastname, date_birth, ci, role, created_at, ""isActive"")
-                            VALUES (@Name, @FirstLastname, @SecondLastname, @DateBirth, @CI, @Role, NOW(), @IsActive)
+                               (name, first_lastname, second_lastname, date_birth, ci, role, created_at, last_modification, ""isActive"")
+                            VALUES (@Name, @FirstLastname, @SecondLastname, @DateBirth, @CI, @Role, @CreatedAt, @LastModification, @IsActive)
                             RETURNING id;";
-                // Asumo que tu columna 'id' es de tipo BIGINT en la BD, por eso uso long
+
+                entity.CreatedAt = DateTime.UtcNow;
+                entity.LastModification = DateTime.UtcNow;
+                entity.IsActive = true;
+
                 entity.Id = await conn.ExecuteScalarAsync<long>(sql, entity);
                 return entity;
             }
@@ -95,9 +96,11 @@ namespace GYMPT.Data.Repositories
                                 date_birth = @DateBirth,
                                 ci = @CI,
                                 role = @Role,
-                                last_modification = NOW(),
+                                last_modification = @LastModification,
                                 ""isActive"" = @IsActive
                             WHERE id = @Id;";
+
+                entity.LastModification = DateTime.UtcNow;
                 await conn.ExecuteAsync(sql, entity);
                 return entity;
             }
@@ -108,13 +111,13 @@ namespace GYMPT.Data.Repositories
             }
         }
 
-        public async Task<bool> DeleteByIdAsync(int id)
+        public async Task<bool> DeleteByIdAsync(long id)
         {
             try
             {
                 await RemoteLoggerSingleton.Instance.LogInfo($"Eliminando usuario con Id: {id}");
                 using var conn = new NpgsqlConnection(_connectionString);
-                var sql = @"DELETE FROM ""Users"" WHERE id = @Id;"; // <-- Asegúrate de que "Users" sea el nombre correcto
+                var sql = @"DELETE FROM ""Users"" WHERE id = @Id;";
                 var affected = await conn.ExecuteAsync(sql, new { Id = id });
                 return affected > 0;
             }
