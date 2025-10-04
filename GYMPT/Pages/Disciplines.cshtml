@@ -34,7 +34,7 @@
                     <td>@discipline.StartTime?.ToString(@"hh\:mm")</td>
                     <td>@discipline.EndTime?.ToString(@"hh\:mm")</td>
                     <td>
-                        <a asp-page="/Disciplines/Edit" asp-route-id="@discipline.Id" class="btn btn-sm btn-success">Editar</a>
+                        <a asp-page="/DisciplineEdit" asp-route-id="@discipline.Id" class="btn btn-sm btn-success">Editar</a>
                         <form method="post" asp-page-handler="Delete" asp-route-id="@discipline.Id" style="display:inline;" onsubmit="return confirm('¿Estás seguro de que quieres eliminar esta disciplina?');">
                             <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
                         </form>

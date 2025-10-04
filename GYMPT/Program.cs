@@ -21,9 +21,9 @@ builder.Services.AddDbContext<GYMPTContext>(options =>
 // 2. REGISTRAMOS LOS REPOSITORIOS (Esto no cambia)
 // La aplicaci�n sigue funcionando con las interfaces, por lo que esta parte
 // no necesita saber que hemos cambiado de Supabase a PostgreSQL. �Esa es la ventaja de una buena arquitectura!
-builder.Services.AddScoped<IRepository<Membership>, MembershipRepository>();
-builder.Services.AddScoped<IRepository<DetailsUser>, DetailUserRepository>();
-builder.Services.AddScoped<IRepository<UserData>, UserRepository>();
+//builder.Services.AddScoped<IRepository<Membership>, MembershipRepository>();
+//builder.Services.AddScoped<IRepository<DetailsUser>, DetailUserRepository>();
+//builder.Services.AddScoped<IRepository<UserData>, UserRepository>();
 builder.Services.AddScoped<IRepository<Discipline>, DisciplineRepository>();
 
 builder.Services.AddScoped<IClientRepository, ClientRepository>();
