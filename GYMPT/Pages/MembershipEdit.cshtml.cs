@@ -1,5 +1,6 @@
 using GYMPT.Data.Contracts;
 using GYMPT.Models;
+using GYMPT.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Configuration; 
@@ -10,20 +11,20 @@ namespace GYMPT.Pages
 {
     public class MembershipEditModel : PageModel
     {
-        private readonly IRepository<Membership> _repo;
+        private readonly MembershipRepository _repo;
 
         private readonly IConfiguration _configuration;
 
         [BindProperty]
         public Membership Membership { get; set; }
 
-        public MembershipEditModel(IRepository<Membership> repo, IConfiguration configuration)
+        public MembershipEditModel(MembershipRepository repo, IConfiguration configuration)
         {
             _repo = repo;
             _configuration = configuration;
         }
-        //Acá se puede mejorar pasando la consulta a un contrato de IRepository como GetById para eliminar la consulta
-        // acá y no instanciar lq connectionString, pero para que no haya conflictos al merge de las demás ramas lo dejo así por ahora
+        //Acï¿½ se puede mejorar pasando la consulta a un contrato de IRepository como GetById para eliminar la consulta
+        // acï¿½ y no instanciar lq connectionString, pero para que no haya conflictos al merge de las demï¿½s ramas lo dejo asï¿½ por ahora
         public async Task<IActionResult> OnGetAsync(int id)
         {
             string connectionString = _configuration.GetConnectionString("DefaultConnection");

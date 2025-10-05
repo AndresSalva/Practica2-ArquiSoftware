@@ -1,4 +1,5 @@
 using GYMPT.Data.Contracts;
+using GYMPT.Data.Repositories;
 using GYMPT.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -10,11 +11,11 @@ namespace GYMPT.Pages
 {
     public class MembershipsModel : PageModel
     {
-        private readonly IRepository<Membership> _repo;
+        private readonly MembershipRepository _repo;
 
         public IEnumerable<Membership> MembershipList { get; private set; } = Enumerable.Empty<Membership>();
 
-        public MembershipsModel(IRepository<Membership> repo)
+        public MembershipsModel(MembershipRepository repo)
         {
             _repo = repo;
         }
