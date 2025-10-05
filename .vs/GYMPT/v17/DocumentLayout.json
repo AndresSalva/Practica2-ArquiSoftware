@@ -7,6 +7,10 @@
       "RelativeMoniker": "D:0:0:{51D5E0AD-22C2-449B-9447-70B76B7C4943}|GYMPT\\GYMPT.csproj|solutionrelative:gympt\\pages\\disciplines.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{51D5E0AD-22C2-449B-9447-70B76B7C4943}|GYMPT\\GYMPT.csproj|c:\\users\\isabella\\practica2-arquisoftware\\gympt\\pages\\disciplineedit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{51D5E0AD-22C2-449B-9447-70B76B7C4943}|GYMPT\\GYMPT.csproj|solutionrelative:gympt\\pages\\disciplineedit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{51D5E0AD-22C2-449B-9447-70B76B7C4943}|GYMPT\\GYMPT.csproj|c:\\users\\isabella\\practica2-arquisoftware\\gympt\\pages\\disciplinecreate.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{51D5E0AD-22C2-449B-9447-70B76B7C4943}|GYMPT\\GYMPT.csproj|solutionrelative:gympt\\pages\\disciplinecreate.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
@@ -33,10 +37,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{51D5E0AD-22C2-449B-9447-70B76B7C4943}|GYMPT\\GYMPT.csproj|c:\\users\\isabella\\practica2-arquisoftware\\gympt\\pages\\disciplineedit.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{51D5E0AD-22C2-449B-9447-70B76B7C4943}|GYMPT\\GYMPT.csproj|solutionrelative:gympt\\pages\\disciplineedit.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{51D5E0AD-22C2-449B-9447-70B76B7C4943}|GYMPT\\GYMPT.csproj|c:\\users\\isabella\\practica2-arquisoftware\\gympt\\pages\\disciplineedit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{51D5E0AD-22C2-449B-9447-70B76B7C4943}|GYMPT\\GYMPT.csproj|solutionrelative:gympt\\pages\\disciplineedit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{51D5E0AD-22C2-449B-9447-70B76B7C4943}|GYMPT\\GYMPT.csproj|c:\\users\\isabella\\practica2-arquisoftware\\gympt\\pages\\disciplinecreate.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -220,8 +220,20 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 3,
           "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -237,20 +249,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Disciplines.cshtml.cs",
-              "DocumentMoniker": "C:\\Users\\ISABELLA\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Disciplines.cshtml.cs",
-              "RelativeDocumentMoniker": "GYMPT\\Pages\\Disciplines.cshtml.cs",
-              "ToolTip": "C:\\Users\\ISABELLA\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Disciplines.cshtml.cs",
-              "RelativeToolTip": "GYMPT\\Pages\\Disciplines.cshtml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAAsAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-29T16:00:51.787Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "DisciplineRepository.cs",
               "DocumentMoniker": "C:\\Users\\ISABELLA\\Practica2-ArquiSoftware\\GYMPT\\Data\\Repositories\\DisciplineRepository.cs",
               "RelativeDocumentMoniker": "GYMPT\\Data\\Repositories\\DisciplineRepository.cs",
@@ -258,12 +257,11 @@
               "RelativeToolTip": "GYMPT\\Data\\Repositories\\DisciplineRepository.cs",
               "ViewState": "AgIAABMAAAAAAAAAAAAQwHYAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-29T15:05:29.764Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-29T15:05:29.764Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "DetailUserRepository.cs",
               "DocumentMoniker": "C:\\Users\\ISABELLA\\Practica2-ArquiSoftware\\GYMPT\\Data\\Repositories\\DetailUserRepository.cs",
               "RelativeDocumentMoniker": "GYMPT\\Data\\Repositories\\DetailUserRepository.cs",
@@ -271,12 +269,11 @@
               "RelativeToolTip": "GYMPT\\Data\\Repositories\\DetailUserRepository.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAAB4AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-29T15:24:05.285Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-29T15:24:05.285Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "Discipline.cs",
               "DocumentMoniker": "C:\\Users\\ISABELLA\\Practica2-ArquiSoftware\\GYMPT\\Models\\Discipline.cs",
               "RelativeDocumentMoniker": "GYMPT\\Models\\Discipline.cs",
@@ -284,38 +281,62 @@
               "RelativeToolTip": "GYMPT\\Models\\Discipline.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAuwAsAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-30T03:34:49.904Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-30T03:34:49.904Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "DisciplineDelete.cshtml",
               "DocumentMoniker": "C:\\Users\\ISABELLA\\Practica2-ArquiSoftware\\GYMPT\\Pages\\DisciplineDelete.cshtml",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\DisciplineDelete.cshtml",
               "ToolTip": "C:\\Users\\ISABELLA\\Practica2-ArquiSoftware\\GYMPT\\Pages\\DisciplineDelete.cshtml",
               "RelativeToolTip": "GYMPT\\Pages\\DisciplineDelete.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAqwA0AAAALAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-10-04T01:15:16.728Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "DisciplineCreate.cshtml",
               "DocumentMoniker": "C:\\Users\\ISABELLA\\Practica2-ArquiSoftware\\GYMPT\\Pages\\DisciplineCreate.cshtml",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\DisciplineCreate.cshtml",
               "ToolTip": "C:\\Users\\ISABELLA\\Practica2-ArquiSoftware\\GYMPT\\Pages\\DisciplineCreate.cshtml",
               "RelativeToolTip": "GYMPT\\Pages\\DisciplineCreate.cshtml",
-              "ViewState": "AgIAABIAAAAAAAAAAAAAABQAAAAaAAAAAAAAAA==",
+              "ViewState": "AgIAABkAAAAAAAAAAAAqwCkAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-10-04T12:37:20.712Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 1,
+              "Title": "DisciplineEdit.cshtml",
+              "DocumentMoniker": "C:\\Users\\ISABELLA\\Practica2-ArquiSoftware\\GYMPT\\Pages\\DisciplineEdit.cshtml",
+              "RelativeDocumentMoniker": "GYMPT\\Pages\\DisciplineEdit.cshtml",
+              "ToolTip": "C:\\Users\\ISABELLA\\Practica2-ArquiSoftware\\GYMPT\\Pages\\DisciplineEdit.cshtml",
+              "RelativeToolTip": "GYMPT\\Pages\\DisciplineEdit.cshtml",
+              "ViewState": "AgIAABoAAAAAAAAAAAAqwCwAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-10-04T01:15:16.218Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Disciplines.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\ISABELLA\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Disciplines.cshtml.cs",
+              "RelativeDocumentMoniker": "GYMPT\\Pages\\Disciplines.cshtml.cs",
+              "ToolTip": "C:\\Users\\ISABELLA\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Disciplines.cshtml.cs",
+              "RelativeToolTip": "GYMPT\\Pages\\Disciplines.cshtml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-29T16:00:51.787Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
               "Title": "DisciplineEdit.cshtml.cs",
               "DocumentMoniker": "C:\\Users\\ISABELLA\\Practica2-ArquiSoftware\\GYMPT\\Pages\\DisciplineEdit.cshtml.cs",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\DisciplineEdit.cshtml.cs",
@@ -323,8 +344,7 @@
               "RelativeToolTip": "GYMPT\\Pages\\DisciplineEdit.cshtml.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-04T01:15:16.345Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-04T01:15:16.345Z"
             },
             {
               "$type": "Document",
@@ -336,8 +356,7 @@
               "RelativeToolTip": "GYMPT\\Pages\\DisciplineCreate.cshtml.cs",
               "ViewState": "AgIAAA0AAAAAAAAAAAAzwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-04T12:35:41.89Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-04T12:35:41.89Z"
             },
             {
               "$type": "Document",
@@ -349,8 +368,7 @@
               "RelativeToolTip": "GYMPT\\Pages\\DisciplineDelete.cshtml.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-04T01:15:17.022Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-04T01:15:17.022Z"
             },
             {
               "$type": "Document",
@@ -362,21 +380,7 @@
               "RelativeToolTip": "GYMPT\\Data\\Contracts\\IRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-04T12:34:47.675Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "DisciplineEdit.cshtml",
-              "DocumentMoniker": "C:\\Users\\ISABELLA\\Practica2-ArquiSoftware\\GYMPT\\Pages\\DisciplineEdit.cshtml",
-              "RelativeDocumentMoniker": "GYMPT\\Pages\\DisciplineEdit.cshtml",
-              "ToolTip": "C:\\Users\\ISABELLA\\Practica2-ArquiSoftware\\GYMPT\\Pages\\DisciplineEdit.cshtml",
-              "RelativeToolTip": "GYMPT\\Pages\\DisciplineEdit.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACcAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-10-04T01:15:16.218Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-04T12:34:47.675Z"
             },
             {
               "$type": "Document",
@@ -388,8 +392,7 @@
               "RelativeToolTip": "GYMPT\\Pages\\Error.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-10-04T02:28:02.823Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-04T02:28:02.823Z"
             },
             {
               "$type": "Document",
@@ -401,8 +404,7 @@
               "RelativeToolTip": "GYMPT\\Pages\\Details.cshtml",
               "ViewState": "AgIAACoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-10-04T01:15:16.468Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-04T01:15:16.468Z"
             },
             {
               "$type": "Document",
@@ -414,8 +416,7 @@
               "RelativeToolTip": "GYMPT\\Program.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-28T16:03:44.842Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-28T16:03:44.842Z"
             },
             {
               "$type": "Document",
@@ -427,8 +428,7 @@
               "RelativeToolTip": "..\\..\\..\\Program Files\\dotnet\\sdk\\9.0.305\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.PackageDependencyResolution.targets",
               "ViewState": "AgIAAP0AAAAAAAAAAAAUwAkBAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003801|",
-              "WhenOpened": "2025-10-04T02:10:33.798Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-04T02:10:33.798Z"
             },
             {
               "$type": "Document",
@@ -440,8 +440,7 @@
               "RelativeToolTip": "GYMPT\\Pages\\Error.cshtml.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-04T02:00:23.985Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-04T02:00:23.985Z"
             },
             {
               "$type": "Document",
@@ -453,8 +452,7 @@
               "RelativeToolTip": "GYMPT\\Pages\\Details.cshtml.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-04T01:15:16.585Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-04T01:15:16.585Z"
             },
             {
               "$type": "Document",
@@ -466,8 +464,7 @@
               "RelativeToolTip": "GYMPT\\Data\\Repositories\\UserRepository.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAAAuwAwAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-29T15:23:32.218Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-29T15:23:32.218Z"
             },
             {
               "$type": "Document",
@@ -479,8 +476,7 @@
               "RelativeToolTip": "GYMPT\\Models\\DetailUser.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-29T16:00:13.356Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-29T16:00:13.356Z"
             },
             {
               "$type": "Document",
@@ -492,8 +488,7 @@
               "RelativeToolTip": "GYMPT\\Models\\ClientData.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-30T15:29:04.161Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-30T15:29:04.161Z"
             },
             {
               "$type": "Document",
@@ -505,8 +500,7 @@
               "RelativeToolTip": "GYMPT\\Models\\UserData.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-30T15:59:39.737Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-30T15:59:39.737Z"
             },
             {
               "$type": "Document",
@@ -518,8 +512,7 @@
               "RelativeToolTip": "GYMPT\\Data\\Contracts\\IInstructorRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-30T15:42:33.351Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-30T15:42:33.351Z"
             },
             {
               "$type": "Document",
@@ -531,8 +524,7 @@
               "RelativeToolTip": "GYMPT\\Data\\Repositories\\InstructorRepository.cs",
               "ViewState": "AgIAAEEAAAAAAAAAAAAowFQAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-30T16:11:25.397Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-30T16:11:25.397Z"
             },
             {
               "$type": "Document",
@@ -544,8 +536,7 @@
               "RelativeToolTip": "GYMPT\\Domain\\Instructor.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAAAcAAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-30T14:36:27.295Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-30T14:36:27.295Z"
             },
             {
               "$type": "Document",
@@ -557,8 +548,7 @@
               "RelativeToolTip": "GYMPT\\Domain\\User.cs",
               "ViewState": "AgIAAAQAAAAAAAAAAAAowAUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-29T16:02:12.603Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-29T16:02:12.603Z"
             },
             {
               "$type": "Document",
@@ -570,8 +560,7 @@
               "RelativeToolTip": "GYMPT\\Domain\\Client.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-30T14:32:34.377Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-30T14:32:34.377Z"
             },
             {
               "$type": "Document",
@@ -583,8 +572,7 @@
               "RelativeToolTip": "GYMPT\\Factories\\InstructorCreator.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-30T14:56:37.401Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-30T14:56:37.401Z"
             },
             {
               "$type": "Document",
@@ -596,8 +584,7 @@
               "RelativeToolTip": "GYMPT\\Factories\\ClientCreator.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-30T14:55:48.176Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-30T14:55:48.176Z"
             },
             {
               "$type": "Document",
@@ -609,8 +596,7 @@
               "RelativeToolTip": "GYMPT\\Factories\\UserCreator.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-30T14:54:22.433Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-30T14:54:22.433Z"
             },
             {
               "$type": "Document",
@@ -622,33 +608,19 @@
               "RelativeToolTip": "GYMPT\\Data\\GYMPTContext.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-04T01:15:15.396Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-04T01:15:15.396Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 34,
-              "Title": "GYMPT",
+              "Title": "GYMPT.csproj",
               "DocumentMoniker": "C:\\Users\\ISABELLA\\Practica2-ArquiSoftware\\GYMPT\\GYMPT.csproj",
               "RelativeDocumentMoniker": "GYMPT\\GYMPT.csproj",
               "ToolTip": "C:\\Users\\ISABELLA\\Practica2-ArquiSoftware\\GYMPT\\GYMPT.csproj",
               "RelativeToolTip": "GYMPT\\GYMPT.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-10-03T18:15:06.062Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+              "WhenOpened": "2025-10-03T18:15:06.062Z"
             },
             {
               "$type": "Document",
@@ -660,8 +632,7 @@
               "RelativeToolTip": "..\\..\\..\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
               "ViewState": "AgIAAAUVAAAAAAAAAAAUwBAVAAALAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003801|",
-              "WhenOpened": "2025-10-03T18:08:58.055Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-03T18:08:58.055Z"
             },
             {
               "$type": "Document",
@@ -673,8 +644,7 @@
               "RelativeToolTip": "GYMPT\\appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAClAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-09-28T16:01:19.375Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-28T16:01:19.375Z"
             },
             {
               "$type": "Document",
@@ -686,8 +656,7 @@
               "RelativeToolTip": "GYMPT\\Models\\Membership.cs",
               "ViewState": "AgIAAAUAAAAAAAAAAAAxwBIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-28T16:21:49.347Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-28T16:21:49.347Z"
             },
             {
               "$type": "Document",
@@ -699,8 +668,7 @@
               "RelativeToolTip": "GYMPT\\Pages\\Shared\\_Layout.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAABNAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-10-03T18:04:12.016Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-03T18:04:12.016Z"
             },
             {
               "$type": "Document",
@@ -712,12 +680,7 @@
               "RelativeToolTip": "GYMPT\\Pages\\Memberships.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-09-28T16:38:55.21Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+              "WhenOpened": "2025-09-28T16:38:55.21Z"
             },
             {
               "$type": "Document",
@@ -729,8 +692,7 @@
               "RelativeToolTip": "GYMPT\\Models\\InstructorData.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-30T15:30:01.608Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-30T15:30:01.608Z"
             },
             {
               "$type": "Document",
@@ -742,8 +704,7 @@
               "RelativeToolTip": "GYMPT\\Pages\\Users.cshtml",
               "ViewState": "AgIAACEAAAAAAAAAAAAAADYAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-09-30T16:13:21.264Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-30T16:13:21.264Z"
             },
             {
               "$type": "Document",
@@ -755,8 +716,7 @@
               "RelativeToolTip": "GYMPT\\Pages\\Users.cshtml.cs",
               "ViewState": "AgIAAAgAAAAAAAAAAAAAwBIAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-29T16:02:01.56Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-29T16:02:01.56Z"
             },
             {
               "$type": "Document",
@@ -768,8 +728,7 @@
               "RelativeToolTip": "GYMPT\\Models\\LogEntry.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-28T18:44:18.508Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-28T18:44:18.508Z"
             },
             {
               "$type": "Document",
@@ -781,8 +740,7 @@
               "RelativeToolTip": "GYMPT\\Data\\Repositories\\MembershipRepository.cs",
               "ViewState": "AgIAAAUAAAAAAAAAAAAowB4AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-28T16:32:04.449Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-28T16:32:04.449Z"
             },
             {
               "$type": "Document",
@@ -794,8 +752,7 @@
               "RelativeToolTip": "GYMPT\\Data\\Repositories\\ClientRepository.cs",
               "ViewState": "AgIAAD8AAAAAAAAAAAAowFUAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-30T15:52:33.274Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-30T15:52:33.274Z"
             },
             {
               "$type": "Document",
@@ -807,8 +764,7 @@
               "RelativeToolTip": "GYMPT\\Services\\RemoteLoggerSingleton.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAG0AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-28T18:46:14.65Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-28T18:46:14.65Z"
             },
             {
               "$type": "Document",
@@ -820,8 +776,7 @@
               "RelativeToolTip": "GYMPT\\Pages\\ClientDetails.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACcAAAAGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-09-30T16:14:22.042Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-30T16:14:22.042Z"
             },
             {
               "$type": "Document",
@@ -833,8 +788,7 @@
               "RelativeToolTip": "GYMPT\\Pages\\Memberships.cshtml.cs",
               "ViewState": "AgIAAAQAAAAAAAAAAAAgwBMAAAA3AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-28T16:39:01.086Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-28T16:39:01.086Z"
             },
             {
               "$type": "Document",
@@ -846,8 +800,7 @@
               "RelativeToolTip": "GYMPT\\Pages\\ClientDetails.cshtml.cs",
               "ViewState": "AgIAAAgAAAAAAAAAAAAxwBUAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-30T16:14:27.912Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-30T16:14:27.912Z"
             },
             {
               "$type": "Document",
@@ -859,8 +812,7 @@
               "RelativeToolTip": "GYMPT\\Pages\\DetailsUsers.cshtml.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-29T15:57:05.204Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-29T15:57:05.204Z"
             },
             {
               "$type": "Document",
@@ -872,8 +824,7 @@
               "RelativeToolTip": "GYMPT\\Pages\\InstructorDetails.cshtml.cs",
               "ViewState": "AgIAAAgAAAAAAAAAAAAxwBUAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-30T16:17:34.77Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-30T16:17:34.77Z"
             },
             {
               "$type": "Document",
@@ -885,8 +836,7 @@
               "RelativeToolTip": "GYMPT\\Data\\Contracts\\IClientRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAALAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-30T15:41:13.547Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-30T15:41:13.547Z"
             },
             {
               "$type": "Document",
@@ -898,8 +848,7 @@
               "RelativeToolTip": "GYMPT\\Mappers\\UserMapper.cs",
               "ViewState": "AgIAAA0AAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-30T20:25:44.441Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-30T20:25:44.441Z"
             },
             {
               "$type": "Document",
@@ -911,8 +860,7 @@
               "RelativeToolTip": "GYMPT\\Pages\\InstructorDetails.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACQAAAAGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-09-30T16:17:23.122Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-30T16:17:23.122Z"
             },
             {
               "$type": "Document",
@@ -924,8 +872,11 @@
               "RelativeToolTip": "GYMPT\\Pages\\DetailsUsers.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-09-29T15:11:38.941Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-29T15:11:38.941Z"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
             },
             {
               "$type": "Bookmark",
