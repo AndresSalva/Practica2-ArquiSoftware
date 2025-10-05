@@ -1,0 +1,27 @@
+﻿@page "{id:int}"
+@model GYMPT.Pages.DisciplineDelete
+@{
+    ViewData["Title"] = "Eliminar Disciplina";
+}
+
+<h2>Eliminar Disciplina</h2>
+
+@if (Model.Discipline != null)
+{
+    <form method="post">
+        <input type="hidden" asp-for="Discipline.Id" />
+
+        <p>
+            ¿Seguro que quieres eliminar la disciplina
+            <strong>@Model.Discipline.Name</strong>?
+        </p>
+
+        <button type="submit" class="btn btn-danger">Eliminar</button>
+        <a asp-page="/Disciplines/Index" class="btn btn-secondary">Cancelar</a>
+    </form>
+}
+else
+{
+    <p class="text-danger">No se encontró la disciplina.</p>
+    <a asp-page="/Disciplines/Index" class="btn btn-secondary">Volver al listado</a>
+}

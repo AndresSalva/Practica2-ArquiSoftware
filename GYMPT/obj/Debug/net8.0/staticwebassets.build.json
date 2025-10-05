@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "BOkS/u9/hvY2s4NK+cM/Nta2EaMoWjiEdj6EnZYa7y4=",
+  "Hash": "nW9ZlFkFflivkWZp1lxT+UghhGpCKFZs8xuCbqX4+18=",
   "Source": "GYMPT",
   "BasePath": "_content/GYMPT",
   "Mode": "Default",
@@ -31,8 +31,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "ScopedCss",
       "AssetTraitValue": "ApplicationBundle",
-      "Fingerprint": "0dovo9wmuv",
-      "Integrity": "FOnCcQ/cqDsfM666PkMAqSlTNUSl/yYhAd+RvwzTV5c=",
+      "Fingerprint": "jea7i66fz0",
+      "Integrity": "a3pFUCmvQblF1/mVJXJsSexwxtllyg/zvsnepK3HGuU=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "/home/gehre/Desktop/arq-soft/Practica2-ArquiSoftware/GYMPT/obj/Debug/net8.0/scopedcss/bundle/GYMPT.styles.css"
@@ -52,8 +52,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "ScopedCss",
       "AssetTraitValue": "ProjectBundle",
-      "Fingerprint": "0dovo9wmuv",
-      "Integrity": "FOnCcQ/cqDsfM666PkMAqSlTNUSl/yYhAd+RvwzTV5c=",
+      "Fingerprint": "jea7i66fz0",
+      "Integrity": "a3pFUCmvQblF1/mVJXJsSexwxtllyg/zvsnepK3HGuU=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "/home/gehre/Desktop/arq-soft/Practica2-ArquiSoftware/GYMPT/obj/Debug/net8.0/scopedcss/projectbundle/GYMPT.bundle.scp.css"
@@ -1485,96 +1485,6 @@
       ]
     },
     {
-      "Route": "GYMPT.0dovo9wmuv.bundle.scp.css",
-      "AssetFile": "/home/gehre/Desktop/arq-soft/Practica2-ArquiSoftware/GYMPT/obj/Debug/net8.0/scopedcss/projectbundle/GYMPT.bundle.scp.css",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "1074"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"FOnCcQ/cqDsfM666PkMAqSlTNUSl/yYhAd+RvwzTV5c=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Thu, 02 Oct 2025 00:27:28 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "0dovo9wmuv"
-        },
-        {
-          "Name": "label",
-          "Value": "GYMPT.bundle.scp.css"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-FOnCcQ/cqDsfM666PkMAqSlTNUSl/yYhAd+RvwzTV5c="
-        }
-      ]
-    },
-    {
-      "Route": "GYMPT.0dovo9wmuv.styles.css",
-      "AssetFile": "/home/gehre/Desktop/arq-soft/Practica2-ArquiSoftware/GYMPT/obj/Debug/net8.0/scopedcss/bundle/GYMPT.styles.css",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "1074"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"FOnCcQ/cqDsfM666PkMAqSlTNUSl/yYhAd+RvwzTV5c=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Thu, 02 Oct 2025 00:27:28 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "0dovo9wmuv"
-        },
-        {
-          "Name": "label",
-          "Value": "GYMPT.styles.css"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-FOnCcQ/cqDsfM666PkMAqSlTNUSl/yYhAd+RvwzTV5c="
-        }
-      ]
-    },
-    {
       "Route": "GYMPT.bundle.scp.css",
       "AssetFile": "/home/gehre/Desktop/arq-soft/Practica2-ArquiSoftware/GYMPT/obj/Debug/net8.0/scopedcss/projectbundle/GYMPT.bundle.scp.css",
       "Selectors": [],
@@ -1593,11 +1503,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"FOnCcQ/cqDsfM666PkMAqSlTNUSl/yYhAd+RvwzTV5c=\""
+          "Value": "\"a3pFUCmvQblF1/mVJXJsSexwxtllyg/zvsnepK3HGuU=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 02 Oct 2025 00:27:28 GMT"
+          "Value": "Sun, 05 Oct 2025 19:34:33 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1607,7 +1517,97 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-FOnCcQ/cqDsfM666PkMAqSlTNUSl/yYhAd+RvwzTV5c="
+          "Value": "sha256-a3pFUCmvQblF1/mVJXJsSexwxtllyg/zvsnepK3HGuU="
+        }
+      ]
+    },
+    {
+      "Route": "GYMPT.jea7i66fz0.bundle.scp.css",
+      "AssetFile": "/home/gehre/Desktop/arq-soft/Practica2-ArquiSoftware/GYMPT/obj/Debug/net8.0/scopedcss/projectbundle/GYMPT.bundle.scp.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1074"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"a3pFUCmvQblF1/mVJXJsSexwxtllyg/zvsnepK3HGuU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 05 Oct 2025 19:34:33 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "jea7i66fz0"
+        },
+        {
+          "Name": "label",
+          "Value": "GYMPT.bundle.scp.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-a3pFUCmvQblF1/mVJXJsSexwxtllyg/zvsnepK3HGuU="
+        }
+      ]
+    },
+    {
+      "Route": "GYMPT.jea7i66fz0.styles.css",
+      "AssetFile": "/home/gehre/Desktop/arq-soft/Practica2-ArquiSoftware/GYMPT/obj/Debug/net8.0/scopedcss/bundle/GYMPT.styles.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1074"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"a3pFUCmvQblF1/mVJXJsSexwxtllyg/zvsnepK3HGuU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 05 Oct 2025 19:34:33 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "jea7i66fz0"
+        },
+        {
+          "Name": "label",
+          "Value": "GYMPT.styles.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-a3pFUCmvQblF1/mVJXJsSexwxtllyg/zvsnepK3HGuU="
         }
       ]
     },
@@ -1630,11 +1630,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"FOnCcQ/cqDsfM666PkMAqSlTNUSl/yYhAd+RvwzTV5c=\""
+          "Value": "\"a3pFUCmvQblF1/mVJXJsSexwxtllyg/zvsnepK3HGuU=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 02 Oct 2025 00:27:28 GMT"
+          "Value": "Sun, 05 Oct 2025 19:34:33 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1644,7 +1644,7 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-FOnCcQ/cqDsfM666PkMAqSlTNUSl/yYhAd+RvwzTV5c="
+          "Value": "sha256-a3pFUCmvQblF1/mVJXJsSexwxtllyg/zvsnepK3HGuU="
         }
       ]
     },

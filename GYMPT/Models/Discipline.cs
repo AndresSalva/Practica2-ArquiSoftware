@@ -3,13 +3,13 @@ namespace GYMPT.Models
 {
     public class Discipline
     {
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         public DateTime CreatedAt { get; set; }
 
         public DateTime? LastModification { get; set; }
 
-        public bool? IsActive { get; set; }
+        public bool IsActive { get; set; } = true;
 
         public string? Name { get; set; }
 

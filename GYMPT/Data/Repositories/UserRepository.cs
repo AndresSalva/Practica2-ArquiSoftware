@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace GYMPT.Data.Repositories
 {
-    public class UserRepository : IRepository<UserData>
-    {
-        private readonly string _connectionString;
+   public class UserRepository : IRepository<UserData>
+   {
+       private readonly string _connectionString;
 
         public UserRepository(IConfiguration configuration)
         {

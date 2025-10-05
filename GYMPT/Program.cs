@@ -2,27 +2,33 @@
 using GYMPT.Data.Repositories;
 using GYMPT.Models;
 using GYMPT.Services;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using GYMPT.Data;
+using GYMPT.Domain;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// --- SECCI�N DE CONFIGURACI�N DE SERVICIOS ---
+// --- Configuracion servicios ---
 
 builder.Services.AddRazorPages();
+builder.Services.AddDbContext<GYMPTContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("GYMPTContext") ?? throw new InvalidOperationException("Connection string 'GYMPTContext' not found.")));
 
-// 1. ELIMINAMOS TODA LA CONFIGURACI�N DE SUPABASE
-// La conexi�n a la base de datos ahora la gestiona cada repositorio
-// leyendo la cadena de conexi�n que pusimos en appsettings.json.
+// Configuramos la inyección de dependencias para los repositorios
+builder.Services.AddScoped<UserRepository>();
+builder.Services.AddScoped<ClientRepository>();
+builder.Services.AddScoped<InstructorRepository>();
+builder.Services.AddScoped<DisciplineRepository>();
+builder.Services.AddScoped<MembershipRepository>();
+builder.Services.AddScoped<DetailUserRepository>();
 
-// 2. REGISTRAMOS LOS REPOSITORIOS (Esto no cambia)
-// La aplicaci�n sigue funcionando con las interfaces, por lo que esta parte
-// no necesita saber que hemos cambiado de Supabase a PostgreSQL. �Esa es la ventaja de una buena arquitectura!
+builder.Services.AddScoped<IRepository<UserData>, UserRepository>();
+//builder.Services.AddScoped<IRepository<ClientData>, ClientRepository>();
+//builder.Services.AddScoped<IRepository<InstructorData>, InstructorRepository>();
+builder.Services.AddScoped<IRepository<Discipline>, DisciplineRepository>();
 builder.Services.AddScoped<IRepository<Membership>, MembershipRepository>();
 builder.Services.AddScoped<IRepository<DetailsUser>, DetailUserRepository>();
-builder.Services.AddScoped<IRepository<UserData>, UserRepository>();
-builder.Services.AddScoped<IRepository<Discipline>, DisciplineRepository>();
-builder.Services.AddScoped<MembershipRepository>();
-builder.Services.AddScoped<IClientRepository, ClientRepository>();
-builder.Services.AddScoped<IInstructorRepository, InstructorRepository>();
 
 // --- FIN DE LA SECCI�N DE CONFIGURACI�N ---
 
