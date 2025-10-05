@@ -2,7 +2,7 @@
 # Compilación
 ./GYMPT/bin/
 ./GYMPT/obj/
-
+./.vs/
 # Archivos temporales y de cache de compilación
 *.cache
 *.editorconfig

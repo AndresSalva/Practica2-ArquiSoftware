@@ -39,7 +39,6 @@ var app = builder.Build();
 // toda la configuraci�n de la aplicaci�n para que pueda encontrar la cadena de conexi�n.
 RemoteLoggerSingleton.Configure(app.Configuration);
 
-// El resto del archivo no necesita cambios.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");

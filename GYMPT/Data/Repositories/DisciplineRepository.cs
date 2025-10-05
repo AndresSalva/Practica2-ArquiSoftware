@@ -98,7 +98,7 @@ namespace GYMPT.Data.Repositories
                 var affectedRows = await conn.ExecuteAsync(sql, entity);
                 if (affectedRows == 0)
                 {
-                    throw new KeyNotFoundException("No se encontró una disciplina con el ID proporcionado para actualizar.");
+                    throw new KeyNotFoundException("No se encontrï¿½ una disciplina con el ID proporcionado para actualizar.");
                 }
             }
             return entity;
