@@ -9,18 +9,18 @@ namespace GYMPT.Data.Repositories
 {
     public class InstructorRepository : IUserRelationRepository<Instructor>
     {
-        private readonly string _connectionString;
+        private readonly string _postgresString;
 
         public InstructorRepository(IConfiguration configuration)
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection");
+            _postgresString = ConnectionStringSingleton.Instance.PostgresConnection;
         }
 
         public async Task<Instructor> GetByIdAsync(int id)
         {
             await RemoteLoggerSingleton.Instance.LogInfo($"Buscando instructor con ID: {id} en PostgreSQL con Dapper.");
 
-            using (var conn = new NpgsqlConnection(_connectionString))
+            using (var conn = new NpgsqlConnection(_postgresString))
             {
                 var userSql =
                 @"SELECT id, created_at AS CreatedAt, name, first_lastname AS FirstLastname, second_lastname AS SecondLastname,
@@ -54,7 +54,7 @@ namespace GYMPT.Data.Repositories
         public async Task CreateAsync(Instructor instructor)
         {
             await RemoteLoggerSingleton.Instance.LogInfo($"Iniciando creación de un nuevo instructor: {instructor.Name} con Dapper.");
-            using (var conn = new NpgsqlConnection(_connectionString))
+            using (var conn = new NpgsqlConnection(_postgresString))
             {
                 await conn.OpenAsync();
                 using (var transaction = await conn.BeginTransactionAsync())
@@ -90,7 +90,7 @@ namespace GYMPT.Data.Repositories
 
         public async Task<bool> UpdateAsync(Instructor instructor)
         {
-            using var conn = new NpgsqlConnection(_connectionString);
+            using var conn = new NpgsqlConnection(_postgresString);
 
             var sql =
             @"UPDATE instructor

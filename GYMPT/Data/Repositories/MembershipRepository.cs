@@ -8,11 +8,11 @@ namespace GYMPT.Data.Repositories
 {
     public class MembershipRepository : IRepository<Membership>
     {
-        private readonly string _connectionString;
+        private readonly string _postgresString;
 
-        public MembershipRepository(IConfiguration configuration)
+        public MembershipRepository()
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection");
+            _postgresString = ConnectionStringSingleton.Instance.PostgresConnection;
         }
 
         public async Task<Membership> CreateAsync(Membership entity)
@@ -22,7 +22,7 @@ namespace GYMPT.Data.Repositories
             @"INSERT INTO membership (name, price, description, monthly_sessions, created_at, last_modification, is_active)
             VALUES (@Name, @Price, @Description, @MonthlySessions, @CreatedAt, @LastModification, @IsActive)
             RETURNING id;";
-            using (var conn = new NpgsqlConnection(_connectionString))
+            using (var conn = new NpgsqlConnection(_postgresString))
             {
                 entity.CreatedAt = DateTime.UtcNow;
                 entity.LastModification = DateTime.UtcNow;
@@ -41,7 +41,7 @@ namespace GYMPT.Data.Repositories
             @"UPDATE membership
             SET is_active = false, last_modification = @LastModification
             WHERE id = @Id;";
-            using (var conn = new NpgsqlConnection(_connectionString))
+            using (var conn = new NpgsqlConnection(_postgresString))
             {
                 var affectedRows = await conn.ExecuteAsync(sql, new { Id = id, LastModification = DateTime.Now });
                 return affectedRows > 0;
@@ -51,7 +51,7 @@ namespace GYMPT.Data.Repositories
         public async Task<IEnumerable<Membership>> GetAllAsync()
         {
             await RemoteLoggerSingleton.Instance.LogInfo("Solicitando la lista completa de membresías con Dapper.");
-            using (var conn = new NpgsqlConnection(_connectionString))
+            using (var conn = new NpgsqlConnection(_postgresString))
             {
                 var sql =
                 @"SELECT id, name, price, description,
@@ -68,7 +68,7 @@ namespace GYMPT.Data.Repositories
         public async Task<Membership> GetByIdAsync(short id)
         {
             await RemoteLoggerSingleton.Instance.LogInfo($"Solicitando membresía con ID: {id} con Dapper.");
-            using (var conn = new NpgsqlConnection(_connectionString))
+            using (var conn = new NpgsqlConnection(_postgresString))
             {
                 var sql =
                 @"SELECT id, name, price, description,
@@ -93,7 +93,7 @@ namespace GYMPT.Data.Repositories
             monthly_sessions = @MonthlySessions,
             last_modification = @LastModification
             WHERE id = @Id;";
-            using (var conn = new NpgsqlConnection(_connectionString))
+            using (var conn = new NpgsqlConnection(_postgresString))
             {
                 entity.LastModification = DateTime.UtcNow;
 

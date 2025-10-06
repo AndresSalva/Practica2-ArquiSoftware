@@ -8,18 +8,18 @@ namespace GYMPT.Data.Repositories
 {
     public class UserRepository : IRepository<User>
     {
-        private readonly string _connectionString;
+        private readonly string _postgresString;
 
-        public UserRepository(IConfiguration configuration)
+        public UserRepository()
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection");
+            _postgresString = ConnectionStringSingleton.Instance.PostgresConnection;
         }
         public async Task<IEnumerable<User>> GetAllAsync()
         {
             try
             {
                 await RemoteLoggerSingleton.Instance.LogInfo("Solicitando la lista completa de usuarios con Dapper.");
-                using var conn = new NpgsqlConnection(_connectionString);
+                using var conn = new NpgsqlConnection(_postgresString);
                 var sql =
                 @"SELECT id AS Id,
                 created_at AS CreatedAt,
@@ -48,7 +48,7 @@ namespace GYMPT.Data.Repositories
             try
             {
                 await RemoteLoggerSingleton.Instance.LogInfo($"Solicitando usuario con ID: {id} con Dapper.");
-                using var conn = new NpgsqlConnection(_connectionString);
+                using var conn = new NpgsqlConnection(_postgresString);
                 var sql =
                 @"SELECT id AS Id,
                 name AS Name,
@@ -77,7 +77,7 @@ namespace GYMPT.Data.Repositories
             try
             {
                 await RemoteLoggerSingleton.Instance.LogInfo($"Creando un nuevo usuario: {entity.Name} {entity.FirstLastname}");
-                using var conn = new NpgsqlConnection(_connectionString);
+                using var conn = new NpgsqlConnection(_postgresString);
                 var sql =
                 @"INSERT INTO ""user""
                 (name, first_lastname, second_lastname, date_birth, ci, ""role"", created_at, last_modification, is_active)
@@ -103,7 +103,7 @@ namespace GYMPT.Data.Repositories
             try
             {
                 await RemoteLoggerSingleton.Instance.LogInfo($"Actualizando usuario con Id: {entity.Id}");
-                using var conn = new NpgsqlConnection(_connectionString);
+                using var conn = new NpgsqlConnection(_postgresString);
                 var sql =
                 @"UPDATE ""user""
                 SET name = @Name,
@@ -132,7 +132,7 @@ namespace GYMPT.Data.Repositories
             try
             {
                 await RemoteLoggerSingleton.Instance.LogInfo($"Eliminando usuario con Id: {id}");
-                using var conn = new NpgsqlConnection(_connectionString);
+                using var conn = new NpgsqlConnection(_postgresString);
                 var sql = @"UPDATE ""user"" SET is_active = false WHERE id = @Id;";
                 var affected = await conn.ExecuteAsync(sql, new { Id = id });
                 return affected > 0;

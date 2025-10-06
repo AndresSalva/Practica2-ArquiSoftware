@@ -3,16 +3,17 @@ using GYMPT.Data.Contracts;
 using GYMPT.Models;
 using GYMPT.Services;
 using Npgsql;
+using NuGet.Protocol.Plugins;
 
 namespace GYMPT.Data.Repositories
 {
     public class DetailUserRepository : IRepository<DetailsUser>
     {
-        private readonly string _connectionString;
+        private readonly string _postgresString;
 
-        public DetailUserRepository(IConfiguration configuration)
+        public DetailUserRepository()
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection");
+            _postgresString = ConnectionStringSingleton.Instance.PostgresConnection;
         }
 
         public async Task<IEnumerable<DetailsUser>> GetAllAsync()
@@ -20,7 +21,7 @@ namespace GYMPT.Data.Repositories
             try
             {
                 await RemoteLoggerSingleton.Instance.LogInfo("Obteniendo todos los detalles de usuarios.");
-                using var conn = new NpgsqlConnection(_connectionString);
+                using var conn = new NpgsqlConnection(_postgresString);
 
                 var sql =
                 @"SELECT id, 
@@ -50,7 +51,7 @@ namespace GYMPT.Data.Repositories
             try
             {
                 await RemoteLoggerSingleton.Instance.LogInfo($"Obteniendo detalle de usuario con ID: {id}");
-                using var conn = new NpgsqlConnection(_connectionString);
+                using var conn = new NpgsqlConnection(_postgresString);
 
                 var sql =
                 @"SELECT id, 
@@ -80,7 +81,7 @@ namespace GYMPT.Data.Repositories
             {
                 await RemoteLoggerSingleton.Instance.LogInfo($"Creando detalle de usuario: UserId={entity.IdUser}, MembershipId={entity.IdMembership}");
 
-                using var conn = new NpgsqlConnection(_connectionString);
+                using var conn = new NpgsqlConnection(_postgresString);
 
                 // Validar que el usuario existe
                 var userExists = await conn.ExecuteScalarAsync<bool>(
@@ -131,7 +132,7 @@ namespace GYMPT.Data.Repositories
             try
             {
                 await RemoteLoggerSingleton.Instance.LogInfo($"Actualizando detalle de usuario con ID: {entity.Id}");
-                using var conn = new NpgsqlConnection(_connectionString);
+                using var conn = new NpgsqlConnection(_postgresString);
 
                 entity.LastModification = DateTime.UtcNow;
                 entity.SessionsLeft = entity.SessionsLeft < 0 ? 0 : entity.SessionsLeft;
@@ -168,7 +169,7 @@ namespace GYMPT.Data.Repositories
             try
             {
                 await RemoteLoggerSingleton.Instance.LogInfo($"Eliminando detalle de usuario con ID: {id}");
-                using var conn = new NpgsqlConnection(_connectionString);
+                using var conn = new NpgsqlConnection(_postgresString);
 
                 var sql = @"UPDATE details_user SET is_active = false WHERE id = @Id;";
                 var affected = await conn.ExecuteAsync(sql, new { Id = id });

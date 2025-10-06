@@ -8,11 +8,11 @@ namespace GYMPT.Data.Repositories
 {
     public class DisciplineRepository : IRepository<Discipline>
     {
-        private readonly string _connectionString;
+        private readonly string _postgresString;
 
-        public DisciplineRepository(IConfiguration configuration)
+        public DisciplineRepository()
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection");
+            _postgresString = ConnectionStringSingleton.Instance.PostgresConnection;
         }
 
         public async Task<Discipline> CreateAsync(Discipline entity)
@@ -24,7 +24,7 @@ namespace GYMPT.Data.Repositories
                 VALUES (@Name, @IdInstructor, @StartTime, @EndTime, @CreatedAt, @LastModification, @IsActive)
                 RETURNING id;";
 
-            using (var conn = new NpgsqlConnection(_connectionString))
+            using (var conn = new NpgsqlConnection(_postgresString))
             {
                 entity.CreatedAt = DateTime.UtcNow;
                 entity.LastModification = DateTime.UtcNow;
@@ -50,7 +50,7 @@ namespace GYMPT.Data.Repositories
                         FROM discipline 
                         WHERE id = @Id;";
 
-            using (var conn = new NpgsqlConnection(_connectionString))
+            using (var conn = new NpgsqlConnection(_postgresString))
             {
                 return await conn.QueryFirstOrDefaultAsync<Discipline>(sql, new { Id = id });
             }
@@ -69,7 +69,7 @@ namespace GYMPT.Data.Repositories
                                is_active as IsActive 
                         FROM discipline;";
 
-            using (var conn = new NpgsqlConnection(_connectionString))
+            using (var conn = new NpgsqlConnection(_postgresString))
             {
                 return await conn.QueryAsync<Discipline>(sql);
             }
@@ -87,7 +87,7 @@ namespace GYMPT.Data.Repositories
                             is_active = @IsActive
                         WHERE id = @Id;";
 
-            using (var conn = new NpgsqlConnection(_connectionString))
+            using (var conn = new NpgsqlConnection(_postgresString))
             {
                 entity.LastModification = DateTime.UtcNow;
 
@@ -107,7 +107,7 @@ namespace GYMPT.Data.Repositories
                 SET is_active = false, last_modification = @LastModification 
                 WHERE id = @Id;";
 
-            using (var conn = new NpgsqlConnection(_connectionString))
+            using (var conn = new NpgsqlConnection(_postgresString))
             {
                 var affectedRows = await conn.ExecuteAsync(sql, new { Id = id, LastModification = DateTime.UtcNow });
                 return affectedRows > 0;

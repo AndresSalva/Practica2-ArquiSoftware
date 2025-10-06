@@ -9,18 +9,18 @@ namespace GYMPT.Data.Repositories
 {
     public class ClientRepository : IUserRelationRepository<Client>
     {
-        private readonly string _connectionString;
+        private readonly string _postgresString;
 
-        public ClientRepository(IConfiguration configuration)
+        public ClientRepository()
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection");
+            _postgresString = ConnectionStringSingleton.Instance.PostgresConnection;
         }
 
         public async Task<Client> GetByIdAsync(int id)
         {
             await RemoteLoggerSingleton.Instance.LogInfo($"Buscando cliente con ID: {id} en PostgreSQL con Dapper.");
 
-            using (var conn = new NpgsqlConnection(_connectionString))
+            using (var conn = new NpgsqlConnection(_postgresString))
             {
                 var userSql = "SELECT id, created_at AS CreatedAt, name, first_lastname AS FirstLastname, second_lastname AS SecondLastname, date_birth as DateBirth, ci, role FROM \"user\" WHERE id = @Id";
                 var baseUser = await conn.QuerySingleOrDefaultAsync<User>(userSql, new { Id = id });
@@ -52,7 +52,7 @@ namespace GYMPT.Data.Repositories
         public async Task CreateAsync(Client client)
         {
             await RemoteLoggerSingleton.Instance.LogInfo($"Iniciando creación de un nuevo cliente: {client.Name} con Dapper.");
-            using (var conn = new NpgsqlConnection(_connectionString))
+            using (var conn = new NpgsqlConnection(_postgresString))
             {
                 await conn.OpenAsync();
                 using (var transaction = await conn.BeginTransactionAsync())
@@ -88,7 +88,7 @@ namespace GYMPT.Data.Repositories
 
         public async Task<bool> UpdateAsync(Client client)
         {
-            using var conn = new NpgsqlConnection(_connectionString);
+            using var conn = new NpgsqlConnection(_postgresString);
 
             var sql = @"UPDATE client
                 SET fitness_level = @FitnessLevel,

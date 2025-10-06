@@ -35,7 +35,7 @@ var app = builder.Build();
 // 3. CONFIGURAMOS NUESTRO LOGGER ADAPTADO
 // En lugar de Initialize, llamamos a nuestro nuevo m�todo Configure y le pasamos
 // toda la configuraci�n de la aplicaci�n para que pueda encontrar la cadena de conexi�n.
-RemoteLoggerSingleton.Configure(app.Configuration);
+RemoteLoggerSingleton.Configure();
 
 if (!app.Environment.IsDevelopment())
 {

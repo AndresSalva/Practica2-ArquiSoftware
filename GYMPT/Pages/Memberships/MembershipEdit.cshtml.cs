@@ -42,7 +42,7 @@ namespace GYMPT.Pages.Memberships
 
             await _repo.UpdateAsync(Membership);
 
-            return RedirectToPage("Memberships/Membership");
+            return RedirectToPage("/Memberships/Membership");
         }
     }
 }

@@ -15,12 +15,12 @@ namespace GYMPT.Services
         private static readonly object _lock = new object();
 
         // El logger ahora guardará la cadena de conexión
-        private string _connectionString;
+        private string _postgresString;
 
         private RemoteLoggerSingleton() { }
 
         // El método de configuración ahora recibe IConfiguration para leer el appsettings.json
-        public static void Configure(IConfiguration configuration)
+        public static void Configure()
         {
             if (_instance == null)
             {
@@ -29,7 +29,7 @@ namespace GYMPT.Services
                     if (_instance == null)
                     {
                         _instance = new RemoteLoggerSingleton();
-                        _instance._connectionString = configuration.GetConnectionString("DefaultConnection");
+                        _instance._postgresString = ConnectionStringSingleton.Instance.PostgresConnection;
                     }
                 }
             }
@@ -53,7 +53,7 @@ namespace GYMPT.Services
 
         private async Task Log(string level, string message)
         {
-            if (string.IsNullOrEmpty(_connectionString))
+            if (string.IsNullOrEmpty(_postgresString))
             {
                 Console.WriteLine("ADVERTENCIA: El logger no tiene una cadena de conexión. El log se perderá.");
                 return;
@@ -61,7 +61,7 @@ namespace GYMPT.Services
 
             try
             {
-                using (var conn = new NpgsqlConnection(_connectionString))
+                using (var conn = new NpgsqlConnection(_postgresString))
                 {
                     var machineName = Environment.MachineName;
                     var logEntry = new LogEntry
