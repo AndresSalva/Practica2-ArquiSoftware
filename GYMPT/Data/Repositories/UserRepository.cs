@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace GYMPT.Data.Repositories
 {
-    public class UserRepository : IRepository<UserData>
+    public class UserRepository : IUserRepository
     {
         private readonly string _connectionString;
 

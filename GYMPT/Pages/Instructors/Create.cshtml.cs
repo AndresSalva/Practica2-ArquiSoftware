@@ -29,7 +29,7 @@ namespace GYMPT.Pages.Instructors
             // Esto crea el User + Instructor en una sola transacción
             await _instructorRepo.CreateAsync(Instructor);
 
-            return RedirectToPage("/Users/Users");
+            return RedirectToPage("/Users");
         }
     }
 }

@@ -29,7 +29,7 @@ namespace GYMPT.Pages.Clients
             // Esto crea el User + Client en una sola transacción
             await _clientRepo.CreateAsync(Client);
 
-            return RedirectToPage("/Users/Users");
+            return RedirectToPage("/Users");
         }
     }
 }

@@ -5,32 +5,33 @@ using GYMPT.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// --- SECCIÓN DE CONFIGURACIÓN DE SERVICIOS ---
+// --- SECCIï¿½N DE CONFIGURACIï¿½N DE SERVICIOS ---
 
 builder.Services.AddRazorPages();
 
-// 1. ELIMINAMOS TODA LA CONFIGURACIÓN DE SUPABASE
-// La conexión a la base de datos ahora la gestiona cada repositorio
-// leyendo la cadena de conexión que pusimos en appsettings.json.
+// 1. ELIMINAMOS TODA LA CONFIGURACIï¿½N DE SUPABASE
+// La conexiï¿½n a la base de datos ahora la gestiona cada repositorio
+// leyendo la cadena de conexiï¿½n que pusimos en appsettings.json.
 
 // 2. REGISTRAMOS LOS REPOSITORIOS (Esto no cambia)
-// La aplicación sigue funcionando con las interfaces, por lo que esta parte
-// no necesita saber que hemos cambiado de Supabase a PostgreSQL. ¡Esa es la ventaja de una buena arquitectura!
+// La aplicaciï¿½n sigue funcionando con las interfaces, por lo que esta parte
+// no necesita saber que hemos cambiado de Supabase a PostgreSQL. ï¿½Esa es la ventaja de una buena arquitectura!
 builder.Services.AddScoped<IRepository<Membership>, MembershipRepository>();
 builder.Services.AddScoped<IRepository<DetailsUser>, DetailUserRepository>();
 builder.Services.AddScoped<IRepository<UserData>, UserRepository>();
 builder.Services.AddScoped<IRepository<Discipline>, DisciplineRepository>();
 
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IClientRepository, ClientRepository>();
 builder.Services.AddScoped<IInstructorRepository, InstructorRepository>();
 
-// --- FIN DE LA SECCIÓN DE CONFIGURACIÓN ---
+// --- FIN DE LA SECCIï¿½N DE CONFIGURACIï¿½N ---
 
 var app = builder.Build();
 
 // 3. CONFIGURAMOS NUESTRO LOGGER ADAPTADO
-// En lugar de Initialize, llamamos a nuestro nuevo método Configure y le pasamos
-// toda la configuración de la aplicación para que pueda encontrar la cadena de conexión.
+// En lugar de Initialize, llamamos a nuestro nuevo mï¿½todo Configure y le pasamos
+// toda la configuraciï¿½n de la aplicaciï¿½n para que pueda encontrar la cadena de conexiï¿½n.
 RemoteLoggerSingleton.Configure(app.Configuration);
 
 // El resto del archivo no necesita cambios.

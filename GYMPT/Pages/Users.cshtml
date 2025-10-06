@@ -44,18 +44,19 @@
                         <span class="badge bg-secondary">@user.Role</span>
                     }
                 </td>
+
                 <td>
                     @if (user.Role == "Client")
                     {
                         <a class="btn btn-sm btn-info" asp-page="/ClientDetails" asp-route-id="@user.Id">Ver</a>
                         <a class="btn btn-sm btn-warning" asp-page="/EditClient" asp-route-id="@user.Id">Editar</a>
-                        <a class="btn btn-sm btn-danger" asp-page="/DeleteUser" asp-route-id="@user.Id">Eliminar</a>
+                        <a class="btn btn-sm btn-danger" asp-page="Users/DeleteUser" asp-route-id="@user.Id">Eliminar</a>
                     }
                     else if (user.Role == "Instructor")
                     {
                         <a class="btn btn-sm btn-info" asp-page="/InstructorDetails" asp-route-id="@user.Id">Ver</a>
                         <a class="btn btn-sm btn-warning" asp-page="/EditInstructor" asp-route-id="@user.Id">Editar</a>
-                        <a class="btn btn-sm btn-danger" asp-page="/DeleteUser" asp-route-id="@user.Id">Eliminar</a>
+                        <a class="btn btn-sm btn-danger" asp-page="Users/DeleteUser" asp-route-id="@user.Id">Eliminar</a>
                     }
                 </td>
             </tr>
