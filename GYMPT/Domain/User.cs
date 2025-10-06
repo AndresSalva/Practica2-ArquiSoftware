@@ -39,6 +39,7 @@ namespace GYMPT.Domain
         protected User()
         {
             IsActive = true;
+            CreatedAt = DateTime.UtcNow;
         }
     }
 }

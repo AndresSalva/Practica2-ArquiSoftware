@@ -1,9 +1,7 @@
 using GYMPT.Data.Contracts;
 using GYMPT.Domain;
-using GYMPT.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Threading.Tasks;
 
 namespace GYMPT.Pages.Instructors
 {
@@ -24,13 +22,25 @@ namespace GYMPT.Pages.Instructors
 
         public async Task<IActionResult> OnGetAsync()
         {
-            if (Id == 0) return RedirectToPage("/Users");
+            Console.WriteLine($"[DEBUG] Valor recibido de Id: {Id}");
+
+            if (Id == 0)
+            {
+                Console.WriteLine("[DEBUG] Id = 0, redirigiendo a /Users");
+                return RedirectToPage("/Users");
+            }
 
             Instructor = await _instructorRepo.GetByIdAsync(Id);
-            if (Instructor == null) return RedirectToPage("/Users");
+            if (Instructor == null)
+            {
+                Console.WriteLine($"[DEBUG] No se encontró instructor con id {Id}");
+                return RedirectToPage("/Users");
+            }
 
+            Console.WriteLine($"[DEBUG] Instructor encontrado: {Instructor.Name}");
             return Page();
         }
+
 
         public async Task<IActionResult> OnPostAsync()
         {
