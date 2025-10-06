@@ -2,11 +2,7 @@
 using GYMPT.Data.Contracts;
 using GYMPT.Models;
 using GYMPT.Services;
-using Microsoft.Extensions.Configuration;
 using Npgsql;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace GYMPT.Data.Repositories
 {
@@ -33,13 +29,13 @@ namespace GYMPT.Data.Repositories
                 entity.LastModification = DateTime.UtcNow;
                 entity.IsActive = true;
 
-                var newId = await conn.QuerySingleAsync<long>(sql, entity);
+                var newId = await conn.QuerySingleAsync<short>(sql, entity);
                 entity.Id = newId;
             }
             return entity;
         }
 
-        public async Task<bool> DeleteByIdAsync(long id)
+        public async Task<bool> DeleteByIdAsync(short id)
         {
             await RemoteLoggerSingleton.Instance.LogInfo($"Dando de baja membresía con ID: {id}.");
             var sql = @"UPDATE ""Membership"" SET ""isActive"" = false, last_modification = @LastModification WHERE id = @Id;";
@@ -61,7 +57,7 @@ namespace GYMPT.Data.Repositories
             }
         }
 
-        public async Task<Membership> GetByIdAsync(long id)
+        public async Task<Membership> GetByIdAsync(short id)
         {
             await RemoteLoggerSingleton.Instance.LogInfo($"Solicitando membresía con ID: {id} con Dapper.");
             using (var conn = new NpgsqlConnection(_connectionString))

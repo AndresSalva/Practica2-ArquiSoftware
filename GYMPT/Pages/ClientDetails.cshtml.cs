@@ -1,24 +1,23 @@
-using GYMPT.Data.Contracts;
-using GYMPT.Domain;
+using GYMPT.Models;
+using GYMPT.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Threading.Tasks;
 
 namespace GYMPT.Pages
 {
     public class ClientDetailsModel : PageModel
     {
-        private readonly IClientRepository _clientRepo;
+        private readonly ClientRepository _clientRepo;
 
         public Client Client { get; set; }
 
-        public ClientDetailsModel(IClientRepository clientRepo)
+        public ClientDetailsModel(ClientRepository clientRepo)
         {
             _clientRepo = clientRepo;
         }
 
 
-        public async Task<IActionResult> OnGetAsync(long id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
    
             Client = await _clientRepo.GetByIdAsync(id);

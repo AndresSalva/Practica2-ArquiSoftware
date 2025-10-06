@@ -2,11 +2,7 @@ using Dapper;
 using GYMPT.Data.Contracts;
 using GYMPT.Models;
 using GYMPT.Services;
-using Microsoft.Extensions.Configuration;
 using Npgsql;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace GYMPT.Data.Repositories
 {
@@ -34,7 +30,7 @@ namespace GYMPT.Data.Repositories
                 entity.LastModification = DateTime.UtcNow;
                 entity.IsActive = true;
 
-                var newId = await conn.QuerySingleAsync<int>(sql, entity);
+                var newId = await conn.QuerySingleAsync<short>(sql, entity);
                 entity.Id = newId;
             }
             return entity;

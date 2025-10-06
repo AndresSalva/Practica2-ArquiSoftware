@@ -66,7 +66,7 @@ namespace GYMPT.Services
                     var machineName = Environment.MachineName;
                     var logEntry = new LogEntry
                     {
-                        Timestamp = DateTime.UtcNow,
+                        CreatedAt = DateTime.UtcNow,
                         Level = level,
                         Message = message,
                         ClientIdentifier = machineName

@@ -1,5 +1,6 @@
 using GYMPT.Data.Contracts;
-using GYMPT.Domain;
+using GYMPT.Data.Repositories;
+using GYMPT.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Threading.Tasks;
@@ -8,16 +9,16 @@ namespace GYMPT.Pages
 {
     public class InstructorDetailsModel : PageModel
     {
-        private readonly IInstructorRepository _instructorRepo;
+        private readonly InstructorRepository _instructorRepo;
 
         public Instructor Instructor { get; set; }
 
-        public InstructorDetailsModel(IInstructorRepository instructorRepo)
+        public InstructorDetailsModel(InstructorRepository instructorRepo)
         {
             _instructorRepo = instructorRepo;
         }
 
-        public async Task<IActionResult> OnGetAsync(long id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
  
             Instructor = await _instructorRepo.GetByIdAsync(id);

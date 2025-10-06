@@ -1,8 +1,4 @@
-﻿using GYMPT.Models;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-namespace GYMPT.Data.Contracts
+﻿namespace GYMPT.Data.Contracts
 {
     public interface IRepository<T>
     {

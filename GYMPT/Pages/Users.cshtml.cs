@@ -4,13 +4,13 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace GYMPT.Pages
 {
-    public class UsersModel : PageModel
+    public class Users : PageModel
     {
-        private readonly IRepository<UserData> _repo;
+        private readonly IRepository<User> _repo;
 
-        public IEnumerable<UserData> UserList { get; private set; } = Enumerable.Empty<UserData>();
+        public IEnumerable<User> UserList { get; private set; } = Enumerable.Empty<User>();
 
-        public UsersModel(IRepository<UserData> repo)
+        public Users(IRepository<User> repo)
         {
             _repo = repo;
         }

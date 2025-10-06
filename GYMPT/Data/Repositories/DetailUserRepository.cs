@@ -2,11 +2,7 @@ using Dapper;
 using GYMPT.Data.Contracts;
 using GYMPT.Models;
 using GYMPT.Services;
-using Microsoft.Extensions.Configuration;
 using Npgsql;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace GYMPT.Data.Repositories
 {
@@ -50,7 +46,7 @@ namespace GYMPT.Data.Repositories
             }
         }
 
-        public async Task<DetailsUser> GetByIdAsync(long id)
+        public async Task<DetailsUser> GetByIdAsync(int id)
         {
             try
             {
@@ -119,7 +115,7 @@ namespace GYMPT.Data.Repositories
                     VALUES (@IdUser, @IdMembership, @StartDate, @EndDate, @SessionsLeft, @CreatedAt, @LastModification, @IsActive)
                     RETURNING id;";
 
-                entity.Id = await conn.QuerySingleAsync<long>(sql, entity);
+                entity.Id = await conn.QuerySingleAsync<int>(sql, entity);
 
                 await RemoteLoggerSingleton.Instance.LogInfo($"Detalle de usuario creado exitosamente con ID: {entity.Id}");
 
@@ -168,7 +164,7 @@ namespace GYMPT.Data.Repositories
             }
         }
 
-        public async Task<bool> DeleteByIdAsync(long id)
+        public async Task<bool> DeleteByIdAsync(int id)
         {
             try
             {

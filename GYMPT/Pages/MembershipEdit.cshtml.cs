@@ -1,11 +1,8 @@
-using GYMPT.Data.Contracts;
 using GYMPT.Models;
 using GYMPT.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Configuration; 
 using Npgsql;                             
-using System.Threading.Tasks;
 
 namespace GYMPT.Pages
 {
@@ -46,9 +43,9 @@ namespace GYMPT.Pages
                     {
                         if (await reader.ReadAsync())
                         {
-                            Membership.Id = reader.GetInt32(reader.GetOrdinal("id"));
+                            Membership.Id = reader.GetInt16(reader.GetOrdinal("id"));
                             Membership.Name = reader.GetString(reader.GetOrdinal("name"));
-                            Membership.Price = reader.GetFloat(reader.GetOrdinal("price"));
+                            Membership.Price = reader.GetDecimal(reader.GetOrdinal("price"));
                             Membership.Description = reader.GetString(reader.GetOrdinal("description"));
                             Membership.MonthlySessions = reader.GetInt16(reader.GetOrdinal("monthly_sessions"));
                         }

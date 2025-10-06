@@ -1,4 +1,4 @@
-﻿using GYMPT.Domain;
+﻿using GYMPT.Models;
 
 namespace GYMPT.Factories
 {

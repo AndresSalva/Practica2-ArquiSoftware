@@ -1,11 +1,7 @@
-using GYMPT.Data.Contracts;
 using GYMPT.Data.Repositories;
 using GYMPT.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace GYMPT.Pages
 {
@@ -26,7 +22,7 @@ namespace GYMPT.Pages
             MembershipList = allMemberships.Where(m => m.IsActive == true);
         }
 
-        public async Task<IActionResult> OnPostDeleteAsync(int id)
+        public async Task<IActionResult> OnPostDeleteAsync(short id)
         {
             await _repo.DeleteByIdAsync(id);
             return RedirectToPage();

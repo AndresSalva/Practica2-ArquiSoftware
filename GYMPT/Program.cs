@@ -3,9 +3,7 @@ using GYMPT.Data.Repositories;
 using GYMPT.Models;
 using GYMPT.Services;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using GYMPT.Data;
-using GYMPT.Domain;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,7 +21,7 @@ builder.Services.AddScoped<DisciplineRepository>();
 builder.Services.AddScoped<MembershipRepository>();
 builder.Services.AddScoped<DetailUserRepository>();
 
-builder.Services.AddScoped<IRepository<UserData>, UserRepository>();
+builder.Services.AddScoped<IRepository<User>, UserRepository>();
 //builder.Services.AddScoped<IRepository<ClientData>, ClientRepository>();
 //builder.Services.AddScoped<IRepository<InstructorData>, InstructorRepository>();
 builder.Services.AddScoped<IRepository<Discipline>, DisciplineRepository>();

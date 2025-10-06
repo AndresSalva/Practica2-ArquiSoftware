@@ -2,33 +2,39 @@ using Dapper;
 using GYMPT.Data.Contracts;
 using GYMPT.Models;
 using GYMPT.Services;
-using Microsoft.Extensions.Configuration;
 using Npgsql;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace GYMPT.Data.Repositories
 {
-   public class UserRepository : IRepository<UserData>
-   {
-       private readonly string _connectionString;
+    public class UserRepository : IRepository<User>
+    {
+        private readonly string _connectionString;
 
         public UserRepository(IConfiguration configuration)
         {
             _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
-        public async Task<IEnumerable<UserData>> GetAllAsync()
+        public async Task<IEnumerable<User>> GetAllAsync()
         {
             try
             {
                 await RemoteLoggerSingleton.Instance.LogInfo("Solicitando la lista completa de usuarios con Dapper.");
                 using var conn = new NpgsqlConnection(_connectionString);
-                var sql = @"SELECT id, name, first_lastname AS FirstLastname, second_lastname AS SecondLastname,
-                                   date_birth AS DateBirth, ci AS CI, role AS Role,
-                                   created_at AS CreatedAt, last_modification AS LastModification, ""isActive"" as IsActive
-                            FROM ""User""";
-                return await conn.QueryAsync<UserData>(sql);
+                var sql =
+                @"SELECT id AS Id,
+                created_at AS CreatedAt,
+                last_modification AS LastModification,
+                is_active AS IsActive,
+                name AS Name,
+                first_lastname AS FirstLastname,
+                second_lastname AS SecondLastname,
+                date_birth AS DateBirth,
+                ci AS Ci,
+                role AS Role
+                FROM ""user""
+                WHERE is_active = true;";
+
+                return await conn.QueryAsync<User>(sql);
             }
             catch (Exception ex)
             {
@@ -37,18 +43,26 @@ namespace GYMPT.Data.Repositories
             }
         }
 
-        public async Task<UserData> GetByIdAsync(long id)
+        public async Task<User> GetByIdAsync(int id)
         {
             try
             {
                 await RemoteLoggerSingleton.Instance.LogInfo($"Solicitando usuario con ID: {id} con Dapper.");
                 using var conn = new NpgsqlConnection(_connectionString);
-                var sql = @"SELECT id, name, first_lastname AS FirstLastname, second_lastname AS SecondLastname,
-                                   date_birth AS DateBirth, ci AS CI, role AS Role,
-                                   created_at AS CreatedAt, last_modification AS LastModification, ""isActive"" as IsActive
-                            FROM ""User""
-                            WHERE id = @Id;";
-                return await conn.QuerySingleOrDefaultAsync<UserData>(sql, new { Id = id });
+                var sql =
+                @"SELECT id AS Id,
+                name AS Name,
+                first_lastname AS FirstLastname,
+                second_lastname AS SecondLastname,
+                date_birth AS DateBirth,
+                ci AS Ci,
+                role AS Role,
+                created_at AS CreatedAt,
+                last_modification AS LastModification,
+                is_active as IsActive
+                FROM ""user""
+                WHERE id = @Id AND is_active = true;";
+                return await conn.QuerySingleOrDefaultAsync<User>(sql, new { Id = id });
             }
             catch (Exception ex)
             {
@@ -57,22 +71,23 @@ namespace GYMPT.Data.Repositories
             }
         }
 
-        public async Task<UserData> CreateAsync(UserData entity)
+        public async Task<User> CreateAsync(User entity)
         {
             try
             {
                 await RemoteLoggerSingleton.Instance.LogInfo($"Creando un nuevo usuario: {entity.Name} {entity.FirstLastname}");
                 using var conn = new NpgsqlConnection(_connectionString);
-                var sql = @"INSERT INTO ""User""
-                               (name, first_lastname, second_lastname, date_birth, ci, role, created_at, last_modification, ""isActive"")
-                            VALUES (@Name, @FirstLastname, @SecondLastname, @DateBirth, @CI, @Role, @CreatedAt, @LastModification, @IsActive)
-                            RETURNING id;";
+                var sql =
+                @"INSERT INTO ""user""
+                (name, first_lastname, second_lastname, date_birth, ci, role, created_at, last_modification, is_active)
+                VALUES (@Name, @FirstLastname, @SecondLastname, @DateBirth, @Ci, @Role, @CreatedAt, @LastModification, @IsActive)
+                RETURNING id;";
 
                 entity.CreatedAt = DateTime.UtcNow;
                 entity.LastModification = DateTime.UtcNow;
                 entity.IsActive = true;
 
-                entity.Id = await conn.ExecuteScalarAsync<long>(sql, entity);
+                entity.Id = await conn.ExecuteScalarAsync<int>(sql, entity);
                 return entity;
             }
             catch (Exception ex)
@@ -82,22 +97,23 @@ namespace GYMPT.Data.Repositories
             }
         }
 
-        public async Task<UserData> UpdateAsync(UserData entity)
+        public async Task<User> UpdateAsync(User entity)
         {
             try
             {
                 await RemoteLoggerSingleton.Instance.LogInfo($"Actualizando usuario con Id: {entity.Id}");
                 using var conn = new NpgsqlConnection(_connectionString);
-                var sql = @"UPDATE ""User""
-                            SET name = @Name,
-                                first_lastname = @FirstLastname,
-                                second_lastname = @SecondLastname,
-                                date_birth = @DateBirth,
-                                ci = @CI,
-                                role = @Role,
-                                last_modification = @LastModification,
-                                ""isActive"" = @IsActive
-                            WHERE id = @Id;";
+                var sql =
+                @"UPDATE ""user""
+                SET name = @Name,
+                first_lastname = @FirstLastname,
+                second_lastname = @SecondLastname,
+                date_birth = @DateBirth,
+                ci = @CI,
+                role = @Role,
+                last_modification = @LastModification,
+                is_active = @IsActive
+                WHERE id = @Id;";
 
                 entity.LastModification = DateTime.UtcNow;
                 await conn.ExecuteAsync(sql, entity);
@@ -110,13 +126,13 @@ namespace GYMPT.Data.Repositories
             }
         }
 
-        public async Task<bool> DeleteByIdAsync(long id)
+        public async Task<bool> DeleteByIdAsync(int id)
         {
             try
             {
                 await RemoteLoggerSingleton.Instance.LogInfo($"Eliminando usuario con Id: {id}");
                 using var conn = new NpgsqlConnection(_connectionString);
-                var sql = @"DELETE FROM ""User"" WHERE id = @Id;";
+                var sql = @"UPDATE ""user"" SET is_active = false WHERE id = @Id;";
                 var affected = await conn.ExecuteAsync(sql, new { Id = id });
                 return affected > 0;
             }

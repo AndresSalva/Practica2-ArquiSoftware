@@ -2,10 +2,6 @@ using GYMPT.Data.Repositories;
 using GYMPT.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace GYMPT.Pages
 {
@@ -133,7 +129,7 @@ namespace GYMPT.Pages
             return RedirectToPage();
         }
 
-        public async Task<IActionResult> OnPostDeleteAsync(long id)
+        public async Task<IActionResult> OnPostDeleteAsync(int id)
         {
             try
             {

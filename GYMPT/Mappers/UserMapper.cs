@@ -1,5 +1,4 @@
-﻿using GYMPT.Domain;
-using GYMPT.Models;
+﻿using GYMPT.Models;
 
 namespace GYMPT.Mappers
 {
@@ -7,7 +6,7 @@ namespace GYMPT.Mappers
     public static class UserMapper
     {
 
-        public static T MapToUserDomain<T>(UserData source) where T : User, new()
+        public static T MapToUserDomain<T>(User source) where T : User, new()
         {
             if (source == null)
             {

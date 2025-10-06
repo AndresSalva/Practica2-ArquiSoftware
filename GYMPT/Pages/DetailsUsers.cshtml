@@ -134,8 +134,8 @@
                                 <td>@detail.Id</td>
                                 <td>@detail.IdUser</td>
                                 <td>@detail.IdMembership</td>
-                                <td>@detail.StartDate.ToString("dd/MM/yyyy")</td>
-                                <td>@detail.EndDate.ToString("dd/MM/yyyy")</td>
+                                <td>@detail.StartDate</td>
+                                <td>@detail.EndDate</td>
                                 <td>
                                     <span class="badge bg-info">@detail.SessionsLeft</span>
                                 </td>
@@ -156,8 +156,8 @@
                                                             @detail.Id,
                                                             @detail.IdUser,
                                                             @detail.IdMembership,
-                                                            '@detail.StartDate.ToString("yyyy-MM-dd")',
-                                                            '@detail.EndDate.ToString("yyyy-MM-dd")',
+                                                            @detail.StartDate,
+                                                            @detail.EndDate,
                                                             @detail.SessionsLeft,
                                                             @detail.IsActive.ToString().ToLower())">
                                             <i class="fas fa-edit"></i> Editar

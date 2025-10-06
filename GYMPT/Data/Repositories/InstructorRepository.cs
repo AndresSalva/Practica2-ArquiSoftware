@@ -1,17 +1,13 @@
 ﻿using Dapper;
 using GYMPT.Data.Contracts;
-using GYMPT.Domain;
 using GYMPT.Mappers;
 using GYMPT.Models;
 using GYMPT.Services;
-using Microsoft.Extensions.Configuration;
 using Npgsql;
-using System;
-using System.Threading.Tasks;
 
 namespace GYMPT.Data.Repositories
 {
-    public class InstructorRepository : IInstructorRepository
+    public class InstructorRepository : IUserRelationRepository<Instructor>
     {
         private readonly string _connectionString;
 
@@ -20,25 +16,25 @@ namespace GYMPT.Data.Repositories
             _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
-        public async Task<Instructor> GetByIdAsync(long id)
+        public async Task<Instructor> GetByIdAsync(int id)
         {
             await RemoteLoggerSingleton.Instance.LogInfo($"Buscando instructor con ID: {id} en PostgreSQL con Dapper.");
 
             using (var conn = new NpgsqlConnection(_connectionString))
             {
                 var userSql = "SELECT id, created_at AS CreatedAt, name, first_lastname AS FirstLastname, second_lastname AS SecondLastname, date_birth as DateBirth, \"CI\", role FROM \"User\" WHERE id = @Id";
-                var baseUserData = await conn.QuerySingleOrDefaultAsync<UserData>(userSql, new { Id = id });
+                var baseUser = await conn.QuerySingleOrDefaultAsync<User>(userSql, new { Id = id });
 
-                if (baseUserData == null || baseUserData.Role != "Instructor")
+                if (baseUser == null || baseUser.Role != "Instructor")
                 {
                     await RemoteLoggerSingleton.Instance.LogWarning($"No se encontró un usuario base con ID: {id} y rol 'Instructor'.");
                     return null;
                 }
 
-                var instructor = UserMapper.MapToUserDomain<Instructor>(baseUserData);
+                var instructor = UserMapper.MapToUserDomain<Instructor>(baseUser);
 
                 var detailsSql = "SELECT hire_date AS HireDate, monthly_salary AS MonthlySalary, specialization AS Specialization FROM \"Instructor\" WHERE id_user = @Id";
-                var detailsData = await conn.QuerySingleOrDefaultAsync<InstructorData>(detailsSql, new { Id = id });
+                var detailsData = await conn.QuerySingleOrDefaultAsync<Instructor>(detailsSql, new { Id = id });
 
                 if (detailsData != null)
                 {
@@ -63,7 +59,7 @@ namespace GYMPT.Data.Repositories
                     try
                     {
                         var userSql = "INSERT INTO \"User\" (name, first_lastname, second_lastname, date_birth, \"CI\", role, \"isActive\") VALUES (@Name, @FirstLastname, @SecondLastname, @DateBirth, @CI, @Role, true) RETURNING id;";
-                        var newUserId = await conn.QuerySingleAsync<long>(userSql, instructor, transaction);
+                        var newUserId = await conn.QuerySingleAsync<int>(userSql, instructor, transaction);
 
                         instructor.Id = newUserId;
                         var instructorSql = "INSERT INTO \"Instructor\" (id_user, hire_date, monthly_salary, specialization) VALUES (@Id, @HireDate, @MonthlySalary, @Specialization);";
@@ -80,6 +76,11 @@ namespace GYMPT.Data.Repositories
                     }
                 }
             }
+        }
+
+        public Task<bool> DeleteByIdAsync(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

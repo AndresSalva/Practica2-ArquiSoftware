@@ -2,14 +2,14 @@
 {
     public class DetailsUser
     {
-        public long Id { get; set; }
-        public long IdUser { get; set; }
-        public long IdMembership { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-        public int SessionsLeft { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public DateTime LastModification { get; set; }
-        public bool IsActive { get; set; }
+        public int Id { get; set; }
+        public DateTime? CreatedAt { get; set; }
+        public DateTime? LastModification { get; set; }
+        public bool IsActive { get; set; } = true;
+        public int? IdUser { get; set; }
+        public short? IdMembership { get; set; }
+        public DateOnly? StartDate { get; set; }
+        public DateOnly? EndDate { get; set; }
+        public short? SessionsLeft { get; set; }
     }
 }
