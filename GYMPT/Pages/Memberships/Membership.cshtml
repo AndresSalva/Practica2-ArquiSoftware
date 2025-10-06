@@ -1,12 +1,12 @@
 ﻿@page
-@model GYMPT.Pages.Memberships.MembershipsModel
+@model GYMPT.Pages.Memberships.MembershipModel
 @{
     ViewData["Title"] = "Membresias GYMPT";
 }
 
 <h1>Membresías GYMPT</h1>
 <div class="mb-4">
-    <a asp-page="/MembershipCreate" class="btn btn-primary">
+    <a asp-page="/Memberships/MembershipCreate" class="btn btn-primary">
         <i class="fas fa-plus"></i> Crear Nueva Membresía
     </a>
 </div>
@@ -34,7 +34,7 @@
                     <td>@membership.MonthlySessions</td>
                     <td>@membership.Description</td>
                     <td>
-                        <a asp-page="/MembershipEdit" asp-route-id="@membership.Id" class="btn btn-sm btn-success">Editar</a>
+                        <a asp-page="/Memberships/MembershipEdit" asp-route-id="@membership.Id" class="btn btn-sm btn-success">Editar</a>
                         <form method="post" asp-page-handler="Delete" asp-route-id="@membership.Id" style="display:inline;" onsubmit="return confirm('¿Estás seguro de que quieres eliminar esta membresía?');">
                             <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
                         </form>

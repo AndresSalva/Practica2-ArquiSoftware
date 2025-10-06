@@ -30,7 +30,7 @@ namespace GYMPT.Pages.Memberships
 
             await _repo.CreateAsync(Membership);
 
-            return RedirectToPage("./Memberships");
+            return RedirectToPage("Memberships/Membership");
         }
     }
 }

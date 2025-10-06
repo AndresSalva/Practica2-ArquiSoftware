@@ -5,13 +5,13 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace GYMPT.Pages.Memberships
 {
-    public class MembershipsModel : PageModel
+    public class MembershipModel : PageModel
     {
         private readonly MembershipRepository _repo;
 
         public IEnumerable<Membership> MembershipList { get; private set; } = Enumerable.Empty<Membership>();
 
-        public MembershipsModel(MembershipRepository repo)
+        public MembershipModel(MembershipRepository repo)
         {
             _repo = repo;
         }
