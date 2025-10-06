@@ -10,21 +10,28 @@
     <h1>Detalles de: @Model.Instructor.Name @Model.Instructor.FirstLastname</h1>
     <hr />
     <dl class="row">
-        <dt class="col-sm-3">ID de Usuario</dt>
-        <dd class="col-sm-9">@Model.Instructor.Id</dd>
+        <dt class="col-sm-3">Nombre completo</dt>
+        <dd class="col-sm-9">@Model.Instructor.Name @Model.Instructor.FirstLastname @Model.Instructor.SecondLastname</dd>
 
         <dt class="col-sm-3">Rol</dt>
-        <dd class="col-sm-9"><span class="badge bg-success">@Model.Instructor.Role</span></dd>
+        <dd class="col-sm-9">@Model.Instructor.Role</dd>
+
+        <dt class="col-sm-3">CI</dt>
+        <dd class="col-sm-9">@Model.Instructor.Ci</dd>
+
+        <dt class="col-sm-3">Fecha de Nacimiento</dt>
+        <dd class="col-sm-9">@Model.Instructor.DateBirth?.ToShortDateString()"</dd>
 
         <dt class="col-sm-3">Especialización</dt>
-        <dd class="col-sm-9">@(Model.Instructor.Specialization ?? "No especificada")</dd>
+        <dd class="col-sm-9">@Model.Instructor.Specialization"</dd>
 
         <dt class="col-sm-3">Fecha de Contratación</dt>
-        <dd class="col-sm-9">@(Model.Instructor.HireDate?.ToShortDateString() ?? "No especificada")</dd>
+        <dd class="col-sm-9">@Model.Instructor.HireDate?.ToShortDateString()"</dd>
 
         <dt class="col-sm-3">Sueldo Mensual</dt>
-        <dd class="col-sm-9">@(Model.Instructor.MonthlySalary?.ToString("C") ?? "No especificado")</dd>
+        <dd class="col-sm-9">@Model.Instructor.MonthlySalary?.ToString("C")"</dd>
     </dl>
+
 }
 else
 {
@@ -33,5 +40,5 @@ else
 }
 
 <div class="mt-4">
-    <a asp-page="/Users" class="btn btn-secondary">← Volver a la Lista de Usuarios</a>
+    <a asp-page="/Users/User" class="btn btn-secondary">← Volver a la Lista de Usuarios</a>
 </div>

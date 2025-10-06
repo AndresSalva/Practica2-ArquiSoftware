@@ -22,7 +22,10 @@ namespace GYMPT.Data.Repositories
 
             using (var conn = new NpgsqlConnection(_connectionString))
             {
-                var userSql = "SELECT id, created_at AS CreatedAt, name, first_lastname AS FirstLastname, second_lastname AS SecondLastname, date_birth as DateBirth, \"CI\", role FROM \"User\" WHERE id = @Id";
+                var userSql =
+                @"SELECT id, created_at AS CreatedAt, name, first_lastname AS FirstLastname, second_lastname AS SecondLastname,
+                date_birth as DateBirth, ci, role 
+                FROM ""user"" WHERE id = @Id AND is_active = true;";
                 var baseUser = await conn.QuerySingleOrDefaultAsync<User>(userSql, new { Id = id });
 
                 if (baseUser == null || baseUser.Role != "Instructor")
@@ -33,7 +36,7 @@ namespace GYMPT.Data.Repositories
 
                 var instructor = UserMapper.MapToUserDomain<Instructor>(baseUser);
 
-                var detailsSql = "SELECT hire_date AS HireDate, monthly_salary AS MonthlySalary, specialization AS Specialization FROM \"Instructor\" WHERE id_user = @Id";
+                var detailsSql = "SELECT hire_date AS HireDate, monthly_salary AS MonthlySalary, specialization AS Specialization FROM instructor WHERE id_user = @Id";
                 var detailsData = await conn.QuerySingleOrDefaultAsync<Instructor>(detailsSql, new { Id = id });
 
                 if (detailsData != null)
@@ -58,11 +61,18 @@ namespace GYMPT.Data.Repositories
                 {
                     try
                     {
-                        var userSql = "INSERT INTO \"User\" (name, first_lastname, second_lastname, date_birth, \"CI\", role, \"isActive\") VALUES (@Name, @FirstLastname, @SecondLastname, @DateBirth, @CI, @Role, true) RETURNING id;";
+                        var userSql =
+                        @"INSERT INTO ""user""
+                        (name, first_lastname, second_lastname, date_birth, ci, role)
+                        VALUES (@Name, @FirstLastname, @SecondLastname, @DateBirth, @Ci, @Role)
+                        RETURNING id;";
                         var newUserId = await conn.QuerySingleAsync<int>(userSql, instructor, transaction);
 
                         instructor.Id = newUserId;
-                        var instructorSql = "INSERT INTO \"Instructor\" (id_user, hire_date, monthly_salary, specialization) VALUES (@Id, @HireDate, @MonthlySalary, @Specialization);";
+                        var instructorSql =
+                        @"INSERT INTO instructor
+                        (id_user, hire_date, monthly_salary, specialization)
+                        VALUES (@Id, @HireDate, @MonthlySalary, @Specialization);";
                         await conn.ExecuteAsync(instructorSql, instructor, transaction);
 
                         await transaction.CommitAsync();
@@ -78,9 +88,33 @@ namespace GYMPT.Data.Repositories
             }
         }
 
-        public Task<bool> DeleteByIdAsync(int id)
+        public async Task<bool> UpdateAsync(Instructor instructor)
         {
-            throw new NotImplementedException();
+            using var conn = new NpgsqlConnection(_connectionString);
+
+            var sql =
+            @"UPDATE instructor
+            SET specialization = @Specialization,
+            hire_date = @HireDate,
+            monthly_salary = @MonthlySalary
+            WHERE id_user = @Id;";
+
+            var parameters = new
+            {
+                instructor.Id,
+                LastModification = DateTime.Now,
+                instructor.Specialization,
+                instructor.HireDate,
+                instructor.MonthlySalary
+            };
+
+            var rows = await conn.ExecuteAsync(sql, parameters);
+            return rows > 0;
+        }
+
+        public Task<bool> DeleteAsync(int id)
+        {
+            return Task.FromResult(false);
         }
     }
 }

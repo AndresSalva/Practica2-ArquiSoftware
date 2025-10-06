@@ -1,0 +1,25 @@
+﻿@page "{id:long}"
+@model GYMPT.Pages.Users.DeleteUserModel
+@{
+    ViewData["Title"] = "Eliminar Usuario";
+}
+
+<h1>Eliminar Usuario</h1>
+
+@if (Model.User != null)
+{
+    <div class="alert alert-warning">
+        <strong>Atención:</strong> ¿Está seguro que desea eliminar al usuario <strong>@Model.User.Name @Model.User.FirstLastname @Model.User.SecondLastname</strong>?
+    </div>
+
+    <form method="post">
+        <input type="hidden" asp-for="User.Id" />
+        <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+        <a asp-page="/Users" class="btn btn-secondary">Cancelar</a>
+    </form>
+}
+else
+{
+    <div class="alert alert-danger">Usuario no encontrado.</div>
+    <a asp-page="/Users" class="btn btn-secondary">Volver</a>
+}

@@ -22,7 +22,7 @@ namespace GYMPT.Data.Repositories
 
             using (var conn = new NpgsqlConnection(_connectionString))
             {
-                var userSql = "SELECT id, created_at AS CreatedAt, name, first_lastname AS FirstLastname, second_lastname AS SecondLastname, date_birth as DateBirth, \"CI\", role FROM \"User\" WHERE id = @Id";
+                var userSql = "SELECT id, created_at AS CreatedAt, name, first_lastname AS FirstLastname, second_lastname AS SecondLastname, date_birth as DateBirth, ci, role FROM \"user\" WHERE id = @Id";
                 var baseUser = await conn.QuerySingleOrDefaultAsync<User>(userSql, new { Id = id });
 
                 if (baseUser == null || baseUser.Role != "Client")
@@ -33,7 +33,7 @@ namespace GYMPT.Data.Repositories
 
                 var client = UserMapper.MapToUserDomain<Client>(baseUser);
 
-                var detailsSql = "SELECT fitness_level AS FitnessLevel, initial_weight_kg AS InitialWeightKg, current_weight_kg AS CurrentWeightKg, emergency_contact_phone AS EmergencyContactPhone FROM \"Client\" WHERE id_user = @Id";
+                var detailsSql = "SELECT fitness_level AS FitnessLevel, initial_weight_kg AS InitialWeightKg, current_weight_kg AS CurrentWeightKg, emergency_contact_phone AS EmergencyContactPhone FROM client WHERE id_user = @Id";
                 var detailsData = await conn.QuerySingleOrDefaultAsync<Client>(detailsSql, new { Id = id });
 
                 if (detailsData != null)
@@ -59,11 +59,18 @@ namespace GYMPT.Data.Repositories
                 {
                     try
                     {
-                        var userSql = "INSERT INTO \"User\" (name, first_lastname, second_lastname, date_birth, \"CI\", role, \"isActive\") VALUES (@Name, @FirstLastname, @SecondLastname, @DateBirth, @CI, @Role, true) RETURNING id;";
+                        var userSql =
+                        @"INSERT INTO ""user""
+                        (name, first_lastname, second_lastname, date_birth, ci, role)
+                        VALUES (@Name, @FirstLastname, @SecondLastname, @DateBirth, @CI, @Role)
+                        RETURNING id;";
                         var newUserId = await conn.QuerySingleAsync<int>(userSql, client, transaction);
 
                         client.IdUser = newUserId;
-                        var clientSql = "INSERT INTO \"Client\" (id_user, fitness_level, initial_weight_kg, current_weight_kg, emergency_contact_phone) VALUES (@Id, @FitnessLevel, @InitialWeightKg, @CurrentWeightKg, @EmergencyContactPhone);";
+                        var clientSql =
+                        @"INSERT INTO client
+                        (id_user, fitness_level, initial_weight_kg, current_weight_kg, emergency_contact_phone)
+                        VALUES (@IdUser, @FitnessLevel, @InitialWeightKg, @CurrentWeightKg, @EmergencyContactPhone);";
                         await conn.ExecuteAsync(clientSql, client, transaction);
 
                         await transaction.CommitAsync();
@@ -79,9 +86,34 @@ namespace GYMPT.Data.Repositories
             }
         }
 
-        public Task<bool> DeleteByIdAsync(int id)
+        public async Task<bool> UpdateAsync(Client client)
         {
-            throw new NotImplementedException();
+            using var conn = new NpgsqlConnection(_connectionString);
+
+            var sql = @"UPDATE client
+                SET fitness_level = @FitnessLevel,
+                initial_weight_kg = @InitialWeightKg,
+                current_weight_kg = @CurrentWeightKg,
+                emergency_contact_phone = @EmergencyContactPhone
+                WHERE id_user = @Id;";
+
+            var parameters = new
+            {
+                client.Id,
+                LastModification = DateTime.Now,
+                client.FitnessLevel,
+                client.InitialWeightKg,
+                client.CurrentWeightKg,
+                client.EmergencyContactPhone
+            };
+
+            var rows = await conn.ExecuteAsync(sql, parameters);
+            return rows > 0;
+        }
+
+        public Task<bool> DeleteAsync(int id)
+        {
+            return Task.FromResult(false);
         }
     }
 }

@@ -30,7 +30,7 @@ namespace GYMPT.Data.Repositories
                 second_lastname AS SecondLastname,
                 date_birth AS DateBirth,
                 ci AS Ci,
-                role AS Role
+                ""role"" AS Role
                 FROM ""user""
                 WHERE is_active = true;";
 
@@ -56,13 +56,14 @@ namespace GYMPT.Data.Repositories
                 second_lastname AS SecondLastname,
                 date_birth AS DateBirth,
                 ci AS Ci,
-                role AS Role,
+                ""role"" AS Role,
                 created_at AS CreatedAt,
                 last_modification AS LastModification,
                 is_active as IsActive
                 FROM ""user""
                 WHERE id = @Id AND is_active = true;";
-                return await conn.QuerySingleOrDefaultAsync<User>(sql, new { Id = id });
+                var resp = await conn.QuerySingleOrDefaultAsync<User>(sql, new { Id = id });
+                return resp;
             }
             catch (Exception ex)
             {
@@ -79,7 +80,7 @@ namespace GYMPT.Data.Repositories
                 using var conn = new NpgsqlConnection(_connectionString);
                 var sql =
                 @"INSERT INTO ""user""
-                (name, first_lastname, second_lastname, date_birth, ci, role, created_at, last_modification, is_active)
+                (name, first_lastname, second_lastname, date_birth, ci, ""role"", created_at, last_modification, is_active)
                 VALUES (@Name, @FirstLastname, @SecondLastname, @DateBirth, @Ci, @Role, @CreatedAt, @LastModification, @IsActive)
                 RETURNING id;";
 
@@ -110,7 +111,7 @@ namespace GYMPT.Data.Repositories
                 second_lastname = @SecondLastname,
                 date_birth = @DateBirth,
                 ci = @CI,
-                role = @Role,
+                ""role"" = @Role,
                 last_modification = @LastModification,
                 is_active = @IsActive
                 WHERE id = @Id;";

@@ -10,7 +10,7 @@
         public string? FirstLastname { get; set; }
         public string? SecondLastname { get; set; }
         public DateTime? DateBirth { get; set; }
-        public string? CI { get; set; }
+        public string? Ci { get; set; }
         public string? Role { get; set; }
     }
 }

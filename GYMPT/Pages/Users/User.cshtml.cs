@@ -1,16 +1,17 @@
 using GYMPT.Data.Contracts;
+using GYMPT.Data.Repositories;
 using GYMPT.Models;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace GYMPT.Pages
+namespace GYMPT.Pages.Users
 {
-    public class Users : PageModel
+    public class UserModel : PageModel
     {
-        private readonly IRepository<User> _repo;
+        private readonly UserRepository _repo;
 
         public IEnumerable<User> UserList { get; private set; } = Enumerable.Empty<User>();
 
-        public Users(IRepository<User> repo)
+        public UserModel(UserRepository repo)
         {
             _repo = repo;
         }

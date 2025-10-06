@@ -23,7 +23,7 @@ namespace GYMPT.Mappers
             destination.FirstLastname = source.FirstLastname;
             destination.SecondLastname = source.SecondLastname;
             destination.DateBirth = source.DateBirth;
-            destination.CI = source.CI;
+            destination.Ci = source.Ci;
             destination.Role = source.Role;
 
             return destination;
