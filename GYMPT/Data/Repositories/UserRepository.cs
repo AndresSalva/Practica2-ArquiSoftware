@@ -97,14 +97,14 @@ namespace GYMPT.Data.Repositories
 
             var sql = @"UPDATE ""User"" 
                         SET name = @Name,
-                        first_lastname = @FirstLastname,
-                        second_lastname = @SecondLastname,
-                        ""isActive"" = @IsActive,
-                        role = @Role,
-                        ""CI"" = @CI,
-                        last_modification = @LastModification
-
+                            first_lastname = @FirstLastname,
+                            second_lastname = @SecondLastname,
+                            date_birth = @DateBirth,
+                            ""CI"" = @CI,
+                            ""isActive"" = @IsActive,
+                            last_modification = @LastModification
                         WHERE id = @Id;";
+
 
             var parameters = new
             {
@@ -112,11 +112,12 @@ namespace GYMPT.Data.Repositories
                 user.Name,
                 user.FirstLastname,
                 user.SecondLastname,
-                user.IsActive,
-                user.Role,
+                user.DateBirth,
                 user.CI,
+                IsActive = user.IsActive ?? true,
                 LastModification = DateTime.Now
             };
+
 
             var rows = await conn.ExecuteAsync(sql, parameters);
             return rows > 0;

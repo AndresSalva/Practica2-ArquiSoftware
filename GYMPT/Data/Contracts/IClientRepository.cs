@@ -7,5 +7,6 @@ namespace GYMPT.Data.Contracts
     {
         Task<Client> GetByIdAsync(long id);
         Task CreateAsync(Client client);
+        Task<bool> UpdateAsync(Client client);
     }
 }

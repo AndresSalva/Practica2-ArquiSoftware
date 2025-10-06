@@ -1,0 +1,35 @@
+﻿@page "{id:long}"
+@model GYMPT.Pages.Users.EditUserModel
+@{
+    ViewData["Title"] = "Editar Usuario";
+}
+
+<h1>Editar Usuario: @Model.User.Name</h1>
+
+<form method="post">
+    <input type="hidden" asp-for="User.Id" /> 
+
+    <div class="mb-3">
+        <label class="form-label">Nombre</label>
+        <input asp-for="User.Name" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Apellido Paterno</label>
+        <input asp-for="User.FirstLastname" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Apellido Materno</label>
+        <input asp-for="User.SecondLastname" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">CI</label>
+        <input asp-for="User.CI" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Fecha de Nacimiento</label>
+        <input asp-for="User.DateBirth" type="date" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Guardar y Continuar</button>
+    <a asp-page="/Users" class="btn btn-secondary">Cancelar</a>
+</form>

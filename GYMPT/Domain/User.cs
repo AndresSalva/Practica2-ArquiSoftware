@@ -35,5 +35,10 @@ namespace GYMPT.Domain
 
         [Column("role")]
         public string? Role { get; set; }
+
+        protected User()
+        {
+            IsActive = true;
+        }
     }
 }

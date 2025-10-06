@@ -82,5 +82,45 @@ namespace GYMPT.Data.Repositories
                 }
             }
         }
+
+        public async Task<bool> UpdateAsync(Client client)
+        {
+            using var conn = new NpgsqlConnection(_connectionString);
+
+            var sql = @"UPDATE ""User"" 
+                SET name = @Name,
+                    first_lastname = @FirstLastname,
+                    second_lastname = @SecondLastname,
+                    date_birth = @DateBirth,
+                    ""CI"" = @CI,
+                    last_modification = @LastModification
+                WHERE id = @Id;
+
+                UPDATE ""Client""
+                SET fitness_level = @FitnessLevel,
+                    initial_weight_kg = @InitialWeightKg,
+                    current_weight_kg = @CurrentWeightKg,
+                    emergency_contact_phone = @EmergencyContactPhone
+                WHERE id_user = @Id;";
+
+            var parameters = new
+            {
+                client.Id,
+                client.Name,
+                client.FirstLastname,
+                client.SecondLastname,
+                client.DateBirth,
+                client.CI,
+                LastModification = DateTime.Now,
+                client.FitnessLevel,
+                client.InitialWeightKg,
+                client.CurrentWeightKg,
+                client.EmergencyContactPhone
+            };
+
+            var rows = await conn.ExecuteAsync(sql, parameters);
+            return rows > 0;
+        }
+
     }
 }

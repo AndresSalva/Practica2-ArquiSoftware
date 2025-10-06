@@ -81,5 +81,41 @@ namespace GYMPT.Data.Repositories
                 }
             }
         }
+        public async Task<bool> UpdateAsync(Instructor instructor)
+        {
+            using var conn = new NpgsqlConnection(_connectionString);
+
+            var sql = @"UPDATE ""User""
+                SET name = @Name,
+                    first_lastname = @FirstLastname,
+                    second_lastname = @SecondLastname,
+                    date_birth = @DateBirth,
+                    ""CI"" = @CI,
+                    last_modification = @LastModification
+                WHERE id = @Id;
+
+                UPDATE ""Instructor""
+                SET specialization = @Specialization,
+                    hire_date = @HireDate,
+                    monthly_salary = @MonthlySalary
+                WHERE id_user = @Id;";
+
+            var parameters = new
+            {
+                instructor.Id,
+                instructor.Name,
+                instructor.FirstLastname,
+                instructor.SecondLastname,
+                instructor.DateBirth,
+                instructor.CI,
+                LastModification = DateTime.Now,
+                instructor.Specialization,
+                instructor.HireDate,
+                instructor.MonthlySalary
+            };
+
+            var rows = await conn.ExecuteAsync(sql, parameters);
+            return rows > 0;
+        }
     }
 }

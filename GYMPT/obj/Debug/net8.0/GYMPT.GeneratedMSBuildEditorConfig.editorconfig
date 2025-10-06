@@ -28,6 +28,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2xpZW50c1xDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/ASUS/Desktop/CARPETA MAESTRA/materias/12vo semestre/Arquitectura del software/Practica2-ArquiSoftware/Practica2-ArquiSoftware/GYMPT/Pages/Clients/EditClient.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2xpZW50c1xFZGl0Q2xpZW50LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/ASUS/Desktop/CARPETA MAESTRA/materias/12vo semestre/Arquitectura del software/Practica2-ArquiSoftware/Practica2-ArquiSoftware/GYMPT/Pages/DetailsUsers.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGV0YWlsc1VzZXJzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -52,6 +56,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5zdHJ1Y3RvcnNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/ASUS/Desktop/CARPETA MAESTRA/materias/12vo semestre/Arquitectura del software/Practica2-ArquiSoftware/Practica2-ArquiSoftware/GYMPT/Pages/Instructors/EditInstructor.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5zdHJ1Y3RvcnNcRWRpdEluc3RydWN0b3IuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/ASUS/Desktop/CARPETA MAESTRA/materias/12vo semestre/Arquitectura del software/Practica2-ArquiSoftware/Practica2-ArquiSoftware/GYMPT/Pages/Memberships.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWVtYmVyc2hpcHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -74,6 +82,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/ASUS/Desktop/CARPETA MAESTRA/materias/12vo semestre/Arquitectura del software/Practica2-ArquiSoftware/Practica2-ArquiSoftware/GYMPT/Pages/Users/DeleteUser.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcRGVsZXRlVXNlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/Desktop/CARPETA MAESTRA/materias/12vo semestre/Arquitectura del software/Practica2-ArquiSoftware/Practica2-ArquiSoftware/GYMPT/Pages/Users/EditUser.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcRWRpdFVzZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/ASUS/Desktop/CARPETA MAESTRA/materias/12vo semestre/Arquitectura del software/Practica2-ArquiSoftware/Practica2-ArquiSoftware/GYMPT/Pages/_ViewImports.cshtml]
