@@ -18,11 +18,10 @@ namespace GYMPT.Data.Repositories
         public async Task<Membership> CreateAsync(Membership entity)
         {
             await RemoteLoggerSingleton.Instance.LogInfo($"Creando nueva membresía: {entity.Name}, con ID: {entity.Id}");
-            var sql = @"
-                INSERT INTO ""Membership"" (name, price, description, monthly_sessions, created_at, last_modification, ""isActive"")
-                VALUES (@Name, @Price, @Description, @MonthlySessions, @CreatedAt, @LastModification, @IsActive)
-                RETURNING id;";
-
+            var sql =
+            @"INSERT INTO membership (name, price, description, monthly_sessions, created_at, last_modification, is_active)
+            VALUES (@Name, @Price, @Description, @MonthlySessions, @CreatedAt, @LastModification, @IsActive)
+            RETURNING id;";
             using (var conn = new NpgsqlConnection(_connectionString))
             {
                 entity.CreatedAt = DateTime.UtcNow;
@@ -38,11 +37,13 @@ namespace GYMPT.Data.Repositories
         public async Task<bool> DeleteByIdAsync(short id)
         {
             await RemoteLoggerSingleton.Instance.LogInfo($"Dando de baja membresía con ID: {id}.");
-            var sql = @"UPDATE ""Membership"" SET ""isActive"" = false, last_modification = @LastModification WHERE id = @Id;";
-
+            var sql =
+            @"UPDATE membership
+            SET is_active = false, last_modification = @LastModification
+            WHERE id = @Id;";
             using (var conn = new NpgsqlConnection(_connectionString))
             {
-                var affectedRows = await conn.ExecuteAsync(sql, new { Id = id, LastModification = DateTime.UtcNow });
+                var affectedRows = await conn.ExecuteAsync(sql, new { Id = id, LastModification = DateTime.Now });
                 return affectedRows > 0;
             }
         }
@@ -52,7 +53,14 @@ namespace GYMPT.Data.Repositories
             await RemoteLoggerSingleton.Instance.LogInfo("Solicitando la lista completa de membresías con Dapper.");
             using (var conn = new NpgsqlConnection(_connectionString))
             {
-                var sql = "SELECT id, name, price, description, monthly_sessions AS MonthlySessions, created_at AS CreatedAt, last_modification AS LastModification, \"isActive\" as IsActive FROM \"Membership\"";
+                var sql =
+                @"SELECT id, name, price, description,
+                monthly_sessions AS MonthlySessions,
+                created_at AS CreatedAt,
+                last_modification AS LastModification,
+                is_active as IsActive
+                FROM membership
+                WHERE is_active = true;";
                 return await conn.QueryAsync<Membership>(sql);
             }
         }
@@ -62,7 +70,14 @@ namespace GYMPT.Data.Repositories
             await RemoteLoggerSingleton.Instance.LogInfo($"Solicitando membresía con ID: {id} con Dapper.");
             using (var conn = new NpgsqlConnection(_connectionString))
             {
-                var sql = "SELECT id, name, price, description, monthly_sessions AS MonthlySessions, created_at AS CreatedAt, last_modification AS LastModification, \"isActive\" as IsActive FROM \"Membership\" WHERE id = @Id";
+                var sql =
+                @"SELECT id, name, price, description,
+                monthly_sessions AS MonthlySessions,
+                created_at AS CreatedAt,
+                last_modification AS LastModification,
+                is_active as IsActive
+                FROM membership
+                WHERE id = @Id";
                 return await conn.QuerySingleOrDefaultAsync<Membership>(sql, new { Id = id });
             }
         }
@@ -70,8 +85,14 @@ namespace GYMPT.Data.Repositories
         public async Task<Membership> UpdateAsync(Membership entity)
         {
             await RemoteLoggerSingleton.Instance.LogInfo($"Actualizando membresía: {entity.Name}, con ID: {entity.Id}.");
-            var sql = @"UPDATE ""Membership""SET name = @Name,price = @Price,description = @Description,monthly_sessions = @MonthlySessions,last_modification = @LastModification,""isActive"" = @IsActive WHERE id = @Id;";
-
+            var sql =
+            @"UPDATE membership
+            SET name = @Name,
+            price = @Price,
+            description = @Description,
+            monthly_sessions = @MonthlySessions,
+            last_modification = @LastModification
+            WHERE id = @Id;";
             using (var conn = new NpgsqlConnection(_connectionString))
             {
                 entity.LastModification = DateTime.UtcNow;

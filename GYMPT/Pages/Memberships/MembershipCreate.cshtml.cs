@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Threading.Tasks;
 
-namespace GYMPT.Pages
+namespace GYMPT.Pages.Memberships
 {
     public class MembershipCreateModel : PageModel
     {

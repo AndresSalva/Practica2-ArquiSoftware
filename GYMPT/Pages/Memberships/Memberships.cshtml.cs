@@ -3,7 +3,7 @@ using GYMPT.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace GYMPT.Pages
+namespace GYMPT.Pages.Memberships
 {
     public class MembershipsModel : PageModel
     {

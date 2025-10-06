@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Npgsql;                             
 
-namespace GYMPT.Pages
+namespace GYMPT.Pages.Memberships
 {
     public class MembershipEditModel : PageModel
     {
@@ -30,8 +30,8 @@ namespace GYMPT.Pages
 
             await using (var conn = new NpgsqlConnection(connectionString))
             {
-                string sql = @"SELECT id, name, price, description, monthly_sessions, ""isActive"" 
-                               FROM ""Membership"" WHERE id = @Id";
+                string sql = @"SELECT id, name, price, description, monthly_sessions, is_active 
+                               FROM membership WHERE id = @Id";
 
                 await using (var cmd = new NpgsqlCommand(sql, conn))
                 {

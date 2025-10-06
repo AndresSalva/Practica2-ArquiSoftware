@@ -68,16 +68,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvSW5zdHJ1Y3RvckRldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/gehre/Desktop/arq-soft/Practica2-ArquiSoftware/GYMPT/Pages/MembershipCreate.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXMvTWVtYmVyc2hpcENyZWF0ZS5jc2h0bWw=
+[/home/gehre/Desktop/arq-soft/Practica2-ArquiSoftware/GYMPT/Pages/Memberships/MembershipCreate.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvTWVtYmVyc2hpcHMvTWVtYmVyc2hpcENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/gehre/Desktop/arq-soft/Practica2-ArquiSoftware/GYMPT/Pages/MembershipEdit.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXMvTWVtYmVyc2hpcEVkaXQuY3NodG1s
+[/home/gehre/Desktop/arq-soft/Practica2-ArquiSoftware/GYMPT/Pages/Memberships/MembershipEdit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvTWVtYmVyc2hpcHMvTWVtYmVyc2hpcEVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/gehre/Desktop/arq-soft/Practica2-ArquiSoftware/GYMPT/Pages/Memberships.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXMvTWVtYmVyc2hpcHMuY3NodG1s
+[/home/gehre/Desktop/arq-soft/Practica2-ArquiSoftware/GYMPT/Pages/Memberships/Memberships.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvTWVtYmVyc2hpcHMvTWVtYmVyc2hpcHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [/home/gehre/Desktop/arq-soft/Practica2-ArquiSoftware/GYMPT/Pages/Privacy.cshtml]
