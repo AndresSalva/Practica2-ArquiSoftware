@@ -1,5 +1,5 @@
 ﻿@page
-@model GYMPT.Pages.DetailsUsersModel
+@model GYMPT.Pages.DetailsUsers.DetailsUsersModel
 @{
     ViewData["Title"] = "Detalles de Usuarios";
 }
@@ -128,14 +128,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var detail in Model.DetailsUserList)
+                        @foreach (Models.DetailsUser detail in Model.DetailsUserList)
                         {
                             <tr>
                                 <td>@detail.Id</td>
                                 <td>@detail.IdUser</td>
                                 <td>@detail.IdMembership</td>
-                                <td>@detail.StartDate</td>
-                                <td>@detail.EndDate</td>
+                                <td>@detail.StartDate.ToString(format: "yyyy-MM-dd")</td>   
+                                <td>@detail.EndDate.ToString(format: "yyyy-MM-dd")</td>
+
                                 <td>
                                     <span class="badge bg-info">@detail.SessionsLeft</span>
                                 </td>
@@ -156,8 +157,8 @@
                                                             @detail.Id,
                                                             @detail.IdUser,
                                                             @detail.IdMembership,
-                                                            @detail.StartDate,
-                                                            @detail.EndDate,
+                                                            '@detail.StartDate.ToString(format: "yyyy-MM-dd")',
+                                                            '@detail.EndDate.ToString(format: "yyyy-MM-dd")',
                                                             @detail.SessionsLeft,
                                                             @detail.IsActive.ToString().ToLower())">
                                             <i class="fas fa-edit"></i> Editar

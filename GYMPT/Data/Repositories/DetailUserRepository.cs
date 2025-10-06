@@ -22,18 +22,17 @@ namespace GYMPT.Data.Repositories
                 await RemoteLoggerSingleton.Instance.LogInfo("Obteniendo todos los detalles de usuarios.");
                 using var conn = new NpgsqlConnection(_connectionString);
 
-                var sql = @"
-                    SELECT 
-                        id, 
-                        id_user AS IdUser, 
-                        id_membership AS IdMembership,
-                        start_date AS StartDate, 
-                        end_date AS EndDate,
-                        sessions_left AS SessionsLeft, 
-                        created_at AS CreatedAt,
-                        last_modification AS LastModification, 
-                        ""isActive"" AS IsActive
-                    FROM ""Details_user"";";
+                var sql =
+                @"SELECT id, 
+                id_user AS IdUser, 
+                id_membership AS IdMembership,
+                start_date AS StartDate, 
+                end_date AS EndDate,
+                sessions_left AS SessionsLeft, 
+                created_at AS CreatedAt,
+                last_modification AS LastModification, 
+                is_active AS IsActive
+                FROM details_user;";
 
                 var result = await conn.QueryAsync<DetailsUser>(sql);
                 await RemoteLoggerSingleton.Instance.LogInfo($"Se encontraron {result?.Count() ?? 0} detalles de usuario.");
@@ -53,19 +52,18 @@ namespace GYMPT.Data.Repositories
                 await RemoteLoggerSingleton.Instance.LogInfo($"Obteniendo detalle de usuario con ID: {id}");
                 using var conn = new NpgsqlConnection(_connectionString);
 
-                var sql = @"
-                    SELECT 
-                        id, 
-                        id_user AS IdUser, 
-                        id_membership AS IdMembership,
-                        start_date AS StartDate, 
-                        end_date AS EndDate,
-                        sessions_left AS SessionsLeft, 
-                        created_at AS CreatedAt,
-                        last_modification AS LastModification, 
-                        ""isActive"" AS IsActive
-                    FROM ""Details_user""
-                    WHERE id = @Id;";
+                var sql =
+                @"SELECT id, 
+                id_user AS IdUser, 
+                id_membership AS IdMembership,
+                start_date AS StartDate, 
+                end_date AS EndDate,
+                sessions_left AS SessionsLeft, 
+                created_at AS CreatedAt,
+                last_modification AS LastModification, 
+                is_active AS IsActive
+                FROM details_user
+                WHERE id = @Id;";
 
                 return await conn.QueryFirstOrDefaultAsync<DetailsUser>(sql, new { Id = id });
             }
@@ -86,7 +84,7 @@ namespace GYMPT.Data.Repositories
 
                 // Validar que el usuario existe
                 var userExists = await conn.ExecuteScalarAsync<bool>(
-                    @"SELECT COUNT(1) FROM ""User"" WHERE id = @UserId AND ""isActive"" = true",
+                    @"SELECT COUNT(1) FROM ""user"" WHERE id = @UserId AND is_active = true",
                     new { UserId = entity.IdUser });
 
                 if (!userExists)
@@ -96,7 +94,7 @@ namespace GYMPT.Data.Repositories
 
                 // Validar que la membres�a existe
                 var membershipExists = await conn.ExecuteScalarAsync<bool>(
-                    @"SELECT COUNT(1) FROM ""Membership"" WHERE id = @MembershipId AND ""isActive"" = true",
+                    @"SELECT COUNT(1) FROM membership WHERE id = @MembershipId AND is_active = true",
                     new { MembershipId = entity.IdMembership });
 
                 if (!membershipExists)
@@ -110,8 +108,8 @@ namespace GYMPT.Data.Repositories
                 entity.SessionsLeft = entity.SessionsLeft < 0 ? 0 : entity.SessionsLeft;
 
                 var sql = @"
-                    INSERT INTO ""Details_user"" 
-                    (id_user, id_membership, start_date, end_date, sessions_left, created_at, last_modification, ""isActive"")
+                    INSERT INTO details_user 
+                    (id_user, id_membership, start_date, end_date, sessions_left, created_at, last_modification, is_active)
                     VALUES (@IdUser, @IdMembership, @StartDate, @EndDate, @SessionsLeft, @CreatedAt, @LastModification, @IsActive)
                     RETURNING id;";
 
@@ -138,16 +136,17 @@ namespace GYMPT.Data.Repositories
                 entity.LastModification = DateTime.UtcNow;
                 entity.SessionsLeft = entity.SessionsLeft < 0 ? 0 : entity.SessionsLeft;
 
-                var sql = @"
-                    UPDATE ""Details_user"" 
-                    SET id_user = @IdUser,
-                        id_membership = @IdMembership,
-                        start_date = @StartDate,
-                        end_date = @EndDate,
-                        sessions_left = @SessionsLeft,
-                        last_modification = @LastModification,
-                        ""isActive"" = @IsActive
-                    WHERE id = @Id;";
+                var sql =
+                @"UPDATE details_user 
+                SET
+                id_user = @IdUser,
+                id_membership = @IdMembership,
+                start_date = @StartDate,
+                end_date = @EndDate,
+                sessions_left = @SessionsLeft,
+                last_modification = @LastModification,
+                is_active = @IsActive
+                WHERE id = @Id;";
 
                 var affectedRows = await conn.ExecuteAsync(sql, entity);
 
@@ -171,7 +170,7 @@ namespace GYMPT.Data.Repositories
                 await RemoteLoggerSingleton.Instance.LogInfo($"Eliminando detalle de usuario con ID: {id}");
                 using var conn = new NpgsqlConnection(_connectionString);
 
-                var sql = @"DELETE FROM ""Details_user"" WHERE id = @Id;";
+                var sql = @"UPDATE details_user SET is_active = false WHERE id = @Id;";
                 var affected = await conn.ExecuteAsync(sql, new { Id = id });
 
                 await RemoteLoggerSingleton.Instance.LogInfo($"Eliminaci�n completada. Filas afectadas: {affected}");
