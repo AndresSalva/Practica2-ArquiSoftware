@@ -1,9 +1,7 @@
-using GYMPT.Data.Contracts;
 using GYMPT.Models;
 using GYMPT.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Threading.Tasks;
 
 namespace GYMPT.Pages.Memberships
 {
