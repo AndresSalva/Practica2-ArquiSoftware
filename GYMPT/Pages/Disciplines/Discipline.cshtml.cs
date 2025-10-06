@@ -1,21 +1,17 @@
-using GYMPT.Data.Contracts;
 using GYMPT.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using GYMPT.Data.Repositories;
 
-namespace GYMPT.Pages
+namespace GYMPT.Pages.Disciplines
 {
-    public class DisciplinesModel : PageModel
+    public class DisciplineModel : PageModel
     {
         private readonly DisciplineRepository _repo;
 
         public IEnumerable<Discipline> DisciplineList { get; private set; } = Enumerable.Empty<Discipline>();
 
-        public DisciplinesModel(DisciplineRepository repo)
+        public DisciplineModel(DisciplineRepository repo)
         {
             _repo = repo;
         }

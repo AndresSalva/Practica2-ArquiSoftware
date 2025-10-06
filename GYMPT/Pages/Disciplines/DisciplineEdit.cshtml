@@ -1,10 +1,10 @@
 ﻿@page "{id:int}"
-@model GYMPT.Pages.DisciplineCreate
+@model GYMPT.Pages.Disciplines.DisciplineEditModel
 @{
-    ViewData["Title"] = "Nueva Disciplina";
+    ViewData["Title"] = "Editar Disciplina";
 }
 
-<h2>Nueva Disciplina</h2>
+<h2>Editar Disciplina</h2>
 
 <!-- Mostrar mensaje de éxito si existe -->
 @if (TempData["Message"] != null)
@@ -15,6 +15,8 @@
 }
 
 <form method="post">
+    <input type="hidden" asp-for="Discipline.Id" />
+
     <div class="mb-3">
         <label asp-for="Discipline.Name" class="form-label"></label>
         <input asp-for="Discipline.Name" class="form-control" />
@@ -39,8 +41,8 @@
         <span asp-validation-for="Discipline.EndTime" class="text-danger"></span>
     </div>
 
-    <button type="submit" class="btn btn-primary">Guardar</button>
-    <a asp-page="/Disciplines/Index" class="btn btn-secondary">Cancelar</a>
+    <button type="submit" class="btn btn-primary">Actualizar</button>
+    <a asp-page="/Disciplines/Discipline" class="btn btn-secondary">Cancelar</a>
 </form>
 
 @section Scripts {

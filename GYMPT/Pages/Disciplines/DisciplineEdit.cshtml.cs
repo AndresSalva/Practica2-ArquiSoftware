@@ -1,20 +1,18 @@
-﻿using GYMPT.Data.Contracts;
-using GYMPT.Models;
+﻿using GYMPT.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Threading.Tasks;
 using GYMPT.Data.Repositories;
 
-namespace GYMPT.Pages
+namespace GYMPT.Pages.Disciplines
 {
-    public class DisciplineEdit : PageModel
+    public class DisciplineEditModel : PageModel
     {
         private readonly DisciplineRepository _repo;
 
         [BindProperty]
         public Discipline Discipline { get; set; } = new();
 
-        public DisciplineEdit(DisciplineRepository repo)
+        public DisciplineEditModel(DisciplineRepository repo)
         {
             _repo = repo;
         }
@@ -25,7 +23,7 @@ namespace GYMPT.Pages
 
             if (Discipline == null)
             {
-                return RedirectToPage("./Disciplines");
+                return RedirectToPage("Disciplines/Discipline");
             }
 
             return Page();
@@ -42,7 +40,7 @@ namespace GYMPT.Pages
 
             TempData["Message"] = $"Disciplina '{Discipline.Name}' actualizada correctamente ✅";
 
-            return RedirectToPage("./Disciplines");
+            return RedirectToPage("Disciplines/Discipline");
         }
     }
 }

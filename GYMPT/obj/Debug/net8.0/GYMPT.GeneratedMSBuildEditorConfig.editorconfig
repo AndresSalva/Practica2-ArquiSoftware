@@ -40,20 +40,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRGV0YWlsc1VzZXJzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/gehre/Desktop/arq-soft/Practica2-ArquiSoftware/GYMPT/Pages/DisciplineCreate.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRGlzY2lwbGluZUNyZWF0ZS5jc2h0bWw=
+[/home/gehre/Desktop/arq-soft/Practica2-ArquiSoftware/GYMPT/Pages/Disciplines/Discipline.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRGlzY2lwbGluZXMvRGlzY2lwbGluZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/gehre/Desktop/arq-soft/Practica2-ArquiSoftware/GYMPT/Pages/DisciplineDelete.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRGlzY2lwbGluZURlbGV0ZS5jc2h0bWw=
+[/home/gehre/Desktop/arq-soft/Practica2-ArquiSoftware/GYMPT/Pages/Disciplines/DisciplineCreate.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRGlzY2lwbGluZXMvRGlzY2lwbGluZUNyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/gehre/Desktop/arq-soft/Practica2-ArquiSoftware/GYMPT/Pages/DisciplineEdit.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRGlzY2lwbGluZUVkaXQuY3NodG1s
+[/home/gehre/Desktop/arq-soft/Practica2-ArquiSoftware/GYMPT/Pages/Disciplines/DisciplineDelete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRGlzY2lwbGluZXMvRGlzY2lwbGluZURlbGV0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/gehre/Desktop/arq-soft/Practica2-ArquiSoftware/GYMPT/Pages/Disciplines.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRGlzY2lwbGluZXMuY3NodG1s
+[/home/gehre/Desktop/arq-soft/Practica2-ArquiSoftware/GYMPT/Pages/Disciplines/DisciplineEdit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRGlzY2lwbGluZXMvRGlzY2lwbGluZUVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [/home/gehre/Desktop/arq-soft/Practica2-ArquiSoftware/GYMPT/Pages/Error.cshtml]

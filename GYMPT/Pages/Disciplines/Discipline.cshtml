@@ -1,5 +1,5 @@
 ﻿@page
-@model GYMPT.Pages.DisciplinesModel
+@model GYMPT.Pages.Disciplines.DisciplineModel
 @{
     ViewData["Title"] = "Disciplinas GYMPT";
 }
@@ -8,7 +8,7 @@
 <p>Lista de disciplinas actualmente registradas en el gimnasio.</p>
 
 <div class="mb-4">
-    <a asp-page="/DisciplineCreate">
+    <a asp-page="/Disciplines/DisciplineCreate">
         <i class="fas fa-plus"></i> Crear Nueva Disciplina
     </a>
 </div>
@@ -34,7 +34,7 @@
                     <td>@discipline.StartTime?.ToString(@"hh\:mm")</td>
                     <td>@discipline.EndTime?.ToString(@"hh\:mm")</td>
                     <td>
-                        <a asp-page="/DisciplineEdit" asp-route-id="@discipline.Id" class="btn btn-sm btn-success">Editar</a>
+                        <a asp-page="/Disciplines/DisciplineEdit" asp-route-id="@discipline.Id" class="btn btn-sm btn-success">Editar</a>
                         <form method="post" asp-page-handler="Delete" asp-route-id="@discipline.Id" style="display:inline;" onsubmit="return confirm('¿Estás seguro de que quieres eliminar esta disciplina?');">
                             <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
                         </form>

@@ -19,7 +19,7 @@ namespace GYMPT.Data.Repositories
         {
             await RemoteLoggerSingleton.Instance.LogInfo($"Creando nueva disciplina: {entity.Name}.");
             var sql = @"
-                INSERT INTO ""Discipline"" 
+                INSERT INTO discipline 
                 (name, id_instructor, start_time, end_time, created_at, last_modification, ""isActive"")
                 VALUES (@Name, @IdInstructor, @StartTime, @EndTime, @CreatedAt, @LastModification, @IsActive)
                 RETURNING id;";
@@ -46,8 +46,8 @@ namespace GYMPT.Data.Repositories
                                end_time AS EndTime, 
                                created_at AS CreatedAt, 
                                last_modification AS LastModification, 
-                               ""isActive"" as IsActive 
-                        FROM ""Discipline"" 
+                               is_active as IsActive 
+                        FROM discipline 
                         WHERE id = @Id;";
 
             using (var conn = new NpgsqlConnection(_connectionString))
@@ -66,8 +66,8 @@ namespace GYMPT.Data.Repositories
                                end_time AS EndTime, 
                                created_at AS CreatedAt, 
                                last_modification AS LastModification, 
-                               ""isActive"" as IsActive 
-                        FROM ""Discipline"";";
+                               is_active as IsActive 
+                        FROM discipline;";
 
             using (var conn = new NpgsqlConnection(_connectionString))
             {
@@ -78,13 +78,13 @@ namespace GYMPT.Data.Repositories
         public async Task<Discipline> UpdateAsync(Discipline entity)
         {
             await RemoteLoggerSingleton.Instance.LogInfo($"Actualizando disciplina con ID: {entity.Id}.");
-            var sql = @"UPDATE ""Discipline"" 
+            var sql = @"UPDATE discipline 
                         SET name = @Name,
                             id_instructor = @IdInstructor,
                             start_time = @StartTime,
                             end_time = @EndTime,
                             last_modification = @LastModification,
-                            ""isActive"" = @IsActive
+                            is_active = @IsActive
                         WHERE id = @Id;";
 
             using (var conn = new NpgsqlConnection(_connectionString))
@@ -103,8 +103,8 @@ namespace GYMPT.Data.Repositories
         public async Task<bool> DeleteByIdAsync(int id)
         {
             await RemoteLoggerSingleton.Instance.LogInfo($"Dando de baja disciplina con ID: {id}.");
-            var sql = @"UPDATE ""Discipline"" 
-                SET ""isActive"" = false, last_modification = @LastModification 
+            var sql = @"UPDATE discipline 
+                SET is_active = false, last_modification = @LastModification 
                 WHERE id = @Id;";
 
             using (var conn = new NpgsqlConnection(_connectionString))
