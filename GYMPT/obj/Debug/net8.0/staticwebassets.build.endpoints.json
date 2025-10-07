@@ -2500,7 +2500,7 @@
       ]
     },
     {
-      "Route": "lib/bootstrap/dist/css/bootstrap.min.bpk8xqwxhs.css",
+      "Route": "lib/bootstrap/dist/css/bootstrap.min.c5bcl1kr36.css",
       "AssetFile": "lib/bootstrap/dist/css/bootstrap.min.css",
       "Selectors": [],
       "ResponseHeaders": [
@@ -2514,7 +2514,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "162720"
+          "Value": "292558"
         },
         {
           "Name": "Content-Type",
@@ -2522,21 +2522,21 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"z8OR40MowJ8GgK6P89Y+hiJK5+cclzFHzLhFQLL92bg=\""
+          "Value": "\"kGPZz0rS8OWc1P2jssRycS7aJqWz7mbIDsKwDQZCKAc=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 02 Oct 2025 00:27:28 GMT"
+          "Value": "Tue, 07 Oct 2025 14:49:35 GMT"
         }
       ],
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "bpk8xqwxhs"
+          "Value": "c5bcl1kr36"
         },
         {
           "Name": "integrity",
-          "Value": "sha256-z8OR40MowJ8GgK6P89Y+hiJK5+cclzFHzLhFQLL92bg="
+          "Value": "sha256-kGPZz0rS8OWc1P2jssRycS7aJqWz7mbIDsKwDQZCKAc="
         },
         {
           "Name": "label",
@@ -2559,7 +2559,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "162720"
+          "Value": "292558"
         },
         {
           "Name": "Content-Type",
@@ -2567,17 +2567,17 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"z8OR40MowJ8GgK6P89Y+hiJK5+cclzFHzLhFQLL92bg=\""
+          "Value": "\"kGPZz0rS8OWc1P2jssRycS7aJqWz7mbIDsKwDQZCKAc=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 02 Oct 2025 00:27:28 GMT"
+          "Value": "Tue, 07 Oct 2025 14:49:35 GMT"
         }
       ],
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-z8OR40MowJ8GgK6P89Y+hiJK5+cclzFHzLhFQLL92bg="
+          "Value": "sha256-kGPZz0rS8OWc1P2jssRycS7aJqWz7mbIDsKwDQZCKAc="
         }
       ]
     },

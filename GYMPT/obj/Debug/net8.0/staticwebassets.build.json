@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "5Ydf9nT/ouuV4O5eJaBqO2EAgHKnamlfLJ1NX4ZxNzM=",
+  "Hash": "6vN4/BvcyePP60coVBlICl7KuNC3TilmTD0mYNvC2bE=",
   "Source": "GYMPT",
   "BasePath": "_content/GYMPT",
   "Mode": "Default",
@@ -682,8 +682,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "bpk8xqwxhs",
-      "Integrity": "z8OR40MowJ8GgK6P89Y+hiJK5+cclzFHzLhFQLL92bg=",
+      "Fingerprint": "c5bcl1kr36",
+      "Integrity": "kGPZz0rS8OWc1P2jssRycS7aJqWz7mbIDsKwDQZCKAc=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/css/bootstrap.min.css"
@@ -3818,7 +3818,7 @@
       ]
     },
     {
-      "Route": "lib/bootstrap/dist/css/bootstrap.min.bpk8xqwxhs.css",
+      "Route": "lib/bootstrap/dist/css/bootstrap.min.c5bcl1kr36.css",
       "AssetFile": "/home/gehre/Desktop/arq-soft/Practica2-ArquiSoftware/GYMPT/wwwroot/lib/bootstrap/dist/css/bootstrap.min.css",
       "Selectors": [],
       "ResponseHeaders": [
@@ -3828,7 +3828,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "162720"
+          "Value": "292558"
         },
         {
           "Name": "Content-Type",
@@ -3836,11 +3836,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"z8OR40MowJ8GgK6P89Y+hiJK5+cclzFHzLhFQLL92bg=\""
+          "Value": "\"kGPZz0rS8OWc1P2jssRycS7aJqWz7mbIDsKwDQZCKAc=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 02 Oct 2025 00:27:28 GMT"
+          "Value": "Tue, 07 Oct 2025 14:49:35 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -3850,7 +3850,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "bpk8xqwxhs"
+          "Value": "c5bcl1kr36"
         },
         {
           "Name": "label",
@@ -3858,7 +3858,7 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-z8OR40MowJ8GgK6P89Y+hiJK5+cclzFHzLhFQLL92bg="
+          "Value": "sha256-kGPZz0rS8OWc1P2jssRycS7aJqWz7mbIDsKwDQZCKAc="
         }
       ]
     },
@@ -3873,7 +3873,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "162720"
+          "Value": "292558"
         },
         {
           "Name": "Content-Type",
@@ -3881,11 +3881,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"z8OR40MowJ8GgK6P89Y+hiJK5+cclzFHzLhFQLL92bg=\""
+          "Value": "\"kGPZz0rS8OWc1P2jssRycS7aJqWz7mbIDsKwDQZCKAc=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 02 Oct 2025 00:27:28 GMT"
+          "Value": "Tue, 07 Oct 2025 14:49:35 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -3895,7 +3895,7 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-z8OR40MowJ8GgK6P89Y+hiJK5+cclzFHzLhFQLL92bg="
+          "Value": "sha256-kGPZz0rS8OWc1P2jssRycS7aJqWz7mbIDsKwDQZCKAc="
         }
       ]
     },

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GYMPT")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b8f6b769809f241b0d74022230a15c63bed16272")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2afb2e0f1e82aad105a9db463ff6d89f6bfc836d")]
 [assembly: System.Reflection.AssemblyProductAttribute("GYMPT")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GYMPT")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
