@@ -1,40 +1,48 @@
-using GYMPT.Data.Repositories;
+using GYMPT.Data.Contracts;
+using GYMPT.Factories;
 using GYMPT.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace GYMPT.Pages.DetailsUsers
 {
     public class DetailsUsersModel : PageModel
     {
-        private readonly DetailUserRepository _detailUserRepository;
-
-        public DetailsUsersModel(DetailUserRepository detailUserRepository)
-        {
-            _detailUserRepository = detailUserRepository;
-        }
-
         [BindProperty]
         public DetailsUser DetailUser { get; set; } = new DetailsUser();
 
         public List<DetailsUser> DetailsUserList { get; set; } = new List<DetailsUser>();
 
-        public async Task OnGetAsync()
+        public DetailsUsersModel() { }
+
+
+        private IRepository<DetailsUser> CreateDetailUserRepository()
         {
+            RepositoryCreator<DetailsUser> factory = new DetailUserRepositoryCreator();
+            return factory.CreateRepository();
+        }
+
+  
+        public async Task OnGetAsync(int? id)
+        {
+            var detailRepo = CreateDetailUserRepository();
             try
             {
-                var details = await _detailUserRepository.GetAllAsync();
-                DetailsUserList = details?.ToList() ?? new List<DetailsUser>();
-
-                if (!DetailsUserList.Any())
+                if (id.HasValue)
                 {
-                    TempData["InfoMessage"] = "No hay detalles de usuarios registrados.";
+                    DetailUser = await detailRepo.GetByIdAsync(id.Value);
                 }
+
+                var details = await detailRepo.GetAllAsync();
+                DetailsUserList = details?.ToList() ?? new List<DetailsUser>();
             }
             catch (Exception ex)
             {
-                TempData["ErrorMessage"] = $"Error al cargar los detalles: {ex.Message}";
-                DetailsUserList = new List<DetailsUser>();
+                TempData["ErrorMessage"] = $"Error al cargar los datos: {ex.Message}";
             }
         }
 
@@ -42,47 +50,21 @@ namespace GYMPT.Pages.DetailsUsers
         {
             try
             {
-                if (!ModelState.IsValid)
-                {
-                    var errors = string.Join(", ", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
-                    TempData["ErrorMessage"] = $"Errores de validaci�n: {errors}";
-                    return RedirectToPage();
-                }
-
-                // Validaciones adicionales
+                if (!ModelState.IsValid) return Page();
                 if (DetailUser.EndDate <= DetailUser.StartDate)
                 {
                     TempData["ErrorMessage"] = "La fecha de fin debe ser posterior a la fecha de inicio.";
                     return RedirectToPage();
                 }
 
-                if (DetailUser.IdUser <= 0 || DetailUser.IdMembership <= 0)
-                {
-                    TempData["ErrorMessage"] = "Los IDs de usuario y membres�a deben ser mayores a 0.";
-                    return RedirectToPage();
-                }
-
-                var createdDetail = await _detailUserRepository.CreateAsync(DetailUser);
-
-                if (createdDetail != null && createdDetail.Id > 0)
-                {
-                    TempData["SuccessMessage"] = "Detalle de usuario creado exitosamente.";
-                }
-                else
-                {
-                    TempData["ErrorMessage"] = "No se pudo crear el detalle de usuario.";
-                }
-            }
-            catch (ArgumentException ex)
-            {
-                // Captura espec�ficamente errores de validaci�n de FK
-                TempData["ErrorMessage"] = ex.Message;
+                var detailRepo = CreateDetailUserRepository();
+                await detailRepo.CreateAsync(DetailUser);
+                TempData["SuccessMessage"] = "Detalle de usuario creado exitosamente.";
             }
             catch (Exception ex)
             {
                 TempData["ErrorMessage"] = $"Error al crear el detalle: {ex.Message}";
             }
-
             return RedirectToPage();
         }
 
@@ -90,56 +72,30 @@ namespace GYMPT.Pages.DetailsUsers
         {
             try
             {
-                if (!ModelState.IsValid)
-                {
-                    var errors = string.Join(", ", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
-                    TempData["ErrorMessage"] = $"Errores de validaci�n: {errors}";
-                    return RedirectToPage();
-                }
-
+                if (!ModelState.IsValid) return Page();
                 if (DetailUser.EndDate <= DetailUser.StartDate)
                 {
                     TempData["ErrorMessage"] = "La fecha de fin debe ser posterior a la fecha de inicio.";
                     return RedirectToPage();
                 }
 
-                var existingDetail = await _detailUserRepository.GetByIdAsync(DetailUser.Id);
-                if (existingDetail == null)
-                {
-                    TempData["ErrorMessage"] = "No se encontr� el detalle de usuario para actualizar.";
-                    return RedirectToPage();
-                }
-
-                var updatedDetail = await _detailUserRepository.UpdateAsync(DetailUser);
-
-                if (updatedDetail != null)
-                {
-                    TempData["SuccessMessage"] = "Detalle de usuario actualizado exitosamente.";
-                }
-                else
-                {
-                    TempData["ErrorMessage"] = "No se pudo actualizar el detalle de usuario.";
-                }
+                var detailRepo = CreateDetailUserRepository();
+                await detailRepo.UpdateAsync(DetailUser);
+                TempData["SuccessMessage"] = "Detalle de usuario actualizado exitosamente.";
             }
             catch (Exception ex)
             {
                 TempData["ErrorMessage"] = $"Error al actualizar el detalle: {ex.Message}";
             }
-
-            return RedirectToPage();
+            return RedirectToPage(new { id = (int?)null }); 
         }
 
         public async Task<IActionResult> OnPostDeleteAsync(int id)
         {
             try
             {
-                if (id <= 0)
-                {
-                    TempData["ErrorMessage"] = "ID inv�lido.";
-                    return RedirectToPage();
-                }
-
-                var result = await _detailUserRepository.DeleteByIdAsync(id);
+                var detailRepo = CreateDetailUserRepository();
+                var result = await detailRepo.DeleteByIdAsync(id);
                 if (result)
                 {
                     TempData["SuccessMessage"] = "Detalle eliminado correctamente.";
@@ -153,7 +109,6 @@ namespace GYMPT.Pages.DetailsUsers
             {
                 TempData["ErrorMessage"] = $"Error al eliminar: {ex.Message}";
             }
-
             return RedirectToPage();
         }
     }

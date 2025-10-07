@@ -1,4 +1,6 @@
+using GYMPT.Data.Contracts;
 using GYMPT.Data.Repositories;
+using GYMPT.Factories;
 using GYMPT.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -8,11 +10,14 @@ namespace GYMPT.Pages.Instructors
 {
     public class EditInstructorModel : PageModel
     {
-        private readonly InstructorRepository _instructorRepo;
 
-        public EditInstructorModel(InstructorRepository instructorRepo)
+        public EditInstructorModel()
         {
-            _instructorRepo = instructorRepo;
+        }
+        private IRepository<Instructor> CreateInstructorRepository()
+        {
+            var factory = new InstructorRepositoryCreator();
+            return factory.CreateRepository();
         }
 
         [BindProperty]
@@ -23,7 +28,8 @@ namespace GYMPT.Pages.Instructors
 
         public async Task<IActionResult> OnGetAsync()
         {
-            Instructor = await _instructorRepo.GetByIdAsync(Id);
+            var instructorRepo = CreateInstructorRepository();
+            Instructor = await instructorRepo.GetByIdAsync(Id);
             if (Instructor == null) return RedirectToPage("/Users/User");
             Id = Instructor.Id;
             return Page();
@@ -33,7 +39,8 @@ namespace GYMPT.Pages.Instructors
         {
             if (Instructor == null || Id == 0) return RedirectToPage("/Users/User");
             Instructor.Id = Id;
-            var updated = await _instructorRepo.UpdateAsync(Instructor);
+            var instructorRepo = CreateInstructorRepository();
+            var updated = await instructorRepo.UpdateAsync(Instructor);
 
             TempData["Message"] = $"Instructor {Instructor.Name} actualizado correctamente.";
             return RedirectToPage("/Users/User");

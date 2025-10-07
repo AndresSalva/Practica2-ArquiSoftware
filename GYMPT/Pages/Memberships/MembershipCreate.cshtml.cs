@@ -1,5 +1,7 @@
-using GYMPT.Models;
+using GYMPT.Data.Contracts;
 using GYMPT.Data.Repositories;
+using GYMPT.Factories;
+using GYMPT.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -7,14 +9,17 @@ namespace GYMPT.Pages.Memberships
 {
     public class MembershipCreateModel : PageModel
     {
-        private readonly MembershipRepository _repo;
 
         [BindProperty]
         public Membership Membership { get; set; } = new();
 
-        public MembershipCreateModel(MembershipRepository repo)
+        public MembershipCreateModel()
         {
-            _repo = repo;
+        }
+        private IRepository<Membership> CreateMembershipRepository()
+        {
+            var factory = new MembershipRepositoryCreator();
+            return factory.CreateRepository();
         }
 
         public void OnGet()
@@ -27,8 +32,8 @@ namespace GYMPT.Pages.Memberships
             {
                 return Page();
             }
-
-            await _repo.CreateAsync(Membership);
+            var repo = CreateMembershipRepository();
+            await repo.CreateAsync(Membership);
 
             return RedirectToPage("/Memberships/Membership");
         }

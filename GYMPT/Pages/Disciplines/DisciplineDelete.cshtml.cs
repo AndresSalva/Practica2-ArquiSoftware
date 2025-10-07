@@ -1,25 +1,31 @@
-﻿using GYMPT.Models;
+﻿using GYMPT.Data.Contracts;
+using GYMPT.Data.Repositories;
+using GYMPT.Factories;
+using GYMPT.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using GYMPT.Data.Repositories;
 
 namespace GYMPT.Pages.Disciplines
 {
     public class DisciplineDeleteModel : PageModel
     {
-        private readonly DisciplineRepository _repo;
 
         [BindProperty]
         public Discipline Discipline { get; set; } = new();
 
-        public DisciplineDeleteModel(DisciplineRepository repo)
+        public DisciplineDeleteModel()
         {
-            _repo = repo;
+        }
+        private IRepository<Discipline> CreateDisciplineRepository()
+        {
+            var factory = new DisciplineRepositoryCreator();
+            return factory.CreateRepository();
         }
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            Discipline = await _repo.GetByIdAsync(id);
+            var repo = CreateDisciplineRepository();
+            Discipline = await repo.GetByIdAsync(id);
 
             if (Discipline == null)
             {
@@ -35,8 +41,9 @@ namespace GYMPT.Pages.Disciplines
             {
                 return Page();
             }
+            var repo = CreateDisciplineRepository();
 
-            await _repo.DeleteByIdAsync(Discipline.Id);
+            await repo.DeleteByIdAsync(Discipline.Id);
 
             return RedirectToPage("Disciplines/Discipline");
         }

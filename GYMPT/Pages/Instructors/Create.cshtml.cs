@@ -1,4 +1,6 @@
+using GYMPT.Data.Contracts;
 using GYMPT.Data.Repositories;
+using GYMPT.Factories;
 using GYMPT.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -7,14 +9,17 @@ namespace GYMPT.Pages.Instructors
 {
     public class CreateModel : PageModel
     {
-        private readonly InstructorRepository _instructorRepo;
 
         [BindProperty]
         public Instructor Instructor { get; set; }
 
-        public CreateModel(InstructorRepository instructorRepo)
+        public CreateModel()
         {
-            _instructorRepo = instructorRepo;
+        }
+        private IRepository<Instructor> CreateInstructorRepository()
+        {
+            var factory = new InstructorRepositoryCreator();
+            return factory.CreateRepository();
         }
 
         public void OnGet()
@@ -26,10 +31,10 @@ namespace GYMPT.Pages.Instructors
             if (!ModelState.IsValid)
                 return Page();
 
-            // Esto crea el User + Instructor en una sola transacción
-            await _instructorRepo.CreateAsync(Instructor);
+            var instructorRepo = CreateInstructorRepository();
+            await instructorRepo.CreateAsync(Instructor);
 
-            return RedirectToPage("/Users");
+            return RedirectToPage("/Users/User");
         }
     }
 }

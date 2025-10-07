@@ -3,7 +3,6 @@ using GYMPT.Data.Contracts;
 using GYMPT.Models;
 using GYMPT.Services;
 using Npgsql;
-using NuGet.Protocol.Plugins;
 
 namespace GYMPT.Data.Repositories
 {
@@ -16,172 +15,56 @@ namespace GYMPT.Data.Repositories
             _postgresString = ConnectionStringSingleton.Instance.PostgresConnection;
         }
 
-        public async Task<IEnumerable<DetailsUser>> GetAllAsync()
-        {
-            try
-            {
-                await RemoteLoggerSingleton.Instance.LogInfo("Obteniendo todos los detalles de usuarios.");
-                using var conn = new NpgsqlConnection(_postgresString);
-
-                var sql =
-                @"SELECT id, 
-                id_user AS IdUser, 
-                id_membership AS IdMembership,
-                start_date AS StartDate, 
-                end_date AS EndDate,
-                sessions_left AS SessionsLeft, 
-                created_at AS CreatedAt,
-                last_modification AS LastModification, 
-                is_active AS IsActive
-                FROM details_user;";
-
-                var result = await conn.QueryAsync<DetailsUser>(sql);
-                await RemoteLoggerSingleton.Instance.LogInfo($"Se encontraron {result?.Count() ?? 0} detalles de usuario.");
-                return result;
-            }
-            catch (Exception ex)
-            {
-                await RemoteLoggerSingleton.Instance.LogError($"Error en GetAllAsync: {ex.Message}", ex);
-                throw;
-            }
-        }
-
-        public async Task<DetailsUser> GetByIdAsync(int id)
-        {
-            try
-            {
-                await RemoteLoggerSingleton.Instance.LogInfo($"Obteniendo detalle de usuario con ID: {id}");
-                using var conn = new NpgsqlConnection(_postgresString);
-
-                var sql =
-                @"SELECT id, 
-                id_user AS IdUser, 
-                id_membership AS IdMembership,
-                start_date AS StartDate, 
-                end_date AS EndDate,
-                sessions_left AS SessionsLeft, 
-                created_at AS CreatedAt,
-                last_modification AS LastModification, 
-                is_active AS IsActive
-                FROM details_user
-                WHERE id = @Id;";
-
-                return await conn.QueryFirstOrDefaultAsync<DetailsUser>(sql, new { Id = id });
-            }
-            catch (Exception ex)
-            {
-                await RemoteLoggerSingleton.Instance.LogError($"Error en GetByIdAsync: {ex.Message}", ex);
-                throw;
-            }
-        }
-
         public async Task<DetailsUser> CreateAsync(DetailsUser entity)
         {
-            try
-            {
-                await RemoteLoggerSingleton.Instance.LogInfo($"Creando detalle de usuario: UserId={entity.IdUser}, MembershipId={entity.IdMembership}");
+            await RemoteLoggerSingleton.Instance.LogInfo($"Creando detalle de usuario para UserId: {entity.IdUser}");
+            using var conn = new NpgsqlConnection(_postgresString);
 
-                using var conn = new NpgsqlConnection(_postgresString);
+            var userExists = await conn.ExecuteScalarAsync<bool>(@"SELECT COUNT(1) FROM ""user"" WHERE id = @UserId AND is_active = true", new { UserId = entity.IdUser });
+            if (!userExists) throw new ArgumentException($"El usuario con ID {entity.IdUser} no existe o no está activo.");
 
-                // Validar que el usuario existe
-                var userExists = await conn.ExecuteScalarAsync<bool>(
-                    @"SELECT COUNT(1) FROM ""user"" WHERE id = @UserId AND is_active = true",
-                    new { UserId = entity.IdUser });
+            var membershipExists = await conn.ExecuteScalarAsync<bool>(@"SELECT COUNT(1) FROM membership WHERE id = @MembershipId AND is_active = true", new { MembershipId = entity.IdMembership });
+            if (!membershipExists) throw new ArgumentException($"La membresía con ID {entity.IdMembership} no existe o no está activa.");
 
-                if (!userExists)
-                {
-                    throw new ArgumentException($"El usuario con ID {entity.IdUser} no existe o no est� activo.");
-                }
+            entity.CreatedAt = DateTime.UtcNow;
+            entity.LastModification = DateTime.UtcNow;
+            entity.IsActive = true;
 
-                // Validar que la membres�a existe
-                var membershipExists = await conn.ExecuteScalarAsync<bool>(
-                    @"SELECT COUNT(1) FROM membership WHERE id = @MembershipId AND is_active = true",
-                    new { MembershipId = entity.IdMembership });
-
-                if (!membershipExists)
-                {
-                    throw new ArgumentException($"La membres�a con ID {entity.IdMembership} no existe o no est� activa.");
-                }
-
-                entity.CreatedAt = DateTime.UtcNow;
-                entity.LastModification = DateTime.UtcNow;
-                entity.IsActive = true;
-                entity.SessionsLeft = entity.SessionsLeft < 0 ? 0 : entity.SessionsLeft;
-
-                var sql = @"
-                    INSERT INTO details_user 
-                    (id_user, id_membership, start_date, end_date, sessions_left, created_at, last_modification, is_active)
-                    VALUES (@IdUser, @IdMembership, @StartDate, @EndDate, @SessionsLeft, @CreatedAt, @LastModification, @IsActive)
-                    RETURNING id;";
-
-                entity.Id = await conn.QuerySingleAsync<int>(sql, entity);
-
-                await RemoteLoggerSingleton.Instance.LogInfo($"Detalle de usuario creado exitosamente con ID: {entity.Id}");
-
-                return entity;
-            }
-            catch (Exception ex)
-            {
-                await RemoteLoggerSingleton.Instance.LogError($"Error en CreateAsync: {ex.Message}", ex);
-                throw;
-            }
-        }
-
-        public async Task<DetailsUser> UpdateAsync(DetailsUser entity)
-        {
-            try
-            {
-                await RemoteLoggerSingleton.Instance.LogInfo($"Actualizando detalle de usuario con ID: {entity.Id}");
-                using var conn = new NpgsqlConnection(_postgresString);
-
-                entity.LastModification = DateTime.UtcNow;
-                entity.SessionsLeft = entity.SessionsLeft < 0 ? 0 : entity.SessionsLeft;
-
-                var sql =
-                @"UPDATE details_user 
-                SET
-                id_user = @IdUser,
-                id_membership = @IdMembership,
-                start_date = @StartDate,
-                end_date = @EndDate,
-                sessions_left = @SessionsLeft,
-                last_modification = @LastModification,
-                is_active = @IsActive
-                WHERE id = @Id;";
-
-                var affectedRows = await conn.ExecuteAsync(sql, entity);
-
-                if (affectedRows == 0)
-                    throw new KeyNotFoundException("No se encontr� el detalle de usuario para actualizar.");
-
-                await RemoteLoggerSingleton.Instance.LogInfo($"Detalle de usuario actualizado exitosamente: {entity.Id}");
-                return entity;
-            }
-            catch (Exception ex)
-            {
-                await RemoteLoggerSingleton.Instance.LogError($"Error en UpdateAsync: {ex.Message}", ex);
-                throw;
-            }
+            var sql = @"INSERT INTO details_user (id_user, id_membership, start_date, end_date, sessions_left, created_at, last_modification, is_active) VALUES (@IdUser, @IdMembership, @StartDate, @EndDate, @SessionsLeft, @CreatedAt, @LastModification, @IsActive) RETURNING id;";
+            entity.Id = await conn.QuerySingleAsync<int>(sql, entity);
+            return entity;
         }
 
         public async Task<bool> DeleteByIdAsync(int id)
         {
-            try
-            {
-                await RemoteLoggerSingleton.Instance.LogInfo($"Eliminando detalle de usuario con ID: {id}");
-                using var conn = new NpgsqlConnection(_postgresString);
+            using var conn = new NpgsqlConnection(_postgresString);
+            var sql = @"UPDATE details_user SET is_active = false, last_modification = @LastModification WHERE id = @Id;";
+            var affected = await conn.ExecuteAsync(sql, new { Id = id, LastModification = DateTime.UtcNow });
+            return affected > 0;
+        }
 
-                var sql = @"UPDATE details_user SET is_active = false WHERE id = @Id;";
-                var affected = await conn.ExecuteAsync(sql, new { Id = id });
+        public async Task<IEnumerable<DetailsUser>> GetAllAsync()
+        {
+            using var conn = new NpgsqlConnection(_postgresString);
+            var sql = @"SELECT id, id_user AS IdUser, id_membership AS IdMembership, start_date AS StartDate, end_date AS EndDate, sessions_left AS SessionsLeft, created_at AS CreatedAt, last_modification AS LastModification, is_active AS IsActive FROM details_user WHERE is_active = true;";
+            return await conn.QueryAsync<DetailsUser>(sql);
+        }
 
-                await RemoteLoggerSingleton.Instance.LogInfo($"Eliminaci�n completada. Filas afectadas: {affected}");
-                return affected > 0;
-            }
-            catch (Exception ex)
-            {
-                await RemoteLoggerSingleton.Instance.LogError($"Error en DeleteByIdAsync: {ex.Message}", ex);
-                throw;
-            }
+        public async Task<DetailsUser> GetByIdAsync(int id)
+        {
+            using var conn = new NpgsqlConnection(_postgresString);
+            var sql = @"SELECT id, id_user AS IdUser, id_membership AS IdMembership, start_date AS StartDate, end_date AS EndDate, sessions_left AS SessionsLeft, created_at AS CreatedAt, last_modification AS LastModification, is_active AS IsActive FROM details_user WHERE id = @Id;";
+            return await conn.QueryFirstOrDefaultAsync<DetailsUser>(sql, new { Id = id });
+        }
+
+        public async Task<DetailsUser> UpdateAsync(DetailsUser entity)
+        {
+            using var conn = new NpgsqlConnection(_postgresString);
+            entity.LastModification = DateTime.UtcNow;
+            var sql = @"UPDATE details_user SET id_user = @IdUser, id_membership = @IdMembership, start_date = @StartDate, end_date = @EndDate, sessions_left = @SessionsLeft, last_modification = @LastModification, is_active = @IsActive WHERE id = @Id;";
+            var affectedRows = await conn.ExecuteAsync(sql, entity);
+            if (affectedRows == 0) throw new KeyNotFoundException("No se encontró el detalle de usuario para actualizar.");
+            return entity;
         }
     }
 }

@@ -1,5 +1,7 @@
-using GYMPT.Models;
+using GYMPT.Data.Contracts;
 using GYMPT.Data.Repositories;
+using GYMPT.Factories;
+using GYMPT.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Npgsql;
@@ -8,22 +10,25 @@ namespace GYMPT.Pages.Memberships
 {
     public class MembershipEditModel : PageModel
     {
-        private readonly MembershipRepository _repo;
 
         private readonly IConfiguration _configuration;
 
         [BindProperty]
         public Membership Membership { get; set; }
 
-        public MembershipEditModel(MembershipRepository repo, IConfiguration configuration)
+        public MembershipEditModel()
         {
-            _repo = repo;
-            _configuration = configuration;
+        }
+        private IRepository<Membership> CreateMembershipRepository()
+        {
+            var factory = new MembershipRepositoryCreator();
+            return factory.CreateRepository();
         }
 
         public async Task<IActionResult> OnGetAsync(short id)
         {
-            Membership = await _repo.GetByIdAsync(id);
+            var repo = CreateMembershipRepository();
+            Membership = await repo.GetByIdAsync(id);
 
             if (Membership == null)
             {
@@ -40,7 +45,9 @@ namespace GYMPT.Pages.Memberships
                 return Page();
             }
 
-            await _repo.UpdateAsync(Membership);
+            var repo = CreateMembershipRepository();
+
+            await repo.UpdateAsync(Membership);
 
             return RedirectToPage("/Memberships/Membership");
         }

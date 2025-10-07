@@ -1,4 +1,6 @@
+using GYMPT.Data.Contracts;
 using GYMPT.Data.Repositories;
+using GYMPT.Factories;
 using GYMPT.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -8,11 +10,14 @@ namespace GYMPT.Pages.Users
 {
     public class DeleteUserModel : PageModel
     {
-        private readonly UserRepository _userRepo;  // Cambiado a IUserRepository
 
-        public DeleteUserModel(UserRepository userRepo)  // Cambiado el parámetro
+        public DeleteUserModel() 
         {
-            _userRepo = userRepo;
+        }
+        private IRepository<User> CreateUserRepository()
+        {
+            var factory = new UserRepositoryCreator();
+            return factory.CreateRepository();
         }
 
         [BindProperty]
@@ -26,10 +31,12 @@ namespace GYMPT.Pages.Users
             if (Id == 0)
                 return RedirectToPage("/Users/User");
 
-            User = await _userRepo.GetByIdAsync(Id);
+            var repo = CreateUserRepository();
+
+            User = await repo.GetByIdAsync(Id);
 
             if (User == null)
-                return RedirectToPage("/Users/User"); // Si no existe, volver a lista
+                return RedirectToPage("/Users/User"); 
 
             return Page();
         }
@@ -39,7 +46,9 @@ namespace GYMPT.Pages.Users
             if (Id == 0)
                 return RedirectToPage("/Users/User");
 
-            bool deleted = await _userRepo.DeleteByIdAsync(Id);
+            var repo = CreateUserRepository();
+
+            bool deleted = await repo.DeleteByIdAsync(Id);
 
             if (deleted)
             {

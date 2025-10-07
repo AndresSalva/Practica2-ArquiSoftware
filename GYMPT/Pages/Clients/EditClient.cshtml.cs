@@ -1,40 +1,57 @@
-using GYMPT.Data.Repositories;
+using GYMPT.Data.Contracts;
+using GYMPT.Factories; 
 using GYMPT.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Threading.Tasks;
 
 namespace GYMPT.Pages.Clients
 {
     public class EditClientModel : PageModel
     {
-        private readonly ClientRepository _clientRepo;
-
-        public EditClientModel(ClientRepository clientRepo)
-        {
-            _clientRepo = clientRepo;
-        }
+        public EditClientModel() { }
 
         [BindProperty]
         public Client Client { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public int Id { get; set; }
+        private IRepository<Client> CreateClientRepository()
+        {
+            var factory = new ClientRepositoryCreator();
+            return factory.CreateRepository();
+        }
 
         public async Task<IActionResult> OnGetAsync()
         {
-            Client = await _clientRepo.GetByIdAsync(Id);
-            if (Client == null) return RedirectToPage("/Users/User");
+            var clientRepo = CreateClientRepository(); 
+
+            Client = await clientRepo.GetByIdAsync(Id);
+
+            if (Client == null)
+            {
+                return RedirectToPage("/Users/User");
+            }
+
             Id = Client.Id;
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (Client == null || Id == 0) return RedirectToPage("/Users");
-            Client.Id = Id;
-            var updated = await _clientRepo.UpdateAsync(Client);
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
 
-            TempData["Message"] = $"Cliente {Client.Name} actualizado correctamente.";
+            Client.Id = Id;
+
+            RepositoryCreator<Client> factory = new ClientRepositoryCreator();
+            var clientRepo = factory.CreateRepository();
+
+            await clientRepo.UpdateAsync(Client);
+
+            TempData["Message"] = $"Cliente '{Client.Name}' actualizado correctamente.";
             return RedirectToPage("/Users/User");
         }
     }

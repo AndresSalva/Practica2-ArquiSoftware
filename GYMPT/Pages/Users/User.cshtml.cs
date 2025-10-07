@@ -1,5 +1,6 @@
 using GYMPT.Data.Contracts;
 using GYMPT.Data.Repositories;
+using GYMPT.Factories;
 using GYMPT.Models;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -7,18 +8,22 @@ namespace GYMPT.Pages.Users
 {
     public class UserModel : PageModel
     {
-        private readonly UserRepository _repo;
+        private IRepository<User> CreateUserRepository()
+        {
+            var factory = new UserRepositoryCreator();
+            return factory.CreateRepository();
+        }
 
         public IEnumerable<User> UserList { get; private set; } = Enumerable.Empty<User>();
 
-        public UserModel(UserRepository repo)
+        public UserModel()
         {
-            _repo = repo;
         }
 
         public async Task OnGetAsync()
         {
-            UserList = await _repo.GetAllAsync();
+            var repo = CreateUserRepository();
+            UserList = await repo.GetAllAsync();
         }
     }
 }

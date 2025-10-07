@@ -1,30 +1,32 @@
-using GYMPT.Data.Repositories;
+using GYMPT.Factories; 
 using GYMPT.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Threading.Tasks;
 
-namespace GYMPT.Pages
+
+namespace GYMPT.Pages.SpecificUserDetail
 {
     public class InstructorDetailsModel : PageModel
     {
-        private readonly InstructorRepository _instructorRepo;
-
         public Instructor Instructor { get; set; }
 
-        public InstructorDetailsModel(InstructorRepository instructorRepo)
+
+        public InstructorDetailsModel()
         {
-            _instructorRepo = instructorRepo;
         }
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
- 
-            Instructor = await _instructorRepo.GetByIdAsync(id);
+            var factory = new InstructorRepositoryCreator();
+            var instructorRepo = factory.CreateRepository();
+
+            Instructor = await instructorRepo.GetByIdAsync(id);
 
             if (Instructor == null)
             {
-                return NotFound();
+                TempData["ErrorMessage"] = "Instructor no encontrado.";
+                return RedirectToPage("/Users/User");
             }
 
             return Page();
