@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{51D5E0AD-22C2-449B-9447-70B76B7C4943}|GYMPT\\GYMPT.csproj|d:\\universidad\\semestre8\\arquitectura\\p2 - gpt5\\gympt\\gympt\\pages\\memberships\\membership.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{51D5E0AD-22C2-449B-9447-70B76B7C4943}|GYMPT\\GYMPT.csproj|solutionrelative:gympt\\pages\\memberships\\membership.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{51D5E0AD-22C2-449B-9447-70B76B7C4943}|GYMPT\\GYMPT.csproj|d:\\universidad\\semestre8\\arquitectura\\p2 - gpt5\\gympt\\gympt\\pages\\memberships\\membership.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{51D5E0AD-22C2-449B-9447-70B76B7C4943}|GYMPT\\GYMPT.csproj|solutionrelative:gympt\\pages\\memberships\\membership.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{51D5E0AD-22C2-449B-9447-70B76B7C4943}|GYMPT\\GYMPT.csproj|d:\\universidad\\semestre8\\arquitectura\\p2 - gpt5\\gympt\\gympt\\pages\\users\\user.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{51D5E0AD-22C2-449B-9447-70B76B7C4943}|GYMPT\\GYMPT.csproj|solutionrelative:gympt\\pages\\users\\user.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
@@ -29,10 +37,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{51D5E0AD-22C2-449B-9447-70B76B7C4943}|GYMPT\\GYMPT.csproj|d:\\universidad\\semestre8\\arquitectura\\p2 - gpt5\\gympt\\gympt\\pages\\memberships\\membershipcreate.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{51D5E0AD-22C2-449B-9447-70B76B7C4943}|GYMPT\\GYMPT.csproj|solutionrelative:gympt\\pages\\memberships\\membershipcreate.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{51D5E0AD-22C2-449B-9447-70B76B7C4943}|GYMPT\\GYMPT.csproj|d:\\universidad\\semestre8\\arquitectura\\p2 - gpt5\\gympt\\gympt\\pages\\memberships\\membership.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{51D5E0AD-22C2-449B-9447-70B76B7C4943}|GYMPT\\GYMPT.csproj|solutionrelative:gympt\\pages\\memberships\\membership.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{51D5E0AD-22C2-449B-9447-70B76B7C4943}|GYMPT\\GYMPT.csproj|d:\\universidad\\semestre8\\arquitectura\\p2 - gpt5\\gympt\\gympt\\pages\\specificuserdetail\\instructordetails.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -245,24 +249,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "MembershipCreate.cshtml.cs",
-              "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Pages\\Memberships\\MembershipCreate.cshtml.cs",
-              "RelativeDocumentMoniker": "GYMPT\\Pages\\Memberships\\MembershipCreate.cshtml.cs",
-              "ToolTip": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Pages\\Memberships\\MembershipCreate.cshtml.cs",
-              "RelativeToolTip": "GYMPT\\Pages\\Memberships\\MembershipCreate.cshtml.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAAA8AAAAlAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-07T16:07:26.753Z",
+              "DocumentIndex": 0,
+              "Title": "Membership.cshtml",
+              "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Pages\\Memberships\\Membership.cshtml",
+              "RelativeDocumentMoniker": "GYMPT\\Pages\\Memberships\\Membership.cshtml",
+              "ToolTip": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Pages\\Memberships\\Membership.cshtml",
+              "RelativeToolTip": "GYMPT\\Pages\\Memberships\\Membership.cshtml",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAACEAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-10-07T17:29:49.705Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "Create.cshtml.cs",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Pages\\Clients\\Create.cshtml.cs",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Clients\\Create.cshtml.cs",
@@ -275,7 +279,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "EditClient.cshtml.cs",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Pages\\Clients\\EditClient.cshtml.cs",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Clients\\EditClient.cshtml.cs",
@@ -288,7 +292,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "Create.cshtml.cs",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Pages\\Instructors\\Create.cshtml.cs",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Instructors\\Create.cshtml.cs",
@@ -301,7 +305,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "Discipline.cshtml.cs",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Pages\\Disciplines\\Discipline.cshtml.cs",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Disciplines\\Discipline.cshtml.cs",
@@ -314,7 +318,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "EditInstructor.cshtml.cs",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Pages\\Instructors\\EditInstructor.cshtml.cs",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Instructors\\EditInstructor.cshtml.cs",
@@ -327,7 +331,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "User.cshtml",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Pages\\Users\\User.cshtml",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Users\\User.cshtml",
@@ -340,7 +344,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 1,
               "Title": "Membership.cshtml.cs",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Pages\\Memberships\\Membership.cshtml.cs",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Memberships\\Membership.cshtml.cs",
@@ -353,7 +357,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 8,
+              "Title": "MembershipCreate.cshtml.cs",
+              "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Pages\\Memberships\\MembershipCreate.cshtml.cs",
+              "RelativeDocumentMoniker": "GYMPT\\Pages\\Memberships\\MembershipCreate.cshtml.cs",
+              "ToolTip": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Pages\\Memberships\\MembershipCreate.cshtml.cs",
+              "RelativeToolTip": "GYMPT\\Pages\\Memberships\\MembershipCreate.cshtml.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAA8AAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-07T16:07:26.753Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
               "Title": "InstructorDetails.cshtml",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Pages\\SpecificUserDetail\\InstructorDetails.cshtml",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\SpecificUserDetail\\InstructorDetails.cshtml",
@@ -366,7 +383,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "ClientDetails.cshtml",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Pages\\SpecificUserDetail\\ClientDetails.cshtml",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\SpecificUserDetail\\ClientDetails.cshtml",
@@ -379,7 +396,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "ClientDetails.cshtml.cs",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Pages\\SpecificUserDetail\\ClientDetails.cshtml.cs",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\SpecificUserDetail\\ClientDetails.cshtml.cs",
@@ -392,7 +409,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "InstructorDetails.cshtml.cs",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Pages\\SpecificUserDetail\\InstructorDetails.cshtml.cs",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\SpecificUserDetail\\InstructorDetails.cshtml.cs",
@@ -405,7 +422,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "ClientRepository.cs",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Data\\Repositories\\ClientRepository.cs",
               "RelativeDocumentMoniker": "GYMPT\\Data\\Repositories\\ClientRepository.cs",
@@ -418,7 +435,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Program.cs",
               "RelativeDocumentMoniker": "GYMPT\\Program.cs",
@@ -431,7 +448,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "ClientRepositoryCreator.cs",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Factories\\ClientRepositoryCreator.cs",
               "RelativeDocumentMoniker": "GYMPT\\Factories\\ClientRepositoryCreator.cs",
@@ -444,7 +461,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "MembershipEdit.cshtml.cs",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Pages\\Memberships\\MembershipEdit.cshtml.cs",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Memberships\\MembershipEdit.cshtml.cs",
@@ -457,7 +474,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 17,
               "Title": "UserRepositoryCreator.cs",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Factories\\UserRepositoryCreator.cs",
               "RelativeDocumentMoniker": "GYMPT\\Factories\\UserRepositoryCreator.cs",
@@ -470,7 +487,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 18,
               "Title": "RepositoryCreator.cs",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Factories\\RepositoryCreator.cs",
               "RelativeDocumentMoniker": "GYMPT\\Factories\\RepositoryCreator.cs",
@@ -483,7 +500,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 19,
               "Title": "MembershipRepositoryCreator.cs",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Factories\\MembershipRepositoryCreator.cs",
               "RelativeDocumentMoniker": "GYMPT\\Factories\\MembershipRepositoryCreator.cs",
@@ -496,7 +513,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 20,
               "Title": "InstructorRepositoryCreator.cs",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Factories\\InstructorRepositoryCreator.cs",
               "RelativeDocumentMoniker": "GYMPT\\Factories\\InstructorRepositoryCreator.cs",
@@ -509,7 +526,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 21,
               "Title": "DisciplineRepositoryCreator.cs",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Factories\\DisciplineRepositoryCreator.cs",
               "RelativeDocumentMoniker": "GYMPT\\Factories\\DisciplineRepositoryCreator.cs",
@@ -522,7 +539,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 22,
               "Title": "DetailUserRepositoryCreator.cs",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Factories\\DetailUserRepositoryCreator.cs",
               "RelativeDocumentMoniker": "GYMPT\\Factories\\DetailUserRepositoryCreator.cs",
@@ -535,7 +552,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 23,
               "Title": "UserRepository.cs",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Data\\Repositories\\UserRepository.cs",
               "RelativeDocumentMoniker": "GYMPT\\Data\\Repositories\\UserRepository.cs",
@@ -548,7 +565,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 24,
               "Title": "MembershipRepository.cs",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Data\\Repositories\\MembershipRepository.cs",
               "RelativeDocumentMoniker": "GYMPT\\Data\\Repositories\\MembershipRepository.cs",
@@ -561,7 +578,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 25,
               "Title": "InstructorRepository.cs",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Data\\Repositories\\InstructorRepository.cs",
               "RelativeDocumentMoniker": "GYMPT\\Data\\Repositories\\InstructorRepository.cs",
@@ -574,7 +591,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 26,
               "Title": "DisciplineRepository.cs",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Data\\Repositories\\DisciplineRepository.cs",
               "RelativeDocumentMoniker": "GYMPT\\Data\\Repositories\\DisciplineRepository.cs",
@@ -587,7 +604,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 27,
               "Title": "DetailUserRepository.cs",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Data\\Repositories\\DetailUserRepository.cs",
               "RelativeDocumentMoniker": "GYMPT\\Data\\Repositories\\DetailUserRepository.cs",
@@ -600,7 +617,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 28,
               "Title": "IRepository.cs",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Data\\Contracts\\IRepository.cs",
               "RelativeDocumentMoniker": "GYMPT\\Data\\Contracts\\IRepository.cs",
@@ -613,7 +630,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 29,
               "Title": "DetailsUsers.cshtml.cs",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Pages\\DetailsUsers\\DetailsUsers.cshtml.cs",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\DetailsUsers\\DetailsUsers.cshtml.cs",
@@ -626,7 +643,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 31,
               "Title": "DeleteUser.cshtml.cs",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Pages\\Users\\DeleteUser.cshtml.cs",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Users\\DeleteUser.cshtml.cs",
@@ -639,7 +656,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 32,
               "Title": "Create.cshtml.cs",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Pages\\Users\\Create.cshtml.cs",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Users\\Create.cshtml.cs",
@@ -652,7 +669,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 30,
               "Title": "User.cshtml.cs",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Pages\\Users\\User.cshtml.cs",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Users\\User.cshtml.cs",
@@ -665,7 +682,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 33,
               "Title": "Create.cshtml",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Pages\\Clients\\Create.cshtml",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Clients\\Create.cshtml",
@@ -678,7 +695,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 34,
               "Title": "DisciplineEdit.cshtml.cs",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Pages\\Disciplines\\DisciplineEdit.cshtml.cs",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Disciplines\\DisciplineEdit.cshtml.cs",
@@ -691,7 +708,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 35,
               "Title": "DisciplineDelete.cshtml.cs",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Pages\\Disciplines\\DisciplineDelete.cshtml.cs",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Disciplines\\DisciplineDelete.cshtml.cs",
@@ -704,7 +721,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 36,
               "Title": "DisciplineCreate.cshtml.cs",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Pages\\Disciplines\\DisciplineCreate.cshtml.cs",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Disciplines\\DisciplineCreate.cshtml.cs",
@@ -717,7 +734,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 37,
               "Title": "Membership.cs",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Models\\Membership.cs",
               "RelativeDocumentMoniker": "GYMPT\\Models\\Membership.cs",
@@ -730,7 +747,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 38,
               "Title": "Create.cshtml",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Pages\\Users\\Create.cshtml",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Users\\Create.cshtml",
@@ -742,7 +759,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 39,
               "Title": "DeleteUser.cshtml",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Pages\\Users\\DeleteUser.cshtml",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Users\\DeleteUser.cshtml",
@@ -754,7 +771,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 40,
               "Title": "Index.cshtml",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Pages\\Index.cshtml",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Index.cshtml",
@@ -766,7 +783,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 41,
               "Title": "EditInstructor.cshtml",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Pages\\Instructors\\EditInstructor.cshtml",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Instructors\\EditInstructor.cshtml",
@@ -778,7 +795,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
+              "DocumentIndex": 42,
               "Title": "Create.cshtml",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Pages\\Instructors\\Create.cshtml",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Instructors\\Create.cshtml",
@@ -790,7 +807,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 49,
+              "DocumentIndex": 50,
               "Title": "User.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\CARPETA MAESTRA\\materias\\12vo semestre\\Arquitectura del software\\Practica2-ArquiSoftware\\Practica2-ArquiSoftware\\GYMPT\\Domain\\User.cs",
               "ToolTip": "C:\\Users\\ASUS\\Desktop\\CARPETA MAESTRA\\materias\\12vo semestre\\Arquitectura del software\\Practica2-ArquiSoftware\\Practica2-ArquiSoftware\\GYMPT\\Domain\\User.cs",
@@ -800,7 +817,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 50,
+              "DocumentIndex": 51,
               "Title": "IInstructorRepository.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\CARPETA MAESTRA\\materias\\12vo semestre\\Arquitectura del software\\Practica2-ArquiSoftware\\Practica2-ArquiSoftware\\GYMPT\\Data\\Contracts\\IInstructorRepository.cs",
               "ToolTip": "C:\\Users\\ASUS\\Desktop\\CARPETA MAESTRA\\materias\\12vo semestre\\Arquitectura del software\\Practica2-ArquiSoftware\\Practica2-ArquiSoftware\\GYMPT\\Data\\Contracts\\IInstructorRepository.cs",
@@ -810,7 +827,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 51,
+              "DocumentIndex": 52,
               "Title": "IClientRepository.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\CARPETA MAESTRA\\materias\\12vo semestre\\Arquitectura del software\\Practica2-ArquiSoftware\\Practica2-ArquiSoftware\\GYMPT\\Data\\Contracts\\IClientRepository.cs",
               "ToolTip": "C:\\Users\\ASUS\\Desktop\\CARPETA MAESTRA\\materias\\12vo semestre\\Arquitectura del software\\Practica2-ArquiSoftware\\Practica2-ArquiSoftware\\GYMPT\\Data\\Contracts\\IClientRepository.cs",
@@ -820,7 +837,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 42,
+              "DocumentIndex": 43,
               "Title": "EditClient.cshtml",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Pages\\Clients\\EditClient.cshtml",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Clients\\EditClient.cshtml",
@@ -832,7 +849,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 52,
+              "DocumentIndex": 53,
               "Title": "Users.cshtml",
               "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\CARPETA MAESTRA\\materias\\12vo semestre\\Arquitectura del software\\Practica2-ArquiSoftware\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Users.cshtml",
               "ToolTip": "C:\\Users\\ASUS\\Desktop\\CARPETA MAESTRA\\materias\\12vo semestre\\Arquitectura del software\\Practica2-ArquiSoftware\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Users.cshtml",
@@ -842,7 +859,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 53,
+              "DocumentIndex": 54,
               "Title": "Memberships.cshtml",
               "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\CARPETA MAESTRA\\materias\\12vo semestre\\Arquitectura del software\\Practica2-ArquiSoftware\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Memberships.cshtml",
               "ToolTip": "C:\\Users\\ASUS\\Desktop\\CARPETA MAESTRA\\materias\\12vo semestre\\Arquitectura del software\\Practica2-ArquiSoftware\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Memberships.cshtml",
@@ -852,7 +869,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 44,
+              "DocumentIndex": 45,
               "Title": "_ViewImports.cshtml",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Pages\\_ViewImports.cshtml",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\_ViewImports.cshtml",
@@ -864,7 +881,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 43,
+              "DocumentIndex": 44,
               "Title": "_ViewStart.cshtml",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Pages\\_ViewStart.cshtml",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\_ViewStart.cshtml",
@@ -876,7 +893,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 54,
+              "DocumentIndex": 55,
               "Title": "Instructor.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\CARPETA MAESTRA\\materias\\12vo semestre\\Arquitectura del software\\Practica2-ArquiSoftware\\Practica2-ArquiSoftware\\GYMPT\\Domain\\Instructor.cs",
               "ToolTip": "C:\\Users\\ASUS\\Desktop\\CARPETA MAESTRA\\materias\\12vo semestre\\Arquitectura del software\\Practica2-ArquiSoftware\\Practica2-ArquiSoftware\\GYMPT\\Domain\\Instructor.cs",
@@ -886,7 +903,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 55,
+              "DocumentIndex": 56,
               "Title": "Client.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\CARPETA MAESTRA\\materias\\12vo semestre\\Arquitectura del software\\Practica2-ArquiSoftware\\Practica2-ArquiSoftware\\GYMPT\\Domain\\Client.cs",
               "ToolTip": "C:\\Users\\ASUS\\Desktop\\CARPETA MAESTRA\\materias\\12vo semestre\\Arquitectura del software\\Practica2-ArquiSoftware\\Practica2-ArquiSoftware\\GYMPT\\Domain\\Client.cs",
@@ -896,7 +913,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 56,
+              "DocumentIndex": 57,
               "Title": "Users.cshtml.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\CARPETA MAESTRA\\materias\\12vo semestre\\Arquitectura del software\\Practica2-ArquiSoftware\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Users.cshtml.cs",
               "ToolTip": "C:\\Users\\ASUS\\Desktop\\CARPETA MAESTRA\\materias\\12vo semestre\\Arquitectura del software\\Practica2-ArquiSoftware\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Users.cshtml.cs",
@@ -906,7 +923,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 57,
+              "DocumentIndex": 58,
               "Title": "DetailsUsers.cshtml",
               "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\CARPETA MAESTRA\\materias\\12vo semestre\\Arquitectura del software\\Practica2-ArquiSoftware\\Practica2-ArquiSoftware\\GYMPT\\Pages\\DetailsUsers.cshtml",
               "ToolTip": "C:\\Users\\ASUS\\Desktop\\CARPETA MAESTRA\\materias\\12vo semestre\\Arquitectura del software\\Practica2-ArquiSoftware\\Practica2-ArquiSoftware\\GYMPT\\Pages\\DetailsUsers.cshtml",
@@ -916,7 +933,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 58,
+              "DocumentIndex": 59,
               "Title": "DetailsUsers.cshtml.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\CARPETA MAESTRA\\materias\\12vo semestre\\Arquitectura del software\\Practica2-ArquiSoftware\\Practica2-ArquiSoftware\\GYMPT\\Pages\\DetailsUsers.cshtml.cs",
               "ToolTip": "C:\\Users\\ASUS\\Desktop\\CARPETA MAESTRA\\materias\\12vo semestre\\Arquitectura del software\\Practica2-ArquiSoftware\\Practica2-ArquiSoftware\\GYMPT\\Pages\\DetailsUsers.cshtml.cs",
@@ -926,7 +943,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 45,
+              "DocumentIndex": 46,
               "Title": "appsettings.json",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\appsettings.json",
               "RelativeDocumentMoniker": "GYMPT\\appsettings.json",
@@ -938,7 +955,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 46,
+              "DocumentIndex": 47,
               "Title": "LogEntry.cs",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Models\\LogEntry.cs",
               "RelativeDocumentMoniker": "GYMPT\\Models\\LogEntry.cs",
@@ -950,7 +967,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 47,
+              "DocumentIndex": 48,
               "Title": "RemoteLoggerSingleton.cs",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Services\\RemoteLoggerSingleton.cs",
               "RelativeDocumentMoniker": "GYMPT\\Services\\RemoteLoggerSingleton.cs",
@@ -963,7 +980,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 48,
+              "DocumentIndex": 49,
               "Title": "Discipline.cs",
               "DocumentMoniker": "D:\\universidad\\semestre8\\Arquitectura\\P2 - GPT5\\GYMPT\\GYMPT\\Models\\Discipline.cs",
               "RelativeDocumentMoniker": "GYMPT\\Models\\Discipline.cs",
@@ -975,7 +992,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 59,
+              "DocumentIndex": 60,
               "Title": "ClientData.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\CARPETA MAESTRA\\materias\\12vo semestre\\Arquitectura del software\\Practica2-ArquiSoftware\\Practica2-ArquiSoftware\\GYMPT\\Models\\ClientData.cs",
               "ToolTip": "C:\\Users\\ASUS\\Desktop\\CARPETA MAESTRA\\materias\\12vo semestre\\Arquitectura del software\\Practica2-ArquiSoftware\\Practica2-ArquiSoftware\\GYMPT\\Models\\ClientData.cs",
@@ -985,7 +1002,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 60,
+              "DocumentIndex": 61,
               "Title": "Memberships.cshtml.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\CARPETA MAESTRA\\materias\\12vo semestre\\Arquitectura del software\\Practica2-ArquiSoftware\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Memberships.cshtml.cs",
               "ToolTip": "C:\\Users\\ASUS\\Desktop\\CARPETA MAESTRA\\materias\\12vo semestre\\Arquitectura del software\\Practica2-ArquiSoftware\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Memberships.cshtml.cs",
@@ -995,7 +1012,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 61,
+              "DocumentIndex": 62,
               "Title": "Disciplines.cshtml.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\CARPETA MAESTRA\\materias\\12vo semestre\\Arquitectura del software\\Practica2-ArquiSoftware\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Disciplines.cshtml.cs",
               "ToolTip": "C:\\Users\\ASUS\\Desktop\\CARPETA MAESTRA\\materias\\12vo semestre\\Arquitectura del software\\Practica2-ArquiSoftware\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Disciplines.cshtml.cs",
