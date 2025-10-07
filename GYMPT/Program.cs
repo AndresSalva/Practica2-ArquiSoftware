@@ -9,10 +9,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 
 
-builder.Services.AddDbContext<GYMPTContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("GYMPTContext") ?? throw new InvalidOperationException("Connection string 'GYMPTContext' not found.")));
-
-
 var app = builder.Build();
 
 
