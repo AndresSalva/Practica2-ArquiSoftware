@@ -73,7 +73,7 @@ namespace GYMPT.Services
                     };
 
                     // Asume que tienes una tabla "logs"
-                    var sql = "INSERT INTO logs (timestamp, level, message, client_identifier) VALUES (@Timestamp, @Level, @Message, @ClientIdentifier)";
+                    var sql = "INSERT INTO logs (created_at, level, message, client_identifier) VALUES (@CreatedAt, @Level, @Message, @ClientIdentifier)";
 
                     // Dapper se encarga de la ejecución
                     await conn.ExecuteAsync(sql, logEntry);
