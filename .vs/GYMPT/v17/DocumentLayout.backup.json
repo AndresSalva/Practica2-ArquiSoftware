@@ -289,8 +289,7 @@
               "RelativeToolTip": "GYMPT\\Services\\RemoteLoggerSingleton.cs",
               "ViewState": "AgIAAEIAAAAAAAAAAAAkwFsAAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-28T18:46:14.65Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-28T18:46:14.65Z"
             },
             {
               "$type": "Document",
@@ -300,7 +299,7 @@
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Index.cshtml",
               "ToolTip": "D:\\Arquitectura de Soft\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Index.cshtml",
               "RelativeToolTip": "GYMPT\\Pages\\Index.cshtml",
-              "ViewState": "AgIAALEAAAAAAAAAAAAAAK0AAABIAAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-10-06T00:52:17.574Z",
               "EditorCaption": ""
@@ -315,8 +314,7 @@
               "RelativeToolTip": "GYMPT\\Data\\Repositories\\UserRepository.cs",
               "ViewState": "AgIAAEQAAAAAAAAAAAAYwE4AAACqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-29T15:23:32.218Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-29T15:23:32.218Z"
             },
             {
               "$type": "Document",
@@ -328,8 +326,7 @@
               "RelativeToolTip": "GYMPT\\Data\\Repositories\\InstructorRepository.cs",
               "ViewState": "AgIAAEYAAAAAAAAAAAAkwFEAAAB9AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-06T02:29:52.558Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-06T02:29:52.558Z"
             },
             {
               "$type": "Document",
@@ -341,8 +338,7 @@
               "RelativeToolTip": "GYMPT\\Data\\Repositories\\DisciplineRepository.cs",
               "ViewState": "AgIAADAAAAAAAAAAAAAYwDoAAACAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-29T15:05:29.764Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-29T15:05:29.764Z"
             },
             {
               "$type": "Document",
@@ -354,8 +350,7 @@
               "RelativeToolTip": "GYMPT\\Data\\Repositories\\DetailUserRepository.cs",
               "ViewState": "AgIAACAAAAAAAAAAAAAAACAAAAB5AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-29T15:24:05.285Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-29T15:24:05.285Z"
             },
             {
               "$type": "Document",
@@ -367,8 +362,7 @@
               "RelativeToolTip": "GYMPT\\Data\\Repositories\\ClientRepository.cs",
               "ViewState": "AgIAAEUAAAAAAAAAAAAYwE8AAAB9AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-06T00:46:48.893Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-06T00:46:48.893Z"
             },
             {
               "$type": "Document",
@@ -380,8 +374,7 @@
               "RelativeToolTip": "GYMPT\\Data\\Repositories\\MembershipRepository.cs",
               "ViewState": "AgIAAAsAAAAAAAAAAAAAwBQAAABmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-06T00:46:46.926Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-06T00:46:46.926Z"
             },
             {
               "$type": "Document",
@@ -393,8 +386,7 @@
               "RelativeToolTip": "GYMPT\\Models\\User.cs",
               "ViewState": "AgIAAAUAAAAAAAAAAAAAAAUAAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-08T15:08:37.644Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-08T15:08:37.644Z"
             },
             {
               "$type": "Document",
@@ -406,8 +398,7 @@
               "RelativeToolTip": "GYMPT\\Pages\\Shared\\_Layout.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAGkAAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-10-08T15:07:52.359Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-08T15:07:52.359Z"
             },
             {
               "$type": "Document",
@@ -419,8 +410,7 @@
               "RelativeToolTip": "GYMPT\\Factories\\UserRepositoryCreator.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-07T15:07:20.951Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-07T15:07:20.951Z"
             },
             {
               "$type": "Document",
@@ -432,8 +422,7 @@
               "RelativeToolTip": "GYMPT\\Pages\\Memberships\\Membership.cshtml.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-07T16:05:02.635Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-07T16:05:02.635Z"
             },
             {
               "$type": "Document",
@@ -445,8 +434,7 @@
               "RelativeToolTip": "GYMPT\\Pages\\Memberships\\Membership.cshtml",
               "ViewState": "AgIAACoAAAAAAAAAAAAAACEAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-10-07T17:29:49.705Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-07T17:29:49.705Z"
             },
             {
               "$type": "Document",
@@ -458,8 +446,7 @@
               "RelativeToolTip": "GYMPT\\Factories\\InstructorRepositoryCreator.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-07T15:05:17.508Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-07T15:05:17.508Z"
             },
             {
               "$type": "Document",
@@ -471,8 +458,7 @@
               "RelativeToolTip": "GYMPT\\Factories\\RepositoryCreator.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-07T14:45:19.055Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-07T14:45:19.055Z"
             },
             {
               "$type": "Document",
@@ -484,8 +470,7 @@
               "RelativeToolTip": "GYMPT\\Factories\\ClientRepositoryCreator.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-07T15:04:38.738Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-07T15:04:38.738Z"
             },
             {
               "$type": "Document",
@@ -497,8 +482,7 @@
               "RelativeToolTip": "GYMPT\\Factories\\DisciplineRepositoryCreator.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-07T15:05:45.291Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-07T15:05:45.291Z"
             },
             {
               "$type": "Document",
@@ -510,8 +494,7 @@
               "RelativeToolTip": "GYMPT\\Pages\\Index.cshtml.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-08T16:29:24.37Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-08T16:29:24.37Z"
             },
             {
               "$type": "Document",
