@@ -15,7 +15,7 @@ namespace GYMPT.Factories
             var entities = await repository.GetAllAsync();
             int count = entities.Count();
 
-            return $"El repositorio para '{typeof(T).Name}' está funcionando y reporta {count} entidades activas.";
+            return $"The repository for '{typeof(T).Name}' is working and reporting {count} active entities.";
         }
     }
 }

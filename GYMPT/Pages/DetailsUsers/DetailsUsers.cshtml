@@ -6,7 +6,6 @@
 
 <h1>Detalles de Usuarios con Membresías</h1>
 
-<!-- Mensajes -->
 @if (TempData["SuccessMessage"] != null)
 {
     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -29,12 +28,10 @@
     </div>
 }
 
-<!-- Botón para mostrar formulario -->
 <button id="btnShowForm" class="btn btn-success mb-3">
     <i class="fas fa-plus"></i> Agregar Detalle de Usuario
 </button>
 
-<!-- Formulario oculto inicialmente -->
 <div id="formContainer" class="card mb-4" style="display:none;">
     <div class="card-header">
         <h5 id="formTitle">Agregar Detalle de Usuario</h5>
@@ -105,7 +102,6 @@
     </div>
 </div>
 
-<!-- Tabla de detalles de usuario -->
 @if (Model.DetailsUserList.Any())
 {
     <div class="card">
@@ -195,7 +191,6 @@ else
         const updateButton = document.getElementById('updateButton');
         const formTitle = document.getElementById('formTitle');
 
-        // Mostrar formulario para crear nuevo detalle
         btnShowForm.addEventListener('click', () => {
             resetForm();
             formTitle.textContent = 'Agregar Detalle de Usuario';
@@ -205,7 +200,6 @@ else
             btnShowForm.style.display = 'none';
         });
 
-        // Ocultar formulario
         function hideForm() {
             formContainer.style.display = 'none';
             btnShowForm.style.display = 'inline-block';
@@ -213,14 +207,12 @@ else
             updateButton.style.display = 'none';
         }
 
-        // Resetear formulario
         function resetForm() {
             document.getElementById('detailUserForm').reset();
             document.querySelector('[name="DetailUser.Id"]').value = '0';
             document.querySelector('[name="DetailUser.IsActive"]').checked = true;
         }
 
-        // Llenar formulario para editar
         function fillEditForm(id, userId, membershipId, startDate, endDate, sessionsLeft, isActive) {
             resetForm();
 
@@ -238,11 +230,9 @@ else
             formContainer.style.display = 'block';
             btnShowForm.style.display = 'none';
 
-            // Scroll suave al formulario
             formContainer.scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Validación de fechas en tiempo real
         document.addEventListener('DOMContentLoaded', function() {
             const startDateInput = document.querySelector('[name="DetailUser.StartDate"]');
             const endDateInput = document.querySelector('[name="DetailUser.EndDate"]');
