@@ -19,7 +19,7 @@ namespace GYMPT.Data.Repositories
         {
             try
             {
-                await RemoteLoggerSingleton.Instance.LogInfo($"Creando un nuevo usuario: {entity.Name} {entity.FirstLastname}");
+                await RemoteLoggerSingleton.Instance.LogInfo($"Creating new user: {entity.Name} {entity.FirstLastname}");
                 using var conn = new NpgsqlConnection(_postgresString);
                 var sql = @"INSERT INTO ""user"" (name, first_lastname, second_lastname, date_birth, ci, ""role"", created_at, last_modification, is_active) VALUES (@Name, @FirstLastname, @SecondLastname, @DateBirth, @Ci, @Role, @CreatedAt, @LastModification, @IsActive) RETURNING id;";
 
@@ -32,7 +32,7 @@ namespace GYMPT.Data.Repositories
             }
             catch (Exception ex)
             {
-                await RemoteLoggerSingleton.Instance.LogError($"Error al crear el usuario '{entity.Name}': {ex.Message}", ex);
+                await RemoteLoggerSingleton.Instance.LogError($"Error trying to create user '{entity.Name}': {ex.Message}", ex);
                 throw;
             }
         }
@@ -41,7 +41,7 @@ namespace GYMPT.Data.Repositories
         {
             try
             {
-                await RemoteLoggerSingleton.Instance.LogInfo($"Eliminando usuario con Id: {id}");
+                await RemoteLoggerSingleton.Instance.LogInfo($"Deleting user: {id}");
                 using var conn = new NpgsqlConnection(_postgresString);
                 var sql = @"UPDATE ""user"" SET is_active = false, last_modification = @LastModification WHERE id = @Id;";
                 var affected = await conn.ExecuteAsync(sql, new { Id = id, LastModification = DateTime.UtcNow });
@@ -49,7 +49,7 @@ namespace GYMPT.Data.Repositories
             }
             catch (Exception ex)
             {
-                await RemoteLoggerSingleton.Instance.LogError($"Error al eliminar el usuario (Id: {id}): {ex.Message}", ex);
+                await RemoteLoggerSingleton.Instance.LogError($"Error trying to eliminate user (Id: {id}): {ex.Message}", ex);
                 throw;
             }
         }
@@ -58,14 +58,14 @@ namespace GYMPT.Data.Repositories
         {
             try
             {
-                await RemoteLoggerSingleton.Instance.LogInfo("Solicitando la lista completa de usuarios con Dapper.");
+                await RemoteLoggerSingleton.Instance.LogInfo("Trying to obtain full list");
                 using var conn = new NpgsqlConnection(_postgresString);
                 var sql = @"SELECT id, created_at AS CreatedAt, last_modification AS LastModification, is_active AS IsActive, name, first_lastname AS FirstLastname, second_lastname AS SecondLastname, date_birth AS DateBirth, ci, ""role"" AS Role FROM ""user"" WHERE is_active = true;";
                 return await conn.QueryAsync<User>(sql);
             }
             catch (Exception ex)
             {
-                await RemoteLoggerSingleton.Instance.LogError($"Error al obtener todos los usuarios: {ex.Message}", ex);
+                await RemoteLoggerSingleton.Instance.LogError($"Error trying to obtain all users: {ex.Message}", ex);
                 throw;
             }
         }
@@ -74,14 +74,14 @@ namespace GYMPT.Data.Repositories
         {
             try
             {
-                await RemoteLoggerSingleton.Instance.LogInfo($"Solicitando usuario con ID: {id} con Dapper.");
+                await RemoteLoggerSingleton.Instance.LogInfo($"Trying to obtain user with id: {id} con Dapper.");
                 using var conn = new NpgsqlConnection(_postgresString);
                 var sql = @"SELECT id, name, first_lastname AS FirstLastname, second_lastname AS SecondLastname, date_birth AS DateBirth, ci, ""role"" AS Role, created_at AS CreatedAt, last_modification AS LastModification, is_active as IsActive FROM ""user"" WHERE id = @Id AND is_active = true;";
                 return await conn.QuerySingleOrDefaultAsync<User>(sql, new { Id = id });
             }
             catch (Exception ex)
             {
-                await RemoteLoggerSingleton.Instance.LogError($"Error al obtener el usuario (Id: {id}): {ex.Message}", ex);
+                await RemoteLoggerSingleton.Instance.LogError($"Error trying to obtain user with (Id: {id}): {ex.Message}", ex);
                 throw;
             }
         }
@@ -90,7 +90,7 @@ namespace GYMPT.Data.Repositories
         {
             try
             {
-                await RemoteLoggerSingleton.Instance.LogInfo($"Actualizando usuario con Id: {entity.Id}");
+                await RemoteLoggerSingleton.Instance.LogInfo($"Updating user with id: {entity.Id}");
                 using var conn = new NpgsqlConnection(_postgresString);
                 var sql = @"UPDATE ""user"" SET name = @Name, first_lastname = @FirstLastname, second_lastname = @SecondLastname, date_birth = @DateBirth, ci = @CI, ""role"" = @Role, last_modification = @LastModification, is_active = @IsActive WHERE id = @Id;";
 
@@ -100,7 +100,7 @@ namespace GYMPT.Data.Repositories
             }
             catch (Exception ex)
             {
-                await RemoteLoggerSingleton.Instance.LogError($"Error al actualizar el usuario (Id: {entity.Id}): {ex.Message}", ex);
+                await RemoteLoggerSingleton.Instance.LogError($"Error trying to update user (Id: {entity.Id}): {ex.Message}", ex);
                 throw;
             }
         }

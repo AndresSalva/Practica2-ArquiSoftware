@@ -9,17 +9,15 @@ namespace GYMPT.Services
 {
     public sealed class RemoteLoggerSingleton
     {
-        #region Implementación del Patrón Singleton
+        #region Singleton implementation
 
         private static RemoteLoggerSingleton _instance;
         private static readonly object _lock = new object();
 
-        // El logger ahora guardará la cadena de conexión
         private string _postgresString;
 
         private RemoteLoggerSingleton() { }
 
-        // El método de configuración ahora recibe IConfiguration para leer el appsettings.json
         public static void Configure()
         {
             if (_instance == null)
@@ -41,7 +39,7 @@ namespace GYMPT.Services
             {
                 if (_instance == null)
                 {
-                    throw new InvalidOperationException("El RemoteLoggerSingleton no ha sido configurado. Llama a Configure() en Program.cs.");
+                    throw new InvalidOperationException("The RemoteLoggerSingleton has not been configured. Call Configure() in Program.cs.");
                 }
                 return _instance;
             }
@@ -49,13 +47,13 @@ namespace GYMPT.Services
 
         #endregion
 
-        #region Lógica del Logger (Adaptada a PostgreSQL y Dapper)
+        #region Logger
 
         private async Task Log(string level, string message)
         {
             if (string.IsNullOrEmpty(_postgresString))
             {
-                Console.WriteLine("ADVERTENCIA: El logger no tiene una cadena de conexión. El log se perderá.");
+                Console.WriteLine("WARNING: The logger does not have a connection string. The log will be lost.");
                 return;
             }
 
@@ -72,10 +70,8 @@ namespace GYMPT.Services
                         ClientIdentifier = machineName
                     };
 
-                    // Asume que tienes una tabla "logs"
                     var sql = "INSERT INTO logs (created_at, level, message, client_identifier) VALUES (@CreatedAt, @Level, @Message, @ClientIdentifier)";
 
-                    // Dapper se encarga de la ejecución
                     await conn.ExecuteAsync(sql, logEntry);
                 }
             }
@@ -87,7 +83,7 @@ namespace GYMPT.Services
 
         #endregion
 
-        #region Métodos Públicos (Sin cambios)
+        #region Public methods
 
         public async Task LogInfo(string message)
         {

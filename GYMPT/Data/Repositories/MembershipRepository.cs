@@ -17,7 +17,7 @@ namespace GYMPT.Data.Repositories
 
         public async Task<Membership> CreateAsync(Membership entity)
         {
-            await RemoteLoggerSingleton.Instance.LogInfo($"Creando nueva membresía: {entity.Name}");
+            await RemoteLoggerSingleton.Instance.LogInfo($"Creating new membership: {entity.Name}");
             var sql = @"INSERT INTO membership (name, price, description, monthly_sessions, created_at, last_modification, is_active) VALUES (@Name, @Price, @Description, @MonthlySessions, @CreatedAt, @LastModification, @IsActive) RETURNING id;";
             using (var conn = new NpgsqlConnection(_postgresString))
             {
@@ -32,7 +32,7 @@ namespace GYMPT.Data.Repositories
 
         public async Task<bool> DeleteByIdAsync(int id)
         {
-            await RemoteLoggerSingleton.Instance.LogInfo($"Dando de baja membresía con ID: {id}.");
+            await RemoteLoggerSingleton.Instance.LogInfo($"Deleting membership with id: {id}.");
             var sql = @"UPDATE membership SET is_active = false, last_modification = @LastModification WHERE id = @Id;";
             using (var conn = new NpgsqlConnection(_postgresString))
             {
@@ -43,7 +43,7 @@ namespace GYMPT.Data.Repositories
 
         public async Task<IEnumerable<Membership>> GetAllAsync()
         {
-            await RemoteLoggerSingleton.Instance.LogInfo("Solicitando la lista de membresías.");
+            await RemoteLoggerSingleton.Instance.LogInfo("Searching for membership list");
             using (var conn = new NpgsqlConnection(_postgresString))
             {
                 var sql = @"SELECT id, name, price, description, monthly_sessions AS MonthlySessions, created_at AS CreatedAt, last_modification AS LastModification, is_active as IsActive FROM membership WHERE is_active = true;";
@@ -53,7 +53,7 @@ namespace GYMPT.Data.Repositories
 
         public async Task<Membership> GetByIdAsync(int id)
         {
-            await RemoteLoggerSingleton.Instance.LogInfo($"Solicitando membresía con ID: {id}");
+            await RemoteLoggerSingleton.Instance.LogInfo($"Searching for membership list with id: {id}");
             using (var conn = new NpgsqlConnection(_postgresString))
             {
                 var sql = @"SELECT id, name, price, description, monthly_sessions AS MonthlySessions, created_at AS CreatedAt, last_modification AS LastModification, is_active as IsActive FROM membership WHERE id = @Id;";
@@ -63,7 +63,7 @@ namespace GYMPT.Data.Repositories
 
         public async Task<Membership> UpdateAsync(Membership entity)
         {
-            await RemoteLoggerSingleton.Instance.LogInfo($"Actualizando membresía: {entity.Name}");
+            await RemoteLoggerSingleton.Instance.LogInfo($"Updating membershi[: {entity.Name}");
             var sql = @"UPDATE membership SET name = @Name, price = @Price, description = @Description, monthly_sessions = @MonthlySessions, last_modification = @LastModification, is_active = @IsActive WHERE id = @Id;";
             using (var conn = new NpgsqlConnection(_postgresString))
             {
@@ -71,7 +71,7 @@ namespace GYMPT.Data.Repositories
                 var affectedRows = await conn.ExecuteAsync(sql, entity);
                 if (affectedRows == 0)
                 {
-                    throw new KeyNotFoundException("No se encontró la membresía para actualizar.");
+                    throw new KeyNotFoundException("We doesn't found a membership to update.");
                 }
             }
             return entity;

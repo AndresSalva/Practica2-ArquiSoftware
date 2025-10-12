@@ -9,7 +9,6 @@ namespace GYMPT.Services
 
         private ConnectionStringSingleton()
         {
-            // Construimos el IConfiguration al crear la instancia
             _configuration = new ConfigurationBuilder()
                 .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)

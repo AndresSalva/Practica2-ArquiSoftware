@@ -70,7 +70,7 @@ namespace GYMPT.Data.Repositories
         public async Task<Client> CreateAsync(Client entity)
         {
 
-            await RemoteLoggerSingleton.Instance.LogInfo($"Creando cliente: {entity.Name}");
+            await RemoteLoggerSingleton.Instance.LogInfo($"Creating client: {entity.Name}");
             using var conn = new NpgsqlConnection(_postgresString);
             await conn.OpenAsync();
             using var transaction = await conn.BeginTransactionAsync();
@@ -95,7 +95,7 @@ namespace GYMPT.Data.Repositories
             catch (Exception ex)
             {
                 await transaction.RollbackAsync();
-                await RemoteLoggerSingleton.Instance.LogError($"Error creando cliente {entity.Name}.", ex);
+                await RemoteLoggerSingleton.Instance.LogError($"Error creating client {entity.Name}.", ex);
                 throw;
             }
         }
@@ -121,7 +121,7 @@ namespace GYMPT.Data.Repositories
             catch (Exception ex)
             {
                 await transaction.RollbackAsync();
-                await RemoteLoggerSingleton.Instance.LogError($"Error actualizando cliente {entity.Id}.", ex);
+                await RemoteLoggerSingleton.Instance.LogError($"Error updating client {entity.Id}.", ex);
                 throw;
             }
         }

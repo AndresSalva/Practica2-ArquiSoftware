@@ -17,7 +17,7 @@ namespace GYMPT.Data.Repositories
 
         public async Task<Discipline> CreateAsync(Discipline entity)
         {
-            await RemoteLoggerSingleton.Instance.LogInfo($"Creando nueva disciplina: {entity.Name}.");
+            await RemoteLoggerSingleton.Instance.LogInfo($"Creating new discipline: {entity.Name}.");
             var sql = @"INSERT INTO discipline (name, id_instructor, start_time, end_time, created_at, last_modification, is_active) VALUES (@Name, @IdInstructor, @StartTime, @EndTime, @CreatedAt, @LastModification, @IsActive) RETURNING id;";
 
             using (var conn = new NpgsqlConnection(_postgresString))
@@ -34,7 +34,7 @@ namespace GYMPT.Data.Repositories
 
         public async Task<bool> DeleteByIdAsync(int id)
         {
-            await RemoteLoggerSingleton.Instance.LogInfo($"Dando de baja disciplina con ID: {id}.");
+            await RemoteLoggerSingleton.Instance.LogInfo($"Deleting discipline with id: {id}.");
             var sql = @"UPDATE discipline SET is_active = false, last_modification = @LastModification WHERE id = @Id;";
             using (var conn = new NpgsqlConnection(_postgresString))
             {
@@ -45,7 +45,7 @@ namespace GYMPT.Data.Repositories
 
         public async Task<IEnumerable<Discipline>> GetAllAsync()
         {
-            await RemoteLoggerSingleton.Instance.LogInfo("Solicitando la lista de disciplinas.");
+            await RemoteLoggerSingleton.Instance.LogInfo("Searching for discipline list.");
             var sql = @"SELECT id, name, id_instructor AS IdInstructor, start_time AS StartTime, end_time AS EndTime, created_at AS CreatedAt, last_modification AS LastModification, is_active as IsActive FROM discipline WHERE is_active = true;";
             using (var conn = new NpgsqlConnection(_postgresString))
             {
@@ -55,7 +55,7 @@ namespace GYMPT.Data.Repositories
 
         public async Task<Discipline> GetByIdAsync(int id)
         {
-            await RemoteLoggerSingleton.Instance.LogInfo($"Buscando disciplina con ID: {id}.");
+            await RemoteLoggerSingleton.Instance.LogInfo($"Searching discipline with: {id}.");
             var sql = @"SELECT id, name, id_instructor AS IdInstructor, start_time AS StartTime, end_time AS EndTime, created_at AS CreatedAt, last_modification AS LastModification, is_active as IsActive FROM discipline WHERE id = @Id;";
             using (var conn = new NpgsqlConnection(_postgresString))
             {
@@ -65,7 +65,7 @@ namespace GYMPT.Data.Repositories
 
         public async Task<Discipline> UpdateAsync(Discipline entity)
         {
-            await RemoteLoggerSingleton.Instance.LogInfo($"Actualizando disciplina con ID: {entity.Id}.");
+            await RemoteLoggerSingleton.Instance.LogInfo($"Updating discipline with: {entity.Id}.");
             var sql = @"UPDATE discipline SET name = @Name, id_instructor = @IdInstructor, start_time = @StartTime, end_time = @EndTime, last_modification = @LastModification, is_active = @IsActive WHERE id = @Id;";
             using (var conn = new NpgsqlConnection(_postgresString))
             {
@@ -73,7 +73,7 @@ namespace GYMPT.Data.Repositories
                 var affectedRows = await conn.ExecuteAsync(sql, entity);
                 if (affectedRows == 0)
                 {
-                    throw new KeyNotFoundException("No se encontró una disciplina con el ID proporcionado para actualizar.");
+                    throw new KeyNotFoundException("ID disciplne wasn't found for update.");
                 }
             }
             return entity;
