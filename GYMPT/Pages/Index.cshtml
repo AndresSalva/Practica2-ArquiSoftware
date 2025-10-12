@@ -355,6 +355,11 @@
 			border: 1px solid transparent;
 		}
 
+		.textimonial .container {
+			position: relative;
+			z-index: 2;
+		}
+
 		.btn-main, .btn-small, .btn-transparent {
 			background: linear-gradient(90deg, rgb(245, 99, 75) 0%, #fe9418 100%);
 			color: #fff;
@@ -467,6 +472,10 @@
 			position: relative;
 		}
 
+		.cta .container {
+			position: relative; /* Necesario para que z-index funcione */
+			z-index: 2; /* CAPA 2: Se coloca encima del difuminado */
+		}
 			.overly:before, .bg-4:before {
 				content: "";
 				position: absolute;
@@ -484,6 +493,7 @@
 			position: relative;
 		}
 
+
 			.overly-2:before, .textimonial:before, .cta:before, .slider:before, .page-title:before {
 				content: "";
 				position: absolute;
@@ -497,6 +507,23 @@
 				opacity: 0.8;
 			}
 
+			.slider:before {
+				content: "";
+				position: absolute;
+				left: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				background: #000;
+				opacity: 0.2; /* Le ponemos muy poca opacidad, casi no se necesita con fondo sólido */
+				z-index: 1; /* Capa 1: Por debajo del texto */
+			}
+
+		
+			.slider .container {
+				position: relative; /* Necesario para que z-index funcione */
+				z-index: 2; /* Capa 2: Por encima del difuminado */
+			}
 		#success, #error {
 			display: none;
 		}
@@ -546,8 +573,8 @@
 		}
 
 		.slider {
-			background: url("../Pages/Images") no-repeat 0% 30%;
-			background-size: cover;
+			background-color: #000000; /* Fondo negro */
+			
 			padding: 180px 0px;
 		}
 
