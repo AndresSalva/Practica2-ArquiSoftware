@@ -15,25 +15,25 @@
 
 <form method="post">
     <div class="mb-3">
-        <label asp-for="Discipline.Name" class="form-label"></label>
+        <label asp-for="Discipline.Name" class="form-label">Nombre</label>
         <input asp-for="Discipline.Name" class="form-control" />
         <span asp-validation-for="Discipline.Name" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
-        <label asp-for="Discipline.IdInstructor" class="form-label"></label>
+        <label asp-for="Discipline.IdInstructor" class="form-label">Id del instructor</label>
         <input asp-for="Discipline.IdInstructor" class="form-control" />
         <span asp-validation-for="Discipline.IdInstructor" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
-        <label asp-for="Discipline.StartTime" class="form-label"></label>
+        <label asp-for="Discipline.StartTime" class="form-label">Tiempo de inicio</label>
         <input asp-for="Discipline.StartTime" type="time" class="form-control" />
         <span asp-validation-for="Discipline.StartTime" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
-        <label asp-for="Discipline.EndTime" class="form-label"></label>
+        <label asp-for="Discipline.EndTime" class="form-label">Tiempo de finalización</label>
         <input asp-for="Discipline.EndTime" type="time" class="form-control" />
         <span asp-validation-for="Discipline.EndTime" class="text-danger"></span>
     </div>
