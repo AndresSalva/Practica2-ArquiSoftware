@@ -1,27 +1,24 @@
-using GYMPT.Factories; 
-using GYMPT.Models;
+using GYMPT.Application.Interfaces;
+using GYMPT.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Threading.Tasks;
-
 
 namespace GYMPT.Pages.SpecificUserDetail
 {
     public class InstructorDetailsModel : PageModel
     {
+        private readonly IInstructorService _instructorService;
         public Instructor Instructor { get; set; }
 
-
-        public InstructorDetailsModel()
+        public InstructorDetailsModel(IInstructorService instructorService)
         {
+            _instructorService = instructorService;
         }
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            var factory = new InstructorRepositoryCreator();
-            var instructorRepo = factory.CreateRepository();
-
-            Instructor = await instructorRepo.GetByIdAsync(id);
+            Instructor = await _instructorService.GetInstructorById(id);
 
             if (Instructor == null)
             {

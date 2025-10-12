@@ -1,6 +1,5 @@
-﻿using GYMPT.Data.Contracts;
-using GYMPT.Factories; 
-using GYMPT.Models;
+﻿using GYMPT.Application.Interfaces;
+using GYMPT.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Threading.Tasks;
@@ -9,25 +8,23 @@ namespace GYMPT.Pages.Disciplines
 {
     public class DisciplineEditModel : PageModel
     {
+        private readonly IDisciplineService _disciplineService;
+
         [BindProperty]
         public Discipline Discipline { get; set; } = new();
 
-        public DisciplineEditModel() { }
-
-        private IRepository<Discipline> CreateDisciplineRepository()
+        public DisciplineEditModel(IDisciplineService disciplineService)
         {
-            var factory = new DisciplineRepositoryCreator();
-            return factory.CreateRepository();
+            _disciplineService = disciplineService;
         }
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            var repo = CreateDisciplineRepository();
-
-            Discipline = await repo.GetByIdAsync(id);
+            Discipline = await _disciplineService.GetDisciplineById(id);
 
             if (Discipline == null)
             {
+                TempData["ErrorMessage"] = "La disciplina que intentas editar no fue encontrada.";
                 return RedirectToPage("/Disciplines/Discipline");
             }
 
@@ -41,12 +38,8 @@ namespace GYMPT.Pages.Disciplines
                 return Page();
             }
 
-            var repo = CreateDisciplineRepository();
-
-            await repo.UpdateAsync(Discipline);
-
-            TempData["Message"] = $"Disciplina '{Discipline.Name}' actualizada correctamente";
-
+            await _disciplineService.UpdateDisciplineData(Discipline);
+            TempData["SuccessMessage"] = $"Disciplina '{Discipline.Name}' actualizada correctamente.";
             return RedirectToPage("/Disciplines/Discipline");
         }
     }

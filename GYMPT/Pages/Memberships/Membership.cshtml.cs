@@ -1,36 +1,33 @@
-using GYMPT.Data.Contracts;
-using GYMPT.Factories;
-using GYMPT.Models;
+using GYMPT.Application.Interfaces;
+using GYMPT.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace GYMPT.Pages.Memberships
 {
     public class MembershipModel : PageModel
     {
-
+        private readonly IMembershipService _membershipService;
         public IEnumerable<Membership> MembershipList { get; private set; } = Enumerable.Empty<Membership>();
 
-        public MembershipModel()
+        public MembershipModel(IMembershipService membershipService)
         {
-        }
-        private IRepository<Membership> CreateMembershipRepository()
-        {
-            var factory = new MembershipRepositoryCreator();
-            return factory.CreateRepository();
+            _membershipService = membershipService;
         }
 
         public async Task OnGetAsync()
         {
-            var repo = CreateMembershipRepository();
-            var allMemberships = await repo.GetAllAsync();
-            MembershipList = allMemberships.Where(m => m.IsActive == true);
+            var allMemberships = await _membershipService.GetAllMemberships();
+            MembershipList = allMemberships.Where(m => m.IsActive);
         }
 
-        public async Task<IActionResult> OnPostDeleteAsync(short id)
+        public async Task<IActionResult> OnPostDeleteAsync(int id) // Cambiado a int para consistencia
         {
-            var repo = CreateMembershipRepository();
-            await repo.DeleteByIdAsync(id);
+            await _membershipService.DeleteMembership(id);
+            TempData["SuccessMessage"] = "Membresía eliminada correctamente.";
             return RedirectToPage();
         }
     }

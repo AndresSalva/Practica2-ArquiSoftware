@@ -1,39 +1,34 @@
-using GYMPT.Data.Contracts;
-using GYMPT.Data.Repositories;
-using GYMPT.Factories;
-using GYMPT.Models;
+using GYMPT.Application.Interfaces;
+using GYMPT.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Threading.Tasks;
 
 namespace GYMPT.Pages.Instructors
 {
     public class CreateModel : PageModel
     {
+        private readonly IInstructorService _instructorService;
 
         [BindProperty]
         public Instructor Instructor { get; set; }
 
-        public CreateModel()
+        public CreateModel(IInstructorService instructorService)
         {
-        }
-        private IRepository<Instructor> CreateInstructorRepository()
-        {
-            var factory = new InstructorRepositoryCreator();
-            return factory.CreateRepository();
+            _instructorService = instructorService;
         }
 
-        public void OnGet()
-        {
-        }
+        public void OnGet() { }
 
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
+            {
                 return Page();
+            }
 
-            var instructorRepo = CreateInstructorRepository();
-            await instructorRepo.CreateAsync(Instructor);
-
+            await _instructorService.CreateNewInstructor(Instructor);
+            TempData["SuccessMessage"] = $"Instructor '{Instructor.Name}' creado exitosamente.";
             return RedirectToPage("/Users/User");
         }
     }

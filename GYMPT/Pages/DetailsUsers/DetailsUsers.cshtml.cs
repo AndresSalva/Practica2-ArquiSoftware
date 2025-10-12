@@ -1,6 +1,5 @@
-using GYMPT.Data.Contracts;
-using GYMPT.Factories;
-using GYMPT.Models;
+using GYMPT.Application.Interfaces;
+using GYMPT.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
@@ -12,104 +11,81 @@ namespace GYMPT.Pages.DetailsUsers
 {
     public class DetailsUsersModel : PageModel
     {
+        private readonly IDetailUserService _detailUserService;
+
         [BindProperty]
         public DetailsUser DetailUser { get; set; } = new DetailsUser();
 
         public List<DetailsUser> DetailsUserList { get; set; } = new List<DetailsUser>();
 
-        public DetailsUsersModel() { }
-
-
-        private IRepository<DetailsUser> CreateDetailUserRepository()
+        public DetailsUsersModel(IDetailUserService detailUserService)
         {
-            RepositoryCreator<DetailsUser> factory = new DetailUserRepositoryCreator();
-            return factory.CreateRepository();
+            _detailUserService = detailUserService;
         }
 
-  
         public async Task OnGetAsync(int? id)
         {
-            var detailRepo = CreateDetailUserRepository();
-            try
+            if (id.HasValue)
             {
-                if (id.HasValue)
-                {
-                    DetailUser = await detailRepo.GetByIdAsync(id.Value);
-                }
+                DetailUser = await _detailUserService.GetDetailUserById(id.Value) ?? new DetailsUser();
+            }
 
-                var details = await detailRepo.GetAllAsync();
-                DetailsUserList = details?.ToList() ?? new List<DetailsUser>();
-            }
-            catch (Exception ex)
-            {
-                TempData["ErrorMessage"] = $"Error al cargar los datos: {ex.Message}";
-            }
+            var details = await _detailUserService.GetAllDetailUsers();
+            DetailsUserList = details?.ToList() ?? new List<DetailsUser>();
         }
 
         public async Task<IActionResult> OnPostCreateAsync()
         {
-            try
+            if (!ModelState.IsValid)
             {
-                if (!ModelState.IsValid) return Page();
-                if (DetailUser.EndDate <= DetailUser.StartDate)
-                {
-                    TempData["ErrorMessage"] = "La fecha de fin debe ser posterior a la fecha de inicio.";
-                    return RedirectToPage();
-                }
+                // Es necesario recargar la lista si la validación falla para que la página se muestre bien
+                await RehydratePageOnPostError();
+                return Page();
+            }
 
-                var detailRepo = CreateDetailUserRepository();
-                await detailRepo.CreateAsync(DetailUser);
-                TempData["SuccessMessage"] = "Detalle de usuario creado exitosamente.";
-            }
-            catch (Exception ex)
+            if (DetailUser.EndDate <= DetailUser.StartDate)
             {
-                TempData["ErrorMessage"] = $"Error al crear el detalle: {ex.Message}";
+                ModelState.AddModelError("DetailUser.EndDate", "La fecha de fin debe ser posterior a la fecha de inicio.");
+                await RehydratePageOnPostError();
+                return Page();
             }
+
+            await _detailUserService.CreateNewDetailUser(DetailUser);
+            TempData["SuccessMessage"] = "Detalle de usuario creado exitosamente.";
             return RedirectToPage();
         }
 
         public async Task<IActionResult> OnPostUpdateAsync()
         {
-            try
+            if (!ModelState.IsValid)
             {
-                if (!ModelState.IsValid) return Page();
-                if (DetailUser.EndDate <= DetailUser.StartDate)
-                {
-                    TempData["ErrorMessage"] = "La fecha de fin debe ser posterior a la fecha de inicio.";
-                    return RedirectToPage();
-                }
+                await RehydratePageOnPostError();
+                return Page();
+            }
 
-                var detailRepo = CreateDetailUserRepository();
-                await detailRepo.UpdateAsync(DetailUser);
-                TempData["SuccessMessage"] = "Detalle de usuario actualizado exitosamente.";
-            }
-            catch (Exception ex)
+            if (DetailUser.EndDate <= DetailUser.StartDate)
             {
-                TempData["ErrorMessage"] = $"Error al actualizar el detalle: {ex.Message}";
+                ModelState.AddModelError("DetailUser.EndDate", "La fecha de fin debe ser posterior a la fecha de inicio.");
+                await RehydratePageOnPostError();
+                return Page();
             }
-            return RedirectToPage(new { id = (int?)null }); 
+
+            await _detailUserService.UpdateDetailUserData(DetailUser);
+            TempData["SuccessMessage"] = "Detalle de usuario actualizado exitosamente.";
+            return RedirectToPage(new { id = (int?)null });
         }
 
         public async Task<IActionResult> OnPostDeleteAsync(int id)
         {
-            try
-            {
-                var detailRepo = CreateDetailUserRepository();
-                var result = await detailRepo.DeleteByIdAsync(id);
-                if (result)
-                {
-                    TempData["SuccessMessage"] = "Detalle eliminado correctamente.";
-                }
-                else
-                {
-                    TempData["ErrorMessage"] = "No se pudo eliminar el detalle o no existe.";
-                }
-            }
-            catch (Exception ex)
-            {
-                TempData["ErrorMessage"] = $"Error al eliminar: {ex.Message}";
-            }
+            await _detailUserService.DeleteDetailUser(id);
+            TempData["SuccessMessage"] = "Detalle eliminado correctamente.";
             return RedirectToPage();
+        }
+
+        private async Task RehydratePageOnPostError()
+        {
+            var details = await _detailUserService.GetAllDetailUsers();
+            DetailsUserList = details?.ToList() ?? new List<DetailsUser>();
         }
     }
 }

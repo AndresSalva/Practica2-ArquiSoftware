@@ -1,29 +1,22 @@
-using GYMPT.Data.Contracts;
-using GYMPT.Data.Repositories;
-using GYMPT.Factories;
-using GYMPT.Models;
+using GYMPT.Application.Interfaces;
+using GYMPT.Domain.Entities;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-
+using System.Collections.Generic;
+using System.Threading.Tasks;
 namespace GYMPT.Pages.Users
 {
     public class UserModel : PageModel
     {
-        private IRepository<User> CreateUserRepository()
+        private readonly IUserService _userService;
+        public IEnumerable<User> UserList { get; private set; } = new List<User>();
+        public UserModel(IUserService userService)
         {
-            var factory = new UserRepositoryCreator();
-            return factory.CreateRepository();
-        }
-
-        public IEnumerable<User> UserList { get; private set; } = Enumerable.Empty<User>();
-
-        public UserModel()
-        {
+            _userService = userService;
         }
 
         public async Task OnGetAsync()
         {
-            var repo = CreateUserRepository();
-            UserList = await repo.GetAllAsync();
+            UserList = await _userService.GetAllUsers();
         }
     }
 }

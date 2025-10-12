@@ -1,6 +1,5 @@
-﻿using GYMPT.Data.Contracts;
-using GYMPT.Factories; // <-- PASO 2
-using GYMPT.Models;
+﻿using GYMPT.Application.Interfaces;
+using GYMPT.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Threading.Tasks;
@@ -9,14 +8,14 @@ namespace GYMPT.Pages.Disciplines
 {
     public class DisciplineCreateModel : PageModel
     {
+        private readonly IDisciplineService _disciplineService;
+
         [BindProperty]
         public Discipline Discipline { get; set; } = new();
 
-        public DisciplineCreateModel() { }
-        private IRepository<Discipline> CreateDisciplineRepository()
+        public DisciplineCreateModel(IDisciplineService disciplineService)
         {
-            var factory = new DisciplineRepositoryCreator();
-            return factory.CreateRepository();
+            _disciplineService = disciplineService;
         }
 
         public void OnGet() { }
@@ -28,10 +27,8 @@ namespace GYMPT.Pages.Disciplines
                 return Page();
             }
 
-            var repo = CreateDisciplineRepository();
-
-            await repo.CreateAsync(Discipline);
-
+            await _disciplineService.CreateNewDiscipline(Discipline);
+            TempData["SuccessMessage"] = $"Disciplina '{Discipline.Name}' creada exitosamente.";
             return RedirectToPage("/Disciplines/Discipline");
         }
     }
