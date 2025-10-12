@@ -1,17 +1,33 @@
 ﻿@page
 @model GYMPT.Pages.Users.CreateModel
+@{
+    ViewData["Title"] = "Crear Usuario - Paso 1";
+}
 
-<h2>Crear Usuario</h2>
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-header text-center">
+                <h2>Crear Nuevo Usuario</h2>
+            </div>
+            <div class="card-body">
+                <p class="text-center text-muted">Seleccione el tipo de usuario para continuar con el registro.</p>
 
-<form method="post">
-    <div class="form-group">
-        <label>Seleccione el tipo de usuario</label>
-        <select asp-for="User.Role" class="form-control">
-            <option value="Client">Cliente</option>
-            <option value="Instructor">Instructor</option>
-        </select>
+                <form method="post">
+                    <div class="form-group mb-4">
+                        <label class="form-label fw-bold" asp-for="User.Role">Tipo de Usuario</label>
+                        <select asp-for="User.Role" class="form-select form-select-lg">
+                            <option value="Client">Cliente</option>
+                            <option value="Instructor">Instructor</option>
+                        </select>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                        <button type="submit" class="btn btn-primary">Continuar <i class="fas fa-arrow-right ms-2"></i></button>
+                        <a asp-page="/Users/User" class="btn btn-secondary">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-
-    <button type="submit" class="btn btn-primary">Continuar</button>
-    <a asp-page="/Users/User" class="btn btn-secondary">Cancelar</a>
-</form>
+</div>

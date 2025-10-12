@@ -6,6 +6,6 @@ namespace GYMPT.Application.Interfaces
     {
         Task<User> GetUserById(int id);
         Task<IEnumerable<User>> GetAllUsers();
-        Task DeleteUser(int id);
+        Task<bool> DeleteUser(int id);
     }
 }

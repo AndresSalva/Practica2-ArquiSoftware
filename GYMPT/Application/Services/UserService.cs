@@ -15,6 +15,12 @@ namespace GYMPT.Application.Services
 
         public Task<User> GetUserById(int id) => _userRepository.GetByIdAsync(id);
         public Task<IEnumerable<User>> GetAllUsers() => _userRepository.GetAllAsync();
-        public Task DeleteUser(int id) => _userRepository.DeleteByIdAsync(id);
+
+        // ANTES (incorrecto):
+        // public Task DeleteUser(int id) => _userRepository.DeleteByIdAsync(id);
+
+        // AHORA (CORREGIDO):
+        // La clase ahora devuelve el booleano que recibe del repositorio.
+        public Task<bool> DeleteUser(int id) => _userRepository.DeleteByIdAsync(id);
     }
 }
