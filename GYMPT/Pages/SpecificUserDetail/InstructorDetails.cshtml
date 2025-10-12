@@ -14,24 +14,23 @@
         <dd class="col-sm-9">@Model.Instructor.Name @Model.Instructor.FirstLastname @Model.Instructor.SecondLastname</dd>
 
         <dt class="col-sm-3">Rol</dt>
-        <dd class="col-sm-9">@Model.Instructor.Role</dd>
+        <dd class="col-sm-9"><span class="badge bg-primary">@Model.Instructor.Role</span></dd>
 
         <dt class="col-sm-3">CI</dt>
         <dd class="col-sm-9">@Model.Instructor.Ci</dd>
 
         <dt class="col-sm-3">Fecha de Nacimiento</dt>
-        <dd class="col-sm-9">@Model.Instructor.DateBirth?.ToShortDateString()"</dd>
+        <dd class="col-sm-9">@Model.Instructor.DateBirth?.ToShortDateString()</dd>
 
         <dt class="col-sm-3">Especialización</dt>
-        <dd class="col-sm-9">@Model.Instructor.Specialization"</dd>
+        <dd class="col-sm-9">@Model.Instructor.Specialization</dd>
 
         <dt class="col-sm-3">Fecha de Contratación</dt>
-        <dd class="col-sm-9">@Model.Instructor.HireDate?.ToShortDateString()"</dd>
+        <dd class="col-sm-9">@Model.Instructor.HireDate?.ToShortDateString()</dd>
 
         <dt class="col-sm-3">Sueldo Mensual</dt>
-        <dd class="col-sm-9">@Model.Instructor.MonthlySalary?.ToString("C")"</dd>
+        <dd class="col-sm-9">@Model.Instructor.MonthlySalary?.ToString("C")</dd>
     </dl>
-
 }
 else
 {

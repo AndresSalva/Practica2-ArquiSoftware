@@ -1,4 +1,4 @@
-using GYMPT.Factories; // <-- Se añade el using de Fábricas
+using GYMPT.Factories; // <-- Se aï¿½ade el using de Fï¿½bricas
 using GYMPT.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
