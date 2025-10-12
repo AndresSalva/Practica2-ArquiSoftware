@@ -1,34 +1,26 @@
-using GYMPT.Data.Contracts;
-using GYMPT.Data.Repositories;
-using GYMPT.Factories;
-using GYMPT.Models;
+using GYMPT.Application.Interfaces;
+using GYMPT.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Npgsql;
+using System.Threading.Tasks;
 
 namespace GYMPT.Pages.Memberships
 {
     public class MembershipEditModel : PageModel
     {
-
-        private readonly IConfiguration _configuration;
+        private readonly IMembershipService _membershipService;
 
         [BindProperty]
         public Membership Membership { get; set; }
 
-        public MembershipEditModel()
+        public MembershipEditModel(IMembershipService membershipService)
         {
-        }
-        private IRepository<Membership> CreateMembershipRepository()
-        {
-            var factory = new MembershipRepositoryCreator();
-            return factory.CreateRepository();
+            _membershipService = membershipService;
         }
 
-        public async Task<IActionResult> OnGetAsync(short id)
+        public async Task<IActionResult> OnGetAsync(int id) // Cambiado a int para consistencia
         {
-            var repo = CreateMembershipRepository();
-            Membership = await repo.GetByIdAsync(id);
+            Membership = await _membershipService.GetMembershipById(id);
 
             if (Membership == null)
             {
@@ -45,10 +37,8 @@ namespace GYMPT.Pages.Memberships
                 return Page();
             }
 
-            var repo = CreateMembershipRepository();
-
-            await repo.UpdateAsync(Membership);
-
+            await _membershipService.UpdateMembershipData(Membership);
+            TempData["SuccessMessage"] = $"Membresía '{Membership.Name}' actualizada correctamente.";
             return RedirectToPage("/Memberships/Membership");
         }
     }

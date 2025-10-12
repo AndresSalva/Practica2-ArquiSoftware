@@ -1,4 +1,5 @@
 ﻿@page
+@using GYMPT.Domain.Entities
 @model GYMPT.Pages.DetailsUsers.DetailsUsersModel
 @{
     ViewData["Title"] = "Detalles de Usuarios";
@@ -124,7 +125,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (Models.DetailsUser detail in Model.DetailsUserList)
+                        @foreach (DetailsUser detail in Model.DetailsUserList)
                         {
                             <tr>
                                 <td>@detail.Id</td>

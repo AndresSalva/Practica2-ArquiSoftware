@@ -1,35 +1,31 @@
-﻿using GYMPT.Data.Contracts;
-using GYMPT.Data.Repositories;
-using GYMPT.Factories;
-using GYMPT.Models;
+﻿using GYMPT.Application.Interfaces;
+using GYMPT.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Threading.Tasks;
 
 namespace GYMPT.Pages.Disciplines
 {
     public class DisciplineDeleteModel : PageModel
     {
+        private readonly IDisciplineService _disciplineService;
 
         [BindProperty]
         public Discipline Discipline { get; set; } = new();
 
-        public DisciplineDeleteModel()
+        public DisciplineDeleteModel(IDisciplineService disciplineService)
         {
-        }
-        private IRepository<Discipline> CreateDisciplineRepository()
-        {
-            var factory = new DisciplineRepositoryCreator();
-            return factory.CreateRepository();
+            _disciplineService = disciplineService;
         }
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            var repo = CreateDisciplineRepository();
-            Discipline = await repo.GetByIdAsync(id);
+            Discipline = await _disciplineService.GetDisciplineById(id);
 
             if (Discipline == null)
             {
-                return RedirectToPage("Disciplines/Discipline");
+                TempData["ErrorMessage"] = "La disciplina que intentas eliminar no fue encontrada.";
+                return RedirectToPage("/Disciplines/Discipline");
             }
 
             return Page();
@@ -37,15 +33,14 @@ namespace GYMPT.Pages.Disciplines
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (Discipline == null || Discipline.Id == 0)
+            if (Discipline?.Id == 0)
             {
                 return Page();
             }
-            var repo = CreateDisciplineRepository();
 
-            await repo.DeleteByIdAsync(Discipline.Id);
-
-            return RedirectToPage("Disciplines/Discipline");
+            await _disciplineService.DeleteDiscipline(Discipline.Id);
+            TempData["SuccessMessage"] = "Disciplina eliminada correctamente.";
+            return RedirectToPage("/Disciplines/Discipline");
         }
     }
 }

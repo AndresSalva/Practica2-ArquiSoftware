@@ -1,30 +1,22 @@
-using GYMPT.Data.Contracts;
-using GYMPT.Data.Repositories;
-using GYMPT.Factories;
-using GYMPT.Models;
+using GYMPT.Application.Interfaces;
+using GYMPT.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-
+using System.Threading.Tasks;
 namespace GYMPT.Pages.Memberships
 {
     public class MembershipCreateModel : PageModel
     {
-
+        private readonly IMembershipService _membershipService;
         [BindProperty]
         public Membership Membership { get; set; } = new();
 
-        public MembershipCreateModel()
+        public MembershipCreateModel(IMembershipService membershipService)
         {
-        }
-        private IRepository<Membership> CreateMembershipRepository()
-        {
-            var factory = new MembershipRepositoryCreator();
-            return factory.CreateRepository();
+            _membershipService = membershipService;
         }
 
-        public void OnGet()
-        {
-        }
+        public void OnGet() { }
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -32,9 +24,9 @@ namespace GYMPT.Pages.Memberships
             {
                 return Page();
             }
-            var repo = CreateMembershipRepository();
-            await repo.CreateAsync(Membership);
 
+            await _membershipService.CreateNewMembership(Membership);
+            TempData["SuccessMessage"] = $"Membresía '{Membership.Name}' creada exitosamente.";
             return RedirectToPage("/Memberships/Membership");
         }
     }

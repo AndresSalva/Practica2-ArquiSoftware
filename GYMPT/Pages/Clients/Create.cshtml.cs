@@ -1,40 +1,34 @@
-using GYMPT.Data.Contracts;
-using GYMPT.Factories;
-using GYMPT.Models;
+using GYMPT.Application.Interfaces;
+using GYMPT.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Threading.Tasks;
 
 namespace GYMPT.Pages.Clients
 {
     public class CreateModel : PageModel
     {
+        private readonly IClientService _clientService;
+
+        public CreateModel(IClientService clientService)
+        {
+            _clientService = clientService;
+        }
 
         [BindProperty]
         public Client Client { get; set; }
 
-        public CreateModel()
-        {
-
-        }
-        private IRepository<Client> CreateClientRepository()
-        {
-            var factory = new ClientRepositoryCreator();
-            return factory.CreateRepository();
-        }
-
-        public void OnGet()
-        {
-        }
+        public void OnGet() { }
 
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
+            {
                 return Page();
+            }
 
-            var clientRepo = CreateClientRepository();
-
-            await clientRepo.CreateAsync(Client);
-
+            await _clientService.CreateNewClient(Client);
+            TempData["SuccessMessage"] = $"Cliente '{Client.Name}' creado exitosamente.";
             return RedirectToPage("/Users/User");
         }
     }

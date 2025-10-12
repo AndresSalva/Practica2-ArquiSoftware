@@ -1,6 +1,5 @@
-using GYMPT.Data.Contracts;
-using GYMPT.Factories; 
-using GYMPT.Models;
+using GYMPT.Application.Interfaces;
+using GYMPT.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
@@ -11,27 +10,24 @@ namespace GYMPT.Pages.Disciplines
 {
     public class DisciplineModel : PageModel
     {
+        private readonly IDisciplineService _disciplineService;
         public IEnumerable<Discipline> DisciplineList { get; private set; } = Enumerable.Empty<Discipline>();
 
-        public DisciplineModel() { }
-
-        private IRepository<Discipline> CreateDisciplineRepository()
+        public DisciplineModel(IDisciplineService disciplineService)
         {
-            var factory = new DisciplineRepositoryCreator();
-            return factory.CreateRepository();
+            _disciplineService = disciplineService;
         }
 
         public async Task OnGetAsync()
         {
-            var repo = CreateDisciplineRepository();
-            var allDisciplines = await repo.GetAllAsync();
-            DisciplineList = allDisciplines.Where(d => d.IsActive == true);
+            var allDisciplines = await _disciplineService.GetAllDisciplines();
+            DisciplineList = allDisciplines.Where(d => d.IsActive);
         }
 
         public async Task<IActionResult> OnPostDeleteAsync(int id)
         {
-            var repo = CreateDisciplineRepository();
-            await repo.DeleteByIdAsync(id);
+            await _disciplineService.DeleteDiscipline(id);
+            TempData["SuccessMessage"] = "Disciplina eliminada correctamente.";
             return RedirectToPage();
         }
     }
