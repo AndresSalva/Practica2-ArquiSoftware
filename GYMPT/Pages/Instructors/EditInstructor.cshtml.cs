@@ -6,28 +6,25 @@ using System.Threading.Tasks;
 
 namespace GYMPT.Pages.Instructors
 {
-    public class EditInstructorModel : PageModel
+    public class EditModel : PageModel
     {
         private readonly IInstructorService _instructorService;
 
         [BindProperty]
         public Instructor Instructor { get; set; }
 
-        [BindProperty(SupportsGet = true)]
-        public int Id { get; set; }
-
-        public EditInstructorModel(IInstructorService instructorService)
+        public EditModel(IInstructorService instructorService)
         {
             _instructorService = instructorService;
         }
 
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            Instructor = await _instructorService.GetInstructorById(Id);
+            Instructor = await _instructorService.GetInstructorById(id);
 
             if (Instructor == null)
             {
-                TempData["ErrorMessage"] = "El instructor que intentas editar no fue encontrado.";
+                TempData["ErrorMessage"] = "Instructor no encontrado.";
                 return RedirectToPage("/Users/User");
             }
             return Page();
@@ -40,9 +37,9 @@ namespace GYMPT.Pages.Instructors
                 return Page();
             }
 
-            Instructor.Id = Id;
             await _instructorService.UpdateInstructorData(Instructor);
-            TempData["SuccessMessage"] = $"Instructor '{Instructor.Name}' actualizado correctamente.";
+
+            TempData["SuccessMessage"] = "Los datos del instructor han sido actualizados exitosamente.";
             return RedirectToPage("/Users/User");
         }
     }

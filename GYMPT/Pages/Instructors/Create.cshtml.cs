@@ -11,14 +11,17 @@ namespace GYMPT.Pages.Instructors
         private readonly IInstructorService _instructorService;
 
         [BindProperty]
-        public Instructor Instructor { get; set; }
+        public Instructor Instructor { get; set; } = new();
 
         public CreateModel(IInstructorService instructorService)
         {
             _instructorService = instructorService;
         }
 
-        public void OnGet() { }
+        public void OnGet()
+        {
+            Instructor.Role = "Instructor";
+        }
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -27,8 +30,10 @@ namespace GYMPT.Pages.Instructors
                 return Page();
             }
 
+            Instructor.Role = "Instructor";
             await _instructorService.CreateNewInstructor(Instructor);
-            TempData["SuccessMessage"] = $"Instructor '{Instructor.Name}' creado exitosamente.";
+
+            TempData["SuccessMessage"] = $"El instructor '{Instructor.Name} {Instructor.FirstLastname}' ha sido creado exitosamente.";
             return RedirectToPage("/Users/User");
         }
     }

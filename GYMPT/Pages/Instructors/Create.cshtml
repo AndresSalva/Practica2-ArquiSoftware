@@ -1,57 +1,84 @@
 ﻿@page
 @model GYMPT.Pages.Instructors.CreateModel
+@{
+    ViewData["Title"] = "Crear Nuevo Instructor";
+}
 
-<h2>Crear Instructor</h2>
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-header text-center">
+                <h2>Registrar Nuevo Instructor</h2>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
-<form method="post">
-    <fieldset>
-        <legend>Datos de Usuario</legend>
-        <div class="form-group">
-            <label>Nombre</label>
-            <input asp-for="Instructor.Name" class="form-control" />
+                    <h5 class="mt-4 mb-3">Información Personal</h5>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label asp-for="Instructor.Name" class="form-label fw-bold"></label>
+                            <input asp-for="Instructor.Name" class="form-control" />
+                            <span asp-validation-for="Instructor.Name" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label asp-for="Instructor.FirstLastname" class="form-label fw-bold">Primer Apellido</label>
+                            <input asp-for="Instructor.FirstLastname" class="form-control" />
+                            <span asp-validation-for="Instructor.FirstLastname" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label asp-for="Instructor.SecondLastname" class="form-label fw-bold">Segundo Apellido</label>
+                            <input asp-for="Instructor.SecondLastname" class="form-control" />
+                            <span asp-validation-for="Instructor.SecondLastname" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Instructor.Ci" class="form-label fw-bold">Cédula de Identidad</label>
+                            <input asp-for="Instructor.Ci" class="form-control" />
+                            <span asp-validation-for="Instructor.Ci" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Instructor.DateBirth" class="form-label fw-bold">Fecha de Nacimiento</label>
+                            <input asp-for="Instructor.DateBirth" class="form-control" type="date" />
+                            <span asp-validation-for="Instructor.DateBirth" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <hr />
+                    <h5 class="mt-4 mb-3">Información Profesional</h5>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Instructor.Specialization" class="form-label fw-bold">Especialización</label>
+                            <input asp-for="Instructor.Specialization" class="form-control" placeholder="Ej: Yoga, CrossFit, Pesas..." />
+                            <span asp-validation-for="Instructor.Specialization" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Instructor.HireDate" class="form-label fw-bold">Fecha de Contratación</label>
+                            <input asp-for="Instructor.HireDate" class="form-control" type="date" />
+                            <span asp-validation-for="Instructor.HireDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Instructor.MonthlySalary" class="form-label fw-bold">Salario Mensual (Bs.)</label>
+                            <input asp-for="Instructor.MonthlySalary" class="form-control" type="number" step="0.01" />
+                            <span asp-validation-for="Instructor.MonthlySalary" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-center mt-4">
+                        <button type="submit" class="btn btn-primary">Registrar Instructor</button>
+                        <a asp-page="/Users/User" class="btn btn-secondary">Cancelar</a>
+                    </div>
+                </form>
+            </div>
         </div>
+    </div>
+</div>
 
-        <div class="form-group">
-            <label>Primer Apellido</label>
-            <input asp-for="Instructor.FirstLastname" class="form-control" />
-        </div>
-
-        <div class="form-group">
-            <label>Segundo Apellido</label>
-            <input asp-for="Instructor.SecondLastname" class="form-control" />
-        </div>
-
-        <div class="form-group">
-            <label>CI</label>
-            <input asp-for="Instructor.Ci" class="form-control" />
-        </div>
-
-        <div class="form-group">
-            <label>Fecha de Nacimiento</label>
-            <input asp-for="Instructor.DateBirth" type="date" class="form-control" />
-        </div>
-
-        <input type="hidden" asp-for="Instructor.Role" value="Instructor" />
-    </fieldset>
-
-    <fieldset>
-        <legend>Datos de Instructor</legend>
-        <div class="form-group">
-            <label>Fecha de Contratación</label>
-            <input asp-for="Instructor.HireDate" type="date" class="form-control" />
-        </div>
-
-        <div class="form-group">
-            <label>Salario Mensual</label>
-            <input asp-for="Instructor.MonthlySalary" type="number" step="0.01" class="form-control" />
-        </div>
-
-        <div class="form-group">
-            <label>Especialización</label>
-            <input asp-for="Instructor.Specialization" class="form-control" />
-        </div>
-    </fieldset>
-
-    <button type="submit" class="btn btn-primary">Guardar</button>
-    <a asp-page="/Users/User" class="btn btn-secondary">Cancelar</a>
-</form>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
