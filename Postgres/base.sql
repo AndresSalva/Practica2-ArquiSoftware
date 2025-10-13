@@ -125,3 +125,50 @@ INSERT INTO public.details_user (created_at, id_user, id_membership, start_date,
 OVERRIDING SYSTEM VALUE VALUES
 ('2025-10-04 16:15:40', 2, 2, '2025-01-01', '2026-02-22', 30),
 ('2025-10-05 17:17:11', 2, 2, '2025-01-01', '2026-01-01', 150);
+
+
+ALTER TABLE public.instructor
+ADD COLUMN password VARCHAR(255) NOT NULL DEFAULT 'default_password', -- Considerar un mejor manejo de contraseñas
+ADD COLUMN email VARCHAR(100) UNIQUE;
+
+CREATE OR REPLACE VIEW public.instructor_view AS
+SELECT
+    u.id AS Id,
+    u.created_at AS CreatedAt,
+    u.last_modification AS LastModification,
+    u.is_active AS IsActive,
+    u.name as Name,
+    u.first_lastname AS FirstLastname,
+    u.second_lastname AS SecondLastname,
+    u.date_birth AS DateBirth,
+    u.ci AS Ci,
+    u.role AS Role,
+    i.hire_date AS HireDate,
+    i.monthly_salary AS MonthlySalary,
+    i.specialization AS Specialization,
+    i.email as Email
+FROM
+    public.user u
+INNER JOIN
+    public.instructor i ON u.id = i.id_user;
+
+CREATE OR REPLACE VIEW public.client_view AS
+SELECT
+    u.id AS ClientId,
+    u.created_at AS CreatedAt,
+    u.last_modification AS LastModification,
+    u.is_active AS IsActive,
+    u.name AS Name,
+    u.first_lastname AS FirstLastname,
+    u.second_lastname AS SecondLastname,
+    u.date_birth AS DateBirth,
+    u.ci AS Ci,
+    u.role AS Role,
+    c.fitness_level AS FitnessLevel,
+    c.initial_weight_kg AS InitialWeightKg,
+    c.current_weight_kg AS CurrentWeightKg,
+    c.emergency_contact_phone AS EmergencyContactPhone
+FROM
+    public.user u
+INNER JOIN
+    public.client c ON u.id = c.id_user;
