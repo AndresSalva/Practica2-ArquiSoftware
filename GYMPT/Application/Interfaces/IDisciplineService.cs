@@ -1,4 +1,6 @@
 ﻿using GYMPT.Domain.Entities;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace GYMPT.Application.Interfaces
 {
@@ -6,8 +8,8 @@ namespace GYMPT.Application.Interfaces
     {
         Task<Discipline> GetDisciplineById(int id);
         Task<IEnumerable<Discipline>> GetAllDisciplines();
-        Task CreateNewDiscipline(Discipline newDiscipline);
-        Task UpdateDisciplineData(Discipline disciplineToUpdate);
-        Task DeleteDiscipline(int id);
+        Task<Discipline> CreateNewDiscipline(Discipline newDiscipline);
+        Task<bool> UpdateDisciplineData(Discipline disciplineToUpdate);
+        Task<bool> DeleteDiscipline(int id);
     }
 }

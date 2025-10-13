@@ -6,19 +6,23 @@ using System.Threading.Tasks;
 
 namespace GYMPT.Pages.Clients
 {
+    // El nombre de la clase coincide con el nombre del archivo (Create.cshtml -> CreateModel)
     public class CreateModel : PageModel
     {
         private readonly IClientService _clientService;
+
+        [BindProperty]
+        public Client Client { get; set; } = new();
 
         public CreateModel(IClientService clientService)
         {
             _clientService = clientService;
         }
 
-        [BindProperty]
-        public Client Client { get; set; }
-
-        public void OnGet() { }
+        public void OnGet()
+        {
+            Client.Role = "Client";
+        }
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -27,8 +31,10 @@ namespace GYMPT.Pages.Clients
                 return Page();
             }
 
+            Client.Role = "Client";
             await _clientService.CreateNewClient(Client);
-            TempData["SuccessMessage"] = $"Cliente '{Client.Name}' creado exitosamente.";
+
+            TempData["SuccessMessage"] = $"El cliente '{Client.Name} {Client.FirstLastname}' ha sido creado exitosamente.";
             return RedirectToPage("/Users/User");
         }
     }

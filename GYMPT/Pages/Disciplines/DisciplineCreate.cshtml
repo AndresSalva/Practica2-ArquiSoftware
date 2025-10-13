@@ -1,47 +1,54 @@
 ﻿@page
 @model GYMPT.Pages.Disciplines.DisciplineCreateModel
 @{
-    ViewData["Title"] = "Nueva Disciplina";
+    ViewData["Title"] = "Crear Nueva Disciplina";
 }
 
-<h2>Nueva Disciplina</h2>
-
-@if (TempData["Message"] != null)
-{
-    <div class="alert alert-success">
-        @TempData["Message"]
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-header text-center">
+                <h2>Crear Nueva Disciplina</h2>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                    <div class="mb-3">
+                        <label asp-for="Discipline.Name" class="form-label fw-bold">Nombre de la Disciplina</label>
+                        <input asp-for="Discipline.Name" class="form-control" />
+                        <span asp-validation-for="Discipline.Name" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Discipline.IdInstructor" class="form-label fw-bold">Instructor</label>
+                        <select asp-for="Discipline.IdInstructor" class="form-select" asp-items="Model.InstructorOptions">
+                            <option value="">-- Seleccione un Instructor --</option>
+                        </select>
+                        <span asp-validation-for="Discipline.IdInstructor" class="text-danger"></span>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Discipline.StartTime" class="form-label fw-bold">Hora de Inicio</label>
+                            <input asp-for="Discipline.StartTime" class="form-control" type="time" />
+                            <span asp-validation-for="Discipline.StartTime" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Discipline.EndTime" class="form-label fw-bold">Hora de Fin</label>
+                            <input asp-for="Discipline.EndTime" class="form-control" type="time" />
+                            <span asp-validation-for="Discipline.EndTime" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-center mt-4">
+                        <button type="submit" class="btn btn-primary">Guardar Disciplina</button>
+                        <a asp-page="./Discipline" class="btn btn-secondary">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-}
-
-<form method="post">
-    <div class="mb-3">
-        <label asp-for="Discipline.Name" class="form-label">Nombre</label>
-        <input asp-for="Discipline.Name" class="form-control" />
-        <span asp-validation-for="Discipline.Name" class="text-danger"></span>
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="Discipline.IdInstructor" class="form-label">Id del instructor</label>
-        <input asp-for="Discipline.IdInstructor" class="form-control" />
-        <span asp-validation-for="Discipline.IdInstructor" class="text-danger"></span>
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="Discipline.StartTime" class="form-label">Tiempo de inicio</label>
-        <input asp-for="Discipline.StartTime" type="time" class="form-control" />
-        <span asp-validation-for="Discipline.StartTime" class="text-danger"></span>
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="Discipline.EndTime" class="form-label">Tiempo de finalización</label>
-        <input asp-for="Discipline.EndTime" type="time" class="form-control" />
-        <span asp-validation-for="Discipline.EndTime" class="text-danger"></span>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Guardar</button>
-    <a asp-page="/Disciplines/Discipline" class="btn btn-secondary">Cancelar</a>
-</form>
+</div>
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

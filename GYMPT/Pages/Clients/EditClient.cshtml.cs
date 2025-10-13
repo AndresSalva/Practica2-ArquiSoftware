@@ -6,34 +6,33 @@ using System.Threading.Tasks;
 
 namespace GYMPT.Pages.Clients
 {
-    public class EditClientModel : PageModel
+    // El nombre de la clase coincide con el nombre del archivo (Edit.cshtml -> EditModel)
+    public class EditModel : PageModel
     {
         private readonly IClientService _clientService;
-
-        public EditClientModel(IClientService clientService)
-        {
-            _clientService = clientService;
-        }
 
         [BindProperty]
         public Client Client { get; set; }
 
-        [BindProperty(SupportsGet = true)]
-        public int Id { get; set; }
-
-        public async Task<IActionResult> OnGetAsync()
+        public EditModel(IClientService clientService)
         {
-            Client = await _clientService.GetClientById(Id);
+            _clientService = clientService;
+        }
+
+        // Este método se ejecuta al cargar la página para rellenar el formulario
+        public async Task<IActionResult> OnGetAsync(int id)
+        {
+            Client = await _clientService.GetClientById(id);
 
             if (Client == null)
             {
-                TempData["ErrorMessage"] = "El cliente que intentas editar no fue encontrado.";
+                TempData["ErrorMessage"] = "Cliente no encontrado.";
                 return RedirectToPage("/Users/User");
             }
-
             return Page();
         }
 
+        // Este método se ejecuta al guardar los cambios
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -41,9 +40,10 @@ namespace GYMPT.Pages.Clients
                 return Page();
             }
 
-            Client.Id = Id;
+            // Asumo que tu IClientService tiene un método UpdateClientData
             await _clientService.UpdateClientData(Client);
-            TempData["SuccessMessage"] = $"Cliente '{Client.Name}' actualizado correctamente.";
+
+            TempData["SuccessMessage"] = "Los datos del cliente han sido actualizados exitosamente.";
             return RedirectToPage("/Users/User");
         }
     }
