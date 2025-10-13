@@ -1,46 +1,54 @@
 ﻿@page
 @model GYMPT.Pages.Memberships.MembershipCreateModel
 @{
-    ViewData["Title"] = "Crear Membresía";
+    ViewData["Title"] = "Crear Nueva Membresía";
 }
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-header text-center">
+                <h2>Crear Nueva Membresía</h2>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    <!-- Muestra un resumen de errores de validación -->
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
-<h1>Crear Nueva Membresía</h1>
-<hr />
-
-<div class="row">
-    <div class="col-md-6">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-            <div class="form-group">
-                <label asp-for="Membership.Name" class="control-label">Nombre</label>
-                <input asp-for="Membership.Name" class="form-control" required />
-                <span asp-validation-for="Membership.Name" class="text-danger"></span>
+                    <div class="mb-3">
+                        <label asp-for="Membership.Name" class="form-label fw-bold"></label>
+                        <input asp-for="Membership.Name" class="form-control" />
+                        <!-- Muestra el error de validación para este campo -->
+                        <span asp-validation-for="Membership.Name" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Membership.Description" class="form-label fw-bold"></label>
+                        <textarea asp-for="Membership.Description" class="form-control" rows="3"></textarea>
+                        <span asp-validation-for="Membership.Description" class="text-danger"></span>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Membership.Price" class="form-label fw-bold"></label>
+                            <input asp-for="Membership.Price" class="form-control" type="number" step="0.01" />
+                            <span asp-validation-for="Membership.Price" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Membership.MonthlySessions" class="form-label fw-bold">Sesiones Mensuales</label>
+                            <input asp-for="Membership.MonthlySessions" class="form-control" type="number" />
+                            <span asp-validation-for="Membership.MonthlySessions" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-center mt-4">
+                        <button type="submit" class="btn btn-primary">Guardar Membresía</button>
+                        <a asp-page="/Memberships/Membership" class="btn btn-secondary">Cancelar</a>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label asp-for="Membership.Price" class="control-label">Precio (Bs.)</label>
-                <input asp-for="Membership.Price" class="form-control" required />
-                <span asp-validation-for="Membership.Price" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Membership.MonthlySessions" class="control-label">Sesiones al Mes</label>
-                <input asp-for="Membership.MonthlySessions" class="form-control" required />
-                <span asp-validation-for="Membership.MonthlySessions" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Membership.Description" class="control-label">Descripción</label>
-                <textarea asp-for="Membership.Description" class="form-control" rows="3" required></textarea>
-                <span asp-validation-for="Membership.Description" class="text-danger"></span>
-            </div>
-
-            <div class="form-group mt-3">
-                <button type="submit" class="btn btn-primary">Crear</button>
-                <a asp-page="/Memberships/Membership" class="btn btn-secondary">Cancelar</a>
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
