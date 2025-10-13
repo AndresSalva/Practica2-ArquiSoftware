@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Users\\ASUS\\Desktop\\CARPETA MAESTRA\\materias\\12vo semestre\\Arquitectura del software\\Practica2-ArquiSoftware\\Practica2-ArquiSoftware\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{51D5E0AD-22C2-449B-9447-70B76B7C4943}|GYMPT\\GYMPT.csproj|c:\\users\\asus\\desktop\\carpeta maestra\\materias\\12vo semestre\\arquitectura del software\\practica2-arquisoftware\\practica2-arquisoftware\\gympt\\pages\\clients\\create.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{51D5E0AD-22C2-449B-9447-70B76B7C4943}|GYMPT\\GYMPT.csproj|solutionrelative:gympt\\pages\\clients\\create.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{51D5E0AD-22C2-449B-9447-70B76B7C4943}|GYMPT\\GYMPT.csproj|c:\\users\\asus\\desktop\\carpeta maestra\\materias\\12vo semestre\\arquitectura del software\\practica2-arquisoftware\\practica2-arquisoftware\\gympt\\pages\\users\\create.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{51D5E0AD-22C2-449B-9447-70B76B7C4943}|GYMPT\\GYMPT.csproj|solutionrelative:gympt\\pages\\users\\create.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -33,10 +37,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{51D5E0AD-22C2-449B-9447-70B76B7C4943}|GYMPT\\GYMPT.csproj|c:\\users\\asus\\desktop\\carpeta maestra\\materias\\12vo semestre\\arquitectura del software\\practica2-arquisoftware\\practica2-arquisoftware\\gympt\\pages\\clients\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{51D5E0AD-22C2-449B-9447-70B76B7C4943}|GYMPT\\GYMPT.csproj|solutionrelative:gympt\\pages\\clients\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{51D5E0AD-22C2-449B-9447-70B76B7C4943}|GYMPT\\GYMPT.csproj|c:\\users\\asus\\desktop\\carpeta maestra\\materias\\12vo semestre\\arquitectura del software\\practica2-arquisoftware\\practica2-arquisoftware\\gympt\\pages\\clients\\create.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{51D5E0AD-22C2-449B-9447-70B76B7C4943}|GYMPT\\GYMPT.csproj|solutionrelative:gympt\\pages\\clients\\create.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{51D5E0AD-22C2-449B-9447-70B76B7C4943}|GYMPT\\GYMPT.csproj|c:\\users\\asus\\desktop\\carpeta maestra\\materias\\12vo semestre\\arquitectura del software\\practica2-arquisoftware\\practica2-arquisoftware\\gympt\\pages\\clients\\editclient.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -142,11 +142,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 9,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "InstructorDetails.cshtml",
               "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\CARPETA MAESTRA\\materias\\12vo semestre\\Arquitectura del software\\Practica2-ArquiSoftware\\Practica2-ArquiSoftware\\GYMPT\\Pages\\SpecificUserDetail\\InstructorDetails.cshtml",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\SpecificUserDetail\\InstructorDetails.cshtml",
@@ -154,12 +154,11 @@
               "RelativeToolTip": "GYMPT\\Pages\\SpecificUserDetail\\InstructorDetails.cshtml",
               "ViewState": "AgIAAAYAAAAAAAAAAAAAABIAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-10-13T02:29:48.143Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-13T02:29:48.143Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "ClientDetails.cshtml",
               "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\CARPETA MAESTRA\\materias\\12vo semestre\\Arquitectura del software\\Practica2-ArquiSoftware\\Practica2-ArquiSoftware\\GYMPT\\Pages\\SpecificUserDetail\\ClientDetails.cshtml",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\SpecificUserDetail\\ClientDetails.cshtml",
@@ -167,12 +166,11 @@
               "RelativeToolTip": "GYMPT\\Pages\\SpecificUserDetail\\ClientDetails.cshtml",
               "ViewState": "AgIAAAkAAAAAAAAAAAAAABkAAAA3AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-10-13T02:29:19.14Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-13T02:29:19.14Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "User.cshtml.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\CARPETA MAESTRA\\materias\\12vo semestre\\Arquitectura del software\\Practica2-ArquiSoftware\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Users\\User.cshtml.cs",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Users\\User.cshtml.cs",
@@ -184,7 +182,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Create.cshtml",
               "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\CARPETA MAESTRA\\materias\\12vo semestre\\Arquitectura del software\\Practica2-ArquiSoftware\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Users\\Create.cshtml",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Users\\Create.cshtml",
@@ -192,12 +190,11 @@
               "RelativeToolTip": "GYMPT\\Pages\\Users\\Create.cshtml",
               "ViewState": "AgIAABUAAAAAAAAAAAAqwDIAAAAHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-10-12T23:53:19.858Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-12T23:53:19.858Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "Create.cshtml",
               "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\CARPETA MAESTRA\\materias\\12vo semestre\\Arquitectura del software\\Practica2-ArquiSoftware\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Clients\\Create.cshtml",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Clients\\Create.cshtml",
@@ -221,19 +218,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 0,
               "Title": "Create.cshtml.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\CARPETA MAESTRA\\materias\\12vo semestre\\Arquitectura del software\\Practica2-ArquiSoftware\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Clients\\Create.cshtml.cs",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Clients\\Create.cshtml.cs",
               "ToolTip": "C:\\Users\\ASUS\\Desktop\\CARPETA MAESTRA\\materias\\12vo semestre\\Arquitectura del software\\Practica2-ArquiSoftware\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Clients\\Create.cshtml.cs",
               "RelativeToolTip": "GYMPT\\Pages\\Clients\\Create.cshtml.cs",
-              "ViewState": "AgIAAEgAAAAAAAAAAAAuwGYAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAGkAAAAAAAAAAAAuwGYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-12T19:52:35.589Z"
+              "WhenOpened": "2025-10-12T19:52:35.589Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "User.cshtml",
               "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\CARPETA MAESTRA\\materias\\12vo semestre\\Arquitectura del software\\Practica2-ArquiSoftware\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Users\\User.cshtml",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Users\\User.cshtml",
@@ -245,7 +243,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "DetailsUsers.cshtml",
               "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\CARPETA MAESTRA\\materias\\12vo semestre\\Arquitectura del software\\Practica2-ArquiSoftware\\Practica2-ArquiSoftware\\GYMPT\\Pages\\DetailsUsers\\DetailsUsers.cshtml",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\DetailsUsers\\DetailsUsers.cshtml",
@@ -257,13 +255,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Create.cshtml.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\CARPETA MAESTRA\\materias\\12vo semestre\\Arquitectura del software\\Practica2-ArquiSoftware\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Users\\Create.cshtml.cs",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Users\\Create.cshtml.cs",
               "ToolTip": "C:\\Users\\ASUS\\Desktop\\CARPETA MAESTRA\\materias\\12vo semestre\\Arquitectura del software\\Practica2-ArquiSoftware\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Users\\Create.cshtml.cs",
               "RelativeToolTip": "GYMPT\\Pages\\Users\\Create.cshtml.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAA5wEoAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAADUAAAAAAAAAAAAgwEoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-12T20:17:15.792Z",
               "EditorCaption": ""
