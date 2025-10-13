@@ -1,7 +1,7 @@
-using GYMPT.Domain.Entities;              // Entidades del dominio (User)
-using GYMPT.Domain.Ports;                 // Interfaz IRepository<T>
+using GYMPT.Domain.Entities;
+using GYMPT.Domain.Ports;
 using GYMPT.Domain.Rules;
-using GYMPT.Infrastructure.Factories;     // Factoría del repositorio
+using GYMPT.Infrastructure.Factories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
@@ -13,64 +13,60 @@ namespace GYMPT.Pages.Users
 {
     public class UserModel : PageModel
     {
-        // -------------------------
-        // Repositorio de Users
-        // -------------------------
         private IRepository<User> CreateUserRepository()
         {
             var factory = new UserRepositoryCreator();
             return factory.CreateRepository();
         }
 
-        // -------------------------
-        // Lista de usuarios para mostrar en la vista
-        // -------------------------
-        public IEnumerable<User> UserList { get; private set; } = Enumerable.Empty<User>();
+        public class UserView
+        {
+            public User User { get; set; } = new User();
+            public bool TieneDatosInvalidos { get; set; } = false; // Solo para visual
+        }
 
-        // -------------------------
-        // Parámetro de orden (query string)
-        // -------------------------
+        public IEnumerable<UserView> UserList { get; private set; } = Enumerable.Empty<UserView>();
+
         [BindProperty(SupportsGet = true)]
         public string? SortOrder { get; set; }
 
-        // -------------------------
-        // Carga de datos
-        // -------------------------
         public async Task OnGetAsync()
         {
             var repo = CreateUserRepository();
             var users = await repo.GetAllAsync();
 
-            // Lista total
-            var allUsers = new List<User>();
+            var allUsers = new List<UserView>();
 
             foreach (var user in users)
             {
-                bool datosValidos =
-                    UserRules.NombreCompletoValido(user.Name) &&
-                    UserRules.NombreCompletoValido(user.FirstLastname) &&
-                    (string.IsNullOrWhiteSpace(user.SecondLastname) || UserRules.NombreCompletoValido(user.SecondLastname)) &&
-                    UserRules.CiValido(user.Ci) &&
-                    UserRules.FechaNacimientoValida(user.DateBirth) &&
-                    UserRules.RoleValido(user.Role);
+                var nombreValido = UserRules.NombreCompletoValido(user.Name);
+                var primerApellidoValido = UserRules.NombreCompletoValido(user.FirstLastname);
+                var segundoApellidoValido = string.IsNullOrWhiteSpace(user.SecondLastname) || UserRules.NombreCompletoValido(user.SecondLastname).IsSuccess;
+                var ciValido = UserRules.CiValido(user.Ci);
+                var fechaNacimientoValida = UserRules.FechaNacimientoValida(user.DateBirth);
+                var rolValido = UserRules.RoleValido(user.Role);
 
-                if (!datosValidos)
-                    Console.WriteLine($"⚠️ Usuario con datos inválidos detectado: {user.Id} - {user.Name}");
+                bool tieneError = nombreValido.IsFailure || primerApellidoValido.IsFailure || !segundoApellidoValido ||
+                                  ciValido.IsFailure || fechaNacimientoValida.IsFailure || rolValido.IsFailure;
 
-                allUsers.Add(user);
+                allUsers.Add(new UserView
+                {
+                    User = user,
+                    TieneDatosInvalidos = tieneError
+                });
             }
 
             // Ordenamiento
             UserList = SortOrder?.ToLower() switch
             {
-                "id" => allUsers.OrderBy(u => u.Id),
-                "name" => allUsers.OrderBy(u => u.Name)
-                                   .ThenBy(u => u.FirstLastname)
-                                   .ThenBy(u => u.SecondLastname),
-                "role" => allUsers.OrderBy(u => u.Role),
-                _ => allUsers.OrderBy(u => u.Id)
+                "id" => allUsers.OrderBy(u => u.User.Id),
+                "name" => allUsers.OrderBy(u => u.User.Name)
+                                 .ThenBy(u => u.User.FirstLastname)
+                                 .ThenBy(u => u.User.SecondLastname),
+                "role" => allUsers.OrderBy(u => u.User.Role),
+                _ => allUsers.OrderBy(u => u.User.Id)
             };
         }
-
     }
+
 }

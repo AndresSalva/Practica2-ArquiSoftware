@@ -1,10 +1,11 @@
 using GYMPT.Domain.Entities;       
 using GYMPT.Domain.Ports;          
-using GYMPT.Domain.Rules;          
+using GYMPT.Domain.Rules;
 using GYMPT.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Npgsql;
+using GYMPT.Domain.Shared; 
 using System;
 using System.Threading.Tasks;
 
@@ -43,40 +44,34 @@ namespace GYMPT.Pages.Clients
             Client.Role = "Client";
         }
 
+        // -------------------------
+        // MÉTODO AUXILIAR PARA RESULT
+        // -------------------------
+        private void AddModelErrorIfFail(Result result, string key)
+        {
+            if (result.IsFailure)
+                ModelState.AddModelError(key, result.Error);
+        }
+
         public async Task<IActionResult> OnPostAsync()
         {
             // -------------------------
-            // VALIDACIONES DE USUARIO (por si alguien manipula el form)
+            // VALIDACIONES DE USUARIO
             // -------------------------
-            if (!UserRules.NombreCompletoValido(Client.Name))
-                ModelState.AddModelError("Client.Name", "Nombre inválido. Solo letras y mínimo 2 caracteres.");
-
-            if (!UserRules.NombreCompletoValido(Client.FirstLastname))
-                ModelState.AddModelError("Client.FirstLastname", "Apellido Paterno inválido.");
-
-            if (!UserRules.NombreCompletoValido(Client.SecondLastname))
-                ModelState.AddModelError("Client.SecondLastname", "Apellido Materno inválido.");
-
-            if (!UserRules.CiValido(Client.Ci))
-                ModelState.AddModelError("Client.Ci", "CI inválido. Solo números y letras.");
+            AddModelErrorIfFail(UserRules.NombreCompletoValido(Client.Name), "Client.Name");
+            AddModelErrorIfFail(UserRules.NombreCompletoValido(Client.FirstLastname), "Client.FirstLastname");
+            AddModelErrorIfFail(UserRules.NombreCompletoValido(Client.SecondLastname), "Client.SecondLastname");
+            AddModelErrorIfFail(UserRules.CiValido(Client.Ci), "Client.Ci");
+            AddModelErrorIfFail(UserRules.FechaNacimientoValida(Client.DateBirth), "Client.DateBirth");
 
             // -------------------------
             // VALIDACIONES DE DOMINIO CLIENT
             // -------------------------
-            if (!ClientRules.FechaNacimientoValida(Client.DateBirth, 18))
-                ModelState.AddModelError("Client.DateBirth", "El cliente debe tener al menos 18 años y la fecha no puede ser futura.");
-
-            if (!ClientRules.NivelFitnessValido(Client.FitnessLevel))
-                ModelState.AddModelError("Client.FitnessLevel", "Nivel de fitness inválido.");
-
-            if (!ClientRules.PesoInicialValido(Client.InitialWeightKg))
-                ModelState.AddModelError("Client.InitialWeightKg", "Peso inicial inválido.");
-
-            if (!ClientRules.PesoActualValido(Client.InitialWeightKg, Client.CurrentWeightKg))
-                ModelState.AddModelError("Client.CurrentWeightKg", "Peso actual no puede ser menor que el inicial.");
-
-            if (!ClientRules.TelefonoEmergenciaValido(Client.EmergencyContactPhone))
-                ModelState.AddModelError("Client.EmergencyContactPhone", "Teléfono inválido (mínimo 7 dígitos).");
+            AddModelErrorIfFail(ClientRules.FechaNacimientoValida(Client.DateBirth, 18), "Client.DateBirth");
+            AddModelErrorIfFail(ClientRules.NivelFitnessValido(Client.FitnessLevel), "Client.FitnessLevel");
+            AddModelErrorIfFail(ClientRules.PesoInicialValido(Client.InitialWeightKg), "Client.InitialWeightKg");
+            AddModelErrorIfFail(ClientRules.PesoActualValido(Client.InitialWeightKg, Client.CurrentWeightKg), "Client.CurrentWeightKg");
+            AddModelErrorIfFail(ClientRules.TelefonoEmergenciaValido(Client.EmergencyContactPhone), "Client.EmergencyContactPhone");
 
             if (!ModelState.IsValid)
                 return Page();
@@ -117,6 +112,5 @@ namespace GYMPT.Pages.Clients
 
             return RedirectToPage("/Users/User");
         }
-
     }
 }

@@ -26,9 +26,12 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var user in Model.UserList)
+        @foreach (var item in Model.UserList)
         {
-            <tr>
+            var user = item.User;
+            var rowClass = item.TieneDatosInvalidos ? "table-warning" : "";
+
+            <tr class="@rowClass">
                 <td>@user.Id</td>
                 <td>@user.Name @user.FirstLastname @user.SecondLastname</td>
                 <td>@user.Ci</td>

@@ -1,4 +1,7 @@
-﻿namespace GYMPT.Domain.Ports
+﻿using GYMPT.Domain.Entities;
+using GYMPT.Domain.Ports;
+
+namespace GYMPT.Domain.Ports
 {
     public interface IRepository<T>
     {
@@ -9,3 +12,7 @@
         Task<bool> DeleteByIdAsync(int id); 
     }
 }
+
+public interface IUserRepository : IRepository<User> { }
+public interface IClientRepository : IRepository<Client> { }
+public interface IInstructorRepository : IRepository<Instructor> { }

@@ -2,13 +2,12 @@ using GYMPT.Domain.Entities;
 using GYMPT.Domain.Ports;
 using GYMPT.Domain.Rules;
 using GYMPT.Infrastructure.Factories;
+using GYMPT.Domain.Shared;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-
-
 
 namespace GYMPT.Pages.Instructors
 {
@@ -35,8 +34,18 @@ namespace GYMPT.Pages.Instructors
         private IRepository<User> CreateUserRepository() => new UserRepositoryCreator().CreateRepository();
         private IRepository<Instructor> CreateInstructorRepository() => new InstructorRepositoryCreator().CreateRepository();
 
+        // -------------------------
+        // MÉTODO AUXILIAR PARA RESULT
+        // -------------------------
+        private void AddModelErrorIfFail(Result result, string key)
+        {
+            if (result.IsFailure)
+                ModelState.AddModelError(key, result.Error);
+        }
+
         public void OnGet()
         {
+            // Prellenar datos básicos del usuario
             Instructor.Name = Name;
             Instructor.FirstLastname = FirstLastname;
             Instructor.SecondLastname = SecondLastname;
@@ -48,37 +57,37 @@ namespace GYMPT.Pages.Instructors
         public async Task<IActionResult> OnPostAsync()
         {
             // -------------------------
-            // VALIDACIONES DEL USUARIO
+            // VALIDACIONES DE USUARIO
             // -------------------------
-            if (!UserRules.NombreCompletoValido(Instructor.Name))
-                ModelState.AddModelError("Instructor.Name", "Nombre inválido. Debe tener al menos 2 letras y solo letras y espacios.");
-
-            if (!UserRules.NombreCompletoValido(Instructor.FirstLastname))
-                ModelState.AddModelError("Instructor.FirstLastname", "Apellido Paterno inválido.");
-
-            if (!UserRules.NombreCompletoValido(Instructor.SecondLastname))
-                ModelState.AddModelError("Instructor.SecondLastname", "Apellido Materno inválido.");
-
-            if (!UserRules.CiValido(Instructor.Ci))
-                ModelState.AddModelError("Instructor.Ci", "CI inválido. Solo números y letras.");
-
-            if (!UserRules.FechaNacimientoValida(Instructor.DateBirth))
-                ModelState.AddModelError("Instructor.DateBirth", "Fecha de nacimiento no puede ser futura.");
+            AddModelErrorIfFail(UserRules.NombreCompletoValido(Instructor.Name), "Instructor.Name");
+            AddModelErrorIfFail(UserRules.NombreCompletoValido(Instructor.FirstLastname), "Instructor.FirstLastname");
+            AddModelErrorIfFail(UserRules.NombreCompletoValido(Instructor.SecondLastname), "Instructor.SecondLastname");
+            AddModelErrorIfFail(UserRules.CiValido(Instructor.Ci), "Instructor.Ci");
+            AddModelErrorIfFail(UserRules.FechaNacimientoValida(Instructor.DateBirth), "Instructor.DateBirth");
 
             // -------------------------
-            // VALIDACIONES DE DOMINIO DE INSTRUCTOR
+            // VALIDACIONES DE DOMINIO INSTRUCTOR
             // -------------------------
-            if (!InstructorRules.EsFechaContratacionValida(Instructor.HireDate, Instructor.DateBirth))
-                ModelState.AddModelError("Instructor.HireDate",
-                    "La fecha de contratación debe ser posterior al nacimiento, no puede estar en el futuro y el instructor debe tener al menos 18 años.");
+            AddModelErrorIfFail(InstructorRules.EsFechaContratacionValida(Instructor.HireDate, Instructor.DateBirth), "Instructor.HireDate");
+            AddModelErrorIfFail(InstructorRules.EsEspecializacionValida(Instructor.Specialization), "Instructor.Specialization");
+            AddModelErrorIfFail(InstructorRules.EsSalarioValido(Instructor.MonthlySalary), "Instructor.MonthlySalary");
 
-            if (!InstructorRules.EsEspecializacionValida(Instructor.Specialization))
-                ModelState.AddModelError("Instructor.Specialization", "Especialización inválida (mínimo 3 caracteres).");
+            if (!ModelState.IsValid)
+                return Page();
 
-            if (!InstructorRules.EsSalarioValido(Instructor.MonthlySalary))
-                ModelState.AddModelError("Instructor.MonthlySalary", "Salario inválido (debe ser ≥ 0).");
+            // -------------------------
+            // COMPLETAR DATOS BÁSICOS SI VIENEN VACÍOS
+            // -------------------------
+            Instructor.Name = string.IsNullOrWhiteSpace(Instructor.Name) ? Name : Instructor.Name;
+            Instructor.FirstLastname = string.IsNullOrWhiteSpace(Instructor.FirstLastname) ? FirstLastname : Instructor.FirstLastname;
+            Instructor.SecondLastname = string.IsNullOrWhiteSpace(Instructor.SecondLastname) ? SecondLastname : Instructor.SecondLastname;
+            Instructor.Ci = string.IsNullOrWhiteSpace(Instructor.Ci) ? Ci : Instructor.Ci;
+            Instructor.DateBirth = Instructor.DateBirth == default ? DateBirth : Instructor.DateBirth;
 
-            if (!ModelState.IsValid) return Page();
+            Instructor.Role = "Instructor";
+            Instructor.CreatedAt = DateTime.UtcNow;
+            Instructor.LastModification = DateTime.UtcNow;
+            Instructor.IsActive = true;
 
             // -------------------------
             // GUARDAR USER E INSTRUCTOR
@@ -86,31 +95,40 @@ namespace GYMPT.Pages.Instructors
             var userRepo = CreateUserRepository();
             var instructorRepo = CreateInstructorRepository();
 
-            var existingUser = (await userRepo.GetAllAsync()).FirstOrDefault(u => u.Ci == Instructor.Ci);
-
-            if (existingUser == null)
+            try
             {
-                var newUser = new User
+                var existingUser = (await userRepo.GetAllAsync()).FirstOrDefault(u => u.Ci == Instructor.Ci);
+
+                if (existingUser == null)
                 {
-                    Name = Instructor.Name,
-                    FirstLastname = Instructor.FirstLastname,
-                    SecondLastname = Instructor.SecondLastname,
-                    Ci = Instructor.Ci,
-                    DateBirth = Instructor.DateBirth,
-                    Role = "Instructor",
-                    IsActive = true
-                };
+                    var newUser = new User
+                    {
+                        Name = Instructor.Name,
+                        FirstLastname = Instructor.FirstLastname,
+                        SecondLastname = Instructor.SecondLastname,
+                        Ci = Instructor.Ci,
+                        DateBirth = Instructor.DateBirth,
+                        Role = "Instructor",
+                        IsActive = true
+                    };
 
-                await userRepo.CreateAsync(newUser);
-                Instructor.IdUser = newUser.Id;
+                    await userRepo.CreateAsync(newUser);
+                    Instructor.IdUser = newUser.Id;
+                }
+                else
+                {
+                    Instructor.IdUser = existingUser.Id;
+                }
+
+                await instructorRepo.CreateAsync(Instructor);
             }
-            else
+            catch (Exception ex)
             {
-                Instructor.IdUser = existingUser.Id;
+                ModelState.AddModelError("", $"Error al guardar instructor: {ex.Message}");
+                return Page();
             }
 
-            await instructorRepo.CreateAsync(Instructor);
-
+            TempData["Message"] = $"Instructor '{Instructor.Name}' creado correctamente.";
             return RedirectToPage("/Users/User");
         }
     }

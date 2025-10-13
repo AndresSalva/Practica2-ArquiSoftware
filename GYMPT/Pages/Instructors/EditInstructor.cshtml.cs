@@ -2,64 +2,102 @@ using GYMPT.Domain.Entities;
 using GYMPT.Domain.Ports;
 using GYMPT.Domain.Rules;
 using GYMPT.Infrastructure.Factories;
+using GYMPT.Domain.Shared;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace GYMPT.Pages.Instructors
 {
     public class EditInstructorModel : PageModel
     {
         [BindProperty]
-        public Instructor Instructor { get; set; }
+        public Instructor Instructor { get; set; } = new Instructor();
 
         [BindProperty(SupportsGet = true)]
         public int Id { get; set; }
 
+        private IRepository<User> CreateUserRepository() => new UserRepositoryCreator().CreateRepository();
         private IRepository<Instructor> CreateInstructorRepository() => new InstructorRepositoryCreator().CreateRepository();
+
+        private void AddModelErrorIfFail(Result result, string key)
+        {
+            if (result.IsFailure)
+                ModelState.AddModelError(key, result.Error);
+        }
 
         public async Task<IActionResult> OnGetAsync()
         {
-            Instructor = await CreateInstructorRepository().GetByIdAsync(Id);
-            if (Instructor == null) return RedirectToPage("/Users/User");
-            Id = Instructor.Id;
+            var instructorRepo = CreateInstructorRepository();
+            Instructor = await instructorRepo.GetByIdAsync(Id);
+
+            if (Instructor == null)
+                return RedirectToPage("/Users/User");
+
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
             // -------------------------
-            // Validaciones de Usuario + Instructor
+            // VALIDACIONES DE USUARIO
             // -------------------------
-            if (!UserRules.NombreCompletoValido(Instructor.Name))
-                ModelState.AddModelError("Instructor.Name", "Nombre inválido.");
+            AddModelErrorIfFail(UserRules.NombreCompletoValido(Instructor.Name), "Instructor.Name");
+            AddModelErrorIfFail(UserRules.NombreCompletoValido(Instructor.FirstLastname), "Instructor.FirstLastname");
+            AddModelErrorIfFail(UserRules.NombreCompletoValido(Instructor.SecondLastname), "Instructor.SecondLastname");
+            AddModelErrorIfFail(UserRules.CiValido(Instructor.Ci), "Instructor.Ci");
+            AddModelErrorIfFail(UserRules.FechaNacimientoValida(Instructor.DateBirth), "Instructor.DateBirth");
 
-            if (!UserRules.NombreCompletoValido(Instructor.FirstLastname))
-                ModelState.AddModelError("Instructor.FirstLastname", "Apellido Paterno inválido.");
+            // -------------------------
+            // VALIDACIONES DE DOMINIO
+            // -------------------------
+            AddModelErrorIfFail(InstructorRules.EsFechaContratacionValida(Instructor.HireDate, Instructor.DateBirth), "Instructor.HireDate");
+            AddModelErrorIfFail(InstructorRules.EsEspecializacionValida(Instructor.Specialization), "Instructor.Specialization");
+            AddModelErrorIfFail(InstructorRules.EsSalarioValido(Instructor.MonthlySalary), "Instructor.MonthlySalary");
 
-            if (!UserRules.NombreCompletoValido(Instructor.SecondLastname))
-                ModelState.AddModelError("Instructor.SecondLastname", "Apellido Materno inválido.");
+            if (!ModelState.IsValid)
+                return Page();
 
-            if (!UserRules.CiValido(Instructor.Ci))
-                ModelState.AddModelError("Instructor.Ci", "CI inválido.");
+            // -------------------------
+            // ACTUALIZAR USER E INSTRUCTOR
+            // -------------------------
+            var userRepo = CreateUserRepository();
+            var instructorRepo = CreateInstructorRepository();
 
-            if (!UserRules.FechaNacimientoValida(Instructor.DateBirth))
-                ModelState.AddModelError("Instructor.DateBirth", "Fecha de nacimiento inválida.");
+            var existingUser = (await userRepo.GetAllAsync()).FirstOrDefault(u => u.Ci == Instructor.Ci);
 
-            if (!InstructorRules.EsFechaContratacionValida(Instructor.HireDate, Instructor.DateBirth))
-                ModelState.AddModelError("Instructor.HireDate", "Fecha de contratación inválida.");
+            if (existingUser == null)
+            {
+                // Esto no debería pasar normalmente en edición, pero se puede dejar por seguridad
+                var newUser = new User
+                {
+                    Name = Instructor.Name,
+                    FirstLastname = Instructor.FirstLastname,
+                    SecondLastname = Instructor.SecondLastname,
+                    Ci = Instructor.Ci,
+                    DateBirth = Instructor.DateBirth,
+                    Role = "Instructor",
+                    IsActive = true
+                };
 
-            if (!InstructorRules.EsEspecializacionValida(Instructor.Specialization))
-                ModelState.AddModelError("Instructor.Specialization", "Especialización inválida.");
+                await userRepo.CreateAsync(newUser);
+                Instructor.IdUser = newUser.Id;
+            }
+            else
+            {
+                Instructor.IdUser = existingUser.Id;
+                // Actualizamos datos básicos del user
+                existingUser.Name = Instructor.Name;
+                existingUser.FirstLastname = Instructor.FirstLastname;
+                existingUser.SecondLastname = Instructor.SecondLastname;
+                existingUser.DateBirth = Instructor.DateBirth;
+                await userRepo.UpdateAsync(existingUser);
+            }
 
-            if (!InstructorRules.EsSalarioValido(Instructor.MonthlySalary))
-                ModelState.AddModelError("Instructor.MonthlySalary", "Salario inválido.");
+            await instructorRepo.UpdateAsync(Instructor);
 
-            if (!ModelState.IsValid) return Page();
-
-            Instructor.Id = Id;
-            await CreateInstructorRepository().UpdateAsync(Instructor);
-            TempData["Message"] = $"Instructor {Instructor.Name} actualizado correctamente.";
+            TempData["Message"] = $"Instructor '{Instructor.Name}' actualizado correctamente.";
             return RedirectToPage("/Users/User");
         }
     }
