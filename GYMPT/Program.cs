@@ -7,6 +7,9 @@ using GYMPT.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Ensures correct configuration of the url token singleton.
+builder.Services.AddDataProtection();
+builder.Services.AddSingleton<UrlTokenSingleton>();
 
 builder.Services.AddScoped<IClientRepository>(serviceProvider => {
     var factory = new ClientRepositoryCreator();
