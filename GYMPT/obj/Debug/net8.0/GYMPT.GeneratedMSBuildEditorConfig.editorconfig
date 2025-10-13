@@ -17,109 +17,109 @@ build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = GYMPT
 build_property.RootNamespace = GYMPT
-build_property.ProjectDir = D:\universidad\semestre8\Arquitectura\P2 - GPT5\GYMPT\GYMPT\
+build_property.ProjectDir = C:\Users\ASUS\Desktop\CARPETA MAESTRA\materias\12vo semestre\Arquitectura del software\Practica2-ArquiSoftware\Practica2-ArquiSoftware\GYMPT\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = D:\universidad\semestre8\Arquitectura\P2 - GPT5\GYMPT\GYMPT
+build_property.MSBuildProjectDirectory = C:\Users\ASUS\Desktop\CARPETA MAESTRA\materias\12vo semestre\Arquitectura del software\Practica2-ArquiSoftware\Practica2-ArquiSoftware\GYMPT
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 8.0
 build_property.EnableCodeStyleSeverity = 
 
-[D:/universidad/semestre8/Arquitectura/P2 - GPT5/GYMPT/GYMPT/Pages/Clients/Create.cshtml]
+[C:/Users/ASUS/Desktop/CARPETA MAESTRA/materias/12vo semestre/Arquitectura del software/Practica2-ArquiSoftware/Practica2-ArquiSoftware/GYMPT/Pages/Clients/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2xpZW50c1xDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/universidad/semestre8/Arquitectura/P2 - GPT5/GYMPT/GYMPT/Pages/Clients/EditClient.cshtml]
+[C:/Users/ASUS/Desktop/CARPETA MAESTRA/materias/12vo semestre/Arquitectura del software/Practica2-ArquiSoftware/Practica2-ArquiSoftware/GYMPT/Pages/Clients/EditClient.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2xpZW50c1xFZGl0Q2xpZW50LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/universidad/semestre8/Arquitectura/P2 - GPT5/GYMPT/GYMPT/Pages/DetailsUsers/DetailsUsers.cshtml]
+[C:/Users/ASUS/Desktop/CARPETA MAESTRA/materias/12vo semestre/Arquitectura del software/Practica2-ArquiSoftware/Practica2-ArquiSoftware/GYMPT/Pages/DetailsUsers/DetailsUsers.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGV0YWlsc1VzZXJzXERldGFpbHNVc2Vycy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/universidad/semestre8/Arquitectura/P2 - GPT5/GYMPT/GYMPT/Pages/Disciplines/Discipline.cshtml]
+[C:/Users/ASUS/Desktop/CARPETA MAESTRA/materias/12vo semestre/Arquitectura del software/Practica2-ArquiSoftware/Practica2-ArquiSoftware/GYMPT/Pages/Disciplines/Discipline.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGlzY2lwbGluZXNcRGlzY2lwbGluZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/universidad/semestre8/Arquitectura/P2 - GPT5/GYMPT/GYMPT/Pages/Disciplines/DisciplineCreate.cshtml]
+[C:/Users/ASUS/Desktop/CARPETA MAESTRA/materias/12vo semestre/Arquitectura del software/Practica2-ArquiSoftware/Practica2-ArquiSoftware/GYMPT/Pages/Disciplines/DisciplineCreate.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGlzY2lwbGluZXNcRGlzY2lwbGluZUNyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/universidad/semestre8/Arquitectura/P2 - GPT5/GYMPT/GYMPT/Pages/Disciplines/DisciplineDelete.cshtml]
+[C:/Users/ASUS/Desktop/CARPETA MAESTRA/materias/12vo semestre/Arquitectura del software/Practica2-ArquiSoftware/Practica2-ArquiSoftware/GYMPT/Pages/Disciplines/DisciplineDelete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGlzY2lwbGluZXNcRGlzY2lwbGluZURlbGV0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/universidad/semestre8/Arquitectura/P2 - GPT5/GYMPT/GYMPT/Pages/Disciplines/DisciplineEdit.cshtml]
+[C:/Users/ASUS/Desktop/CARPETA MAESTRA/materias/12vo semestre/Arquitectura del software/Practica2-ArquiSoftware/Practica2-ArquiSoftware/GYMPT/Pages/Disciplines/DisciplineEdit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGlzY2lwbGluZXNcRGlzY2lwbGluZUVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/universidad/semestre8/Arquitectura/P2 - GPT5/GYMPT/GYMPT/Pages/Error.cshtml]
+[C:/Users/ASUS/Desktop/CARPETA MAESTRA/materias/12vo semestre/Arquitectura del software/Practica2-ArquiSoftware/Practica2-ArquiSoftware/GYMPT/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/universidad/semestre8/Arquitectura/P2 - GPT5/GYMPT/GYMPT/Pages/Index.cshtml]
+[C:/Users/ASUS/Desktop/CARPETA MAESTRA/materias/12vo semestre/Arquitectura del software/Practica2-ArquiSoftware/Practica2-ArquiSoftware/GYMPT/Pages/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/universidad/semestre8/Arquitectura/P2 - GPT5/GYMPT/GYMPT/Pages/Instructors/Create.cshtml]
+[C:/Users/ASUS/Desktop/CARPETA MAESTRA/materias/12vo semestre/Arquitectura del software/Practica2-ArquiSoftware/Practica2-ArquiSoftware/GYMPT/Pages/Instructors/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5zdHJ1Y3RvcnNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/universidad/semestre8/Arquitectura/P2 - GPT5/GYMPT/GYMPT/Pages/Instructors/EditInstructor.cshtml]
+[C:/Users/ASUS/Desktop/CARPETA MAESTRA/materias/12vo semestre/Arquitectura del software/Practica2-ArquiSoftware/Practica2-ArquiSoftware/GYMPT/Pages/Instructors/EditInstructor.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5zdHJ1Y3RvcnNcRWRpdEluc3RydWN0b3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/universidad/semestre8/Arquitectura/P2 - GPT5/GYMPT/GYMPT/Pages/Memberships/Membership.cshtml]
+[C:/Users/ASUS/Desktop/CARPETA MAESTRA/materias/12vo semestre/Arquitectura del software/Practica2-ArquiSoftware/Practica2-ArquiSoftware/GYMPT/Pages/Memberships/Membership.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWVtYmVyc2hpcHNcTWVtYmVyc2hpcC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/universidad/semestre8/Arquitectura/P2 - GPT5/GYMPT/GYMPT/Pages/Memberships/MembershipCreate.cshtml]
+[C:/Users/ASUS/Desktop/CARPETA MAESTRA/materias/12vo semestre/Arquitectura del software/Practica2-ArquiSoftware/Practica2-ArquiSoftware/GYMPT/Pages/Memberships/MembershipCreate.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWVtYmVyc2hpcHNcTWVtYmVyc2hpcENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/universidad/semestre8/Arquitectura/P2 - GPT5/GYMPT/GYMPT/Pages/Memberships/MembershipEdit.cshtml]
+[C:/Users/ASUS/Desktop/CARPETA MAESTRA/materias/12vo semestre/Arquitectura del software/Practica2-ArquiSoftware/Practica2-ArquiSoftware/GYMPT/Pages/Memberships/MembershipEdit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWVtYmVyc2hpcHNcTWVtYmVyc2hpcEVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/universidad/semestre8/Arquitectura/P2 - GPT5/GYMPT/GYMPT/Pages/Privacy.cshtml]
+[C:/Users/ASUS/Desktop/CARPETA MAESTRA/materias/12vo semestre/Arquitectura del software/Practica2-ArquiSoftware/Practica2-ArquiSoftware/GYMPT/Pages/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJpdmFjeS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/universidad/semestre8/Arquitectura/P2 - GPT5/GYMPT/GYMPT/Pages/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/ASUS/Desktop/CARPETA MAESTRA/materias/12vo semestre/Arquitectura del software/Practica2-ArquiSoftware/Practica2-ArquiSoftware/GYMPT/Pages/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/universidad/semestre8/Arquitectura/P2 - GPT5/GYMPT/GYMPT/Pages/SpecificUserDetail/ClientDetails.cshtml]
+[C:/Users/ASUS/Desktop/CARPETA MAESTRA/materias/12vo semestre/Arquitectura del software/Practica2-ArquiSoftware/Practica2-ArquiSoftware/GYMPT/Pages/SpecificUserDetail/ClientDetails.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3BlY2lmaWNVc2VyRGV0YWlsXENsaWVudERldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/universidad/semestre8/Arquitectura/P2 - GPT5/GYMPT/GYMPT/Pages/SpecificUserDetail/InstructorDetails.cshtml]
+[C:/Users/ASUS/Desktop/CARPETA MAESTRA/materias/12vo semestre/Arquitectura del software/Practica2-ArquiSoftware/Practica2-ArquiSoftware/GYMPT/Pages/SpecificUserDetail/InstructorDetails.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3BlY2lmaWNVc2VyRGV0YWlsXEluc3RydWN0b3JEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/universidad/semestre8/Arquitectura/P2 - GPT5/GYMPT/GYMPT/Pages/Users/Create.cshtml]
+[C:/Users/ASUS/Desktop/CARPETA MAESTRA/materias/12vo semestre/Arquitectura del software/Practica2-ArquiSoftware/Practica2-ArquiSoftware/GYMPT/Pages/Users/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/universidad/semestre8/Arquitectura/P2 - GPT5/GYMPT/GYMPT/Pages/Users/DeleteUser.cshtml]
+[C:/Users/ASUS/Desktop/CARPETA MAESTRA/materias/12vo semestre/Arquitectura del software/Practica2-ArquiSoftware/Practica2-ArquiSoftware/GYMPT/Pages/Users/DeleteUser.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcRGVsZXRlVXNlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/universidad/semestre8/Arquitectura/P2 - GPT5/GYMPT/GYMPT/Pages/Users/User.cshtml]
+[C:/Users/ASUS/Desktop/CARPETA MAESTRA/materias/12vo semestre/Arquitectura del software/Practica2-ArquiSoftware/Practica2-ArquiSoftware/GYMPT/Pages/Users/User.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcVXNlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/universidad/semestre8/Arquitectura/P2 - GPT5/GYMPT/GYMPT/Pages/_ViewImports.cshtml]
+[C:/Users/ASUS/Desktop/CARPETA MAESTRA/materias/12vo semestre/Arquitectura del software/Practica2-ArquiSoftware/Practica2-ArquiSoftware/GYMPT/Pages/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/universidad/semestre8/Arquitectura/P2 - GPT5/GYMPT/GYMPT/Pages/_ViewStart.cshtml]
+[C:/Users/ASUS/Desktop/CARPETA MAESTRA/materias/12vo semestre/Arquitectura del software/Practica2-ArquiSoftware/Practica2-ArquiSoftware/GYMPT/Pages/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/universidad/semestre8/Arquitectura/P2 - GPT5/GYMPT/GYMPT/Pages/Shared/_Layout.cshtml]
+[C:/Users/ASUS/Desktop/CARPETA MAESTRA/materias/12vo semestre/Arquitectura del software/Practica2-ArquiSoftware/Practica2-ArquiSoftware/GYMPT/Pages/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-wfl4zqcd7w

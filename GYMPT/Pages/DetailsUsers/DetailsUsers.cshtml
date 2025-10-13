@@ -1,5 +1,4 @@
 ﻿@page
-@using GYMPT.Domain.Entities
 @model GYMPT.Pages.DetailsUsers.DetailsUsersModel
 @{
     ViewData["Title"] = "Detalles de Usuarios";
@@ -7,6 +6,7 @@
 
 <h1>Detalles de Usuarios con Membresías</h1>
 
+<!-- Mensajes -->
 @if (TempData["SuccessMessage"] != null)
 {
     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -29,16 +29,18 @@
     </div>
 }
 
-<button id="btnShowForm" class="btn btn-success mb-3">
+<!-- Botón para mostrar formulario -->
+<button id="btnShowForm" class="btn btn-success mb-3" type="button">
     <i class="fas fa-plus"></i> Agregar Detalle de Usuario
 </button>
 
+<!-- Formulario oculto inicialmente -->
 <div id="formContainer" class="card mb-4" style="display:none;">
     <div class="card-header">
         <h5 id="formTitle">Agregar Detalle de Usuario</h5>
     </div>
     <div class="card-body">
-        <form method="post" id="detailUserForm">
+        <form method="post" id="detailUserForm" asp-antiforgery="true">
             <input type="hidden" asp-for="DetailUser.Id" />
 
             <div class="row">
@@ -103,7 +105,8 @@
     </div>
 </div>
 
-@if (Model.DetailsUserList.Any())
+<!-- Tabla de detalles de usuario -->
+@if (Model.DetailsUserList != null && Model.DetailsUserList.Any())
 {
     <div class="card">
         <div class="card-header">
@@ -125,15 +128,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (DetailsUser detail in Model.DetailsUserList)
+                        @foreach (var detail in Model.DetailsUserList)
                         {
                             <tr>
                                 <td>@detail.Id</td>
                                 <td>@detail.IdUser</td>
                                 <td>@detail.IdMembership</td>
-                                <td>@detail.StartDate.ToString(format: "yyyy-MM-dd")</td>   
-                                <td>@detail.EndDate.ToString(format: "yyyy-MM-dd")</td>
-
+                                <td>@detail.StartDate.ToString("yyyy-MM-dd")</td>
+                                <td>@detail.EndDate.ToString("yyyy-MM-dd")</td>
                                 <td>
                                     <span class="badge bg-info">@detail.SessionsLeft</span>
                                 </td>
@@ -149,19 +151,20 @@
                                 </td>
                                 <td>
                                     <div class="btn-group" role="group">
-                                        <button class="btn btn-sm btn-primary"
+                                        <button type="button" class="btn btn-sm btn-primary"
                                                 onclick="fillEditForm(
                                                             @detail.Id,
                                                             @detail.IdUser,
                                                             @detail.IdMembership,
-                                                            '@detail.StartDate.ToString(format: "yyyy-MM-dd")',
-                                                            '@detail.EndDate.ToString(format: "yyyy-MM-dd")',
+                                                           '@detail.StartDate.ToString("yyyy-MM-dd")',
+                                                           '@detail.EndDate.ToString("yyyy-MM-dd")',
                                                             @detail.SessionsLeft,
-                                                            @detail.IsActive.ToString().ToLower())">
+                                                            '@detail.IsActive'.toLowerCase())">
                                             <i class="fas fa-edit"></i> Editar
                                         </button>
+
                                         <form method="post" asp-page-handler="Delete" asp-route-id="@detail.Id" style="display:inline">
-                                            <button class="btn btn-sm btn-danger"
+                                            <button type="submit" class="btn btn-sm btn-danger"
                                                     onclick="return confirm('¿Está seguro de que desea eliminar este detalle de usuario?')">
                                                 <i class="fas fa-trash"></i> Eliminar
                                             </button>
@@ -186,57 +189,74 @@ else
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
     <script>
+        // Seguridad: obtener elementos con comprobación de existencia
         const formContainer = document.getElementById('formContainer');
         const btnShowForm = document.getElementById('btnShowForm');
         const createButton = document.getElementById('createButton');
         const updateButton = document.getElementById('updateButton');
         const formTitle = document.getElementById('formTitle');
 
-        btnShowForm.addEventListener('click', () => {
-            resetForm();
-            formTitle.textContent = 'Agregar Detalle de Usuario';
-            createButton.style.display = 'inline-block';
-            updateButton.style.display = 'none';
-            formContainer.style.display = 'block';
-            btnShowForm.style.display = 'none';
-        });
+        if (btnShowForm) {
+            btnShowForm.addEventListener('click', () => {
+                resetForm();
+                if (formTitle) formTitle.textContent = 'Agregar Detalle de Usuario';
+                if (createButton) createButton.style.display = 'inline-block';
+                if (updateButton) updateButton.style.display = 'none';
+                if (formContainer) formContainer.style.display = 'block';
+                btnShowForm.style.display = 'none';
+            });
+        }
 
         function hideForm() {
-            formContainer.style.display = 'none';
-            btnShowForm.style.display = 'inline-block';
-            createButton.style.display = 'none';
-            updateButton.style.display = 'none';
+            if (formContainer) formContainer.style.display = 'none';
+            if (btnShowForm) btnShowForm.style.display = 'inline-block';
+            if (createButton) createButton.style.display = 'none';
+            if (updateButton) updateButton.style.display = 'none';
         }
 
         function resetForm() {
-            document.getElementById('detailUserForm').reset();
-            document.querySelector('[name="DetailUser.Id"]').value = '0';
-            document.querySelector('[name="DetailUser.IsActive"]').checked = true;
+            const form = document.getElementById('detailUserForm');
+            if (form) form.reset();
+            const idInput = document.querySelector('[name="DetailUser.Id"]');
+            if (idInput) idInput.value = '0';
+            const activeCheckbox = document.querySelector('[name="DetailUser.IsActive"]');
+            if (activeCheckbox) activeCheckbox.checked = true;
         }
 
+        // Llenar formulario para editar
         function fillEditForm(id, userId, membershipId, startDate, endDate, sessionsLeft, isActive) {
             resetForm();
 
-            document.querySelector('[name="DetailUser.Id"]').value = id;
-            document.querySelector('[name="DetailUser.IdUser"]').value = userId;
-            document.querySelector('[name="DetailUser.IdMembership"]').value = membershipId;
-            document.querySelector('[name="DetailUser.StartDate"]').value = startDate;
-            document.querySelector('[name="DetailUser.EndDate"]').value = endDate;
-            document.querySelector('[name="DetailUser.SessionsLeft"]').value = sessionsLeft;
-            document.querySelector('[name="DetailUser.IsActive"]').checked = isActive;
+            const setIf = (selector, value) => {
+                const el = document.querySelector(selector);
+                if (el) el.value = value ?? '';
+            };
 
-            formTitle.textContent = 'Editar Detalle de Usuario';
-            createButton.style.display = 'none';
-            updateButton.style.display = 'inline-block';
-            formContainer.style.display = 'block';
-            btnShowForm.style.display = 'none';
+            setIf('[name="DetailUser.Id"]', id);
+            setIf('[name="DetailUser.IdUser"]', userId);
+            setIf('[name="DetailUser.IdMembership"]', membershipId);
+            setIf('[name="DetailUser.StartDate"]', startDate);
+            setIf('[name="DetailUser.EndDate"]', endDate);
+            setIf('[name="DetailUser.SessionsLeft"]', sessionsLeft);
 
-            formContainer.scrollIntoView({ behavior: 'smooth' });
+            const activeEl = document.querySelector('[name="DetailUser.IsActive"]');
+            if (activeEl) activeEl.checked = (String(isActive) === 'true');
+
+            if (formTitle) formTitle.textContent = 'Editar Detalle de Usuario';
+            if (createButton) createButton.style.display = 'none';
+            if (updateButton) updateButton.style.display = 'inline-block';
+            if (formContainer) formContainer.style.display = 'block';
+            if (btnShowForm) btnShowForm.style.display = 'none';
+
+            if (formContainer) formContainer.scrollIntoView({ behavior: 'smooth' });
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
+        // Validación de fechas en tiempo real (si los inputs existen)
+        document.addEventListener('DOMContentLoaded', function () {
             const startDateInput = document.querySelector('[name="DetailUser.StartDate"]');
             const endDateInput = document.querySelector('[name="DetailUser.EndDate"]');
+
+            if (!startDateInput || !endDateInput) return;
 
             function validateDates() {
                 const startDate = new Date(startDateInput.value);

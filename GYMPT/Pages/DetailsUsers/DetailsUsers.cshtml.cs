@@ -1,5 +1,6 @@
-using GYMPT.Application.Interfaces;
-using GYMPT.Domain.Entities;
+using GYMPT.Domain.Entities;               // Entidad del dominio (DetailsUser)
+using GYMPT.Domain.Ports;                  // Interfaz genérica IRepository<T>
+using GYMPT.Infrastructure.Factories;      // Fábrica del repositorio concreto
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
@@ -11,81 +12,132 @@ namespace GYMPT.Pages.DetailsUsers
 {
     public class DetailsUsersModel : PageModel
     {
-        private readonly IDetailUserService _detailUserService;
-
+        // -------------------------------
+        // Propiedades del modelo
+        // -------------------------------
         [BindProperty]
         public DetailsUser DetailUser { get; set; } = new DetailsUser();
 
-        public List<DetailsUser> DetailsUserList { get; set; } = new List<DetailsUser>();
+        public List<DetailsUser> DetailsUserList { get; private set; } = new();
 
-        public DetailsUsersModel(IDetailUserService detailUserService)
+        // -------------------------------
+        // Fábrica de repositorio
+        // -------------------------------
+        private IRepository<DetailsUser> CreateDetailUserRepository()
         {
-            _detailUserService = detailUserService;
+            var factory = new DetailUserRepositoryCreator();
+            return factory.CreateRepository();
         }
 
-        public async Task OnGetAsync(int? id)
+        // -------------------------------
+        // GET: Cargar datos iniciales
+        // -------------------------------
+        public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id.HasValue)
+            try
             {
-                DetailUser = await _detailUserService.GetDetailUserById(id.Value) ?? new DetailsUser();
+                var repo = CreateDetailUserRepository();
+
+                // Cargar registro individual si hay un ID
+                if (id.HasValue)
+                {
+                    DetailUser = await repo.GetByIdAsync(id.Value);
+                    if (DetailUser == null)
+                        TempData["InfoMessage"] = "El detalle solicitado no fue encontrado.";
+                }
+
+                // Cargar todos los registros
+                var details = await repo.GetAllAsync();
+                DetailsUserList = details?.ToList() ?? new List<DetailsUser>();
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Error al cargar los datos: {ex.Message}";
             }
 
-            var details = await _detailUserService.GetAllDetailUsers();
-            DetailsUserList = details?.ToList() ?? new List<DetailsUser>();
+            return Page();
         }
 
+        // -------------------------------
+        // POST: Crear nuevo detalle
+        // -------------------------------
         public async Task<IActionResult> OnPostCreateAsync()
         {
-            if (!ModelState.IsValid)
+            try
             {
-                // Es necesario recargar la lista si la validaci�n falla para que la p�gina se muestre bien
-                await RehydratePageOnPostError();
-                return Page();
+                if (!ModelState.IsValid)
+                    return Page();
+
+                if (DetailUser.EndDate <= DetailUser.StartDate)
+                {
+                    TempData["ErrorMessage"] = "La fecha de fin debe ser posterior a la fecha de inicio.";
+                    return RedirectToPage();
+                }
+
+                var repo = CreateDetailUserRepository();
+                await repo.CreateAsync(DetailUser);
+
+                TempData["SuccessMessage"] = "Detalle de usuario creado exitosamente.";
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Error al crear el detalle: {ex.Message}";
             }
 
-            if (DetailUser.EndDate <= DetailUser.StartDate)
-            {
-                ModelState.AddModelError("DetailUser.EndDate", "La fecha de fin debe ser posterior a la fecha de inicio.");
-                await RehydratePageOnPostError();
-                return Page();
-            }
-
-            await _detailUserService.CreateNewDetailUser(DetailUser);
-            TempData["SuccessMessage"] = "Detalle de usuario creado exitosamente.";
             return RedirectToPage();
         }
 
+        // -------------------------------
+        // POST: Actualizar detalle existente
+        // -------------------------------
         public async Task<IActionResult> OnPostUpdateAsync()
         {
-            if (!ModelState.IsValid)
+            try
             {
-                await RehydratePageOnPostError();
-                return Page();
+                if (!ModelState.IsValid)
+                    return Page();
+
+                if (DetailUser.EndDate <= DetailUser.StartDate)
+                {
+                    TempData["ErrorMessage"] = "La fecha de fin debe ser posterior a la fecha de inicio.";
+                    return RedirectToPage();
+                }
+
+                var repo = CreateDetailUserRepository();
+                await repo.UpdateAsync(DetailUser);
+
+                TempData["SuccessMessage"] = "Detalle de usuario actualizado exitosamente.";
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Error al actualizar el detalle: {ex.Message}";
             }
 
-            if (DetailUser.EndDate <= DetailUser.StartDate)
-            {
-                ModelState.AddModelError("DetailUser.EndDate", "La fecha de fin debe ser posterior a la fecha de inicio.");
-                await RehydratePageOnPostError();
-                return Page();
-            }
-
-            await _detailUserService.UpdateDetailUserData(DetailUser);
-            TempData["SuccessMessage"] = "Detalle de usuario actualizado exitosamente.";
+            // Limpiar id tras la actualización para refrescar la vista
             return RedirectToPage(new { id = (int?)null });
         }
 
+        // -------------------------------
+        // POST: Eliminar detalle
+        // -------------------------------
         public async Task<IActionResult> OnPostDeleteAsync(int id)
         {
-            await _detailUserService.DeleteDetailUser(id);
-            TempData["SuccessMessage"] = "Detalle eliminado correctamente.";
-            return RedirectToPage();
-        }
+            try
+            {
+                var repo = CreateDetailUserRepository();
+                bool deleted = await repo.DeleteByIdAsync(id);
 
-        private async Task RehydratePageOnPostError()
-        {
-            var details = await _detailUserService.GetAllDetailUsers();
-            DetailsUserList = details?.ToList() ?? new List<DetailsUser>();
+                if (deleted)
+                    TempData["SuccessMessage"] = "Detalle eliminado correctamente.";
+                else
+                    TempData["ErrorMessage"] = "No se pudo eliminar el detalle o no existe.";
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Error al eliminar: {ex.Message}";
+            }
+
+            return RedirectToPage();
         }
     }
 }
