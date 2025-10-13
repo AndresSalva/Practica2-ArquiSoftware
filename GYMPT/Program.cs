@@ -2,14 +2,22 @@
 using GYMPT.Application.Services;
 using GYMPT.Domain.Ports;
 using GYMPT.Infrastructure.Factories;
-using GYMPT.Infrastructure.Services;
 using GYMPT.Infrastructure.Persistence;
+using GYMPT.Infrastructure.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Ensures correct configuration of the url token singleton.
 builder.Services.AddDataProtection();
 builder.Services.AddSingleton<UrlTokenSingleton>();
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Login/";
+        options.AccessDeniedPath = "/Login/";
+    });
 
 builder.Services.AddScoped<IClientRepository>(serviceProvider => {
     var factory = new ClientRepositoryCreator();
@@ -70,6 +78,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseAuthentication();
 
 app.MapRazorPages();
 
