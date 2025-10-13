@@ -2,7 +2,7 @@ using GYMPT.Application.Interfaces;
 using GYMPT.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,80 +12,73 @@ namespace GYMPT.Pages.DetailsUsers
     public class DetailsUsersModel : PageModel
     {
         private readonly IDetailUserService _detailUserService;
+        private readonly IUserService _userService;
+        private readonly IMembershipService _membershipService;
 
+        // --- Propiedades para la Lista ---
+        public IEnumerable<DetailsUser> DetailUserList { get; set; } = new List<DetailsUser>();
+        public Dictionary<int, string> UserNames { get; set; } = new Dictionary<int, string>();
+        public Dictionary<short, string> MembershipNames { get; set; } = new Dictionary<short, string>();
+
+        // --- Propiedades para el Formulario de Creación ---
         [BindProperty]
-        public DetailsUser DetailUser { get; set; } = new DetailsUser();
+        public DetailsUser NewDetailUser { get; set; } = new();
+        public SelectList UserOptions { get; set; }
+        public SelectList MembershipOptions { get; set; }
 
-        public List<DetailsUser> DetailsUserList { get; set; } = new List<DetailsUser>();
-
-        public DetailsUsersModel(IDetailUserService detailUserService)
+        public DetailsUsersModel(IDetailUserService detailUserService, IUserService userService, IMembershipService membershipService)
         {
             _detailUserService = detailUserService;
+            _userService = userService;
+            _membershipService = membershipService;
         }
 
-        public async Task OnGetAsync(int? id)
+        // Se ejecuta al cargar la página
+        public async Task OnGetAsync()
         {
-            if (id.HasValue)
-            {
-                DetailUser = await _detailUserService.GetDetailUserById(id.Value) ?? new DetailsUser();
-            }
+            // Carga la lista principal
+            DetailUserList = await _detailUserService.GetAllDetailUsers();
 
-            var details = await _detailUserService.GetAllDetailUsers();
-            DetailsUserList = details?.ToList() ?? new List<DetailsUser>();
+            // Carga los datos necesarios para los menús desplegables y la tabla
+            await PopulateRelatedData();
         }
 
-        public async Task<IActionResult> OnPostCreateAsync()
+        // Se ejecuta al enviar el formulario de CREACIÓN
+        public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
-                // Es necesario recargar la lista si la validación falla para que la página se muestre bien
-                await RehydratePageOnPostError();
+                // Si hay un error, recarga la página con la lista y los desplegables
+                await OnGetAsync();
                 return Page();
             }
 
-            if (DetailUser.EndDate <= DetailUser.StartDate)
-            {
-                ModelState.AddModelError("DetailUser.EndDate", "La fecha de fin debe ser posterior a la fecha de inicio.");
-                await RehydratePageOnPostError();
-                return Page();
-            }
-
-            await _detailUserService.CreateNewDetailUser(DetailUser);
-            TempData["SuccessMessage"] = "Detalle de usuario creado exitosamente.";
+            await _detailUserService.CreateNewDetailUser(NewDetailUser);
+            TempData["SuccessMessage"] = "La suscripción del usuario ha sido registrada exitosamente.";
             return RedirectToPage();
         }
 
-        public async Task<IActionResult> OnPostUpdateAsync()
-        {
-            if (!ModelState.IsValid)
-            {
-                await RehydratePageOnPostError();
-                return Page();
-            }
-
-            if (DetailUser.EndDate <= DetailUser.StartDate)
-            {
-                ModelState.AddModelError("DetailUser.EndDate", "La fecha de fin debe ser posterior a la fecha de inicio.");
-                await RehydratePageOnPostError();
-                return Page();
-            }
-
-            await _detailUserService.UpdateDetailUserData(DetailUser);
-            TempData["SuccessMessage"] = "Detalle de usuario actualizado exitosamente.";
-            return RedirectToPage(new { id = (int?)null });
-        }
-
+        // Se ejecuta al presionar el botón de ELIMINAR
         public async Task<IActionResult> OnPostDeleteAsync(int id)
         {
             await _detailUserService.DeleteDetailUser(id);
-            TempData["SuccessMessage"] = "Detalle eliminado correctamente.";
+            TempData["SuccessMessage"] = "La suscripción ha sido eliminada.";
             return RedirectToPage();
         }
 
-        private async Task RehydratePageOnPostError()
+        // Método auxiliar para no repetir código
+        private async Task PopulateRelatedData()
         {
-            var details = await _detailUserService.GetAllDetailUsers();
-            DetailsUserList = details?.ToList() ?? new List<DetailsUser>();
+            var users = await _userService.GetAllUsers();
+            var memberships = await _membershipService.GetAllMemberships();
+
+            // Para la tabla (convertir IDs en Nombres)
+            UserNames = users.ToDictionary(u => u.Id, u => $"{u.Name} {u.FirstLastname}");
+            MembershipNames = memberships.ToDictionary(m => m.Id, m => m.Name);
+
+            // Para los menús desplegables del formulario de creación
+            UserOptions = new SelectList(users, "Id", "Name");
+            MembershipOptions = new SelectList(memberships, "Id", "Name");
         }
     }
 }

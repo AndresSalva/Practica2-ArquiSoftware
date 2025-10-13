@@ -1,256 +1,146 @@
 ﻿@page
-@using GYMPT.Domain.Entities
 @model GYMPT.Pages.DetailsUsers.DetailsUsersModel
 @{
-    ViewData["Title"] = "Detalles de Usuarios";
+    ViewData["Title"] = "Detalles de Suscripciones de Usuario";
 }
 
-<h1>Detalles de Usuarios con Membresías</h1>
+<div class="text-center">
+    <h1 class="display-4">Suscripciones de Usuarios</h1>
+    <p class="lead text-muted">Asigna y administra las membresías activas de cada usuario.</p>
+</div>
 
-@if (TempData["SuccessMessage"] != null)
-{
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        @TempData["SuccessMessage"]
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-}
-@if (TempData["ErrorMessage"] != null)
-{
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        @TempData["ErrorMessage"]
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-}
-@if (TempData["InfoMessage"] != null)
-{
-    <div class="alert alert-info alert-dismissible fade show" role="alert">
-        @TempData["InfoMessage"]
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-}
-
-<button id="btnShowForm" class="btn btn-success mb-3">
-    <i class="fas fa-plus"></i> Agregar Detalle de Usuario
-</button>
-
-<div id="formContainer" class="card mb-4" style="display:none;">
+<!-- ===== FORMULARIO DE CREACIÓN ===== -->
+<div class="card shadow-sm mb-5">
     <div class="card-header">
-        <h5 id="formTitle">Agregar Detalle de Usuario</h5>
+        <h5>Asignar Nueva Membresía</h5>
     </div>
     <div class="card-body">
-        <form method="post" id="detailUserForm">
-            <input type="hidden" asp-for="DetailUser.Id" />
-
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
             <div class="row">
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <label asp-for="DetailUser.IdUser" class="form-label">ID Usuario *</label>
-                        <input asp-for="DetailUser.IdUser" class="form-control" required min="1" />
-                        <small class="form-text text-muted">Ingrese el ID de un usuario existente y activo</small>
-                        <span asp-validation-for="DetailUser.IdUser" class="text-danger"></span>
-                    </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="NewDetailUser.IdUser" class="form-label fw-bold">Usuario</label>
+                    <select asp-for="NewDetailUser.IdUser" class="form-select" asp-items="Model.UserOptions">
+                        <option value="">-- Seleccione un Usuario --</option>
+                    </select>
+                    <span asp-validation-for="NewDetailUser.IdUser" class="text-danger"></span>
                 </div>
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <label asp-for="DetailUser.IdMembership" class="form-label">ID Membresía *</label>
-                        <input asp-for="DetailUser.IdMembership" class="form-control" required min="1" />
-                        <small class="form-text text-muted">Ingrese el ID de una membresía existente y activa</small>
-                        <span asp-validation-for="DetailUser.IdMembership" class="text-danger"></span>
-                    </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="NewDetailUser.IdMembership" class="form-label fw-bold">Membresía</label>
+                    <select asp-for="NewDetailUser.IdMembership" class="form-select" asp-items="Model.MembershipOptions">
+                        <option value="">-- Seleccione una Membresía --</option>
+                    </select>
+                    <span asp-validation-for="NewDetailUser.IdMembership" class="text-danger"></span>
                 </div>
             </div>
-
             <div class="row">
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <label asp-for="DetailUser.StartDate" class="form-label">Fecha Inicio *</label>
-                        <input asp-for="DetailUser.StartDate" type="date" class="form-control" required />
-                        <span asp-validation-for="DetailUser.StartDate" class="text-danger"></span>
-                    </div>
+                <div class="col-md-4 mb-3">
+                    <label asp-for="NewDetailUser.StartDate" class="form-label fw-bold">Fecha de Inicio</label>
+                    <input asp-for="NewDetailUser.StartDate" class="form-control" type="date" />
+                    <span asp-validation-for="NewDetailUser.StartDate" class="text-danger"></span>
                 </div>
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <label asp-for="DetailUser.EndDate" class="form-label">Fecha Fin *</label>
-                        <input asp-for="DetailUser.EndDate" type="date" class="form-control" required />
-                        <span asp-validation-for="DetailUser.EndDate" class="text-danger"></span>
-                    </div>
+                <div class="col-md-4 mb-3">
+                    <label asp-for="NewDetailUser.EndDate" class="form-label fw-bold">Fecha de Fin</label>
+                    <input asp-for="NewDetailUser.EndDate" class="form-control" type="date" />
+                    <span asp-validation-for="NewDetailUser.EndDate" class="text-danger"></span>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label asp-for="NewDetailUser.SessionsLeft" class="form-label fw-bold">Sesiones Restantes</label>
+                    <input asp-for="NewDetailUser.SessionsLeft" class="form-control" type="number" />
+                    <span asp-validation-for="NewDetailUser.SessionsLeft" class="text-danger"></span>
                 </div>
             </div>
-
-            <div class="mb-3">
-                <label asp-for="DetailUser.SessionsLeft" class="form-label">Sesiones Restantes *</label>
-                <input asp-for="DetailUser.SessionsLeft" class="form-control" required min="0" />
-                <span asp-validation-for="DetailUser.SessionsLeft" class="text-danger"></span>
-            </div>
-
-            <div class="form-check mb-3">
-                <input type="checkbox" asp-for="DetailUser.IsActive" class="form-check-input" />
-                <label asp-for="DetailUser.IsActive" class="form-check-label">Activo</label>
-            </div>
-
-            <div class="d-flex gap-2">
-                <button type="submit" asp-page-handler="Create" id="createButton" class="btn btn-success">
-                    <i class="fas fa-save"></i> Guardar
-                </button>
-                <button type="submit" asp-page-handler="Update" id="updateButton" class="btn btn-primary" style="display:none;">
-                    <i class="fas fa-edit"></i> Actualizar
-                </button>
-                <button type="button" class="btn btn-secondary" onclick="hideForm()">
-                    <i class="fas fa-times"></i> Cancelar
-                </button>
+            <div class="d-flex justify-content-end mt-3">
+                <button type="submit" class="btn btn-primary">Asignar Membresía</button>
             </div>
         </form>
     </div>
 </div>
 
-@if (Model.DetailsUserList.Any())
-{
-    <div class="card">
-        <div class="card-header">
-            <h5>Lista de Detalles de Usuarios</h5>
-        </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-striped table-hover">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>ID</th>
-                            <th>ID Usuario</th>
-                            <th>ID Membresía</th>
-                            <th>Fecha Inicio</th>
-                            <th>Fecha Fin</th>
-                            <th>Sesiones Restantes</th>
-                            <th>Activo</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (DetailsUser detail in Model.DetailsUserList)
-                        {
-                            <tr>
-                                <td>@detail.Id</td>
-                                <td>@detail.IdUser</td>
-                                <td>@detail.IdMembership</td>
-                                <td>@detail.StartDate.ToString(format: "yyyy-MM-dd")</td>   
-                                <td>@detail.EndDate.ToString(format: "yyyy-MM-dd")</td>
 
-                                <td>
-                                    <span class="badge bg-info">@detail.SessionsLeft</span>
-                                </td>
-                                <td>
-                                    @if (detail.IsActive)
-                                    {
-                                        <span class="badge bg-success">Sí</span>
-                                    }
-                                    else
-                                    {
-                                        <span class="badge bg-danger">No</span>
-                                    }
-                                </td>
-                                <td>
-                                    <div class="btn-group" role="group">
-                                        <button class="btn btn-sm btn-primary"
-                                                onclick="fillEditForm(
-                                                            @detail.Id,
-                                                            @detail.IdUser,
-                                                            @detail.IdMembership,
-                                                            '@detail.StartDate.ToString(format: "yyyy-MM-dd")',
-                                                            '@detail.EndDate.ToString(format: "yyyy-MM-dd")',
-                                                            @detail.SessionsLeft,
-                                                            @detail.IsActive.ToString().ToLower())">
-                                            <i class="fas fa-edit"></i> Editar
-                                        </button>
-                                        <form method="post" asp-page-handler="Delete" asp-route-id="@detail.Id" style="display:inline">
-                                            <button class="btn btn-sm btn-danger"
-                                                    onclick="return confirm('¿Está seguro de que desea eliminar este detalle de usuario?')">
-                                                <i class="fas fa-trash"></i> Eliminar
-                                            </button>
-                                        </form>
-                                    </div>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>
+<!-- ===== LISTA DE SUSCRIPCIONES EXISTENTES ===== -->
+<div class="card shadow-sm">
+    <div class="card-header">
+        <h5>Suscripciones Activas</h5>
     </div>
-}
-else
-{
-    <div class="alert alert-info text-center">
-        <i class="fas fa-info-circle"></i> No hay detalles de usuarios registrados.
+    <div class="card-body">
+        <table class="table table-hover align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>Usuario</th>
+                    <th>Membresía</th>
+                    <th>Periodo de Validez</th>
+                    <th class="text-center">Sesiones Restantes</th>
+                    <th class="text-center">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var detail in Model.DetailUserList)
+                {
+                    <tr>
+                        <td class="fw-bold">
+                            @if (detail.IdUser.HasValue && Model.UserNames.ContainsKey(detail.IdUser.Value))
+                            {
+                                @Model.UserNames[detail.IdUser.Value]
+                            }
+                        </td>
+                        <td>
+                            @if (detail.IdMembership.HasValue && Model.MembershipNames.ContainsKey(detail.IdMembership.Value))
+                            {
+                                @Model.MembershipNames[detail.IdMembership.Value]
+                            }
+                        </td>
+                        <td>@detail.StartDate.ToShortDateString() - @detail.EndDate.ToShortDateString()</td>
+                        <td class="text-center">@detail.SessionsLeft</td>
+                        <td class="text-center">
+                            <!-- El handler 'Delete' apunta al método OnPostDeleteAsync -->
+                            <form method="post" asp-page-handler="Delete" asp-route-id="@detail.Id" class="d-inline" onsubmit="return confirmDelete(event, 'esta suscripción');">
+                                <button type="submit" class="btn btn-sm btn-outline-danger" title="Eliminar"><i class="fas fa-trash-alt"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
-}
+</div>
+
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+    <!-- Script para los pop-ups (confirmación y notificación) -->
     <script>
-        const formContainer = document.getElementById('formContainer');
-        const btnShowForm = document.getElementById('btnShowForm');
-        const createButton = document.getElementById('createButton');
-        const updateButton = document.getElementById('updateButton');
-        const formTitle = document.getElementById('formTitle');
-
-        btnShowForm.addEventListener('click', () => {
-            resetForm();
-            formTitle.textContent = 'Agregar Detalle de Usuario';
-            createButton.style.display = 'inline-block';
-            updateButton.style.display = 'none';
-            formContainer.style.display = 'block';
-            btnShowForm.style.display = 'none';
-        });
-
-        function hideForm() {
-            formContainer.style.display = 'none';
-            btnShowForm.style.display = 'inline-block';
-            createButton.style.display = 'none';
-            updateButton.style.display = 'none';
-        }
-
-        function resetForm() {
-            document.getElementById('detailUserForm').reset();
-            document.querySelector('[name="DetailUser.Id"]').value = '0';
-            document.querySelector('[name="DetailUser.IsActive"]').checked = true;
-        }
-
-        function fillEditForm(id, userId, membershipId, startDate, endDate, sessionsLeft, isActive) {
-            resetForm();
-
-            document.querySelector('[name="DetailUser.Id"]').value = id;
-            document.querySelector('[name="DetailUser.IdUser"]').value = userId;
-            document.querySelector('[name="DetailUser.IdMembership"]').value = membershipId;
-            document.querySelector('[name="DetailUser.StartDate"]').value = startDate;
-            document.querySelector('[name="DetailUser.EndDate"]').value = endDate;
-            document.querySelector('[name="DetailUser.SessionsLeft"]').value = sessionsLeft;
-            document.querySelector('[name="DetailUser.IsActive"]').checked = isActive;
-
-            formTitle.textContent = 'Editar Detalle de Usuario';
-            createButton.style.display = 'none';
-            updateButton.style.display = 'inline-block';
-            formContainer.style.display = 'block';
-            btnShowForm.style.display = 'none';
-
-            formContainer.scrollIntoView({ behavior: 'smooth' });
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const startDateInput = document.querySelector('[name="DetailUser.StartDate"]');
-            const endDateInput = document.querySelector('[name="DetailUser.EndDate"]');
-
-            function validateDates() {
-                const startDate = new Date(startDateInput.value);
-                const endDate = new Date(endDateInput.value);
-
-                if (startDate && endDate && endDate <= startDate) {
-                    endDateInput.setCustomValidity('La fecha de fin debe ser posterior a la fecha de inicio.');
-                } else {
-                    endDateInput.setCustomValidity('');
+        function confirmDelete(event, itemName) {
+            event.preventDefault();
+            const form = event.target;
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: `¡Se eliminará ${itemName}! Esta acción no se puede revertir.`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Sí, ¡eliminar!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
                 }
-            }
-
-            startDateInput.addEventListener('change', validateDates);
-            endDateInput.addEventListener('change', validateDates);
-        });
+            });
+        }
     </script>
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <script type="text/javascript">
+            Swal.fire({ icon: 'success', title: '¡Éxito!', text: '@Html.Raw(TempData["SuccessMessage"])', timer: 3000, showConfirmButton: false });
+        </script>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <script type="text/javascript">
+            Swal.fire({ icon: 'error', title: 'Error', text: '@Html.Raw(TempData["ErrorMessage"])' });
+        </script>
+    }
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
