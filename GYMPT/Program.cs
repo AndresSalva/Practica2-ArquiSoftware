@@ -47,7 +47,7 @@ builder.Services.AddScoped<IInstructorService, InstructorService>();
 builder.Services.AddScoped<IDisciplineService, DisciplineService>();
 builder.Services.AddScoped<IMembershipService, MembershipService>();
 builder.Services.AddScoped<IDetailUserService, DetailUserService>();
-
+builder.Services.AddScoped<ISelectDataService, SelectDataService>();
 
 
 builder.Services.AddRazorPages();
