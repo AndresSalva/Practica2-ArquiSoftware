@@ -132,5 +132,13 @@ namespace GYMPT.Infrastructure.Persistence
             var affectedRows = await conn.ExecuteAsync(sql, new { Id = id, LastModification = DateTime.UtcNow });
             return affectedRows > 0;
         }
+
+        public async Task<Instructor> GetByEmailAsync(string email)
+        {
+            using var conn = new NpgsqlConnection(_postgresString);
+            const string sql = @"SELECT * FROM instructor_view WHERE email = @Email;";
+
+            return await conn.QuerySingleOrDefaultAsync<Instructor>(sql, new { Email = email });
+        }
     }
 }

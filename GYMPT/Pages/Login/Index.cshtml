@@ -1,0 +1,18 @@
+@page
+@model GYMPT.Pages.Login.IndexModel
+@{
+    ViewData[index: "Title"] = "Login";
+}
+
+<h2>Login</h2>
+
+<form method="post">
+    <input asp-for="Email" placeholder="Usuario o Email" />
+    <input asp-for="Password" type="password" placeholder="Contraseña" />
+    <button type="submit">Login</button>
+</form>
+
+@if (!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <p style="color:red">@Model.ErrorMessage</p>
+}
