@@ -5,6 +5,7 @@ using GYMPT.Infrastructure.Factories;
 using GYMPT.Infrastructure.Services;
 using GYMPT.Infrastructure.Persistence;
 using GYMPT.Infrastructure.Security;
+using Microsoft.CodeAnalysis.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -63,6 +64,7 @@ builder.Services.AddAuthentication("Cookies")
     .AddCookie("Cookies", options =>
     {
         options.LoginPath = "/Login/Index";
+        options.LogoutPath = "/Login/Logout";
         options.AccessDeniedPath = "/Index";
         options.ExpireTimeSpan = TimeSpan.FromHours(2);
         options.SlidingExpiration = true;
