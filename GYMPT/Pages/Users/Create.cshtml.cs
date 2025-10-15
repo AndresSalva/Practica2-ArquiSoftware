@@ -55,11 +55,13 @@ namespace GYMPT.Pages.Users
                     Ci = Input.Ci,
                     DateBirth = Input.DateBirth,
                     Role = "Instructor",
-
+                    Email = Input.Email,
+                    Password = "",
                     Specialization = string.IsNullOrWhiteSpace(Input.Specialization) ? null : Input.Specialization,
 
                     HireDate = Input.HireDate ?? DateTime.MinValue, 
                     MonthlySalary = Input.MonthlySalary ?? 0m 
+                    
                 };
 
                 await _instructorService.CreateNewInstructor(newInstructor);
@@ -89,5 +91,7 @@ namespace GYMPT.Pages.Users
         public string Specialization { get; set; }
         public DateTime? HireDate { get; set; }
         public decimal? MonthlySalary { get; set; }
+        public string? Email { get; set; }
+
     }
 }

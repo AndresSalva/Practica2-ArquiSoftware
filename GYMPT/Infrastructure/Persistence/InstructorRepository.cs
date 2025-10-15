@@ -32,7 +32,9 @@ namespace GYMPT.Infrastructure.Persistence
                     u.is_active AS IsActive,
                     i.hire_date AS HireDate,
                     i.monthly_salary AS MonthlySalary,
-                    i.specialization AS Specialization
+                    i.specialization AS Specialization,
+                    i.email AS Email,
+                    i.password AS Password
                 FROM ""user"" u
                 INNER JOIN instructor i ON u.id = i.id_user
                 WHERE u.id = @Id AND u.is_active = true;";
@@ -57,7 +59,9 @@ namespace GYMPT.Infrastructure.Persistence
                     u.is_active AS IsActive,
                     i.hire_date AS HireDate,
                     i.monthly_salary AS MonthlySalary,
-                    i.specialization AS Specialization
+                    i.specialization AS Specialization,
+                    i.email AS Email,
+                    i.password AS Password
                 FROM ""user"" u
                 INNER JOIN instructor i ON u.id = i.id_user
                 WHERE u.is_active = true AND u.role = 'Instructor';";
@@ -84,7 +88,7 @@ namespace GYMPT.Infrastructure.Persistence
                 entity.Id = newUserId;
                 entity.IdUser = newUserId;
 
-                var instructorSql = @"INSERT INTO instructor (id_user, hire_date, monthly_salary, specialization) VALUES (@IdUser, @HireDate, @MonthlySalary, @Specialization);";
+                var instructorSql = @"INSERT INTO instructor (id_user, hire_date, monthly_salary, specialization,email,password) VALUES (@IdUser, @HireDate, @MonthlySalary, @Specialization,@Email,@Password);";
                 await conn.ExecuteAsync(instructorSql, entity, transaction);
 
                 await transaction.CommitAsync();
@@ -110,7 +114,7 @@ namespace GYMPT.Infrastructure.Persistence
                 var userSql = @"UPDATE ""user"" SET name = @Name, first_lastname = @FirstLastname, second_lastname = @SecondLastname, date_birth = @DateBirth, ci = @Ci, last_modification = @LastModification WHERE id = @Id;";
                 await conn.ExecuteAsync(userSql, entity, transaction);
 
-                var instructorSql = @"UPDATE instructor SET hire_date = @HireDate, monthly_salary = @MonthlySalary, specialization = @Specialization WHERE id_user = @Id;";
+                var instructorSql = @"UPDATE instructor SET hire_date = @HireDate, monthly_salary = @MonthlySalary, specialization = @Specialization,email = @Email WHERE id_user = @Id;";
                 await conn.ExecuteAsync(instructorSql, entity, transaction);
 
                 await transaction.CommitAsync();
