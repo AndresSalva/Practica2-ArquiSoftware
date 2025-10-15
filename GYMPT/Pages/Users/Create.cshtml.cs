@@ -1,4 +1,5 @@
 using GYMPT.Application.Interfaces;
+using GYMPT.Application.Services;
 using GYMPT.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -9,11 +10,12 @@ namespace GYMPT.Pages.Users
     {
         private readonly IClientService _clientService;
         private readonly IInstructorService _instructorService;
-
-        public CreateModel(IClientService clientService, IInstructorService instructorService)
+        private readonly IPasswordHasher _hasher;
+        public CreateModel(IClientService clientService, IInstructorService instructorService,IPasswordHasher hasherService)
         {
             _clientService = clientService;
             _instructorService = instructorService;
+            _hasher = hasherService;
         }
 
         [BindProperty]
@@ -56,7 +58,7 @@ namespace GYMPT.Pages.Users
                     DateBirth = Input.DateBirth,
                     Role = "Instructor",
                     Email = Input.Email,
-                    Password = "",
+                    Password = _hasher.HashPassword(Input.FirstLastname + "." + Input.Ci),
                     Specialization = string.IsNullOrWhiteSpace(Input.Specialization) ? null : Input.Specialization,
 
                     HireDate = Input.HireDate ?? DateTime.MinValue, 
