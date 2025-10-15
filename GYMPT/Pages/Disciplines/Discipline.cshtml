@@ -32,7 +32,8 @@
                     <tr>
                         <td class="fw-bold">@discipline.Name</td>
                         <td>
-                            @if (discipline.IdInstructor.HasValue && Model.InstructorNames.ContainsKey(discipline.IdInstructor.Value))
+                            @if (discipline.IdInstructor.HasValue &&
+                                                    Model.InstructorNames.ContainsKey(discipline.IdInstructor.Value))
                             {
                                 @Model.InstructorNames[discipline.IdInstructor.Value]
                             }
@@ -41,12 +42,21 @@
                                 <span class="text-muted">No asignado</span>
                             }
                         </td>
-                        <td class="text-center">@discipline.StartTime?.ToString(@"hh\:mm") - @discipline.EndTime?.ToString(@"hh\:mm")</td>
+                        <td class="text-center">@discipline.StartTime?.ToString(@"hh\:mm") -
+                            @discipline.EndTime?.ToString(@"hh\:mm")</td>
                         <td class="text-center">
                             <div class="btn-group" role="group">
-                                <a class="btn btn-sm btn-outline-warning" title="Editar" asp-page="/Disciplines/DisciplineEdit" asp-route-id="@discipline.Id"><i class="fas fa-pencil-alt"></i></a>
-                                <form method="post" asp-page-handler="Delete" asp-route-id="@discipline.Id" class="d-inline" onsubmit="return confirmDelete(event, 'la disciplina @discipline.Name');">
-                                    <button type="submit" class="btn btn-sm btn-outline-danger" title="Eliminar"><i class="fas fa-trash-alt"></i></button>
+                                <form method="post" asp-page-handler="Edit" asp-route-id="@discipline.Id" class="d-inline">
+                                    <button type="submit" class="btn btn-sm btn-outline-warning" title="Editar">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </button>
+                                </form>
+
+                                <form method="post" asp-page-handler="Delete" asp-route-id="@discipline.Id" class="d-inline"
+                                    onsubmit="return confirmDelete(event, 'la disciplina @discipline.Name');">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger" title="Eliminar">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
                                 </form>
                             </div>
                         </td>

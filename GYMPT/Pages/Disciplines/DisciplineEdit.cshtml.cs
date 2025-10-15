@@ -1,10 +1,13 @@
 ﻿using GYMPT.Application.Interfaces;
+using GYMPT.Infrastructure.Services;
 using GYMPT.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Security.Policy;
+using Mono.TextTemplating;
 
 namespace GYMPT.Pages.Disciplines
 {
@@ -12,23 +15,28 @@ namespace GYMPT.Pages.Disciplines
     {
         private readonly IDisciplineService _disciplineService;
         private readonly IUserService _userService;
+        private readonly UrlTokenSingleton _urlTokenSingleton;
 
         [BindProperty]
         public Discipline Discipline { get; set; }
         public SelectList InstructorOptions { get; set; }
 
-        public DisciplineEditModel(IDisciplineService disciplineService, IUserService userService)
+        public DisciplineEditModel(IDisciplineService disciplineService, IUserService userService, UrlTokenSingleton urlTokenSingleton)
         {
             _disciplineService = disciplineService;
             _userService = userService;
+            _urlTokenSingleton = urlTokenSingleton;
         }
-
-        // Este método se ejecuta al cargar la página. Recibe un 'int' desde la URL.
-        public async Task<IActionResult> OnGetAsync(int id)
+        public async Task<IActionResult> OnGetAsync(string token)
         {
-            // Llama al servicio para obtener los datos de la disciplina a editar.
+            var tokenId = _urlTokenSingleton.GetTokenData(token);
+            if (tokenId == null)
+            {
+                TempData["ErrorMessage"] = "Token invalido.";
+                return RedirectToPage("./Discipline");
+            }
+            int id = int.Parse(tokenId); 
             Discipline = await _disciplineService.GetDisciplineById(id);
-
             if (Discipline == null)
             {
                 TempData["ErrorMessage"] = "Disciplina no encontrada.";

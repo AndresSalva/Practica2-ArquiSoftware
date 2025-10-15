@@ -1,5 +1,6 @@
 using GYMPT.Application.Interfaces;
 using GYMPT.Domain.Entities;
+using GYMPT.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Threading.Tasks;
@@ -9,28 +10,37 @@ namespace GYMPT.Pages.Memberships
     public class MembershipEditModel : PageModel
     {
         private readonly IMembershipService _membershipService;
+        private readonly UrlTokenSingleton _urlTokenSingleton;
 
         [BindProperty]
         public Membership Membership { get; set; }
 
-        public MembershipEditModel(IMembershipService membershipService)
+        public MembershipEditModel(IMembershipService membershipService, UrlTokenSingleton urlTokenSingleton)
         {
             _membershipService = membershipService;
+            _urlTokenSingleton = urlTokenSingleton;
         }
 
-        // --- ESTE MÉTODO CARGA LOS DATOS EN EL FORMULARIO ---
-        public async Task<IActionResult> OnGetAsync(int id)
+        // --- ESTE METODO CARGA LOS DATOS EN EL FORMULARIO ---
+        public async Task<IActionResult> OnGetAsync(string token)
         {
+            var tokenId = _urlTokenSingleton.GetTokenData(token);
+            if (tokenId == null)
+            {
+                TempData["ErrorMessage"] = "Token invalido.";
+                return RedirectToPage("/Memberships/Membership");
+            }
+            int id = int.Parse(tokenId);
             Membership = await _membershipService.GetMembershipById(id);
             if (Membership == null)
             {
-                TempData["ErrorMessage"] = "Membresía no encontrada.";
+                TempData["ErrorMessage"] = "Membresia no encontrada.";
                 return RedirectToPage("/Memberships/Membership");
             }
             return Page();
         }
 
-        // --- ESTE MÉTODO GUARDA LOS CAMBIOS Y PONE EL MENSAJE DE ÉXITO ---
+        // --- ESTE METODO GUARDA LOS CAMBIOS Y PONE EL MENSAJE DE EXITO ---
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -40,11 +50,11 @@ namespace GYMPT.Pages.Memberships
             var success = await _membershipService.UpdateMembershipData(Membership);
             if (success)
             {
-                TempData["SuccessMessage"] = "Los datos de la membresía han sido actualizados.";
+                TempData["SuccessMessage"] = "Los datos de la membresï¿½a han sido actualizados.";
             }
             else
             {
-                TempData["ErrorMessage"] = "No se pudo actualizar la membresía.";
+                TempData["ErrorMessage"] = "No se pudo actualizar la membresï¿½a.";
             }
             return RedirectToPage("/Memberships/Membership");
         }
