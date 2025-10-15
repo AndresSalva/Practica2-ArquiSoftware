@@ -1,6 +1,7 @@
 using GYMPT.Application.Interfaces;
 using GYMPT.Application.Services;
 using GYMPT.Domain.Entities;
+using GYMPT.Domain.Ports;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -10,12 +11,12 @@ namespace GYMPT.Pages.Users
     {
         private readonly IClientService _clientService;
         private readonly IInstructorService _instructorService;
-        private readonly IPasswordHasher _hasher;
-        public CreateModel(IClientService clientService, IInstructorService instructorService,IPasswordHasher hasherService)
+        private readonly IPasswordHasher _passwordHasher;
+        public CreateModel(IClientService clientService, IInstructorService instructorService, IPasswordHasher passwordHasher)
         {
             _clientService = clientService;
             _instructorService = instructorService;
-            _hasher = hasherService;
+            _passwordHasher = passwordHasher;
         }
 
         [BindProperty]
@@ -58,12 +59,12 @@ namespace GYMPT.Pages.Users
                     DateBirth = Input.DateBirth,
                     Role = "Instructor",
                     Email = Input.Email,
-                    Password = _hasher.HashPassword(Input.FirstLastname + "." + Input.Ci),
+                    Password = _passwordHasher.Hash("gympt."+Input.Ci),
                     Specialization = string.IsNullOrWhiteSpace(Input.Specialization) ? null : Input.Specialization,
 
-                    HireDate = Input.HireDate ?? DateTime.MinValue, 
-                    MonthlySalary = Input.MonthlySalary ?? 0m 
-                    
+                    HireDate = Input.HireDate ?? DateTime.MinValue,
+                    MonthlySalary = Input.MonthlySalary ?? 0m
+
                 };
 
                 await _instructorService.CreateNewInstructor(newInstructor);

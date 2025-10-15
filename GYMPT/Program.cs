@@ -5,6 +5,7 @@ using GYMPT.Infrastructure.Factories;
 using GYMPT.Infrastructure.Services;
 using GYMPT.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Identity;
+using GYMPT.Infrastructure.Security;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -49,8 +50,7 @@ builder.Services.AddScoped<IDisciplineService, DisciplineService>();
 builder.Services.AddScoped<IMembershipService, MembershipService>();
 builder.Services.AddScoped<IDetailUserService, DetailUserService>();
 builder.Services.AddScoped<ISelectDataService, SelectDataService>();
-builder.Services.AddScoped<IPasswordHasher, PasswordHasherService>();
-
+builder.Services.AddScoped<IPasswordHasher,BcryptPasswordHasher>();
 
 builder.Services.AddRazorPages();
 
