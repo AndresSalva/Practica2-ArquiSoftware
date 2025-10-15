@@ -1,7 +1,7 @@
 using GYMPT.Application.Interfaces;
-using GYMPT.Application.Services;
 using GYMPT.Domain.Entities;
 using GYMPT.Domain.Ports;
+using GYMPT.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -12,11 +12,14 @@ namespace GYMPT.Pages.Users
         private readonly IClientService _clientService;
         private readonly IInstructorService _instructorService;
         private readonly IPasswordHasher _passwordHasher;
-        public CreateModel(IClientService clientService, IInstructorService instructorService, IPasswordHasher passwordHasher)
+        private readonly EmailService _email;
+
+        public CreateModel(IClientService clientService, IInstructorService instructorService, IPasswordHasher passwordHasher, EmailService email)
         {
             _clientService = clientService;
             _instructorService = instructorService;
             _passwordHasher = passwordHasher;
+            _email = email;
         }
 
         [BindProperty]
@@ -61,11 +64,23 @@ namespace GYMPT.Pages.Users
                     Email = Input.Email,
                     Password = _passwordHasher.Hash("gympt."+Input.Ci),
                     Specialization = string.IsNullOrWhiteSpace(Input.Specialization) ? null : Input.Specialization,
-
+                    //rrth giwk oxmi pwiv
                     HireDate = Input.HireDate ?? DateTime.MinValue,
                     MonthlySalary = Input.MonthlySalary ?? 0m
 
                 };
+                string subject = "Tu cuenta GYMPT fue creada";
+                string body = $@"
+                        <h3>¡Bienvenido/a {Input.Name}!</h3>
+                        <p>Tu cuenta ha sido creada correctamente.</p>
+                        <p><strong>Correo:</strong> {Input.Email}</p>
+                        <p><strong>Contraseña:</strong> gympt.{Input.Ci}</p>
+                        <p>Por seguridad, cambia tu contraseña al iniciar sesión.</p>
+                        <hr>
+                        <p>© GYMPT, 2025</p>
+                    ";
+
+                await _email.SendEmailAsync(Input.Email, subject, body);
 
                 await _instructorService.CreateNewInstructor(newInstructor);
                 TempData["SuccessMessage"] = $"El instructor '{newInstructor.Name} {newInstructor.FirstLastname}' ha sido creado exitosamente.";

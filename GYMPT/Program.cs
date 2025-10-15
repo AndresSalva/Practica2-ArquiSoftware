@@ -51,7 +51,8 @@ builder.Services.AddScoped<IMembershipService, MembershipService>();
 builder.Services.AddScoped<IDetailUserService, DetailUserService>();
 builder.Services.AddScoped<ISelectDataService, SelectDataService>();
 builder.Services.AddScoped<IPasswordHasher,BcryptPasswordHasher>();
-
+builder.Services.Configure<SmtpOptions>(builder.Configuration.GetSection("Smtp"));
+builder.Services.AddTransient<EmailService>();
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
