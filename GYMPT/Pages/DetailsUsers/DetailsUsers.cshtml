@@ -1,7 +1,7 @@
 ﻿@page
 @model GYMPT.Pages.DetailsUsers.DetailsUsersModel
 @{
-    ViewData["Title"] = "Detalles de Suscripciones de Usuario";
+    ViewData["Title"] = "Suscripciones de Usuario";
 }
 
 <div class="text-center">
@@ -9,56 +9,66 @@
     <p class="lead text-muted">Asigna y administra las membresías activas de cada usuario.</p>
 </div>
 
-<!-- ===== FORMULARIO DE CREACIÓN ===== -->
-<div class="card shadow-sm mb-5">
-    <div class="card-header">
-        <h5>Asignar Nueva Membresía</h5>
-    </div>
-    <div class="card-body">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label asp-for="NewDetailUser.IdUser" class="form-label fw-bold">Usuario</label>
-                    <select asp-for="NewDetailUser.IdUser" class="form-select" asp-items="Model.UserOptions">
-                        <option value="">-- Seleccione un Usuario --</option>
-                    </select>
-                    <span asp-validation-for="NewDetailUser.IdUser" class="text-danger"></span>
+<!-- ===== BOTÓN INTERRUPTOR ===== -->
+<div class="d-flex justify-content-center my-4">
+    <a class="btn btn-dark btn-lg shadow-sm" data-bs-toggle="collapse" href="#assignFormContainer" role="button" aria-expanded="false" aria-controls="assignFormContainer">
+        <i class="fas fa-plus me-2"></i>ASIGNAR NUEVA MEMBRESÍA
+    </a>
+</div>
+
+<!-- ===== FORMULARIO OCULTO ===== -->
+<div class="collapse" id="assignFormContainer">
+    <div class="card shadow-sm mb-5">
+        <div class="card-header bg-dark text-white">
+            <h5>Asignar Nueva Membresía</h5>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="NewDetailUser.IdUser" class="form-label fw-bold">Usuario</label>
+                        <select asp-for="NewDetailUser.IdUser" class="form-select" asp-items="Model.UserOptions">
+                            <option value="">-- Seleccione un Usuario --</option>
+                        </select>
+                        <span asp-validation-for="NewDetailUser.IdUser" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="NewDetailUser.IdMembership" class="form-label fw-bold">Membresía</label>
+                        <select asp-for="NewDetailUser.IdMembership" class="form-select" asp-items="Model.MembershipOptions">
+                            <option value="">-- Seleccione una Membresía --</option>
+                        </select>
+                        <span asp-validation-for="NewDetailUser.IdMembership" class="text-danger"></span>
+                    </div>
                 </div>
-                <div class="col-md-6 mb-3">
-                    <label asp-for="NewDetailUser.IdMembership" class="form-label fw-bold">Membresía</label>
-                    <select asp-for="NewDetailUser.IdMembership" class="form-select" asp-items="Model.MembershipOptions">
-                        <option value="">-- Seleccione una Membresía --</option>
-                    </select>
-                    <span asp-validation-for="NewDetailUser.IdMembership" class="text-danger"></span>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label asp-for="NewDetailUser.StartDate" class="form-label fw-bold">Fecha de Inicio</label>
+                        <input asp-for="NewDetailUser.StartDate" class="form-control" type="date" />
+                        <span asp-validation-for="NewDetailUser.StartDate" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label asp-for="NewDetailUser.EndDate" class="form-label fw-bold">Fecha de Fin</label>
+                        <input asp-for="NewDetailUser.EndDate" class="form-control" type="date" />
+                        <span asp-validation-for="NewDetailUser.EndDate" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label asp-for="NewDetailUser.SessionsLeft" class="form-label fw-bold">Sesiones Restantes</label>
+                        <input asp-for="NewDetailUser.SessionsLeft" class="form-control" type="number" />
+                        <span asp-validation-for="NewDetailUser.SessionsLeft" class="text-danger"></span>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4 mb-3">
-                    <label asp-for="NewDetailUser.StartDate" class="form-label fw-bold">Fecha de Inicio</label>
-                    <input asp-for="NewDetailUser.StartDate" class="form-control" type="date" />
-                    <span asp-validation-for="NewDetailUser.StartDate" class="text-danger"></span>
+                <div class="d-flex justify-content-end mt-3">
+                    <button type="submit" class="btn btn-primary">Asignar Membresía</button>
+                    <!-- Botón para cancelar y ocultar el formulario -->
+                    <a class="btn btn-secondary ms-2" data-bs-toggle="collapse" href="#assignFormContainer" role="button">Cancelar</a>
                 </div>
-                <div class="col-md-4 mb-3">
-                    <label asp-for="NewDetailUser.EndDate" class="form-label fw-bold">Fecha de Fin</label>
-                    <input asp-for="NewDetailUser.EndDate" class="form-control" type="date" />
-                    <span asp-validation-for="NewDetailUser.EndDate" class="text-danger"></span>
-                </div>
-                <div class="col-md-4 mb-3">
-                    <label asp-for="NewDetailUser.SessionsLeft" class="form-label fw-bold">Sesiones Restantes</label>
-                    <input asp-for="NewDetailUser.SessionsLeft" class="form-control" type="number" />
-                    <span asp-validation-for="NewDetailUser.SessionsLeft" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="d-flex justify-content-end mt-3">
-                <button type="submit" class="btn btn-primary">Asignar Membresía</button>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </div>
 
-
-<!-- ===== LISTA DE SUSCRIPCIONES EXISTENTES ===== -->
+<!-- ===== LISTA DE SUSCRIPCIONES (SIN CAMBIOS) ===== -->
 <div class="card shadow-sm">
     <div class="card-header">
         <h5>Suscripciones Activas</h5>
@@ -90,10 +100,9 @@
                                 @Model.MembershipNames[detail.IdMembership.Value]
                             }
                         </td>
-                        <td>@detail.StartDate.ToShortDateString() - @detail.EndDate.ToShortDateString()</td>
+                        <td>@detail.StartDate.ToString("dd/MM/yy") - @detail.EndDate.ToString("dd/MM/yy")</td>
                         <td class="text-center">@detail.SessionsLeft</td>
                         <td class="text-center">
-                            <!-- El handler 'Delete' apunta al método OnPostDeleteAsync -->
                             <form method="post" asp-page-handler="Delete" asp-route-id="@detail.Id" class="d-inline" onsubmit="return confirmDelete(event, 'esta suscripción');">
                                 <button type="submit" class="btn btn-sm btn-outline-danger" title="Eliminar"><i class="fas fa-trash-alt"></i></button>
                             </form>
@@ -105,22 +114,19 @@
     </div>
 </div>
 
-
 @section Scripts {
-    <!-- Script para los pop-ups (confirmación y notificación) -->
+    <!-- ... tus scripts para pop-ups y validación ... -->
     <script>
         function confirmDelete(event, itemName) {
             event.preventDefault();
             const form = event.target;
             Swal.fire({
                 title: '¿Estás seguro?',
-                text: `¡Se eliminará ${itemName}! Esta acción no se puede revertir.`,
+                text: `¡Se eliminará ${itemName}!`,
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#d33',
-                cancelButtonColor: '#6c757d',
                 confirmButtonText: 'Sí, ¡eliminar!',
-                cancelButtonText: 'Cancelar'
             }).then((result) => {
                 if (result.isConfirmed) {
                     form.submit();
@@ -130,15 +136,11 @@
     </script>
     @if (TempData["SuccessMessage"] != null)
     {
-        <script type="text/javascript">
-            Swal.fire({ icon: 'success', title: '¡Éxito!', text: '@Html.Raw(TempData["SuccessMessage"])', timer: 3000, showConfirmButton: false });
-        </script>
+        <script>Swal.fire({ icon: 'success', title: '¡Éxito!', text: '@Html.Raw(TempData["SuccessMessage"])', timer: 3000, showConfirmButton: false });</script>
     }
     @if (TempData["ErrorMessage"] != null)
     {
-        <script type="text/javascript">
-            Swal.fire({ icon: 'error', title: 'Error', text: '@Html.Raw(TempData["ErrorMessage"])' });
-        </script>
+        <script>Swal.fire({ icon: 'error', title: 'Error', text: '@Html.Raw(TempData["ErrorMessage"])' });</script>
     }
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

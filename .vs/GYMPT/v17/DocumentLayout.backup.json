@@ -11,6 +11,10 @@
       "RelativeMoniker": "D:0:0:{51D5E0AD-22C2-449B-9447-70B76B7C4943}|GYMPT\\GYMPT.csproj|solutionrelative:gympt\\pages\\detailsusers\\detailsusers.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{51D5E0AD-22C2-449B-9447-70B76B7C4943}|GYMPT\\GYMPT.csproj|c:\\users\\asus\\documents\\practica2-arquisoftware\\gympt\\pages\\users\\user.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{51D5E0AD-22C2-449B-9447-70B76B7C4943}|GYMPT\\GYMPT.csproj|solutionrelative:gympt\\pages\\users\\user.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{51D5E0AD-22C2-449B-9447-70B76B7C4943}|GYMPT\\GYMPT.csproj|c:\\users\\asus\\documents\\practica2-arquisoftware\\gympt\\domain\\entities\\detailuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{51D5E0AD-22C2-449B-9447-70B76B7C4943}|GYMPT\\GYMPT.csproj|solutionrelative:gympt\\domain\\entities\\detailuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -171,10 +175,6 @@
       "RelativeMoniker": "D:0:0:{51D5E0AD-22C2-449B-9447-70B76B7C4943}|GYMPT\\GYMPT.csproj|solutionrelative:gympt\\pages\\users\\deleteuser.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{51D5E0AD-22C2-449B-9447-70B76B7C4943}|GYMPT\\GYMPT.csproj|c:\\users\\asus\\documents\\practica2-arquisoftware\\gympt\\pages\\users\\user.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{51D5E0AD-22C2-449B-9447-70B76B7C4943}|GYMPT\\GYMPT.csproj|solutionrelative:gympt\\pages\\users\\user.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{51D5E0AD-22C2-449B-9447-70B76B7C4943}|GYMPT\\GYMPT.csproj|c:\\users\\asus\\documents\\practica2-arquisoftware\\gympt\\pages\\specificuserdetail\\clientdetails.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{51D5E0AD-22C2-449B-9447-70B76B7C4943}|GYMPT\\GYMPT.csproj|solutionrelative:gympt\\pages\\specificuserdetail\\clientdetails.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
@@ -290,21 +290,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "DetailUser.cs",
-              "DocumentMoniker": "C:\\Users\\Asus\\Documents\\Practica2-ArquiSoftware\\GYMPT\\Domain\\Entities\\DetailUser.cs",
-              "RelativeDocumentMoniker": "GYMPT\\Domain\\Entities\\DetailUser.cs",
-              "ToolTip": "C:\\Users\\Asus\\Documents\\Practica2-ArquiSoftware\\GYMPT\\Domain\\Entities\\DetailUser.cs",
-              "RelativeToolTip": "GYMPT\\Domain\\Entities\\DetailUser.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-13T16:08:45.688Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -313,14 +300,14 @@
               "RelativeDocumentMoniker": "GYMPT\\Pages\\DetailsUsers\\DetailsUsers.cshtml",
               "ToolTip": "C:\\Users\\Asus\\Documents\\Practica2-ArquiSoftware\\GYMPT\\Pages\\DetailsUsers\\DetailsUsers.cshtml*",
               "RelativeToolTip": "GYMPT\\Pages\\DetailsUsers\\DetailsUsers.cshtml*",
-              "ViewState": "AgIAAGUAAAAAAAAAAAAUwJEAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAFsAAAAAAAAAAAAUwJMAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-10-13T16:08:00.032Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "IDetailUserRepository.cs",
               "DocumentMoniker": "C:\\Users\\Asus\\Documents\\Practica2-ArquiSoftware\\GYMPT\\Domain\\Ports\\IDetailUserRepository.cs",
               "RelativeDocumentMoniker": "GYMPT\\Domain\\Ports\\IDetailUserRepository.cs",
@@ -328,12 +315,11 @@
               "RelativeToolTip": "GYMPT\\Domain\\Ports\\IDetailUserRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-13T16:07:51.44Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-13T16:07:51.44Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "IDetailUserService.cs",
               "DocumentMoniker": "C:\\Users\\Asus\\Documents\\Practica2-ArquiSoftware\\GYMPT\\Application\\Interfaces\\IDetailUserService.cs",
               "RelativeDocumentMoniker": "GYMPT\\Application\\Interfaces\\IDetailUserService.cs",
@@ -341,12 +327,11 @@
               "RelativeToolTip": "GYMPT\\Application\\Interfaces\\IDetailUserService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-13T16:07:39.078Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-13T16:07:39.078Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "DetailUserService.cs",
               "DocumentMoniker": "C:\\Users\\Asus\\Documents\\Practica2-ArquiSoftware\\GYMPT\\Application\\Services\\DetailUserService.cs",
               "RelativeDocumentMoniker": "GYMPT\\Application\\Services\\DetailUserService.cs",
@@ -354,12 +339,11 @@
               "RelativeToolTip": "GYMPT\\Application\\Services\\DetailUserService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-13T16:07:35.729Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-13T16:07:35.729Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "EditInstructor.cshtml",
               "DocumentMoniker": "C:\\Users\\Asus\\Documents\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Instructors\\EditInstructor.cshtml",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Instructors\\EditInstructor.cshtml",
@@ -367,8 +351,7 @@
               "RelativeToolTip": "GYMPT\\Pages\\Instructors\\EditInstructor.cshtml",
               "ViewState": "AgIAACgAAAAAAAAAAAAUwFQAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-10-13T15:56:06.05Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-13T15:56:06.05Z"
             },
             {
               "$type": "Document",
@@ -378,14 +361,38 @@
               "RelativeDocumentMoniker": "GYMPT\\Pages\\DetailsUsers\\DetailsUsers.cshtml.cs",
               "ToolTip": "C:\\Users\\Asus\\Documents\\Practica2-ArquiSoftware\\GYMPT\\Pages\\DetailsUsers\\DetailsUsers.cshtml.cs*",
               "RelativeToolTip": "GYMPT\\Pages\\DetailsUsers\\DetailsUsers.cshtml.cs*",
-              "ViewState": "AgIAACkAAAAAAAAAAAAUwD4AAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAACQAAAAAAAAAAAAUwE4AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-12T19:59:37.532Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 2,
+              "Title": "User.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\Asus\\Documents\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Users\\User.cshtml.cs",
+              "RelativeDocumentMoniker": "GYMPT\\Pages\\Users\\User.cshtml.cs",
+              "ToolTip": "C:\\Users\\Asus\\Documents\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Users\\User.cshtml.cs",
+              "RelativeToolTip": "GYMPT\\Pages\\Users\\User.cshtml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-12T20:16:32.354Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DetailUser.cs",
+              "DocumentMoniker": "C:\\Users\\Asus\\Documents\\Practica2-ArquiSoftware\\GYMPT\\Domain\\Entities\\DetailUser.cs",
+              "RelativeDocumentMoniker": "GYMPT\\Domain\\Entities\\DetailUser.cs",
+              "ToolTip": "C:\\Users\\Asus\\Documents\\Practica2-ArquiSoftware\\GYMPT\\Domain\\Entities\\DetailUser.cs",
+              "RelativeToolTip": "GYMPT\\Domain\\Entities\\DetailUser.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-13T16:08:45.688Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
               "Title": "Instructor.cs",
               "DocumentMoniker": "C:\\Users\\Asus\\Documents\\Practica2-ArquiSoftware\\GYMPT\\Domain\\Entities\\Instructor.cs",
               "RelativeDocumentMoniker": "GYMPT\\Domain\\Entities\\Instructor.cs",
@@ -397,7 +404,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "Create.cshtml",
               "DocumentMoniker": "C:\\Users\\Asus\\Documents\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Instructors\\Create.cshtml",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Instructors\\Create.cshtml",
@@ -409,7 +416,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "InstructorService.cs",
               "DocumentMoniker": "C:\\Users\\Asus\\Documents\\Practica2-ArquiSoftware\\GYMPT\\Application\\Services\\InstructorService.cs",
               "RelativeDocumentMoniker": "GYMPT\\Application\\Services\\InstructorService.cs",
@@ -421,7 +428,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "IInstructorService.cs",
               "DocumentMoniker": "C:\\Users\\Asus\\Documents\\Practica2-ArquiSoftware\\GYMPT\\Application\\Interfaces\\IInstructorService.cs",
               "RelativeDocumentMoniker": "GYMPT\\Application\\Interfaces\\IInstructorService.cs",
@@ -433,7 +440,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "Create.cshtml.cs",
               "DocumentMoniker": "C:\\Users\\Asus\\Documents\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Instructors\\Create.cshtml.cs",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Instructors\\Create.cshtml.cs",
@@ -445,7 +452,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "EditInstructor.cshtml.cs",
               "DocumentMoniker": "C:\\Users\\Asus\\Documents\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Instructors\\EditInstructor.cshtml.cs",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Instructors\\EditInstructor.cshtml.cs",
@@ -457,7 +464,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "EditClient.cshtml",
               "DocumentMoniker": "C:\\Users\\Asus\\Documents\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Clients\\EditClient.cshtml",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Clients\\EditClient.cshtml",
@@ -469,7 +476,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 22,
               "Title": "DisciplineEdit.cshtml",
               "DocumentMoniker": "C:\\Users\\Asus\\Documents\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Disciplines\\DisciplineEdit.cshtml",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Disciplines\\DisciplineEdit.cshtml",
@@ -481,7 +488,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 17,
               "Title": "Create.cshtml",
               "DocumentMoniker": "C:\\Users\\Asus\\Documents\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Clients\\Create.cshtml",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Clients\\Create.cshtml",
@@ -493,7 +500,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 21,
               "Title": "DisciplineEdit.cshtml.cs",
               "DocumentMoniker": "C:\\Users\\Asus\\Documents\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Disciplines\\DisciplineEdit.cshtml.cs",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Disciplines\\DisciplineEdit.cshtml.cs",
@@ -505,7 +512,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 18,
               "Title": "Create.cshtml.cs",
               "DocumentMoniker": "C:\\Users\\Asus\\Documents\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Clients\\Create.cshtml.cs",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Clients\\Create.cshtml.cs",
@@ -517,7 +524,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 20,
               "Title": "Client.cs",
               "DocumentMoniker": "C:\\Users\\Asus\\Documents\\Practica2-ArquiSoftware\\GYMPT\\Domain\\Entities\\Client.cs",
               "RelativeDocumentMoniker": "GYMPT\\Domain\\Entities\\Client.cs",
@@ -529,7 +536,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 19,
               "Title": "IClientService.cs",
               "DocumentMoniker": "C:\\Users\\Asus\\Documents\\Practica2-ArquiSoftware\\GYMPT\\Application\\Interfaces\\IClientService.cs",
               "RelativeDocumentMoniker": "GYMPT\\Application\\Interfaces\\IClientService.cs",
@@ -541,7 +548,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "EditClient.cshtml.cs",
               "DocumentMoniker": "C:\\Users\\Asus\\Documents\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Clients\\EditClient.cshtml.cs",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Clients\\EditClient.cshtml.cs",
@@ -553,7 +560,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 23,
               "Title": "Discipline.cshtml.cs",
               "DocumentMoniker": "C:\\Users\\Asus\\Documents\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Disciplines\\Discipline.cshtml.cs",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Disciplines\\Discipline.cshtml.cs",
@@ -565,7 +572,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "Create.cshtml.cs",
               "DocumentMoniker": "C:\\Users\\Asus\\Documents\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Users\\Create.cshtml.cs",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Users\\Create.cshtml.cs",
@@ -577,7 +584,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 24,
               "Title": "Discipline.cshtml",
               "DocumentMoniker": "C:\\Users\\Asus\\Documents\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Disciplines\\Discipline.cshtml",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Disciplines\\Discipline.cshtml",
@@ -589,7 +596,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 25,
               "Title": "DisciplineService.cs",
               "DocumentMoniker": "C:\\Users\\Asus\\Documents\\Practica2-ArquiSoftware\\GYMPT\\Application\\Services\\DisciplineService.cs",
               "RelativeDocumentMoniker": "GYMPT\\Application\\Services\\DisciplineService.cs",
@@ -601,7 +608,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 26,
               "Title": "IDisciplineService.cs",
               "DocumentMoniker": "C:\\Users\\Asus\\Documents\\Practica2-ArquiSoftware\\GYMPT\\Application\\Interfaces\\IDisciplineService.cs",
               "RelativeDocumentMoniker": "GYMPT\\Application\\Interfaces\\IDisciplineService.cs",
@@ -613,7 +620,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 27,
               "Title": "DisciplineCreate.cshtml.cs",
               "DocumentMoniker": "C:\\Users\\Asus\\Documents\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Disciplines\\DisciplineCreate.cshtml.cs",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Disciplines\\DisciplineCreate.cshtml.cs",
@@ -625,7 +632,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 28,
               "Title": "Discipline.cs",
               "DocumentMoniker": "C:\\Users\\Asus\\Documents\\Practica2-ArquiSoftware\\GYMPT\\Domain\\Entities\\Discipline.cs",
               "RelativeDocumentMoniker": "GYMPT\\Domain\\Entities\\Discipline.cs",
@@ -637,7 +644,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 29,
               "Title": "DisciplineDelete.cshtml",
               "DocumentMoniker": "C:\\Users\\Asus\\Documents\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Disciplines\\DisciplineDelete.cshtml",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Disciplines\\DisciplineDelete.cshtml",
@@ -649,7 +656,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 30,
               "Title": "DisciplineCreate.cshtml",
               "DocumentMoniker": "C:\\Users\\Asus\\Documents\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Disciplines\\DisciplineCreate.cshtml",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Disciplines\\DisciplineCreate.cshtml",
@@ -661,7 +668,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 31,
               "Title": "MembershipCreate.cshtml",
               "DocumentMoniker": "C:\\Users\\Asus\\Documents\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Memberships\\MembershipCreate.cshtml",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Memberships\\MembershipCreate.cshtml",
@@ -673,7 +680,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 33,
               "Title": "MembershipEdit.cshtml",
               "DocumentMoniker": "C:\\Users\\Asus\\Documents\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Memberships\\MembershipEdit.cshtml",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Memberships\\MembershipEdit.cshtml",
@@ -685,7 +692,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 36,
               "Title": "MembershipEdit.cshtml.cs",
               "DocumentMoniker": "C:\\Users\\Asus\\Documents\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Memberships\\MembershipEdit.cshtml.cs",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Memberships\\MembershipEdit.cshtml.cs",
@@ -697,7 +704,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 32,
               "Title": "MembershipCreate.cshtml.cs",
               "DocumentMoniker": "C:\\Users\\Asus\\Documents\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Memberships\\MembershipCreate.cshtml.cs",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Memberships\\MembershipCreate.cshtml.cs",
@@ -709,7 +716,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 35,
               "Title": "Membership.cshtml.cs",
               "DocumentMoniker": "C:\\Users\\Asus\\Documents\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Memberships\\Membership.cshtml.cs",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Memberships\\Membership.cshtml.cs",
@@ -721,7 +728,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 34,
               "Title": "Membership.cshtml",
               "DocumentMoniker": "C:\\Users\\Asus\\Documents\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Memberships\\Membership.cshtml",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Memberships\\Membership.cshtml",
@@ -733,7 +740,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 37,
               "Title": "_Layout.cshtml",
               "DocumentMoniker": "C:\\Users\\Asus\\Documents\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Shared\\_Layout.cshtml",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Shared\\_Layout.cshtml",
@@ -745,7 +752,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 38,
               "Title": "_ValidationScriptsPartial.cshtml",
               "DocumentMoniker": "C:\\Users\\Asus\\Documents\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Shared\\_ValidationScriptsPartial.cshtml",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Shared\\_ValidationScriptsPartial.cshtml",
@@ -757,7 +764,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 39,
               "Title": "Create.cshtml",
               "DocumentMoniker": "C:\\Users\\Asus\\Documents\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Users\\Create.cshtml",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Users\\Create.cshtml",
@@ -769,7 +776,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 40,
               "Title": "User.cshtml",
               "DocumentMoniker": "C:\\Users\\Asus\\Documents\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Users\\User.cshtml",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Users\\User.cshtml",
@@ -781,7 +788,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 41,
               "Title": "DeleteUser.cshtml",
               "DocumentMoniker": "C:\\Users\\Asus\\Documents\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Users\\DeleteUser.cshtml",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Users\\DeleteUser.cshtml",
@@ -793,7 +800,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
+              "DocumentIndex": 42,
               "Title": "DeleteUser.cshtml.cs",
               "DocumentMoniker": "C:\\Users\\Asus\\Documents\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Users\\DeleteUser.cshtml.cs",
               "RelativeDocumentMoniker": "GYMPT\\Pages\\Users\\DeleteUser.cshtml.cs",
@@ -802,18 +809,6 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAADMAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-12T20:17:39.778Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 42,
-              "Title": "User.cshtml.cs",
-              "DocumentMoniker": "C:\\Users\\Asus\\Documents\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Users\\User.cshtml.cs",
-              "RelativeDocumentMoniker": "GYMPT\\Pages\\Users\\User.cshtml.cs",
-              "ToolTip": "C:\\Users\\Asus\\Documents\\Practica2-ArquiSoftware\\GYMPT\\Pages\\Users\\User.cshtml.cs",
-              "RelativeToolTip": "GYMPT\\Pages\\Users\\User.cshtml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACQAAAAUAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-12T20:16:32.354Z"
             },
             {
               "$type": "Document",
