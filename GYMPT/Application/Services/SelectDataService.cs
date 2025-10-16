@@ -1,7 +1,5 @@
 ﻿using GYMPT.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace GYMPT.Application.Services
 {
@@ -19,7 +17,9 @@ namespace GYMPT.Application.Services
         public async Task<SelectList> GetUserOptionsAsync()
         {
             var users = await _userService.GetAllUsers();
-            var userOptions = users.Select(u => new {
+            var userOptions = users
+                .Where(u => u.Role == "Client")
+                .Select(u => new {
                 u.Id,
                 FullName = $"{u.Name} {u.FirstLastname}"
             });
@@ -32,7 +32,6 @@ namespace GYMPT.Application.Services
             return new SelectList(memberships, "Id", "Name");
         }
 
-        // --- MÉTODO AÑADIDO ---
         public async Task<SelectList> GetInstructorOptionsAsync()
         {
             var users = await _userService.GetAllUsers();

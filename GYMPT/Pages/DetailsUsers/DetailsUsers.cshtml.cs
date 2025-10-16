@@ -10,7 +10,6 @@ namespace GYMPT.Pages.DetailsUsers
     [Authorize]
     public class DetailsUsersModel : PageModel
     {
-        // Servicios de negocio para las operaciones CRUD y de l�gica.
         private readonly IDetailUserService _detailUserService;
         private readonly IUserService _userService;
         private readonly IMembershipService _membershipService;
@@ -43,25 +42,23 @@ namespace GYMPT.Pages.DetailsUsers
 
         public async Task OnGetAsync()
         {
-            // Carga la lista principal de detalles de usuario.
             DetailUserList = await _detailUserService.GetAllDetailUsers();
-
-            // Carga todos los datos adicionales necesarios para la vista.
             await PopulateRelatedData();
+            NewDetailUser.StartDate = DateTime.Today;
+            NewDetailUser.EndDate = DateTime.Today.AddDays(30);
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
-                // Si la validaci�n falla, debemos recargar los datos de los dropdowns
-                // para que la p�gina se vuelva a mostrar correctamente.
+                // If fails, reload dropdown menu data
                 await PopulateRelatedData();
                 return Page();
             }
 
             await _detailUserService.CreateNewDetailUser(NewDetailUser);
-            TempData["SuccessMessage"] = "La suscripci�n del usuario ha sido registrada exitosamente.";
+            TempData["SuccessMessage"] = "La suscripcion del usuario ha sido registrada exitosamente.";
             return RedirectToPage();
         }
 
@@ -72,11 +69,8 @@ namespace GYMPT.Pages.DetailsUsers
             return RedirectToPage();
         }
 
-        // Este m�todo ahora es mucho m�s declarativo y limpio.
         private async Task PopulateRelatedData()
         {
-            // Pedimos los SelectLists ya preparados desde el servicio especializado.
-            // La UI ya no sabe c�mo se construyen.
             UserOptions = await _selectDataService.GetUserOptionsAsync();
             MembershipOptions = await _selectDataService.GetMembershipOptionsAsync();
 

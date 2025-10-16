@@ -22,14 +22,12 @@ namespace GYMPT.Pages.Users
             _urlTokenSingleton = urlTokenSingleton;
         }
 
-        // Este m�todo se ejecuta cuando la p�gina se carga para MOSTRAR los usuarios
         public async Task OnGetAsync()
         {
             UserList = await _userService.GetAllUsers();
             UserTokens = UserList.ToDictionary(u => u.Id, u => _urlTokenSingleton.GenerateToken(u.Id.ToString()));
         }
 
-        // Este m�todo se ejecuta cuando se confirma la eliminaci�n para BORRAR al usuario
         public async Task<IActionResult> OnPostDeleteAsync(int id)
         {
             try
@@ -45,7 +43,6 @@ namespace GYMPT.Pages.Users
 
                 if (success)
                 {
-                    // Prepara el pop-up de �xito
                     TempData["SuccessMessage"] = $"El usuario {userToDelete.Name} {userToDelete.FirstLastname} fue eliminado correctamente.";
                 }
                 else
@@ -58,7 +55,6 @@ namespace GYMPT.Pages.Users
                 TempData["ErrorMessage"] = "Ocurri� un error inesperado al intentar eliminar el usuario.";
             }
 
-            // Redirige de vuelta a la misma p�gina para refrescar la lista y mostrar el pop-up
             return RedirectToPage();
         }
     }

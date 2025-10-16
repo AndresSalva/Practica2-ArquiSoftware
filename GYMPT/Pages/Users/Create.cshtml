@@ -47,7 +47,13 @@
                         <select id="roleSelector" asp-for="Input.Role" class="form-select form-select-lg">
                             <option value="" disabled selected>-- Ninguno --</option>
                             <option value="Client">Cliente</option>
-                            <option value="Instructor">Instructor</option>
+                            @if (User.Identity != null && User.Identity.IsAuthenticated)
+                            {
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <option value="Instructor">Instructor</option>
+                                }
+                            }
                         </select>
                     </div>
 
