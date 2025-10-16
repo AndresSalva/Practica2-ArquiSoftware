@@ -4,6 +4,7 @@ using GYMPT.Domain.Ports;
 using GYMPT.Infrastructure.Factories;
 using GYMPT.Infrastructure.Services;
 using GYMPT.Infrastructure.Security;
+using GYMPT.Domain.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,35 +12,42 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDataProtection();
 builder.Services.AddSingleton<UrlTokenSingleton>();
 
-builder.Services.AddScoped<IClientRepository>(serviceProvider => {
-    var factory = new ClientRepositoryCreator();
+builder.Services.AddScoped<RepositoryFactory>();
 
-    return (IClientRepository)factory.CreateRepository();
+builder.Services.AddScoped<IUserRepository>(sp =>
+{
+    var factory = sp.GetRequiredService<RepositoryFactory>();
+    return (IUserRepository)factory.CreateRepository<User>();
 });
 
-builder.Services.AddScoped<IUserRepository>(serviceProvider => {
-    var factory = new UserRepositoryCreator();
-    return (IUserRepository)factory.CreateRepository();
+builder.Services.AddScoped<IInstructorRepository>(sp =>
+{
+    var factory = sp.GetRequiredService<RepositoryFactory>();
+    return (IInstructorRepository)factory.CreateRepository<Instructor>();
 });
 
-builder.Services.AddScoped<IInstructorRepository>(serviceProvider => {
-    var factory = new InstructorRepositoryCreator();
-    return (IInstructorRepository)factory.CreateRepository();
+builder.Services.AddScoped<IClientRepository>(sp =>
+{
+    var factory = sp.GetRequiredService<RepositoryFactory>();
+    return (IClientRepository)factory.CreateRepository<Client>();
 });
 
-builder.Services.AddScoped<IDisciplineRepository>(serviceProvider => {
-    var factory = new DisciplineRepositoryCreator();
-    return (IDisciplineRepository)factory.CreateRepository();
+builder.Services.AddScoped<IDisciplineRepository>(sp =>
+{
+    var factory = sp.GetRequiredService<RepositoryFactory>();
+    return (IDisciplineRepository)factory.CreateRepository<Discipline>();
 });
 
-builder.Services.AddScoped<IMembershipRepository>(serviceProvider => {
-    var factory = new MembershipRepositoryCreator();
-    return (IMembershipRepository)factory.CreateRepository();
+builder.Services.AddScoped<IMembershipRepository>(sp =>
+{
+    var factory = sp.GetRequiredService<RepositoryFactory>();
+    return (IMembershipRepository)factory.CreateRepository<Membership>();
 });
 
-builder.Services.AddScoped<IDetailUserRepository>(serviceProvider => {
-    var factory = new DetailUserRepositoryCreator();
-    return (IDetailUserRepository)factory.CreateRepository();
+builder.Services.AddScoped<IDetailUserRepository>(sp =>
+{
+    var factory = sp.GetRequiredService<RepositoryFactory>();
+    return (IDetailUserRepository)factory.CreateRepository<DetailsUser>();
 });
 
 builder.Services.AddScoped<IClientService, ClientService>();
