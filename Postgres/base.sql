@@ -97,7 +97,8 @@ CREATE TABLE public.logs (
 INSERT INTO public.user (created_at, name, first_lastname, second_lastname, date_birth, ci, "role")
 OVERRIDING SYSTEM VALUE VALUES
 ('2025-09-28 21:38:33', 'Juan', 'Perez', 'Quispe', '2000-07-14', '12345678', 'Instructor'),
-('2025-09-30 12:59:41', 'Andrés', 'Salvatierra', 'Ramírez', '2003-11-21', '0000000', 'Client');
+('2025-09-30 12:59:41', 'Andrés', 'Salvatierra', 'Ramírez', '2003-11-21', '0000000', 'Client'),
+('2025-10-01 01:46:54', 'Elad', 'Minist', 'Trador', '2000-12-20', '99999999', 'Admin');
 
 -- Clientes
 INSERT INTO public.client (id_user, fitness_level, initial_weight_kg, current_weight_kg, emergency_contact_phone)
@@ -105,7 +106,9 @@ VALUES (2, 'Intermedio', 55, 57, '77967341');
 
 -- Instructores
 INSERT INTO public.instructor (id_user, hire_date, monthly_salary, specialization, email, password)
-VALUES (1, '2025-09-30', 2000, 'Body Combat', 'instructor@gmail.com', '$2a$11$lkjVho0mJHPWs8Cn.8wEhOtJP1ZvDtwQ01qpXaxLVSVPjQVjL2rnm');
+VALUES
+(1, '2025-09-30', 2000, 'Body Combat', 'instructor@gmail.com', '$2a$11$lkjVho0mJHPWs8Cn.8wEhOtJP1ZvDtwQ01qpXaxLVSVPjQVjL2rnm'),
+(3, '2025-09-30', 2000, 'Administrar Sistema', 'admin@gmail.com', '$2a$11$W/CTSKdsb0e0hTYsCUvFH.pA0BzYdUjqmwT/.fpREeCXbGN1qfyim');
 
 -- Membresías
 INSERT INTO public.membership (created_at, name, price, description, monthly_sessions)
