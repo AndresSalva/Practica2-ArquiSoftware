@@ -1,11 +1,12 @@
 ﻿using GYMPT.Application.Interfaces;
 using GYMPT.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Threading.Tasks;
 
 namespace GYMPT.Pages.Disciplines
 {
+    [Authorize(Roles = "Admin")]
     public class DisciplineDeleteModel : PageModel
     {
         private readonly IDisciplineService _disciplineService;

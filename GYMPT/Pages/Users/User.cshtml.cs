@@ -2,27 +2,32 @@ using GYMPT.Application.Interfaces;
 using GYMPT.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using GYMPT.Infrastructure.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GYMPT.Pages.Users
 {
+    [Authorize]
     public class UserModel : PageModel
     {
         private readonly IUserService _userService;
 
         public IEnumerable<User> UserList { get; set; } = new List<User>();
+        public Dictionary<int, string> UserTokens { get; set; } = new Dictionary<int, string>();
+        private readonly UrlTokenSingleton _urlTokenSingleton;
 
-        public UserModel(IUserService userService)
+        public UserModel(IUserService userService, UrlTokenSingleton urlTokenSingleton)
         {
             _userService = userService;
+            _urlTokenSingleton = urlTokenSingleton;
         }
 
-        // Este método se ejecuta cuando la página se carga para MOSTRAR los usuarios
         public async Task OnGetAsync()
         {
             UserList = await _userService.GetAllUsers();
+            UserTokens = UserList.ToDictionary(u => u.Id, u => _urlTokenSingleton.GenerateToken(u.Id.ToString()));
         }
 
-        // Este método se ejecuta cuando se confirma la eliminación para BORRAR al usuario
         public async Task<IActionResult> OnPostDeleteAsync(int id)
         {
             try
@@ -38,7 +43,6 @@ namespace GYMPT.Pages.Users
 
                 if (success)
                 {
-                    // Prepara el pop-up de éxito
                     TempData["SuccessMessage"] = $"El usuario {userToDelete.Name} {userToDelete.FirstLastname} fue eliminado correctamente.";
                 }
                 else
@@ -48,10 +52,9 @@ namespace GYMPT.Pages.Users
             }
             catch (Exception)
             {
-                TempData["ErrorMessage"] = "Ocurrió un error inesperado al intentar eliminar el usuario.";
+                TempData["ErrorMessage"] = "Ocurriï¿½ un error inesperado al intentar eliminar el usuario.";
             }
 
-            // Redirige de vuelta a la misma página para refrescar la lista y mostrar el pop-up
             return RedirectToPage();
         }
     }

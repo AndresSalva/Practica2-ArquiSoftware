@@ -1,0 +1,60 @@
+@page
+@model GYMPT.Pages.Login.IndexModel
+@{
+    Layout = "_LoginLayout";
+    ViewData["Title"] = "Login";
+}
+
+<div class="d-flex justify-content-center align-items-center vh-100 bg-light">
+    <div class="card shadow-lg p-4" style="width: 100%; max-width: 400px;">
+        <h2 class="text-center mb-4">Iniciar Sesión</h2>
+
+        <form method="post">
+            <div class="mb-3">
+                <input asp-for="Email" class="form-control" placeholder="Email" />
+            </div>
+
+            <div class="mb-3 position-relative">
+                <input asp-for="Password" type="password" id="passwordInput" class="form-control"
+                    placeholder="Contraseña" />
+
+                <button type="button"
+                    class="btn position-absolute top-50 end-0 translate-middle-y me-2"
+                    id="togglePassword" tabindex="-1">
+                    <i class="fas fa-eye"></i>
+                </button>
+            </div>
+
+            <div class="d-grid">
+                <button type="submit" class="btn btn-dark">Login</button>
+            </div>
+        </form>
+
+        @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+        {
+            <p class="text-danger text-center mt-3">@Model.ErrorMessage</p>
+        }
+
+        <div class="text-center mt-4">
+            <a asp-page="/Index" class="text-decoration-none text-muted">
+                ← Volver al inicio
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const passwordInput = document.getElementById("passwordInput");
+        const togglePassword = document.getElementById("togglePassword");
+        const icon = togglePassword.querySelector("i");
+
+        togglePassword.addEventListener("click", function () {
+            const isPassword = passwordInput.type === "password";
+            passwordInput.type = isPassword ? "text" : "password";
+
+            icon.classList.toggle("fa-eye");
+            icon.classList.toggle("fa-eye-slash");
+        });
+    });
+</script>

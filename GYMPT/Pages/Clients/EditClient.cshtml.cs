@@ -1,27 +1,37 @@
 using GYMPT.Application.Interfaces;
 using GYMPT.Domain.Entities;
+using GYMPT.Infrastructure.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Threading.Tasks;
 
 namespace GYMPT.Pages.Clients
 {
-    // El nombre de la clase coincide con el nombre del archivo (Edit.cshtml -> EditModel)
+    [Authorize]
     public class EditModel : PageModel
     {
         private readonly IClientService _clientService;
+        private readonly UrlTokenSingleton _urlTokenSingleton;
 
         [BindProperty]
         public Client Client { get; set; }
 
-        public EditModel(IClientService clientService)
+        public EditModel(IClientService clientService, UrlTokenSingleton urlTokenSingleton)
         {
             _clientService = clientService;
+            _urlTokenSingleton = urlTokenSingleton;
         }
 
-        // Este método se ejecuta al cargar la página para rellenar el formulario
-        public async Task<IActionResult> OnGetAsync(int id)
+        // Este mï¿½todo se ejecuta al cargar la pï¿½gina para rellenar el formulario
+        public async Task<IActionResult> OnGetAsync(string token)
         {
+            // Decode token to original id
+            var idStr = _urlTokenSingleton.GetTokenData(token);
+            if (!int.TryParse(idStr, out var id))
+            {
+                TempData["ErrorMessage"] = "Token de URL invÃ¡lido.";
+                return RedirectToPage("/Users/User");
+            }
             Client = await _clientService.GetClientById(id);
 
             if (Client == null)
@@ -32,7 +42,7 @@ namespace GYMPT.Pages.Clients
             return Page();
         }
 
-        // Este método se ejecuta al guardar los cambios
+        // Este mï¿½todo se ejecuta al guardar los cambios
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -40,7 +50,7 @@ namespace GYMPT.Pages.Clients
                 return Page();
             }
 
-            // Asumo que tu IClientService tiene un método UpdateClientData
+            // Asumo que tu IClientService tiene un mï¿½todo UpdateClientData
             await _clientService.UpdateClientData(Client);
 
             TempData["SuccessMessage"] = "Los datos del cliente han sido actualizados exitosamente.";

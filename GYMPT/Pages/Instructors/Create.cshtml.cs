@@ -1,11 +1,13 @@
 using GYMPT.Application.Interfaces;
 using GYMPT.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Threading.Tasks;
+
 
 namespace GYMPT.Pages.Instructors
 {
+    [Authorize(Roles = "Admin")]
     public class CreateModel : PageModel
     {
         private readonly IInstructorService _instructorService;

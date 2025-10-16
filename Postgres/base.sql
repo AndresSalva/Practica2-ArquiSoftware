@@ -31,6 +31,8 @@ CREATE TABLE public.instructor (
     hire_date DATE,
     monthly_salary NUMERIC(10,2),
     specialization VARCHAR(100),
+    password VARCHAR(255) NOT NULL,
+    email VARCHAR(100) UNIQUE,
     CONSTRAINT fk_instructor_user FOREIGN KEY (id_user) REFERENCES public.user(id) ON DELETE CASCADE
 );
 
@@ -95,15 +97,18 @@ CREATE TABLE public.logs (
 INSERT INTO public.user (created_at, name, first_lastname, second_lastname, date_birth, ci, "role")
 OVERRIDING SYSTEM VALUE VALUES
 ('2025-09-28 21:38:33', 'Juan', 'Perez', 'Quispe', '2000-07-14', '12345678', 'Instructor'),
-('2025-09-30 12:59:41', 'Andrés', 'Salvatierra', 'Ramírez', '2003-11-21', '0000000', 'Client');
+('2025-09-30 12:59:41', 'Andrés', 'Salvatierra', 'Ramírez', '2003-11-21', '0000000', 'Client'),
+('2025-10-01 01:46:54', 'Elad', 'Minist', 'Trador', '2000-12-20', '99999999', 'Admin');
 
 -- Clientes
 INSERT INTO public.client (id_user, fitness_level, initial_weight_kg, current_weight_kg, emergency_contact_phone)
 VALUES (2, 'Intermedio', 55, 57, '77967341');
 
 -- Instructores
-INSERT INTO public.instructor (id_user, hire_date, monthly_salary, specialization)
-VALUES (1, '2025-09-30', 2000, 'Body Combat');
+INSERT INTO public.instructor (id_user, hire_date, monthly_salary, specialization, email, password)
+VALUES
+(1, '2025-09-30', 2000, 'Body Combat', 'instructor@gmail.com', '$2a$11$lkjVho0mJHPWs8Cn.8wEhOtJP1ZvDtwQ01qpXaxLVSVPjQVjL2rnm'),
+(3, '2025-09-30', 2000, 'Administrar Sistema', 'admin@gmail.com', '$2a$11$W/CTSKdsb0e0hTYsCUvFH.pA0BzYdUjqmwT/.fpREeCXbGN1qfyim');
 
 -- Membresías
 INSERT INTO public.membership (created_at, name, price, description, monthly_sessions)
@@ -125,3 +130,38 @@ INSERT INTO public.details_user (created_at, id_user, id_membership, start_date,
 OVERRIDING SYSTEM VALUE VALUES
 ('2025-10-04 16:15:40', 2, 2, '2025-01-01', '2026-02-22', 30),
 ('2025-10-05 17:17:11', 2, 2, '2025-01-01', '2026-01-01', 150);
+
+CREATE OR REPLACE VIEW public.instructor_view AS
+SELECT u.id AS Id, u.name AS Name, u.first_lastname AS FirstLastname, u.second_lastname AS SecondLastname,
+    u.date_birth AS DateBirth, u.ci AS Ci, u.role AS Role, u.created_at AS CreatedAt,
+	u.last_modification AS LastModification, u.is_active AS IsActive, i.hire_date AS HireDate,
+    i.monthly_salary AS MonthlySalary, i.specialization AS Specialization, i.email AS Email, i.password AS Password
+FROM
+	public.user u
+INNER JOIN
+	public.instructor i
+ON
+	u.id = i.id_user
+WHERE
+	u.id = @Id AND u.is_active = true;
+
+CREATE OR REPLACE VIEW public.client_view AS
+SELECT
+    u.id AS ClientId,
+    u.created_at AS CreatedAt,
+    u.last_modification AS LastModification,
+    u.is_active AS IsActive,
+    u.name AS Name,
+    u.first_lastname AS FirstLastname,
+    u.second_lastname AS SecondLastname,
+    u.date_birth AS DateBirth,
+    u.ci AS Ci,
+    u.role AS Role,
+    c.fitness_level AS FitnessLevel,
+    c.initial_weight_kg AS InitialWeightKg,
+    c.current_weight_kg AS CurrentWeightKg,
+    c.emergency_contact_phone AS EmergencyContactPhone
+FROM
+    public.user u
+INNER JOIN
+    public.client c ON u.id = c.id_user;

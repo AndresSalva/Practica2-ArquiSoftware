@@ -1,11 +1,12 @@
 using GYMPT.Application.Interfaces;
 using GYMPT.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Threading.Tasks;
 
 namespace GYMPT.Pages.Memberships
 {
+    [Authorize(Roles = "Admin")]
     public class MembershipCreateModel : PageModel
     {
         private readonly IMembershipService _membershipService;
@@ -22,17 +23,17 @@ namespace GYMPT.Pages.Memberships
 
         public async Task<IActionResult> OnPostAsync()
         {
-            // Si la validación falla, se queda en la página y muestra los errores
+            // Si la validaciï¿½n falla, se queda en la pï¿½gina y muestra los errores
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            // Llama al servicio para crear la membresía
+            // Llama al servicio para crear la membresï¿½a
             await _membershipService.CreateNewMembership(Membership);
 
-            // Prepara el mensaje de éxito para el pop-up
-            TempData["SuccessMessage"] = $"La membresía '{Membership.Name}' ha sido creada exitosamente.";
+            // Prepara el mensaje de ï¿½xito para el pop-up
+            TempData["SuccessMessage"] = $"La membresï¿½a '{Membership.Name}' ha sido creada exitosamente.";
 
             // Redirige a la lista
             return RedirectToPage("/Memberships/Membership");
