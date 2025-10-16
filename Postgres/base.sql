@@ -33,6 +33,7 @@ CREATE TABLE public.instructor (
     specialization VARCHAR(100),
     password VARCHAR(255) NOT NULL,
     email VARCHAR(100) UNIQUE,
+    must_change_password BOOLEAN DEFAULT true,
     CONSTRAINT fk_instructor_user FOREIGN KEY (id_user) REFERENCES public.user(id) ON DELETE CASCADE
 );
 
@@ -105,10 +106,10 @@ INSERT INTO public.client (id_user, fitness_level, initial_weight_kg, current_we
 VALUES (2, 'Intermedio', 55, 57, '77967341');
 
 -- Instructores
-INSERT INTO public.instructor (id_user, hire_date, monthly_salary, specialization, email, password)
+INSERT INTO public.instructor (id_user, hire_date, monthly_salary, specialization, email, password, must_change_password)
 VALUES
-(1, '2025-09-30', 2000, 'Body Combat', 'instructor@gmail.com', '$2a$11$lkjVho0mJHPWs8Cn.8wEhOtJP1ZvDtwQ01qpXaxLVSVPjQVjL2rnm'),
-(3, '2025-09-30', 2000, 'Administrar Sistema', 'admin@gmail.com', '$2a$11$W/CTSKdsb0e0hTYsCUvFH.pA0BzYdUjqmwT/.fpREeCXbGN1qfyim');
+(1, '2025-09-30', 2000, 'Body Combat', 'instructor@gmail.com', '$2a$11$lkjVho0mJHPWs8Cn.8wEhOtJP1ZvDtwQ01qpXaxLVSVPjQVjL2rnm', true),
+(3, '2025-09-30', 2000, 'Administrar Sistema', 'admin@gmail.com', '$2a$11$W/CTSKdsb0e0hTYsCUvFH.pA0BzYdUjqmwT/.fpREeCXbGN1qfyim', true);
 
 -- Membresías
 INSERT INTO public.membership (created_at, name, price, description, monthly_sessions)
@@ -135,7 +136,8 @@ CREATE OR REPLACE VIEW public.instructor_view AS
 SELECT u.id AS Id, u.name AS Name, u.first_lastname AS FirstLastname, u.second_lastname AS SecondLastname,
     u.date_birth AS DateBirth, u.ci AS Ci, u.role AS Role, u.created_at AS CreatedAt,
 	u.last_modification AS LastModification, u.is_active AS IsActive, i.hire_date AS HireDate,
-    i.monthly_salary AS MonthlySalary, i.specialization AS Specialization, i.email AS Email, i.password AS Password
+    i.monthly_salary AS MonthlySalary, i.specialization AS Specialization, i.email AS Email,
+    i.password AS Password, i.must_change_password AS MustChangePassword
 FROM
 	public.user u
 INNER JOIN
@@ -143,7 +145,7 @@ INNER JOIN
 ON
 	u.id = i.id_user
 WHERE
-	u.id = @Id AND u.is_active = true;
+	u.is_active = true AND u.role != "Client";
 
 CREATE OR REPLACE VIEW public.client_view AS
 SELECT
