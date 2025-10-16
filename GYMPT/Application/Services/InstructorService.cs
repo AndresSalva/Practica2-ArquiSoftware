@@ -17,5 +17,15 @@ namespace GYMPT.Application.Services
         public Task<IEnumerable<Instructor>> GetAllInstructors() => _instructorRepository.GetAllAsync();
         public Task CreateNewInstructor(Instructor newInstructor) => _instructorRepository.CreateAsync(newInstructor);
         public Task UpdateInstructorData(Instructor instructorToUpdate) => _instructorRepository.UpdateAsync(instructorToUpdate);
+        private Task<bool> UpdatePassword(int id, string password) => _instructorRepository.UpdatePasswordAsync(id, password);
+        public async Task<bool> UpdatePasswordAsync(int userId, string password)
+        {
+            var user = await GetInstructorById(userId);
+            if (user == null)
+            {
+                return false;
+            }
+            return await UpdatePassword(userId, password);
+        }
     }
 }

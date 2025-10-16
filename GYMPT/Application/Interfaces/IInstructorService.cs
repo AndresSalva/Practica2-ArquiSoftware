@@ -8,5 +8,6 @@ namespace GYMPT.Application.Interfaces
         Task<IEnumerable<Instructor>> GetAllInstructors();
         Task CreateNewInstructor(Instructor newInstructor);
         Task UpdateInstructorData(Instructor instructorToUpdate);
+        Task<bool> UpdatePasswordAsync(int userId, string newHash);
     }
 }

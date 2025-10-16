@@ -19,25 +19,8 @@ namespace GYMPT.Infrastructure.Persistence
         {
             using var conn = new NpgsqlConnection(_postgresString);
             const string sql = @"
-                SELECT 
-                    u.id AS Id,
-                    u.name AS Name,
-                    u.first_lastname AS FirstLastname,
-                    u.second_lastname AS SecondLastname,
-                    u.date_birth AS DateBirth,
-                    u.ci AS Ci,
-                    u.role AS Role,
-                    u.created_at AS CreatedAt,
-                    u.last_modification AS LastModification,
-                    u.is_active AS IsActive,
-                    i.hire_date AS HireDate,
-                    i.monthly_salary AS MonthlySalary,
-                    i.specialization AS Specialization,
-                    i.email AS Email,
-                    i.password AS Password
-                FROM ""user"" u
-                INNER JOIN instructor i ON u.id = i.id_user
-                WHERE u.id = @Id AND u.is_active = true;";
+                SELECT * FROM instructor_view
+                WHERE Id = @Id;";
 
             return await conn.QuerySingleOrDefaultAsync<Instructor>(sql, new { Id = id });
         }
@@ -46,25 +29,8 @@ namespace GYMPT.Infrastructure.Persistence
         {
             using var conn = new NpgsqlConnection(_postgresString);
             const string sql = @"
-                SELECT 
-                    u.id AS Id,
-                    u.name AS Name,
-                    u.first_lastname AS FirstLastname,
-                    u.second_lastname AS SecondLastname,
-                    u.date_birth AS DateBirth,
-                    u.ci AS Ci,
-                    u.role AS Role,
-                    u.created_at AS CreatedAt,
-                    u.last_modification AS LastModification,
-                    u.is_active AS IsActive,
-                    i.hire_date AS HireDate,
-                    i.monthly_salary AS MonthlySalary,
-                    i.specialization AS Specialization,
-                    i.email AS Email,
-                    i.password AS Password
-                FROM ""user"" u
-                INNER JOIN instructor i ON u.id = i.id_user
-                WHERE u.is_active = true AND u.role = 'Instructor';";
+                SELECT * FROM instructor_view   
+                WHERE Role = 'Instructor';";
 
             return await conn.QueryAsync<Instructor>(sql);
         }
@@ -130,7 +96,6 @@ namespace GYMPT.Infrastructure.Persistence
 
         public async Task<bool> DeleteByIdAsync(int id)
         {
-
             using var conn = new NpgsqlConnection(_postgresString);
             var sql = @"UPDATE ""user"" SET is_active = false, last_modification = @LastModification WHERE id = @Id;";
             var affectedRows = await conn.ExecuteAsync(sql, new { Id = id, LastModification = DateTime.UtcNow });
@@ -143,6 +108,16 @@ namespace GYMPT.Infrastructure.Persistence
             const string sql = @"SELECT * FROM instructor_view WHERE email = @Email;";
 
             return await conn.QuerySingleOrDefaultAsync<Instructor>(sql, new { Email = email });
+        }
+
+        public async Task<bool> UpdatePasswordAsync(int id, string password)
+        {
+            using var conn = new NpgsqlConnection(_postgresString);
+            const string query = @"UPDATE instructor 
+                       SET password = @Password, must_change_password = false 
+                       WHERE id_user = @Id;";
+            var rowsChanged = await conn.ExecuteAsync(query, new { Password = password, Id = id });
+            return rowsChanged > 0;
         }
     }
 }
