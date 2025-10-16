@@ -3,9 +3,11 @@ using GYMPT.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using GYMPT.Infrastructure.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GYMPT.Pages.Users
 {
+    [Authorize]
     public class UserModel : PageModel
     {
         private readonly IUserService _userService;

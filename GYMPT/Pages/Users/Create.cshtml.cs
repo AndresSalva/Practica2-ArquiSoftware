@@ -1,9 +1,11 @@
 using GYMPT.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace GYMPT.Pages.Users
 {
+    [Authorize]
     public class CreateModel : PageModel
     {
         [BindProperty]
@@ -20,14 +22,14 @@ namespace GYMPT.Pages.Users
 
             if (User.Role == "Client")
             {
-                // ===== CORRECCIÓN CLAVE =====
+                // ===== CORRECCIï¿½N CLAVE =====
                 // Ahora redirige al nombre de archivo correcto: Create.cshtml
                 return RedirectToPage("/Clients/Create");
             }
 
             if (User.Role == "Instructor")
             {
-                // Asumo que la ruta para instructores también usa nombres genéricos
+                // Asumo que la ruta para instructores tambiï¿½n usa nombres genï¿½ricos
                 return RedirectToPage("/Instructors/Create");
             }
 

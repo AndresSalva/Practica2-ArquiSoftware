@@ -1,11 +1,12 @@
 using GYMPT.Application.Interfaces;
 using GYMPT.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Threading.Tasks;
 
 namespace GYMPT.Pages.Users
 {
+    [Authorize]
     public class DeleteUserModel : PageModel
     {
         private readonly IUserService _userService;

@@ -1,13 +1,13 @@
 using GYMPT.Application.Interfaces;
 using GYMPT.Domain.Entities;
 using GYMPT.Infrastructure.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Threading.Tasks;
 
 namespace GYMPT.Pages.Clients
 {
-    // El nombre de la clase coincide con el nombre del archivo (Edit.cshtml -> EditModel)
+    [Authorize]
     public class EditModel : PageModel
     {
         private readonly IClientService _clientService;

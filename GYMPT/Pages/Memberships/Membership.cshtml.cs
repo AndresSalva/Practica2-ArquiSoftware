@@ -1,13 +1,13 @@
 using GYMPT.Application.Interfaces;
 using GYMPT.Domain.Entities;
 using GYMPT.Infrastructure.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace GYMPT.Pages.Memberships
 {
+    [Authorize(Roles = "Admin")]
     public class MembershipModel : PageModel
     {
         private readonly IMembershipService _membershipService;

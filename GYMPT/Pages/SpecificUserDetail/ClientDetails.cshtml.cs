@@ -1,12 +1,13 @@
 using GYMPT.Application.Interfaces;
 using GYMPT.Domain.Entities;
 using GYMPT.Infrastructure.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Threading.Tasks;
 
 namespace GYMPT.Pages.SpecificUserDetail
 {
+    [Authorize]
     public class ClientDetailsModel : PageModel
     {
         private readonly IClientService _clientService;

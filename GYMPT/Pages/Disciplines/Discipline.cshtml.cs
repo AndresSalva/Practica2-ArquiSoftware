@@ -1,15 +1,13 @@
 using GYMPT.Application.Interfaces;
 using GYMPT.Domain.Entities;
 using GYMPT.Infrastructure.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Policy;
-using System.Threading.Tasks;
 
 namespace GYMPT.Pages.Disciplines
 {
+    [Authorize(Roles = "Admin")]
     public class DisciplineModel : PageModel
     {
         private readonly IDisciplineService _disciplineService;

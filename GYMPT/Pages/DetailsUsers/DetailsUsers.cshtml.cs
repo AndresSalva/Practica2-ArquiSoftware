@@ -1,17 +1,16 @@
 using GYMPT.Application.Interfaces;
 using GYMPT.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace GYMPT.Pages.DetailsUsers
 {
+    [Authorize]
     public class DetailsUsersModel : PageModel
     {
-        // Servicios de negocio para las operaciones CRUD y de lógica.
+        // Servicios de negocio para las operaciones CRUD y de lï¿½gica.
         private readonly IDetailUserService _detailUserService;
         private readonly IUserService _userService;
         private readonly IMembershipService _membershipService;
@@ -29,7 +28,7 @@ namespace GYMPT.Pages.DetailsUsers
         public SelectList UserOptions { get; set; }
         public SelectList MembershipOptions { get; set; }
 
-        // Inyectamos todas las dependencias que la página necesita, incluyendo el nuevo servicio.
+        // Inyectamos todas las dependencias que la pï¿½gina necesita, incluyendo el nuevo servicio.
         public DetailsUsersModel(
             IDetailUserService detailUserService,
             IUserService userService,
@@ -55,29 +54,29 @@ namespace GYMPT.Pages.DetailsUsers
         {
             if (!ModelState.IsValid)
             {
-                // Si la validación falla, debemos recargar los datos de los dropdowns
-                // para que la página se vuelva a mostrar correctamente.
+                // Si la validaciï¿½n falla, debemos recargar los datos de los dropdowns
+                // para que la pï¿½gina se vuelva a mostrar correctamente.
                 await PopulateRelatedData();
                 return Page();
             }
 
             await _detailUserService.CreateNewDetailUser(NewDetailUser);
-            TempData["SuccessMessage"] = "La suscripción del usuario ha sido registrada exitosamente.";
+            TempData["SuccessMessage"] = "La suscripciï¿½n del usuario ha sido registrada exitosamente.";
             return RedirectToPage();
         }
 
         public async Task<IActionResult> OnPostDeleteAsync(int id)
         {
             await _detailUserService.DeleteDetailUser(id);
-            TempData["SuccessMessage"] = "La suscripción ha sido eliminada.";
+            TempData["SuccessMessage"] = "La suscripciï¿½n ha sido eliminada.";
             return RedirectToPage();
         }
 
-        // Este método ahora es mucho más declarativo y limpio.
+        // Este mï¿½todo ahora es mucho mï¿½s declarativo y limpio.
         private async Task PopulateRelatedData()
         {
             // Pedimos los SelectLists ya preparados desde el servicio especializado.
-            // La UI ya no sabe cómo se construyen.
+            // La UI ya no sabe cï¿½mo se construyen.
             UserOptions = await _selectDataService.GetUserOptionsAsync();
             MembershipOptions = await _selectDataService.GetMembershipOptionsAsync();
 

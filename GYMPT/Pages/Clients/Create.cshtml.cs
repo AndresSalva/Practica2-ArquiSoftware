@@ -1,12 +1,13 @@
 using GYMPT.Application.Interfaces;
 using GYMPT.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Threading.Tasks;
 
 namespace GYMPT.Pages.Clients
 {
-    // El nombre de la clase coincide con el nombre del archivo (Create.cshtml -> CreateModel)
+    [Authorize]
     public class CreateModel : PageModel
     {
         private readonly IClientService _clientService;

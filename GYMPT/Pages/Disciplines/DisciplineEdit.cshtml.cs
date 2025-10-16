@@ -4,13 +4,11 @@ using GYMPT.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Security.Policy;
-using Mono.TextTemplating;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GYMPT.Pages.Disciplines
 {
+    [Authorize(Roles = "Admin")]
     public class DisciplineEditModel : PageModel
     {
         private readonly IDisciplineService _disciplineService;
