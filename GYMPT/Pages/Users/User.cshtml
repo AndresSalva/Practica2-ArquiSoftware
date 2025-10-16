@@ -64,6 +64,11 @@
                                     <a class="btn btn-sm btn-outline-info" title="Ver Detalles" asp-page="/SpecificUserDetail/InstructorDetails" asp-route-token="@Model.UserTokens[user.Id]"><i class="fas fa-eye"></i></a>
                                     <a class="btn btn-sm btn-outline-warning" title="Editar" asp-page="/Instructors/EditInstructor" asp-route-token="@Model.UserTokens[user.Id]"><i class="fas fa-pencil-alt"></i></a>
                                 }
+                                else if (user.Role == "Admin")
+                                {
+                                    <a class="btn btn-sm btn-outline-info" title="Ver Detalles" asp-page="/SpecificUserDetail/InstructorDetails" asp-route-token="@Model.UserTokens[user.Id]"><i class="fas fa-eye"></i></a>
+                                    <a class="btn btn-sm btn-outline-warning" title="Editar" asp-page="/Instructors/EditInstructor" asp-route-token="@Model.UserTokens[user.Id]"><i class="fas fa-pencil-alt"></i></a>
+                                }
                                 else
                                 {
                                     <a class="btn btn-sm btn-outline-warning" title="Editar" asp-page="/Users/EditUser" asp-route-token="@Model.UserTokens[user.Id]"><i class="fas fa-pencil-alt"></i></a>
