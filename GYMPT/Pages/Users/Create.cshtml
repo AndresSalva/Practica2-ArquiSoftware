@@ -5,25 +5,109 @@
 }
 
 <div class="row justify-content-center">
-    <div class="col-md-6">
+    <div class="col-md-8">
         <div class="card shadow-sm">
             <div class="card-header text-center">
-                <h2>Crear Nuevo Usuario</h2>
+                <h2>Registrar Nuevo Usuario</h2>
             </div>
             <div class="card-body">
-                <p class="text-center text-muted">Seleccione el tipo de usuario para continuar con el registro.</p>
-
                 <form method="post">
+
+                    <h5 class="mt-4 mb-3">Información Personal</h5>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label asp-for="Input.Name" class="form-label fw-bold">Nombres</label>
+                            <input asp-for="Input.Name" class="form-control" />
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label asp-for="Input.FirstLastname" class="form-label fw-bold">Primer Apellido</label>
+                            <input asp-for="Input.FirstLastname" class="form-control" />
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label asp-for="Input.SecondLastname" class="form-label fw-bold">Segundo Apellido</label>
+                            <input asp-for="Input.SecondLastname" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Input.Ci" class="form-label fw-bold">CI</label>
+                            <input asp-for="Input.Ci" class="form-control" />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Input.DateBirth" class="form-label fw-bold">Fecha de Nacimiento</label>
+                            <input asp-for="Input.DateBirth" class="form-control" type="date" />
+                        </div>
+                    </div>
+
+                    <hr />
+
+                    <h5 class="mb-3">Tipo de Usuario</h5>
                     <div class="form-group mb-4">
-                        <label class="form-label fw-bold" asp-for="User.Role">Tipo de Usuario</label>
-                        <select asp-for="User.Role" class="form-select form-select-lg">
+                        <label asp-for="Input.Role" class="form-label fw-bold">Tipo Usuario</label>
+                        <select id="roleSelector" asp-for="Input.Role" class="form-select form-select-lg">
+                            <option value="" disabled selected>-- Ninguno --</option>
                             <option value="Client">Cliente</option>
                             <option value="Instructor">Instructor</option>
                         </select>
                     </div>
 
-                    <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-                        <button type="submit" class="btn btn-primary">Continuar <i class="fas fa-arrow-right ms-2"></i></button>
+                    <div id="clientFields" style="display: none;">
+                        <h5 class="mt-4 mb-3">Información de Cliente</h5>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Input.FitnessLevel" class="form-label fw-bold"></label>
+                                <select asp-for="Input.FitnessLevel" class="form-select">
+                                    <option value="">-- Seleccione un nivel --</option>
+                                    <option value="Principiante">Principiante</option>
+                                    <option value="Intermedio">Intermedio</option>
+                                    <option value="Avanzado">Avanzado</option>
+                                </select>
+                                <span asp-validation-for="Input.FitnessLevel" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Input.EmergencyContactPhone" class="form-label fw-bold">Teléfono de Emergencia</label>
+                                <input asp-for="Input.EmergencyContactPhone" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Input.InitialWeightKg" class="form-label fw-bold">Peso Inicial</label>
+                                <input asp-for="Input.InitialWeightKg" class="form-control" type="number" step="0.01" />
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Input.CurrentWeightKg" class="form-label fw-bold">Peso Actual</label>
+                                <input asp-for="Input.CurrentWeightKg" class="form-control" type="number" step="0.01" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="instructorFields" style="display: none;">
+                        <h5 class="mt-4 mb-3">Información Profesional de Instructor</h5>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Input.Specialization" class="form-label fw-bold">Especialización</label>
+                                <input asp-for="Input.Specialization" class="form-control" placeholder="Ej: Yoga, CrossFit, Pesas..." />
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Input.HireDate" class="form-label fw-bold">Fecha de Contratación</label>
+                                <input asp-for="Input.HireDate" class="form-control" type="date" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Input.MonthlySalary" class="form-label fw-bold">Sueldo Mensual</label>
+                                <input asp-for="Input.MonthlySalary" class="form-control" type="number" step="0.01" />
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Input.Email" class="form-label fw-bold">Correo Electrónico</label>
+                                <input asp-for="Input.Email" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-center mt-4">
+                        <button type="submit" class="btn btn-primary">Registrar Usuario</button>
                         <a asp-page="/Users/User" class="btn btn-secondary">Cancelar</a>
                     </div>
                 </form>
@@ -31,3 +115,30 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const roleSelector = document.getElementById('roleSelector');
+            const clientFields = document.getElementById('clientFields');
+            const instructorFields = document.getElementById('instructorFields');
+
+            function toggleRoleFields() {
+                const selectedRole = roleSelector.value;
+
+                if (selectedRole === 'Client') {
+                    clientFields.style.display = 'block';
+                    instructorFields.style.display = 'none';
+                } else if (selectedRole === 'Instructor') {
+                    clientFields.style.display = 'none';
+                    instructorFields.style.display = 'block';
+                } else {
+                    clientFields.style.display = 'none';
+                    instructorFields.style.display = 'none';
+                }
+            }
+            roleSelector.addEventListener('change', toggleRoleFields);
+            toggleRoleFields();
+        });
+    </script>
+}

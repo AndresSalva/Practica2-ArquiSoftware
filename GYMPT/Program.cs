@@ -3,9 +3,7 @@ using GYMPT.Application.Services;
 using GYMPT.Domain.Ports;
 using GYMPT.Infrastructure.Factories;
 using GYMPT.Infrastructure.Services;
-using GYMPT.Infrastructure.Persistence;
 using GYMPT.Infrastructure.Security;
-using Microsoft.CodeAnalysis.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -52,12 +50,15 @@ builder.Services.AddScoped<IMembershipService, MembershipService>();
 builder.Services.AddScoped<IDetailUserService, DetailUserService>();
 builder.Services.AddScoped<ISelectDataService, SelectDataService>();
 
-// Login Related services
+// Login Related Services
 builder.Services.AddScoped<IPasswordHasher, BcryptPasswordHasher>();
 builder.Services.AddScoped<LoginService>();
 builder.Services.AddScoped<CookieAuthService>();
 builder.Services.AddHttpContextAccessor();
 
+// Email Credentials Related Services
+builder.Services.Configure<SmtpOptions>(builder.Configuration.GetSection("Smtp"));
+builder.Services.AddTransient<EmailService>();
 builder.Services.AddRazorPages();
 
 builder.Services.AddAuthentication("Cookies")
