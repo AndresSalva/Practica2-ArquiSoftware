@@ -133,14 +133,27 @@ public class MembershipService : IMembershipService
             errors.Add("El nombre de la membresía no puede exceder los 50 caracteres.");
         }
 
-        if (membership.Price is < 0)
+        if (membership.Price is null)
         {
-            errors.Add("El precio de la membresía no puede ser negativo.");
+            errors.Add("El precio de la membresía es obligatorio.");
+        }
+        else if (membership.Price <= 0)
+        {
+            errors.Add("El precio de la membresía debe ser mayor a cero.");
         }
 
-        if (membership.MonthlySessions is < 0)
+        if (string.IsNullOrWhiteSpace(membership.Description))
         {
-            errors.Add("Las sesiones mensuales no pueden ser negativas.");
+            errors.Add("La descripción de la membresía es obligatoria.");
+        }
+
+        if (membership.MonthlySessions is null)
+        {
+            errors.Add("Las sesiones mensuales son obligatorias.");
+        }
+        else if (membership.MonthlySessions <= 0)
+        {
+            errors.Add("Las sesiones mensuales deben ser mayores a cero.");
         }
 
         return errors;

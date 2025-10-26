@@ -27,6 +27,12 @@ public class DetailMembershipService : IDetailMembershipService
 
         try
         {
+            var existing = await _detailMembershipRepository.GetByIdsAsync(newDetailsMembership.IdMembership, newDetailsMembership.IdDiscipline);
+            if (existing is not null)
+            {
+                return Result<DetailsMembership>.Failure("La membresía seleccionada ya contiene la disciplina elegida.");
+            }
+
             var created = await _detailMembershipRepository.CreateAsync(newDetailsMembership);
             return Result<DetailsMembership>.Success(created);
         }
@@ -140,6 +146,15 @@ public class DetailMembershipService : IDetailMembershipService
 
         try
         {
+            if (membershipId != updatedDetailsMembership.IdMembership || disciplineId != updatedDetailsMembership.IdDiscipline)
+            {
+                var existing = await _detailMembershipRepository.GetByIdsAsync(updatedDetailsMembership.IdMembership, updatedDetailsMembership.IdDiscipline);
+                if (existing is not null)
+                {
+                    return Result<DetailsMembership>.Failure("La membresía seleccionada ya contiene la disciplina elegida.");
+                }
+            }
+
             var updated = await _detailMembershipRepository.UpdateAsync(membershipId, disciplineId, updatedDetailsMembership);
             return updated is null
                 ? Result<DetailsMembership>.Failure("No se encontró la relación de membresía y disciplina que deseas actualizar.")
@@ -226,3 +241,4 @@ public class DetailMembershipService : IDetailMembershipService
         return errors;
     }
 }
+

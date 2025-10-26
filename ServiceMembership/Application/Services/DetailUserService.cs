@@ -149,11 +149,16 @@ public class DetailUserService : IDetailUserService
             errors.Add("La fecha de inicio no puede ser posterior a la fecha de finalización.");
         }
 
-        if (detailUser.SessionsLeft is < 0)
+        if (detailUser.SessionsLeft is null)
         {
-            errors.Add("Las sesiones restantes no pueden ser negativas.");
+            errors.Add("Debes especificar la cantidad de sesiones restantes.");
+        }
+        else if (detailUser.SessionsLeft <= 0)
+        {
+            errors.Add("Las sesiones restantes deben ser mayores a cero.");
         }
 
         return errors;
     }
 }
+
