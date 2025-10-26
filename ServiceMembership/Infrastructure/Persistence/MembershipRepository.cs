@@ -1,4 +1,4 @@
-using Dapper;
+﻿using Dapper;
 using Microsoft.Extensions.Logging;
 using Npgsql;
 using ServiceMembership.Domain.Entities;
@@ -20,7 +20,7 @@ public class MembershipRepository : IMembershipRepository
         var connectionString = connectionProvider.GetConnectionString();
         if (string.IsNullOrWhiteSpace(connectionString))
         {
-            throw new InvalidOperationException("The membership module requires a valid connection string.");
+            throw new InvalidOperationException("El módulo de membresías requiere una cadena de conexión válida.");
         }
 
         _connectionString = connectionString;
@@ -141,3 +141,5 @@ public class MembershipRepository : IMembershipRepository
         return affectedRows > 0 ? entity : null;
     }
 }
+
+

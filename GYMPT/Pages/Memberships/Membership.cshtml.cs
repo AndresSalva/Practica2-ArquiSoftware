@@ -1,3 +1,5 @@
+﻿using System.Collections.Generic;
+using System.Linq;
 using GYMPT.Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -22,26 +24,33 @@ namespace GYMPT.Pages.Memberships
 
         public async Task OnGetAsync()
         {
-            MembershipList = await _membershipService.GetAllMemberships();
+            var result = await _membershipService.GetAllMemberships();
+            if (result.IsFailure || result.Value is null)
+            {
+                TempData["ErrorMessage"] = result.Error ?? "No se pudo obtener el listado de membresías.";
+                MembershipList = Enumerable.Empty<Membership>();
+                return;
+            }
+
+            MembershipList = result.Value;
         }
 
         public async Task<IActionResult> OnPostDeleteAsync(int id)
         {
-            var success = await _membershipService.DeleteMembership(id);
-            if (success)
+            var result = await _membershipService.DeleteMembership(id);
+            if (result.IsSuccess)
             {
-                TempData["SuccessMessage"] = "La membres�a ha sido eliminada correctamente.";
+                TempData["SuccessMessage"] = "La membresía ha sido eliminada correctamente.";
             }
             else
             {
-                TempData["ErrorMessage"] = "No se pudo eliminar la membres�a.";
+                TempData["ErrorMessage"] = result.Error ?? "No se pudo eliminar la membresía.";
             }
             return RedirectToPage();
         }
 
-        public async Task<IActionResult> OnPostEditAsync(int id)
+        public IActionResult OnPostEditAsync(int id)
         {
-            // Generate a route token using the UrlTokenSingleton and redirect to the edit page
             string token = _urlTokenSingleton.GenerateToken(id.ToString());
             return RedirectToPage("./MembershipEdit", new { token });
         }

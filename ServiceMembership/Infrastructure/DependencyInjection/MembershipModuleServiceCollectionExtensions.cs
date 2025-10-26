@@ -1,4 +1,4 @@
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using ServiceMembership.Application.Interfaces;
 using ServiceMembership.Application.Services;
 using ServiceMembership.Domain.Ports;
@@ -33,6 +33,8 @@ public static class MembershipModuleServiceCollectionExtensions
     {
         services.AddScoped<IMembershipRepository, MembershipRepository>();
         services.AddScoped<IMembershipService, MembershipService>();
+        services.AddScoped<IDetailMembershipRepository, DetailMembershipRepository>();
+        services.AddScoped<IDetailMembershipService, DetailMembershipService>();
         services.AddScoped<IDetailUserRepository, DetailUserRepository>();
         services.AddScoped<IDetailUserService, DetailUserService>();
         return services;
@@ -46,7 +48,7 @@ public static class MembershipModuleServiceCollectionExtensions
         {
             if (string.IsNullOrWhiteSpace(connectionString))
             {
-                throw new ArgumentException("Connection string cannot be null or empty.", nameof(connectionString));
+                throw new ArgumentException("La cadena de conexión no puede ser nula ni estar vacía.", nameof(connectionString));
             }
 
             _connectionString = connectionString;
@@ -55,3 +57,4 @@ public static class MembershipModuleServiceCollectionExtensions
         public string GetConnectionString() => _connectionString;
     }
 }
+

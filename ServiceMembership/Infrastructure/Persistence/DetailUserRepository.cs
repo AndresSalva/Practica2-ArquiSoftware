@@ -1,4 +1,4 @@
-using Dapper;
+﻿using Dapper;
 using Microsoft.Extensions.Logging;
 using Npgsql;
 using ServiceMembership.Domain.Entities;
@@ -20,7 +20,7 @@ public class DetailUserRepository : IDetailUserRepository
         var connectionString = connectionProvider.GetConnectionString();
         if (string.IsNullOrWhiteSpace(connectionString))
         {
-            throw new InvalidOperationException("DetailUserRepository requires a valid connection string.");
+            throw new InvalidOperationException("El repositorio de detalles de usuario requiere una cadena de conexión válida.");
         }
 
         _connectionString = connectionString;
@@ -46,13 +46,13 @@ public class DetailUserRepository : IDetailUserRepository
         var userExists = await conn.ExecuteScalarAsync<bool>(userExistsSql, new { UserId = entity.IdUser });
         if (!userExists)
         {
-            throw new ArgumentException($"User with id {entity.IdUser} does not exist or is inactive.");
+            throw new ArgumentException($"El usuario con identificador {entity.IdUser} no existe o está inactivo.");
         }
 
         var membershipExists = await conn.ExecuteScalarAsync<bool>(membershipExistsSql, new { MembershipId = entity.IdMembership });
         if (!membershipExists)
         {
-            throw new ArgumentException($"Membership with id {entity.IdMembership} does not exist or is inactive.");
+            throw new ArgumentException($"La membresía con identificador {entity.IdMembership} no existe o está inactivo.");
         }
 
         entity.CreatedAt = DateTime.UtcNow;
@@ -150,3 +150,5 @@ public class DetailUserRepository : IDetailUserRepository
         return affectedRows > 0 ? entity : null;
     }
 }
+
+
