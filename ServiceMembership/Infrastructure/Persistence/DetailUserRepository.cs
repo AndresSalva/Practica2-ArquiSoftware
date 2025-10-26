@@ -43,13 +43,13 @@ public class DetailUserRepository : IDetailUserRepository
 
         await using var conn = new NpgsqlConnection(_connectionString);
 
-        var userExists = await conn.ExecuteScalarAsync<bool>(userExistsSql, new { entity.IdUser });
+        var userExists = await conn.ExecuteScalarAsync<bool>(userExistsSql, new { UserId = entity.IdUser });
         if (!userExists)
         {
             throw new ArgumentException($"User with id {entity.IdUser} does not exist or is inactive.");
         }
 
-        var membershipExists = await conn.ExecuteScalarAsync<bool>(membershipExistsSql, new { entity.IdMembership });
+        var membershipExists = await conn.ExecuteScalarAsync<bool>(membershipExistsSql, new { MembershipId = entity.IdMembership });
         if (!membershipExists)
         {
             throw new ArgumentException($"Membership with id {entity.IdMembership} does not exist or is inactive.");
