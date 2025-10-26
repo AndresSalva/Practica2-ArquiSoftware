@@ -25,6 +25,9 @@ namespace GYMPT.Pages.DetailsUsers
 
         [BindProperty]
         public DetailsUser NewDetailUser { get; set; } = new();
+
+        [BindProperty] 
+        public DetailsUser DetailUserToUpdate { get; set; } = new();
         public SelectList UserOptions { get; set; } = default!;
         public SelectList MembershipOptions { get; set; } = default!;
 
@@ -111,6 +114,37 @@ namespace GYMPT.Pages.DetailsUsers
             MembershipNames = membershipsResult.IsSuccess && membershipsResult.Value is not null
                 ? membershipsResult.Value.ToDictionary(m => m.Id, m => m.Name ?? $"Membresía #{m.Id}")
                 : new Dictionary<short, string>();
+        }
+        public async Task<IActionResult> OnGetDetailUserAsync(int id)
+        {
+            
+            var result = await _detailUserService.GetDetailUserById(id);
+            if (result.IsSuccess && result.Value is not null)
+            {
+                return new JsonResult(result.Value);
+            }
+
+            return NotFound();
+        }
+
+        public async Task<IActionResult> OnPostEditAsync()
+        {
+            
+            if (!ModelState.IsValid)
+            {
+                // Si hay un error de validación, es difícil mostrarlo en el modal sin
+                // una lógica de cliente más compleja. Por ahora, redirigimos con un error genérico.
+                TempData["ErrorMessage"] = "Los datos proporcionados no son válidos. Por favor, inténtelo de nuevo.";
+                return RedirectToPage();
+            }
+
+            var result = await _detailUserService.UpdateDetailUserData(DetailUserToUpdate);
+
+            TempData[result.IsSuccess ? "SuccessMessage" : "ErrorMessage"] = result.IsSuccess
+                ? "La suscripción ha sido actualizada exitosamente."
+                : result.Error ?? "No se pudo actualizar la suscripción.";
+
+            return RedirectToPage();
         }
     }
 }
