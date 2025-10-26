@@ -1,43 +1,49 @@
 # Servicio de Membresías (Modular)
 
 ## Objetivo
-Separar toda la lógica de membresías en un módulo reutilizable (`ServiceMembership`) que pueda integrarse en otros servicios (por ejemplo, `ServiceCommon`) sin depender de implementaciones internas del proyecto web.
+Centralizar la lógica de membresías y suscripciones de usuarios (DetailsUser) en un módulo reutilizable (`ServiceMembership`) que pueda integrarse en otros servicios sin depender de implementaciones internas del proyecto web.
 
-## Estructura del nuevo módulo
+## Estructura del módulo
 ```
 ServiceMembership/
  ├── Application/
+ │   ├── Interfaces/IDetailUserService.cs
  │   ├── Interfaces/IMembershipService.cs
+ │   ├── Services/DetailUserService.cs
  │   └── Services/MembershipService.cs
  ├── Domain/
+ │   ├── Entities/DetailsUser.cs
  │   ├── Entities/Membership.cs
+ │   ├── Ports/IDetailUserRepository.cs
  │   └── Ports/IMembershipRepository.cs
  ├── Infrastructure/
  │   ├── DependencyInjection/MembershipModuleServiceCollectionExtensions.cs
+ │   ├── Persistence/DetailUserRepository.cs
  │   ├── Persistence/MembershipRepository.cs
  │   └── Providers/IMembershipConnectionProvider.cs
  └── ServiceMembership.csproj
 ```
 
 ### Capas principales
-- **Domain**: entidad `Membership` y contrato `IMembershipRepository` independientes del proyecto web.
-- **Application**: servicio `IMembershipService` que implementa la lógica de negocio y usa el repositorio.
-- **Infrastructure**: repositorio Dapper (`MembershipRepository`), proveedor de cadena de conexión y extensión de DI `AddMembershipModule`.
+- **Domain**: define `Membership`, `DetailsUser` y sus contratos (`IMembershipRepository`, `IDetailUserRepository`) desacoplados del sitio web.
+- **Application**: contiene `IMembershipService` e `IDetailUserService`, junto con las implementaciones que orquestan la lógica de negocio.
+- **Infrastructure**: repositorios Dapper (`MembershipRepository`, `DetailUserRepository`), proveedor de cadena de conexión y la extensión `AddMembershipModule` para registrar todo vía DI.
 
-## Integración con el proyecto web
-- `GYMPT/GYMPT.csproj` referencia el nuevo proyecto (`ServiceMembership.csproj`).
-- `Program.cs` registra el módulo con la cadena de conexión existente:  
+## Integración con GYMPT
+- `GYMPT/GYMPT.csproj` referencia `ServiceMembership.csproj`.
+- `Program.cs` registra el módulo reutilizando `ConnectionStringSingleton` hasta que exista un proveedor común (por ejemplo en `ServiceCommon`):
   ```csharp
   builder.Services.AddMembershipModule(_ => ConnectionStringSingleton.Instance.PostgresConnection);
   ```
-  De esta forma seguimos reutilizando `ConnectionStringSingleton` hasta que exista un `ServiceCommon`.
-- Las páginas de Razor (`Pages/Memberships/*.cshtml.cs` y `Pages/DetailsUsers/DetailsUsers.cshtml.cs`) ahora consumen `ServiceMembership.Application.Interfaces.IMembershipService` y `ServiceMembership.Domain.Entities.Membership`.
-- `SelectDataService` usa el nuevo servicio para entregar los combos de membresías en la UI.
+- Las Razor Pages (`Pages/Memberships/*.cshtml.cs`, `Pages/DetailsUsers/DetailsUsers.cshtml.cs`) ahora consumen los contratos expuestos por `ServiceMembership.Application.Interfaces` y sus entidades de dominio.
+- `SelectDataService` obtiene las opciones de membresía a través del servicio del módulo.
+- El módulo expone también `IDetailUserService`, usado por la pantalla de suscripciones (`DetailsUsers`).
 
-## Qué se removió del proyecto web
-- Entidad, repositorio, servicio y creadores de membresías que vivían en `Domain`, `Application` e `Infrastructure` de `GYMPT`.
-- Dependencia de `RepositoryFactory` hacia `Membership`.
+## Cambios en el proyecto web
+- Se eliminaron las entidades, repositorios y servicios de membresías y detalles de usuario en `GYMPT/Domain`, `GYMPT/Application` y `GYMPT/Infrastructure`.
+- `RepositoryFactory` ya no crea repositorios para `Membership` ni `DetailsUser`.
+- Las páginas y servicios solo dependen de los contratos del módulo.
 
 ## Próximos pasos sugeridos
-1. Ejecutar `dotnet run` y probar manualmente las páginas de membresías y la pantalla de detalles de usuario.
-2. Cuando exista `ServiceCommon`, implementar un `IMembershipConnectionProvider` común o mover `ConnectionStringSingleton` allí para compartirlo con otros módulos.
+1. Ejecutar `dotnet run` y verificar manualmente la funcionalidad de las páginas de membresías y detalles de usuario.
+2. Cuando exista `ServiceCommon`, mover `ConnectionStringSingleton` o implementar un `IMembershipConnectionProvider` compartido para que todos los módulos reutilicen la configuración de base de datos.

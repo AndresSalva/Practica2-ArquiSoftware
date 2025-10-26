@@ -33,6 +33,8 @@ public static class MembershipModuleServiceCollectionExtensions
     {
         services.AddScoped<IMembershipRepository, MembershipRepository>();
         services.AddScoped<IMembershipService, MembershipService>();
+        services.AddScoped<IDetailUserRepository, DetailUserRepository>();
+        services.AddScoped<IDetailUserService, DetailUserService>();
         return services;
     }
 

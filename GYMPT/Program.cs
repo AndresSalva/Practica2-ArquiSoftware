@@ -39,17 +39,10 @@ builder.Services.AddScoped<IDisciplineRepository>(sp =>
     return (IDisciplineRepository)factory.CreateRepository<Discipline>();
 });
 
-builder.Services.AddScoped<IDetailUserRepository>(sp =>
-{
-    var factory = sp.GetRequiredService<RepositoryFactory>();
-    return (IDetailUserRepository)factory.CreateRepository<DetailsUser>();
-});
-
 builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IInstructorService, InstructorService>();
 builder.Services.AddScoped<IDisciplineService, DisciplineService>();
-builder.Services.AddScoped<IDetailUserService, DetailUserService>();
 builder.Services.AddScoped<ISelectDataService, SelectDataService>();
 builder.Services.AddMembershipModule(_ => ConnectionStringSingleton.Instance.PostgresConnection);
 

@@ -1,10 +1,10 @@
 using GYMPT.Application.Interfaces;
-using GYMPT.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ServiceMembership.Application.Interfaces;
+using ServiceMembership.Domain.Entities;
 
 namespace GYMPT.Pages.DetailsUsers
 {
