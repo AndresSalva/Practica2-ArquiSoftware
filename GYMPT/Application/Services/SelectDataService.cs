@@ -1,5 +1,6 @@
 ﻿using GYMPT.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using ServiceMembership.Application.Interfaces;
 
 namespace GYMPT.Application.Services
 {

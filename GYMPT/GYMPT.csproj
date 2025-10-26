@@ -29,4 +29,8 @@
     <PackageReference Include="supabase-csharp" Version="0.16.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ServiceMembership\ServiceMembership.csproj" />
+  </ItemGroup>
+
 </Project>

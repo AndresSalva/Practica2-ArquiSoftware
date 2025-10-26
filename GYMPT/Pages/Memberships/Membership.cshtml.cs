@@ -1,9 +1,9 @@
-using GYMPT.Application.Interfaces;
-using GYMPT.Domain.Entities;
 using GYMPT.Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using ServiceMembership.Application.Interfaces;
+using ServiceMembership.Domain.Entities;
 
 namespace GYMPT.Pages.Memberships
 {

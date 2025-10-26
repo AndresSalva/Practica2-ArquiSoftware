@@ -5,6 +5,8 @@ VisualStudioVersion = 17.14.36511.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GYMPT", "GYMPT\GYMPT.csproj", "{51D5E0AD-22C2-449B-9447-70B76B7C4943}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceMembership", "ServiceMembership\ServiceMembership.csproj", "{2EC4E31D-014C-459A-8EEF-24DBF9A230DB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{51D5E0AD-22C2-449B-9447-70B76B7C4943}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51D5E0AD-22C2-449B-9447-70B76B7C4943}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{51D5E0AD-22C2-449B-9447-70B76B7C4943}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EC4E31D-014C-459A-8EEF-24DBF9A230DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EC4E31D-014C-459A-8EEF-24DBF9A230DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EC4E31D-014C-459A-8EEF-24DBF9A230DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EC4E31D-014C-459A-8EEF-24DBF9A230DB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
