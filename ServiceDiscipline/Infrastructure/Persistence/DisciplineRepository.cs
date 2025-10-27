@@ -1,10 +1,9 @@
 using Dapper;
-using GYMPT.Domain.Entities;
-using GYMPT.Domain.Ports;
-using GYMPT.Infrastructure.Services;
+using ServiceDiscipline.Domain.Entities;
+using ServiceDiscipline.Domain.Ports;
 using Npgsql;
 
-namespace GYMPT.Infrastructure.Persistence
+namespace ServiceDiscipline.Infrastructure.Persistence
 {
     public class DisciplineRepository : IDisciplineRepository
     {

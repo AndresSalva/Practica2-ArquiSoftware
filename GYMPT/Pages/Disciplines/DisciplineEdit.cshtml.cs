@@ -1,6 +1,7 @@
 ﻿using GYMPT.Application.Interfaces;
 using GYMPT.Infrastructure.Services;
-using GYMPT.Domain.Entities;
+using ServiceDiscipline.Domain.Entities;
+using ServiceDiscipline.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;

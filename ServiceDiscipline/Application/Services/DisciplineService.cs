@@ -1,10 +1,11 @@
-﻿using GYMPT.Application.Interfaces;
-using GYMPT.Domain.Entities;
-using GYMPT.Domain.Ports;
+﻿using System;
 using System.Collections.Generic;
+using ServiceDiscipline.Application.Interfaces;
+using ServiceDiscipline.Domain.Entities;
+using ServiceDiscipline.Domain.Ports;
 using System.Threading.Tasks;
 
-namespace GYMPT.Application.Services
+namespace ServiceDiscipline.Application.Services
 {
     public class DisciplineService : IDisciplineService
     {

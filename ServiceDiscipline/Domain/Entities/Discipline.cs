@@ -1,4 +1,4 @@
-namespace GYMPT.Domain.Entities
+namespace ServiceDiscipline.Domain.Entities
 {
     public class Discipline
     {

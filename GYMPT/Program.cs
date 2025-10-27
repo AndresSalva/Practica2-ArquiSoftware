@@ -5,6 +5,10 @@ using GYMPT.Infrastructure.Factories;
 using GYMPT.Infrastructure.Services;
 using GYMPT.Infrastructure.Security;
 using GYMPT.Domain.Entities;
+using ServiceDiscipline.Application.Interfaces;
+using ServiceDiscipline.Application.Services;
+using ServiceDiscipline.Infrastructure.Persistence;
+using ServiceDiscipline.Domain.Ports;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,11 +36,6 @@ builder.Services.AddScoped<IClientRepository>(sp =>
     return (IClientRepository)factory.CreateRepository<Client>();
 });
 
-builder.Services.AddScoped<IDisciplineRepository>(sp =>
-{
-    var factory = sp.GetRequiredService<RepositoryFactory>();
-    return (IDisciplineRepository)factory.CreateRepository<Discipline>();
-});
 
 builder.Services.AddScoped<IMembershipRepository>(sp =>
 {
@@ -53,7 +52,6 @@ builder.Services.AddScoped<IDetailUserRepository>(sp =>
 builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IInstructorService, InstructorService>();
-builder.Services.AddScoped<IDisciplineService, DisciplineService>();
 builder.Services.AddScoped<IMembershipService, MembershipService>();
 builder.Services.AddScoped<IDetailUserService, DetailUserService>();
 builder.Services.AddScoped<ISelectDataService, SelectDataService>();
@@ -68,6 +66,9 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.Configure<SmtpOptions>(builder.Configuration.GetSection("Smtp"));
 builder.Services.AddTransient<EmailService>();
 builder.Services.AddRazorPages();
+// Discipline Service
+builder.Services.AddScoped<IDisciplineRepository, DisciplineRepository>();
+builder.Services.AddScoped<IDisciplineService, DisciplineService>();
 
 builder.Services.AddAuthentication("Cookies")
     .AddCookie("Cookies", options =>

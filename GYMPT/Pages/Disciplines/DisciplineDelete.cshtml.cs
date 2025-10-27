@@ -1,5 +1,5 @@
-﻿using GYMPT.Application.Interfaces;
-using GYMPT.Domain.Entities;
+﻿using ServiceDiscipline.Application.Interfaces;
+using ServiceDiscipline.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
