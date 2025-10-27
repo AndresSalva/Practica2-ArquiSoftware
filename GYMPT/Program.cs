@@ -1,14 +1,12 @@
 ﻿using GYMPT.Application.Interfaces;
 using GYMPT.Application.Services;
+using GYMPT.Domain.Entities;
 using GYMPT.Domain.Ports;
 using GYMPT.Infrastructure.Factories;
-using GYMPT.Infrastructure.Services;
 using GYMPT.Infrastructure.Security;
-using GYMPT.Domain.Entities;
-using ServiceDiscipline.Application.Interfaces;
-using ServiceDiscipline.Application.Services;
-using ServiceDiscipline.Infrastructure.Persistence;
-using ServiceDiscipline.Domain.Ports;
+using GYMPT.Infrastructure.Services;
+using ServiceDiscipline.Infrastructure.DependencyInjection;
+using ServiceDiscipline.Infrastructure.Provider;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -64,11 +62,10 @@ builder.Services.AddHttpContextAccessor();
 
 // Email Credentials Related Services
 builder.Services.Configure<SmtpOptions>(builder.Configuration.GetSection("Smtp"));
-builder.Services.AddTransient<EmailService>();
+builder.Services.AddTransient<EmailService>();  
 builder.Services.AddRazorPages();
 // Discipline Service
-builder.Services.AddScoped<IDisciplineRepository, DisciplineRepository>();
-builder.Services.AddScoped<IDisciplineService, DisciplineService>();
+builder.Services.AddDisciplineModule(_ => ConnectionStringSingleton.Instance.PostgresConnection);
 
 builder.Services.AddAuthentication("Cookies")
     .AddCookie("Cookies", options =>

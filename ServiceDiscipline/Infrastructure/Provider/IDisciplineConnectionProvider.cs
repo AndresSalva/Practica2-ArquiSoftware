@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ServiceDiscipline.Infrastructure.Provider
 {
-    internal interface IDisciplineConnectionProvider
+    public interface IDisciplineConnectionProvider
     {
         string GetConnectionString();
     }
