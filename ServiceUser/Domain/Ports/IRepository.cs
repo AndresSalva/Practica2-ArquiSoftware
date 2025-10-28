@@ -1,4 +1,4 @@
-﻿namespace GYMPT.Domain.Ports
+﻿namespace ServiceUser.Domain.Ports
 {
     public interface IRepository<T>
     {

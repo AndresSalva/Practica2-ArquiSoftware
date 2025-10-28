@@ -1,4 +1,4 @@
-﻿namespace GYMPT.Domain.Entities
+﻿namespace ServiceUser.Domain.Entities
 {
     public class Instructor : User
     {

@@ -1,8 +1,8 @@
-﻿using GYMPT.Application.Interfaces;
-using GYMPT.Domain.Entities;
-using GYMPT.Domain.Ports;
+﻿using ServiceUser.Application.Interfaces;
+using ServiceUser.Domain.Entities;
+using ServiceUser.Domain.Ports;
 
-namespace GYMPT.Application.Services
+namespace ServiceUser.Application.Services
 {
     public class InstructorService : IInstructorService
     {

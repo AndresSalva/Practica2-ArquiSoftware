@@ -1,6 +1,6 @@
-﻿using GYMPT.Domain.Entities;
+﻿using ServiceUser.Domain.Entities;
 
-namespace GYMPT.Application.Interfaces
+namespace ServiceUser.Application.Interfaces
 {
     public interface IInstructorService
     {

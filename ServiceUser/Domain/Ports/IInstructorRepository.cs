@@ -1,6 +1,7 @@
-﻿using GYMPT.Domain.Entities;
+﻿using ServiceUser.Domain.Entities;
+using ServiceUser.Domain.Ports;
 
-namespace GYMPT.Domain.Ports
+namespace ServiceUser.Domain.Ports
 {
     public interface IInstructorRepository : IRepository<Instructor>
     {
