@@ -27,8 +27,7 @@ namespace GYMPT.Pages.Disciplines
 
         public async Task<IActionResult> OnGetAsync()
         {
-            // La página simplemente pide los datos para el dropdown, ya listos para usar.
-            InstructorOptions = await _selectDataService.GetInstructorOptionsAsync();
+            await PopulateInstructorOptionsAsync();
             return Page();
         }
 
@@ -36,14 +35,28 @@ namespace GYMPT.Pages.Disciplines
         {
             if (!ModelState.IsValid)
             {
-                // Si hay un error, debemos volver a cargar el dropdown antes de mostrar la página de nuevo.
-                InstructorOptions = await _selectDataService.GetInstructorOptionsAsync();
+                await PopulateInstructorOptionsAsync();
                 return Page();
             }
 
-            await _disciplineService.CreateNewDiscipline(Discipline);
-            TempData["SuccessMessage"] = $"La disciplina '{Discipline.Name}' ha sido creada exitosamente.";
+            var result = await _disciplineService.CreateNewDiscipline(Discipline);
+
+            if (result.IsFailure)
+            {
+                ModelState.AddModelError(string.Empty, result.Error);
+                await PopulateInstructorOptionsAsync();
+                return Page();
+
+            }
+
+            TempData["SuccessMessage"] = $"Disciplina '{result.Value.Name}' creada exitosamente.";
             return RedirectToPage("./Discipline");
+        }
+
+        // La lógica para poblar el dropdown centralizada.
+        private async Task PopulateInstructorOptionsAsync()
+        {
+            InstructorOptions = await _selectDataService.GetInstructorOptionsAsync();
         }
     }
 }

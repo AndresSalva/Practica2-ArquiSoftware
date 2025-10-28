@@ -34,54 +34,49 @@ namespace GYMPT.Pages.Disciplines
                 TempData["ErrorMessage"] = "Token invalido.";
                 return RedirectToPage("./Discipline");
             }
-            int id = int.Parse(tokenId); 
-            Discipline = await _disciplineService.GetDisciplineById(id);
-            if (Discipline == null)
+            int id = int.Parse(tokenId);
+            var result = await _disciplineService.GetDisciplineById(id);
+
+            if (result.IsFailure)
             {
-                TempData["ErrorMessage"] = "Disciplina no encontrada.";
+                TempData["ErrorMessage"] = result.Error;
                 return RedirectToPage("./Discipline");
             }
 
-            // Prepara el menú desplegable de instructores.
+            Discipline = result.Value;
+
             await PopulateInstructorsDropDownList();
             return Page();
         }
 
-        // Este método se ejecuta al guardar el formulario.
         public async Task<IActionResult> OnPostAsync()
         {
-            // Si los datos del formulario no son válidos, vuelve a mostrar el formulario con los errores.
             if (!ModelState.IsValid)
             {
                 await PopulateInstructorsDropDownList();
                 return Page();
             }
 
-            // Llama al servicio para actualizar los datos.
-            var success = await _disciplineService.UpdateDisciplineData(Discipline);
+            var result = await _disciplineService.UpdateDiscipline(Discipline);
 
-            if (success)
+            if (result.IsFailure)
             {
-                TempData["SuccessMessage"] = "Los datos de la disciplina han sido actualizados.";
-            }
-            else
-            {
-                TempData["ErrorMessage"] = "No se pudo actualizar la disciplina.";
+                ModelState.AddModelError(string.Empty, result.Error);
+                await PopulateInstructorsDropDownList();
+                return Page();
             }
 
-            // Redirige de vuelta a la lista principal.
+            TempData["SuccessMessage"] = "Los datos de la disciplina han sido actualizados.";
             return RedirectToPage("./Discipline");
         }
 
-        // Método auxiliar para no repetir código.
         private async Task PopulateInstructorsDropDownList()
         {
             var users = await _userService.GetAllUsers();
             var instructors = users
-                .Where(u => u.Role == "Instructor") // Asumiendo que el rol se llama "Instructor"
-                .Select(u => new { Id = (long)u.Id, FullName = $"{u.Name} {u.FirstLastname}" });
+                .Where(u => u.Role == "Instructor")
+                .Select(u => new { Id = u.Id, FullName = $"{u.Name} {u.FirstLastname}" });
 
-            // Crea el SelectList, pasando el IdInstructor actual para que aparezca seleccionado.
             InstructorOptions = new SelectList(instructors, "Id", "FullName", Discipline?.IdInstructor);
         }
     }

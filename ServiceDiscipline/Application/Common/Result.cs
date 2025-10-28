@@ -13,7 +13,6 @@ namespace ServiceDiscipline.Application.Common
         public T Value { get; }
         public string Error { get; }
 
-        // El constructor es privado para forzar el uso de los métodos de fábrica
         private Result(bool isSuccess, T value, string error)
         {
             IsSuccess = isSuccess;
