@@ -1,10 +1,18 @@
-﻿using GYMPT.Application.Interfaces;
-using GYMPT.Infrastructure.Services;
-using GYMPT.Domain.Entities;
+﻿// --- CAMBIO 1: Corregir las directivas 'using' ---
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Authorization;
+using System.Linq;
+using System.Threading.Tasks;
+
+// Se necesita el 'using' del nuevo módulo para IUserService.
+using ServiceClient.Application.Interfaces;
+
+// AÚN necesitamos los 'usings' antiguos para los servicios que no se han movido.
+using GYMPT.Application.Interfaces;
+using GYMPT.Domain.Entities;
+using GYMPT.Infrastructure.Services;
 
 namespace GYMPT.Pages.Disciplines
 {
@@ -16,8 +24,8 @@ namespace GYMPT.Pages.Disciplines
         private readonly UrlTokenSingleton _urlTokenSingleton;
 
         [BindProperty]
-        public Discipline Discipline { get; set; }
-        public SelectList InstructorOptions { get; set; }
+        public Discipline Discipline { get; set; } = default!;
+        public SelectList InstructorOptions { get; set; } = default!;
 
         public DisciplineEditModel(IDisciplineService disciplineService, IUserService userService, UrlTokenSingleton urlTokenSingleton)
         {
@@ -25,41 +33,40 @@ namespace GYMPT.Pages.Disciplines
             _userService = userService;
             _urlTokenSingleton = urlTokenSingleton;
         }
+
         public async Task<IActionResult> OnGetAsync(string token)
         {
             var tokenId = _urlTokenSingleton.GetTokenData(token);
-            if (tokenId == null)
+            if (tokenId == null || !int.TryParse(tokenId, out var id))
             {
-                TempData["ErrorMessage"] = "Token invalido.";
+                TempData["ErrorMessage"] = "Token inválido.";
                 return RedirectToPage("./Discipline");
             }
-            int id = int.Parse(tokenId); 
-            Discipline = await _disciplineService.GetDisciplineById(id);
+
+            // --- CAMBIO 2: Estandarizar las llamadas a los métodos ---
+            Discipline = await _disciplineService.GetByIdAsync(id); // El método correcto es GetByIdAsync
             if (Discipline == null)
             {
                 TempData["ErrorMessage"] = "Disciplina no encontrada.";
                 return RedirectToPage("./Discipline");
             }
 
-            // Prepara el menú desplegable de instructores.
             await PopulateInstructorsDropDownList();
             return Page();
         }
 
-        // Este método se ejecuta al guardar el formulario.
         public async Task<IActionResult> OnPostAsync()
         {
-            // Si los datos del formulario no son válidos, vuelve a mostrar el formulario con los errores.
             if (!ModelState.IsValid)
             {
                 await PopulateInstructorsDropDownList();
                 return Page();
             }
 
-            // Llama al servicio para actualizar los datos.
-            var success = await _disciplineService.UpdateDisciplineData(Discipline);
+            // --- CAMBIO 2 (Continuación): Estandarizar la llamada al método ---
+            var updatedDiscipline = await _disciplineService.UpdateAsync(Discipline); // El método correcto es UpdateAsync
 
-            if (success)
+            if (updatedDiscipline != null)
             {
                 TempData["SuccessMessage"] = "Los datos de la disciplina han sido actualizados.";
             }
@@ -68,19 +75,17 @@ namespace GYMPT.Pages.Disciplines
                 TempData["ErrorMessage"] = "No se pudo actualizar la disciplina.";
             }
 
-            // Redirige de vuelta a la lista principal.
             return RedirectToPage("./Discipline");
         }
 
-        // Método auxiliar para no repetir código.
         private async Task PopulateInstructorsDropDownList()
         {
-            var users = await _userService.GetAllUsers();
+            // --- CAMBIO 2 (Continuación): Estandarizar la llamada al método ---
+            var users = await _userService.GetAllAsync(); // El método correcto es GetAllAsync
             var instructors = users
-                .Where(u => u.Role == "Instructor") // Asumiendo que el rol se llama "Instructor"
+                .Where(u => u.Role == "Instructor")
                 .Select(u => new { Id = (long)u.Id, FullName = $"{u.Name} {u.FirstLastname}" });
 
-            // Crea el SelectList, pasando el IdInstructor actual para que aparezca seleccionado.
             InstructorOptions = new SelectList(instructors, "Id", "FullName", Discipline?.IdInstructor);
         }
     }

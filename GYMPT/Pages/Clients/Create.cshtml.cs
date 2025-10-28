@@ -1,42 +1,44 @@
-using GYMPT.Application.Interfaces;
-using GYMPT.Domain.Entities;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Threading.Tasks;
+// --- AGREGA ESTOS USINGS ---
+using ServiceClient.Application.Interfaces;
+using ServiceClient.Domain.Entities;
+// ---------------------------
 
 namespace GYMPT.Pages.Clients
 {
-    [Authorize]
     public class CreateModel : PageModel
     {
+        // Ahora IClientService se refiere correctamente a la interfaz del nuevo módulo
         private readonly IClientService _clientService;
-
-        [BindProperty]
-        public Client Client { get; set; } = new();
 
         public CreateModel(IClientService clientService)
         {
             _clientService = clientService;
         }
 
-        public void OnGet()
+        [BindProperty]
+        public Client Client { get; set; } = default!;
+
+        public IActionResult OnGet()
         {
-            Client.Role = "Client";
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || Client == null)
             {
                 return Page();
             }
 
-            Client.Role = "Client";
-            await _clientService.CreateNewClient(Client);
+            // ANTES (incorrecto):
+            // await _clientService.CreateClientAsync(Client);
 
-            TempData["SuccessMessage"] = $"El cliente '{Client.Name} {Client.FirstLastname}' ha sido creado exitosamente.";
-            return RedirectToPage("/Users/User");
+            // DESPUÉS (correcto, asumiendo que el método se llama CreateAsync):
+            await _clientService.CreateAsync(Client);
+
+            return RedirectToPage("./Index");
         }
     }
 }

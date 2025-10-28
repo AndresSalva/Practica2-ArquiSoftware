@@ -1,8 +1,9 @@
-﻿namespace GYMPT.Domain.Entities
+﻿// Ruta: ServiceClient/Domain/Entities/Client.cs
+
+namespace ServiceClient.Domain.Entities
 {
     public class Client : User
     {
-        public int IdUser { get; set; }
         public string? FitnessLevel { get; set; }
         public decimal? InitialWeightKg { get; set; }
         public decimal? CurrentWeightKg { get; set; }

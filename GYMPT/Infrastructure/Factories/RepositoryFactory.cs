@@ -1,5 +1,6 @@
 using GYMPT.Domain.Entities;
 using GYMPT.Domain.Ports;
+// Ya no necesitamos usings de ServiceClient aquí, porque esta fábrica ya no lo conoce.
 
 namespace GYMPT.Infrastructure.Factories
 {
@@ -17,14 +18,12 @@ namespace GYMPT.Infrastructure.Factories
 
         private RepositoryCreator<T>? GetCreator<T>() where T : class
         {
+            // --- Lógica para User y Client ELIMINADA ---
+            // La creación de UserRepository y ClientRepository ahora es responsabilidad
+            // exclusiva del módulo ServiceClient, a través de la inyección de dependencias.
+
             if (typeof(T) == typeof(Instructor))
                 return (RepositoryCreator<T>)(object)new InstructorRepositoryCreator();
-
-            if (typeof(T) == typeof(User))
-                return (RepositoryCreator<T>)(object)new UserRepositoryCreator();
-
-            if (typeof(T) == typeof(Client))
-                return (RepositoryCreator<T>)(object)new ClientRepositoryCreator();
 
             if (typeof(T) == typeof(Discipline))
                 return (RepositoryCreator<T>)(object)new DisciplineRepositoryCreator();
