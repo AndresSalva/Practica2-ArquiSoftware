@@ -1,3 +1,5 @@
+namespace ServiceCommon.Domain.Ports;
+
 public interface IPasswordHasher
 {
     string Hash(string password);

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.DataProtection;
 
-namespace GYMPT.Infrastructure.Services
+namespace ServiceCommon.Infrastructure.Services
 {
     /// <summary>
     /// Makes and Recovers tokens for URLs.

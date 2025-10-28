@@ -1,4 +1,4 @@
-namespace GYMPT.Infrastructure.Security
+namespace ServiceCommon.Infrastructure.Security
 {
     public class BcryptPasswordHasher : IPasswordHasher
     {

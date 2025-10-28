@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
 using GYMPT.Domain.Entities;
 
-namespace GYMPT.Infrastructure.Security;
+namespace ServiceCommon.Infrastructure.Security;
 
 public class CookieAuthService
 {

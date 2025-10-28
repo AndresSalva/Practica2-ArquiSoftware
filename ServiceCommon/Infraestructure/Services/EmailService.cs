@@ -3,7 +3,7 @@ using MimeKit;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Identity.UI.Services;
 
-namespace GYMPT.Infrastructure.Services
+namespace ServiceCommon.Infrastructure.Services
 {
     public class EmailService : IEmailSender
     {

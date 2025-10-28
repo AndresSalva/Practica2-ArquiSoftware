@@ -1,4 +1,4 @@
-namespace GYMPT.Infrastructure.Services
+namespace ServiceCommon.Infrastructure.Services
 {
     public class ConnectionStringSingleton
     {

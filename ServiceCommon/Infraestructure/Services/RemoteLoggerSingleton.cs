@@ -5,7 +5,7 @@ using Dapper;
 using System;
 using System.Threading.Tasks;
 
-namespace GYMPT.Infrastructure.Services
+namespace ServiceCommon.Infrastructure.Services
 {
     public sealed class RemoteLoggerSingleton
     {
