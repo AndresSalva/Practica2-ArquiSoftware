@@ -10,11 +10,12 @@ namespace ServiceDiscipline.Infrastructure.Persistence
     public class DisciplineRepository : IDisciplineRepository
     {
         private readonly string _connectionString;
-        private readonly ILogger<DisciplineRepository> _logger;
-        public DisciplineRepository(IDisciplineConnectionProvider connectionProvider, ILogger<DisciplineRepository> logger)
+        //private readonly IDisciplineLoggerProvider _logger;
+        public DisciplineRepository(IDisciplineConnectionProvider connectionProvider /**, IDisciplineLoggerProvider logger**/)
         {
             ArgumentNullException.ThrowIfNull(connectionProvider, nameof(connectionProvider));
-            ArgumentNullException.ThrowIfNull(logger, nameof(logger));
+            //ArgumentNullException.ThrowIfNull(logger, nameof(logger));
+
             var connectionString = connectionProvider.GetConnectionString();
             if (string.IsNullOrWhiteSpace(connectionString))
             {
@@ -22,14 +23,14 @@ namespace ServiceDiscipline.Infrastructure.Persistence
             }
 
             _connectionString = connectionString;
-            _logger = logger;
+            //_logger = logger;
         }
 
         public async Task<Discipline> CreateAsync(Discipline entity)
         {
             ArgumentNullException.ThrowIfNull(entity, nameof(entity));
 
-            _logger.LogInformation("Creating discipline {DisciplineName}", entity.Name);
+            //await _logger.LogInfo($"Creating new discipline: {entity.Name}.");
             const string sql = """
                 INSERT INTO discipline (name, id_instructor, start_time, end_time, created_at, last_modification, is_active) 
                 VALUES (@Name, @IdInstructor, @StartTime, @EndTime, @CreatedAt, @LastModification, @IsActive) 
@@ -50,7 +51,7 @@ namespace ServiceDiscipline.Infrastructure.Persistence
 
         public async Task<bool> DeleteByIdAsync(int id)
         {
-            _logger.LogInformation("Soft deleting discipline {DisciplineId}", id);
+            //await _logger.LogInfo($"Deleting discipline with id: {id}.");
 
             const string sql = """
                 UPDATE discipline 
@@ -64,8 +65,7 @@ namespace ServiceDiscipline.Infrastructure.Persistence
 
         public async Task<IEnumerable<Discipline>> GetAllAsync()
         {
-            _logger.LogInformation("Fetching active discipline list");
-
+            //await _logger.LogInfo($"Fetching active discipline list");
             const string sql = """
                 
                 SELECT id, name, id_instructor AS IdInstructor, start_time AS StartTime, end_time AS EndTime, created_at AS CreatedAt, last_modification AS LastModification, is_active as IsActive 
@@ -80,7 +80,7 @@ namespace ServiceDiscipline.Infrastructure.Persistence
 
         public async Task<Discipline> GetByIdAsync(int id)
         {
-            _logger.LogInformation("Fetching discipline {DisciplineId}", id);
+            //await _logger.LogInfo($"Fetching discipline with id: {id}.");
 
             const string sql = """
                 SELECT id, name, id_instructor AS IdInstructor, start_time AS StartTime, end_time AS EndTime, 
@@ -95,7 +95,7 @@ namespace ServiceDiscipline.Infrastructure.Persistence
         {
             ArgumentNullException.ThrowIfNull(entity, nameof(entity));
 
-            _logger.LogInformation("Updating discipline {DisciplineId}", entity.Id);
+            //await _logger.LogInfo($"Deleting discipline with id: {entity.Id}.");
 
             const string sql = """
                 UPDATE discipline SET name = @Name, id_instructor = @IdInstructor, start_time = @StartTime, 

@@ -6,7 +6,7 @@ using GYMPT.Infrastructure.Factories;
 using GYMPT.Infrastructure.Security;
 using GYMPT.Infrastructure.Services;
 using ServiceDiscipline.Infrastructure.DependencyInjection;
-using ServiceDiscipline.Infrastructure.Provider;
+using ServiceDiscipline.Application.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
