@@ -3,6 +3,7 @@ using GYMPT.Domain.Entities;
 using GYMPT.Domain.Ports;
 using GYMPT.Infrastructure.Services;
 using Npgsql;
+using ServiceUser.Domain.Entities;
 
 namespace GYMPT.Infrastructure.Persistence
 {

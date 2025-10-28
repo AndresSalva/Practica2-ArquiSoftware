@@ -1,4 +1,5 @@
 ﻿using GYMPT.Domain.Ports;
+using ServiceUser.Domain.Ports;
 
 namespace GYMPT.Infrastructure.Factories
 {

@@ -1,5 +1,8 @@
 using GYMPT.Domain.Entities;
 using GYMPT.Domain.Ports;
+using ServiceUser.Domain.Ports;
+using ServiceUser.Domain.Entities;
+
 
 namespace GYMPT.Infrastructure.Factories
 {
@@ -17,14 +20,11 @@ namespace GYMPT.Infrastructure.Factories
 
         private RepositoryCreator<T>? GetCreator<T>() where T : class
         {
-            if (typeof(T) == typeof(Instructor))
-                return (RepositoryCreator<T>)(object)new InstructorRepositoryCreator();
-
             if (typeof(T) == typeof(User))
                 return (RepositoryCreator<T>)(object)new UserRepositoryCreator();
 
             if (typeof(T) == typeof(Client))
-                return (RepositoryCreator<T>)(object)new ClientRepositoryCreator();
+                return (    RepositoryCreator<T>)(object)new ClientRepositoryCreator();
 
             if (typeof(T) == typeof(Discipline))
                 return (RepositoryCreator<T>)(object)new DisciplineRepositoryCreator();

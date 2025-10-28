@@ -13,8 +13,4 @@
     <PackageReference Include="Npgsql" Version="9.0.3" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\GYMPT\GYMPT.csproj" />
-  </ItemGroup>
-
 </Project>

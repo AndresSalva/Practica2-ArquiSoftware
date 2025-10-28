@@ -3,6 +3,7 @@ using GYMPT.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using ServiceUser.Domain.Entities;
 
 namespace GYMPT.Pages.Users
 {

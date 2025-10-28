@@ -1,5 +1,6 @@
 using GYMPT.Domain.Ports;
-using GYMPT.Domain.Entities;
+using ServiceUser.Domain.Entities;
+using ServiceUser.Domain.Ports;
 
 namespace GYMPT.Application.Services
 {

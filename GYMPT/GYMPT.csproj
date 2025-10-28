@@ -137,4 +137,8 @@
     <PackageReference Include="supabase-csharp" Version="0.16.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ServiceUser\ServiceUser.csproj" />
+  </ItemGroup>
+
 </Project>

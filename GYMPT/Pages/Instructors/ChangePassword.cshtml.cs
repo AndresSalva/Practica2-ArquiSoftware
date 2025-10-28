@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using GYMPT.Application.Interfaces;
 using GYMPT.Infrastructure.Services;
+using ServiceUser.Application.Interfaces;
 
 namespace GYMPT.Pages.Instructors
 {

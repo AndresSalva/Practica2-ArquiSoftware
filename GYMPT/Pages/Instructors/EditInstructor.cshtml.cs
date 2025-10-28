@@ -4,6 +4,9 @@ using GYMPT.Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using ServiceUser.Application.Services;
+using ServiceUser.Domain.Entities;
+using ServiceUser.Application.Interfaces;
 
 namespace GYMPT.Pages.Instructors
 {

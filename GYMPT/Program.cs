@@ -5,6 +5,12 @@ using GYMPT.Infrastructure.Factories;
 using GYMPT.Infrastructure.Services;
 using GYMPT.Infrastructure.Security;
 using GYMPT.Domain.Entities;
+using ServiceUser.Domain.Entities;
+using ServiceUser.Domain.Ports;
+using ServiceUser.Application.Interfaces;
+using ServiceUser.Application.Services;
+using ServiceUser.Infrastructure.DependencyInjection;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,11 +26,12 @@ builder.Services.AddScoped<IUserRepository>(sp =>
     return (IUserRepository)factory.CreateRepository<User>();
 });
 
-builder.Services.AddScoped<IInstructorRepository>(sp =>
+/*builder.Services.AddScoped<IInstructorRepository>(sp =>
 {
     var factory = sp.GetRequiredService<RepositoryFactory>();
     return (IInstructorRepository)factory.CreateRepository<Instructor>();
 });
+*/
 
 builder.Services.AddScoped<IClientRepository>(sp =>
 {
@@ -52,7 +59,7 @@ builder.Services.AddScoped<IDetailUserRepository>(sp =>
 
 builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IInstructorService, InstructorService>();
+/*builder.Services.AddScoped<IInstructorService, InstructorService>();*/
 builder.Services.AddScoped<IDisciplineService, DisciplineService>();
 builder.Services.AddScoped<IMembershipService, MembershipService>();
 builder.Services.AddScoped<IDetailUserService, DetailUserService>();
@@ -68,6 +75,8 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.Configure<SmtpOptions>(builder.Configuration.GetSection("Smtp"));
 builder.Services.AddTransient<EmailService>();
 builder.Services.AddRazorPages();
+
+builder.Services.AddUserModule(_ => ConnectionStringSingleton.Instance.PostgresConnection);
 
 builder.Services.AddAuthentication("Cookies")
     .AddCookie("Cookies", options =>

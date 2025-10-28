@@ -1,6 +1,9 @@
 ﻿using GYMPT.Application.Interfaces;
 using GYMPT.Domain.Entities;
 using GYMPT.Domain.Ports;
+using ServiceUser.Domain.Entities;
+using ServiceUser.Infrastructure.Persistence;
+
 
 namespace GYMPT.Application.Services
 {

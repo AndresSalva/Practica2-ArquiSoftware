@@ -1,4 +1,6 @@
-﻿namespace GYMPT.Domain.Entities
+﻿using ServiceUser.Domain.Entities;
+
+namespace GYMPT.Domain.Entities
 {
     public class Client : User
     {
