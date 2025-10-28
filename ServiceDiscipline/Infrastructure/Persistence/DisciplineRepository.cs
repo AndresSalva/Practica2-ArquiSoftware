@@ -67,11 +67,10 @@ namespace ServiceDiscipline.Infrastructure.Persistence
         {
             //await _logger.LogInfo($"Fetching active discipline list");
             const string sql = """
-                
                 SELECT id, name, id_instructor AS IdInstructor, start_time AS StartTime, end_time AS EndTime, created_at AS CreatedAt, last_modification AS LastModification, is_active as IsActive 
                 FROM discipline 
-                WHERE is_active = true;
-                
+                WHERE is_active = true
+                ORDER BY name ASC;
                 """;
 
             await using var conn = new NpgsqlConnection(_connectionString);
