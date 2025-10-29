@@ -12,7 +12,7 @@ namespace ServiceCommon.Infrastructure.Services
         {
             _postgresConnectionString = postgresConnectionString;
         }
-
+        
         private async Task<int> LogAsync(string level, string message, string userIdentifier)
         {
             if (string.IsNullOrEmpty(_postgresConnectionString))
