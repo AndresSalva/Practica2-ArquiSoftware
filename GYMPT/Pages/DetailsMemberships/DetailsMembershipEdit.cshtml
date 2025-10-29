@@ -1,0 +1,74 @@
+﻿@page "{token?}"
+@model GYMPT.Pages.DetailsMemberships.DetailsMembershipEditModel
+@{
+    ViewData["Title"] = "Editar Detalle de Membresía";
+    var selectedIds = Model.SelectedDisciplineIds ?? new List<short>();
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm mt-4">
+            <div class="card-header bg-warning text-dark d-flex justify-content-between align-items-center">
+                <h2 class="h4 mb-0">Administrar disciplinas de membresía</h2>
+                <span class="badge bg-dark text-white">ID @Model.OriginalMembershipId</span>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    <input type="hidden" asp-for="OriginalMembershipId" />
+
+                    <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="SelectedMembershipId" class="form-label">Membresía</label>
+                        <select asp-for="SelectedMembershipId" asp-items="Model.MembershipOptions" class="form-select">
+                            <option value="">-- Selecciona una membresía --</option>
+                        </select>
+                        <span asp-validation-for="SelectedMembershipId" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="SelectedDisciplineIds" class="form-label">Disciplinas</label>
+                        <input type="text" id="disciplineSearch" class="form-control mb-2" placeholder="Buscar disciplina..." onkeyup="filterDisciplines()" />
+                        <div class="row row-cols-1 row-cols-sm-2 g-2" id="disciplineOptions">
+                            @foreach (var option in Model.DisciplineOptions)
+                            {
+                                var itemId = $"discipline_{option.Value}";
+                                var isChecked = short.TryParse(option.Value, out var parsed) && selectedIds.Contains(parsed);
+                                <div class="col discipline-option" data-name="@option.Text.ToLowerInvariant()">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="SelectedDisciplineIds" value="@option.Value" id="@itemId" @(isChecked ? "checked" : null) />
+                                        <label class="form-check-label" for="@itemId">@option.Text</label>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        <span asp-validation-for="SelectedDisciplineIds" class="text-danger"></span>
+                        <small class="form-text text-muted">Selecciona todas las disciplinas que deben pertenecer a la membresía.</small>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <a asp-page="/DetailsMemberships/DetailsMemberships" class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left me-2"></i>Volver
+                        </a>
+                        <button type="submit" class="btn btn-warning text-dark">
+                            <i class="fas fa-save me-2"></i>Actualizar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        function filterDisciplines() {
+            const query = document.getElementById('disciplineSearch').value.trim().toLowerCase();
+            document.querySelectorAll('#disciplineOptions .discipline-option').forEach(option => {
+                const matches = option.dataset.name.includes(query);
+                option.style.display = matches ? '' : 'none';
+            });
+        }
+    </script>
+}

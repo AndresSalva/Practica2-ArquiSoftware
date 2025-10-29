@@ -26,12 +26,6 @@ namespace GYMPT.Infrastructure.Factories
             if (typeof(T) == typeof(Client))
                 return (    RepositoryCreator<T>)(object)new ClientRepositoryCreator();
 
-            if (typeof(T) == typeof(Membership))
-                return (RepositoryCreator<T>)(object)new MembershipRepositoryCreator();
-
-            if (typeof(T) == typeof(DetailsUser))
-                return (RepositoryCreator<T>)(object)new DetailUserRepositoryCreator();
-
             return null;
         }
     }

@@ -127,8 +127,8 @@
     <PackageReference Include="MailKit" Version="4.14.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.11">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    <PrivateAssets>all</PrivateAssets>
+    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.10" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.2" />
@@ -137,14 +137,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ServiceDiscipline\ServiceDiscipline.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\ServiceCommon\ServiceCommon.csproj" />
     <ProjectReference Include="..\SERVICE-PERSON\ServicePerson.csproj" />
 		<ProjectReference Include="..\ServiceClient\ServiceClient.csproj" />
     <ProjectReference Include="..\ServiceUser\ServiceUser.csproj" />
+    <ProjectReference Include="..\ServiceDiscipline\ServiceDiscipline.csproj" />
+    <ProjectReference Include="..\ServiceMembership\ServiceMembership.csproj" />
   </ItemGroup>
 
 </Project>

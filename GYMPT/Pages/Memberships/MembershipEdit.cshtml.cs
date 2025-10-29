@@ -1,9 +1,17 @@
+<<<<<<< HEAD
 using GYMPT.Application.Interfaces;
 using GYMPT.Domain.Entities;
 using ServiceCommon.Infrastructure.Services;
+=======
+﻿using System;
+using System.Linq;
+using GYMPT.Infrastructure.Services;
+>>>>>>> Modulo_Membership
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using ServiceMembership.Application.Interfaces;
+using ServiceMembership.Domain.Entities;
 
 namespace GYMPT.Pages.Memberships
 {
@@ -14,7 +22,7 @@ namespace GYMPT.Pages.Memberships
         private readonly ParameterProtector _urlTokenSingleton;
 
         [BindProperty]
-        public Membership Membership { get; set; }
+        public Membership Membership { get; set; } = new();
 
         public MembershipEditModel(IMembershipService membershipService, ParameterProtector urlTokenSingleton)
         {
@@ -22,41 +30,55 @@ namespace GYMPT.Pages.Memberships
             _urlTokenSingleton = urlTokenSingleton;
         }
 
-        // --- ESTE METODO CARGA LOS DATOS EN EL FORMULARIO ---
         public async Task<IActionResult> OnGetAsync(string token)
         {
+<<<<<<< HEAD
             var tokenId = _urlTokenSingleton.Unprotect(token);
             if (tokenId == null)
+=======
+            var tokenData = _urlTokenSingleton.GetTokenData(token);
+            if (tokenData is null)
+>>>>>>> Modulo_Membership
             {
-                TempData["ErrorMessage"] = "Token invalido.";
+                TempData["ErrorMessage"] = "Token inválido.";
                 return RedirectToPage("/Memberships/Membership");
             }
-            int id = int.Parse(tokenId);
-            Membership = await _membershipService.GetMembershipById(id);
-            if (Membership == null)
+
+            if (!int.TryParse(tokenData, out var membershipId))
             {
-                TempData["ErrorMessage"] = "Membresia no encontrada.";
+                TempData["ErrorMessage"] = "Identificador de membresía inválido.";
                 return RedirectToPage("/Memberships/Membership");
             }
+
+            var result = await _membershipService.GetMembershipById(membershipId);
+            if (result.IsFailure || result.Value is null)
+            {
+                TempData["ErrorMessage"] = result.Error ?? "No se encontró la membresía solicitada.";
+                return RedirectToPage("/Memberships/Membership");
+            }
+
+            Membership = result.Value;
             return Page();
         }
 
-        // --- ESTE METODO GUARDA LOS CAMBIOS Y PONE EL MENSAJE DE EXITO ---
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
-            var success = await _membershipService.UpdateMembershipData(Membership);
-            if (success)
+
+            var result = await _membershipService.UpdateMembershipData(Membership);
+            if (result.IsFailure)
             {
-                TempData["SuccessMessage"] = "Los datos de la membres�a han sido actualizados.";
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error);
+                }
+                return Page();
             }
-            else
-            {
-                TempData["ErrorMessage"] = "No se pudo actualizar la membres�a.";
-            }
+
+            TempData["SuccessMessage"] = "Los datos de la membresía han sido actualizados.";
             return RedirectToPage("/Memberships/Membership");
         }
     }
