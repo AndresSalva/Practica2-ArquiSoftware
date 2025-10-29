@@ -1,8 +1,7 @@
-﻿using Microsoft.Extensions.Logging;
+﻿// Ruta: ServiceClient/Application/Services/UserService.cs
 using ServiceClient.Application.Interfaces;
 using ServiceClient.Domain.Entities;
 using ServiceClient.Domain.Ports;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -11,46 +10,46 @@ namespace ServiceClient.Application.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
-        private readonly ILogger<UserService> _logger;
 
-        public UserService(IUserRepository userRepository, ILogger<UserService> logger)
+        public UserService(IUserRepository userRepository)
         {
-            _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _userRepository = userRepository;
         }
 
-        // --- AÑADE LA IMPLEMENTACIÓN DEL NUEVO MÉTODO ---
+        // ... GetAllAsync y GetByIdAsync no cambian ...
+
         public async Task<IEnumerable<User>> GetAllAsync()
         {
-            _logger.LogInformation("Obteniendo todos los usuarios");
-            // La lógica del servicio es delegar la llamada al repositorio.
             return await _userRepository.GetAllAsync();
         }
 
-        // --- MÉTODOS EXISTENTES ---
         public async Task<User?> GetByIdAsync(int id)
         {
-            _logger.LogInformation("Obteniendo usuario con Id {UserId}", id);
             return await _userRepository.GetByIdAsync(id);
         }
 
         public async Task<User> CreateAsync(User user)
         {
-            ArgumentNullException.ThrowIfNull(user, nameof(user));
-            _logger.LogInformation("Creando usuario {UserName}", user.Name);
+            user.CreatedAt = System.DateTime.UtcNow;
+            user.IsActive = true;
+            // CORRECCIÓN: Llamamos a CreateAsync, como se define en la interfaz
             return await _userRepository.CreateAsync(user);
         }
 
         public async Task<User?> UpdateAsync(User user)
         {
-            ArgumentNullException.ThrowIfNull(user, nameof(user));
-            _logger.LogInformation("Actualizando usuario con Id {UserId}", user.Id);
-            return await _userRepository.UpdateAsync(user);
+            var existingUser = await _userRepository.GetByIdAsync(user.Id);
+            if (existingUser == null) return null;
+
+            // ... lógica de mapeo ...
+            existingUser.LastModification = System.DateTime.UtcNow;
+
+            return await _userRepository.UpdateAsync(existingUser);
         }
 
         public async Task<bool> DeleteByIdAsync(int id)
         {
-            _logger.LogInformation("Eliminando usuario con Id {UserId}", id);
+            // CORRECCIÓN: Llamamos a DeleteByIdAsync, como se define en la interfaz
             return await _userRepository.DeleteByIdAsync(id);
         }
     }

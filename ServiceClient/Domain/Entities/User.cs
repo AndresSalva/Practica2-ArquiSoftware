@@ -1,7 +1,5 @@
 ﻿// Ruta: ServiceClient/Domain/Entities/User.cs
-
-using System;
-
+// ¡ESTE ARCHIVO ES CORRECTO, NO SE NECESITAN CAMBIOS!
 namespace ServiceClient.Domain.Entities
 {
     public class User
@@ -14,7 +12,7 @@ namespace ServiceClient.Domain.Entities
         public string? FirstLastname { get; set; }
         public string? SecondLastname { get; set; }
         public DateTime? DateBirth { get; set; }
-        public string? Ci { get; set; } // Cédula de Identidad
+        public string? Ci { get; set; }
         public string? Role { get; set; }
     }
 }

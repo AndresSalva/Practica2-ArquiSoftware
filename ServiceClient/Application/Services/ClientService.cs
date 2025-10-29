@@ -1,56 +1,66 @@
-﻿using Microsoft.Extensions.Logging;
+﻿// Ruta: ServiceClient/Application/Services/ClientService.cs
+
 using ServiceClient.Application.Interfaces;
-using ServiceClient.Domain.Entities; // Asegúrate de tener este using
+using ServiceClient.Domain.Entities;
 using ServiceClient.Domain.Ports;
+using ServiceClient.Domain.Rules;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ServiceClient.Application.Services
+public class ClientService : IClientService
 {
-    public class ClientService : IClientService // <-- El error CS0535 ocurre en esta línea
+    private readonly IClientRepository _clientRepository;
+
+    public ClientService(IClientRepository clientRepository)
     {
-        private readonly IClientRepository _clientRepository;
-        private readonly ILogger<ClientService> _logger;
+        _clientRepository = clientRepository;
+    }
 
-        public ClientService(IClientRepository clientRepository, ILogger<ClientService> logger)
+    public async Task<Client> CreateAsync(Client client)
+    {
+        // Primero, se valida el objeto que llega desde la capa de presentación.
+        var validationResult = ClientValidationRules.Validate(client);
+
+        if (validationResult.IsFailure)
         {
-            _clientRepository = clientRepository ?? throw new ArgumentNullException(nameof(clientRepository));
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            throw new ArgumentException(validationResult.Error);
         }
 
-        // ---> ESTA ES LA IMPLEMENTACIÓN. DEBE COINCIDIR EXACTAMENTE CON EL CONTRATO <---
-        public async Task<Client?> GetByIdAsync(int id)
-        {
-            _logger.LogInformation("Obteniendo cliente con Id {ClientId}", id);
-            return await _clientRepository.GetByIdAsync(id);
-        }
-        // --------------------------------------------------------------------------
+        // --- ¡ESTA ES LA LÍNEA DE LA SOLUCIÓN! ---
+        // Se asigna la fecha de creación ANTES de pasarlo a la capa de persistencia.
+        // Usar UtcNow es la mejor práctica para evitar problemas de zona horaria en el servidor.
+        client.CreatedAt = DateTime.UtcNow;
+        client.IsActive = true; // También es un buen lugar para establecer valores por defecto.
+        // ------------------------------------------
 
-        public async Task<IEnumerable<Client>> GetAllAsync()
-        {
-            _logger.LogInformation("Obteniendo todos los clientes");
-            return await _clientRepository.GetAllAsync();
-        }
+        // Ahora el objeto 'client' se envía al repositorio con el valor de 'CreatedAt' ya establecido.
+        return await _clientRepository.CreateAsync(client);
+    }
 
-        public async Task<Client> CreateAsync(Client client)
-        {
-            ArgumentNullException.ThrowIfNull(client, nameof(client));
-            _logger.LogInformation("Creando un nuevo cliente con nombre {ClientName}", client.Name);
-            return await _clientRepository.CreateAsync(client);
-        }
+    // --- El resto de los métodos no cambian ---
+    public async Task<IEnumerable<Client>> GetAllAsync()
+    {
+        return await _clientRepository.GetAllAsync();
+    }
 
-        public async Task<Client?> UpdateAsync(Client client)
-        {
-            ArgumentNullException.ThrowIfNull(client, nameof(client));
-            _logger.LogInformation("Actualizando cliente con Id {ClientId}", client.Id);
-            return await _clientRepository.UpdateAsync(client);
-        }
+    public async Task<Client?> GetByIdAsync(int id)
+    {
+        return await _clientRepository.GetByIdAsync(id);
+    }
 
-        public async Task<bool> DeleteByIdAsync(int id)
+    public async Task<Client?> UpdateAsync(Client client)
+    {
+        var validationResult = ClientValidationRules.Validate(client);
+        if (validationResult.IsFailure)
         {
-            _logger.LogInformation("Eliminando cliente con Id {ClientId}", id);
-            return await _clientRepository.DeleteByIdAsync(id);
+            throw new ArgumentException(validationResult.Error);
         }
+        return await _clientRepository.UpdateAsync(client);
+    }
+
+    public async Task<bool> DeleteByIdAsync(int id)
+    {
+        return await _clientRepository.DeleteByIdAsync(id);
     }
 }
