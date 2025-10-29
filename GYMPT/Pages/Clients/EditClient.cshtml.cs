@@ -1,9 +1,15 @@
 using GYMPT.Application.Interfaces;
 using GYMPT.Domain.Entities;
 using ServiceCommon.Infrastructure.Services;
+// --- CAMBIO 1: Actualizar las directivas 'using' ---
+// Ya no usamos las interfaces y entidades de GYMPT, sino las del nuevo módulo ServiceClient.
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using ServiceClient.Application.Interfaces; // <-- Usamos la nueva interfaz
+using ServiceClient.Domain.Entities;      // <-- Usamos la nueva entidad
+using GYMPT.Infrastructure.Services;      // Mantenemos esto para UrlTokenSingleton
+using System.Threading.Tasks;             // Necesario para tareas asíncronas
 
 namespace GYMPT.Pages.Clients
 {
@@ -14,7 +20,7 @@ namespace GYMPT.Pages.Clients
         private readonly ParameterProtector _urlTokenSingleton;
 
         [BindProperty]
-        public Client Client { get; set; }
+        public Client Client { get; set; } = default!;
 
         public EditModel(IClientService clientService, ParameterProtector urlTokenSingleton)
         {
@@ -22,17 +28,20 @@ namespace GYMPT.Pages.Clients
             _urlTokenSingleton = urlTokenSingleton;
         }
 
-        // Este m�todo se ejecuta al cargar la p�gina para rellenar el formulario
         public async Task<IActionResult> OnGetAsync(string token)
         {
             // Decode token to original id
             var idStr = _urlTokenSingleton.Unprotect(token);
+            var idStr = _urlTokenSingleton.GetTokenData(token);
             if (!int.TryParse(idStr, out var id))
             {
                 TempData["ErrorMessage"] = "Token de URL inválido.";
                 return RedirectToPage("/Users/User");
             }
-            Client = await _clientService.GetClientById(id);
+
+            // --- CAMBIO 2: Usar el nombre de método correcto del nuevo contrato ---
+            // El método ahora se llama GetByIdAsync
+            Client = await _clientService.GetByIdAsync(id);
 
             if (Client == null)
             {
@@ -42,7 +51,6 @@ namespace GYMPT.Pages.Clients
             return Page();
         }
 
-        // Este m�todo se ejecuta al guardar los cambios
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -50,8 +58,9 @@ namespace GYMPT.Pages.Clients
                 return Page();
             }
 
-            // Asumo que tu IClientService tiene un m�todo UpdateClientData
-            await _clientService.UpdateClientData(Client);
+            // --- CAMBIO 3: Usar el nombre de método correcto del nuevo contrato ---
+            // El método ahora se llama UpdateAsync
+            await _clientService.UpdateAsync(Client);
 
             TempData["SuccessMessage"] = "Los datos del cliente han sido actualizados exitosamente.";
             return RedirectToPage("/Users/User");

@@ -1,9 +1,14 @@
 using GYMPT.Application.Interfaces;
 using GYMPT.Domain.Entities;
 using ServiceCommon.Infrastructure.Services;
+// --- CAMBIO 1: Actualizar las directivas 'using' ---
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using ServiceClient.Application.Interfaces; // <-- Apuntar a la nueva interfaz
+using ServiceClient.Domain.Entities;      // <-- Apuntar a la nueva entidad
+using GYMPT.Infrastructure.Services;      // Esto se mantiene para UrlTokenSingleton
+using System.Threading.Tasks;             // Necesario para métodos asíncronos
 
 namespace GYMPT.Pages.SpecificUserDetail
 {
@@ -28,7 +33,9 @@ namespace GYMPT.Pages.SpecificUserDetail
                 TempData["ErrorMessage"] = "Token de URL inválido.";
                 return RedirectToPage("/Users/User");
             }
-            Client = await _clientService.GetClientById(id);
+
+            // --- CAMBIO 2: Usar el nombre de método correcto del nuevo contrato ---
+            Client = await _clientService.GetByIdAsync(id);
 
             if (Client == null)
             {

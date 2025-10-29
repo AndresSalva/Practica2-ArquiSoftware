@@ -1,9 +1,11 @@
-﻿using GYMPT.Application.Interfaces;
+﻿// Los usings que tienes ya están correctos para esta página.
+using GYMPT.Application.Interfaces;
 using GYMPT.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
+using System.Threading.Tasks; // <-- Añadido para consistencia
 
 namespace GYMPT.Pages.Disciplines
 {
@@ -11,11 +13,11 @@ namespace GYMPT.Pages.Disciplines
     public class DisciplineCreateModel : PageModel
     {
         private readonly IDisciplineService _disciplineService;
-        private readonly ISelectDataService _selectDataService; // <-- Se usa el servicio especializado
+        private readonly ISelectDataService _selectDataService;
 
         [BindProperty]
         public Discipline Discipline { get; set; } = new();
-        public SelectList InstructorOptions { get; set; }
+        public SelectList InstructorOptions { get; set; } = default!;
 
         public DisciplineCreateModel(IDisciplineService disciplineService, ISelectDataService selectDataService)
         {
@@ -25,7 +27,6 @@ namespace GYMPT.Pages.Disciplines
 
         public async Task<IActionResult> OnGetAsync()
         {
-            // La página simplemente pide los datos para el dropdown, ya listos para usar.
             InstructorOptions = await _selectDataService.GetInstructorOptionsAsync();
             return Page();
         }
@@ -34,12 +35,13 @@ namespace GYMPT.Pages.Disciplines
         {
             if (!ModelState.IsValid)
             {
-                // Si hay un error, debemos volver a cargar el dropdown antes de mostrar la página de nuevo.
                 InstructorOptions = await _selectDataService.GetInstructorOptionsAsync();
                 return Page();
             }
 
-            await _disciplineService.CreateNewDiscipline(Discipline);
+            // --- CAMBIO: Usar el nombre de método correcto del nuevo contrato ---
+            await _disciplineService.CreateAsync(Discipline); // El método correcto es CreateAsync
+
             TempData["SuccessMessage"] = $"La disciplina '{Discipline.Name}' ha sido creada exitosamente.";
             return RedirectToPage("./Discipline");
         }
