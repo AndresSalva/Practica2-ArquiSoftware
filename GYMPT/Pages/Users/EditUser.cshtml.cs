@@ -31,14 +31,14 @@ namespace GYMPT.Pages.Instructors
             if (!int.TryParse(idStr, out var id))
             {
                 TempData["ErrorMessage"] = "Token de URL inválido.";
-                return RedirectToPage("/Users/User");
+                return RedirectToPage("/Persons/Person");
             }
-            Instructor = await _instructorService.GetInstructorById(id);
+            Instructor = await _instructorService.GetUserById(id);
 
             if (Instructor == null)
             {
                 TempData["ErrorMessage"] = "Instructor no encontrado.";
-                return RedirectToPage("/Users/User");
+                return RedirectToPage("/Persons/Person");
             }
             return Page();
         }
@@ -50,10 +50,10 @@ namespace GYMPT.Pages.Instructors
                 return Page();
             }
 
-            await _instructorService.UpdateInstructorData(Instructor);
+            await _instructorService.UpdateUser(Instructor);
 
             TempData["SuccessMessage"] = "Los datos del instructor han sido actualizados exitosamente.";
-            return RedirectToPage("/Users/User");
+            return RedirectToPage("/Persons/Person");
         }
     }
 }

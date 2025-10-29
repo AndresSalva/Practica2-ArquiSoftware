@@ -17,6 +17,13 @@ namespace GYMPT.Application.Services
         public Task<IEnumerable<Client>> GetAllClients() => _clientRepository.GetAllAsync();
         public Task CreateNewClient(Client newClient) => _clientRepository.CreateAsync(newClient);
         public Task UpdateClientData(Client clientToUpdate) => _clientRepository.UpdateAsync(clientToUpdate);
-        public Task DeleteClient(int id) => _clientRepository.DeleteByIdAsync(id);
+        public async Task<bool> DeleteClient(int id)  // <-- Cambiado
+        {
+            var client = await _clientRepository.GetByIdAsync(id);
+            if (client == null) return false;
+
+            await _clientRepository.DeleteByIdAsync(id);
+            return true;
+        }
     }
 }

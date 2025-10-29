@@ -8,6 +8,6 @@ namespace GYMPT.Application.Interfaces
         Task<IEnumerable<Client>> GetAllClients();
         Task CreateNewClient(Client newClient);
         Task UpdateClientData(Client clientToUpdate);
-        Task DeleteClient(int id);
+        Task<bool> DeleteClient(int id);
     }
 }

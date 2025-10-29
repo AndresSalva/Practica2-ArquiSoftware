@@ -14,7 +14,7 @@ namespace GYMPT.Pages.Users
 
         [BindProperty]
         public Person User { get; set; }
-
+            
         public DeleteUserModel(IPersonService userService)
         {
             _userService = userService;
@@ -24,15 +24,15 @@ namespace GYMPT.Pages.Users
         {
             if (id == 0)
             {
-                return RedirectToPage("/Users/User");
+                return RedirectToPage("/Persons/Person");
             }
-
+            
             User = await _userService.GetUserById(id);
 
             if (User == null)
             {
                 TempData["ErrorMessage"] = "El usuario que intentas eliminar no fue encontrado.";
-                return RedirectToPage("/Users/User");
+                return RedirectToPage("/Persons/Person");
             }
 
             return Page();
@@ -42,13 +42,13 @@ namespace GYMPT.Pages.Users
         {
             if (User?.Id == 0)
             {
-                return RedirectToPage("/Users/User");
+                RedirectToPage("/Persons/Person");
             }
 
             await _userService.DeleteUser(User.Id);
 
             TempData["SuccessMessage"] = $"Usuario '{User.Name}' eliminado correctamente.";
-            return RedirectToPage("/Users/User");
+            return RedirectToPage("/Persons/Person");
         }
     }
 }

@@ -23,7 +23,7 @@ namespace GYMPT.Application.Facades
         // 🔹 Listar instructores (user.role = 'Instructor')
         public async Task<SelectList> GetInstructorOptionsAsync()
         {
-            var users = await _userService.GetAllInstructors();
+            var users = await _userService.GetAllUsers();
             var instructors = users
                 .Where(u => u.Role != null && u.Role.Equals("Instructor", StringComparison.OrdinalIgnoreCase))
                 .Select(u => new

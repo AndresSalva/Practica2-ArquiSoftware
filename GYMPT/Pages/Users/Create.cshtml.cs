@@ -34,10 +34,10 @@ namespace GYMPT.Pages.Instructors
             }
 
             Instructor.Role = "Instructor";
-            await _instructorService.CreateNewInstructor(Instructor);
+            await _instructorService.CreateUser(Instructor);
 
             TempData["SuccessMessage"] = $"El instructor '{Instructor.Name} {Instructor.FirstLastname}' ha sido creado exitosamente.";
-            return RedirectToPage("/Users/User");
+            return RedirectToPage("/Persons/Person");
         }
     }
 }

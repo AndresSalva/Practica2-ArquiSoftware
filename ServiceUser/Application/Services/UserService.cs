@@ -6,25 +6,29 @@ namespace ServiceUser.Application.Services
 {
     public class UserService : IUserService
     {
-        private readonly IUserRepository _instructorRepository;
+        private readonly IUserRepository _userRepository;
 
-        public UserService(IUserRepository instructorRepository)
+        public UserService(IUserRepository userRepository)
         {
-            _instructorRepository = instructorRepository;
+            _userRepository = userRepository;
         }
 
-        public Task<User> GetInstructorById(int id) => _instructorRepository.GetByIdAsync(id);
-        public Task<IEnumerable<User>> GetAllInstructors() => _instructorRepository.GetAllAsync();
-        public Task CreateNewInstructor(User newInstructor) => _instructorRepository.CreateAsync(newInstructor);
-        public Task UpdateInstructorData(User instructorToUpdate) => _instructorRepository.UpdateAsync(instructorToUpdate);
-        private Task<bool> UpdatePassword(int id, string password) => _instructorRepository.UpdatePasswordAsync(id, password);
+        public Task<User> GetUserById(int id) => _userRepository.GetByIdAsync(id);
+
+        public Task<IEnumerable<User>> GetAllUsers() => _userRepository.GetAllAsync();
+
+        public Task CreateUser(User newUser) => _userRepository.CreateAsync(newUser);
+
+        public Task UpdateUser(User userToUpdate) => _userRepository.UpdateAsync(userToUpdate);
+
+        public Task<bool> DeleteUser(int userId) => _userRepository.DeleteByIdAsync(userId);
+
+        private Task<bool> UpdatePassword(int id, string password) => _userRepository.UpdatePasswordAsync(id, password);
+
         public async Task<bool> UpdatePasswordAsync(int userId, string password)
         {
-            var user = await GetInstructorById(userId);
-            if (user == null)
-            {
-                return false;
-            }
+            var user = await GetUserById(userId);
+            if (user == null) return false;
             return await UpdatePassword(userId, password);
         }
     }

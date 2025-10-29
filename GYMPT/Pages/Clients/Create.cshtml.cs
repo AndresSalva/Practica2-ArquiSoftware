@@ -22,7 +22,7 @@ namespace GYMPT.Pages.Clients
 
         public void OnGet()
         {
-            Client.Role = "Client";
+            
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -32,7 +32,6 @@ namespace GYMPT.Pages.Clients
                 return Page();
             }
 
-            Client.Role = "Client";
             await _clientService.CreateNewClient(Client);
 
             TempData["SuccessMessage"] = $"El cliente '{Client.Name} {Client.FirstLastname}' ha sido creado exitosamente.";

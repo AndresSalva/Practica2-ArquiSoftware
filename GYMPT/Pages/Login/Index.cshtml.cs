@@ -50,7 +50,7 @@ public class IndexModel : PageModel
         {
             await _authService.SignInAsync(user);
             string token = _urlTokenService.GenerateToken(user.Id.ToString());
-            return RedirectToPage("/Instructors/ChangePassword", new { token });
+            return RedirectToPage("/Users/ChangePassword", new { token });
         }
 
         await _authService.SignInAsync(user);
