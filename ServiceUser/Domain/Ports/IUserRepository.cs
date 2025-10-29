@@ -1,5 +1,4 @@
 ﻿using ServiceUser.Domain.Entities;
-using ServiceUser.Domain.Ports;
 
 namespace ServiceUser.Domain.Ports
 {

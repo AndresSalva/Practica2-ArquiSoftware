@@ -3,6 +3,7 @@ using GYMPT.Application.Interfaces;
 using GYMPT.Application.Services;
 using GYMPT.Domain.Entities;
 using GYMPT.Domain.Ports;
+using GYMPT.Infrastructure.Facade;
 using GYMPT.Infrastructure.Factories;
 using GYMPT.Infrastructure.Security;
 using GYMPT.Infrastructure.Services;
@@ -27,12 +28,12 @@ builder.Services.AddScoped<IPersonRepository>(sp =>
     return (IPersonRepository)factory.CreateRepository<Person>();
 });
 
-/*builder.Services.AddScoped<IInstructorRepository>(sp =>
+builder.Services.AddScoped<IUserRepository>(sp =>
 {
     var factory = sp.GetRequiredService<RepositoryFactory>();
-    return (IInstructorRepository)factory.CreateRepository<Instructor>();
+    return (IUserRepository)factory.CreateRepository<User>();
 });
-*/
+
 
 builder.Services.AddScoped<IClientRepository>(sp =>
 {
@@ -58,6 +59,7 @@ builder.Services.AddScoped<IDetailUserRepository>(sp =>
     return (IDetailUserRepository)factory.CreateRepository<DetailsUser>();
 });
 
+//Servicios de los demas servicios
 builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<IPersonService, PersonService>();
 builder.Services.AddScoped<IUserService, UserService>();
@@ -76,11 +78,16 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.Configure<SmtpOptions>(builder.Configuration.GetSection("Smtp"));
 builder.Services.AddTransient<EmailService>();
 builder.Services.AddRazorPages();
-//Conexion de user
+
+//Conexion de user, servicios necesarios de user
 builder.Services.AddUserModule(_ => ConnectionStringSingleton.Instance.PostgresConnection);
-//Registrar la fachada en el contenedor de dependencias
 builder.Services.AddScoped<ISelectDataFacade, SelectDataFacade>();
 builder.Services.AddScoped<ISelectDataService, SelectDataService>();
+builder.Services.AddScoped<PersonFacade>();
+builder.Services.AddScoped<UserCreationFacade>();
+builder.Services.AddHttpContextAccessor(); // necesario para leer el contexto del usuario
+builder.Services.AddScoped<IUserContextService, UserContextService>();
+//
 
 builder.Services.AddAuthentication("Cookies")
     .AddCookie("Cookies", options =>

@@ -26,14 +26,14 @@ namespace GYMPT.Pages.SpecificUserDetail
             if (!int.TryParse(idStr, out var id))
             {
                 TempData["ErrorMessage"] = "Token de URL inválido.";
-                return RedirectToPage("/Users/User");
+                return RedirectToPage("/Persons/Person");
             }
             Client = await _clientService.GetClientById(id);
 
             if (Client == null)
             {
                 TempData["ErrorMessage"] = "Cliente no encontrado.";
-                return RedirectToPage("/Users/User");
+                return RedirectToPage("/Persons/Person");
             }
 
             return Page();

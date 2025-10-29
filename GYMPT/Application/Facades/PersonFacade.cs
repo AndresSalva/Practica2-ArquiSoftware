@@ -7,8 +7,8 @@ namespace GYMPT.Application.Facades
 {
     public class PersonFacade
     {
-        private readonly IUserService _userService;   // para Instructor/Admin
-        private readonly IClientService _clientService; // para Cliente
+        private readonly IUserService _userService;    // Admin / Instructor / otros
+        private readonly IClientService _clientService; // Clientes
 
         public PersonFacade(IUserService userService, IClientService clientService)
         {
@@ -16,10 +16,16 @@ namespace GYMPT.Application.Facades
             _clientService = clientService;
         }
 
+        /// <summary>
+        /// Obtiene todos los registros de personas (clientes y usuarios), opcionalmente filtrando por rol.
+        /// </summary>
+        /// <param name="roleFilter">Si se indica, solo devuelve personas con este rol ("Client", "Instructor", "Admin", etc.)</param>
         public async Task<List<PersonDto>> GetAllPersonsAsync()
         {
-            var users = await _userService.GetAllUsers(); // devuelve User
-            var clients = await _clientService.GetAllClients(); // devuelve Client
+            // Obtener solo usuarios con rol (Instructor/Admin/otro)
+            var users = await _userService.GetAllUsers(); // ya filtrados en SQL
+                                                          // Obtener clientes
+            var clients = await _clientService.GetAllClients();
 
             var result = new List<PersonDto>();
 
@@ -32,33 +38,42 @@ namespace GYMPT.Application.Facades
                 SecondLastname = c.SecondLastname ?? "",
                 Ci = c.Ci ?? "",
                 DateBirth = c.DateBirth,
-                Role = "Client"
+                Role = "Cliente"
             }));
 
-            // Mapear usuarios
-            result.AddRange(users.Select(u => new PersonDto
-            {
-                Id = u.Id,
-                Name = u.Name ?? "",
-                FirstLastname = u.FirstLastname ?? "",
-                SecondLastname = u.SecondLastname ?? "",
-                Ci = u.Ci ?? "",
-                DateBirth = u.DateBirth,
-                Role = u.Role ?? "Instructor" // ahora sí funciona porque u es User
-            }));
+           // Definir los roles que consideras "usuarios" (no clientes)
+            var validUserRoles = new[] { "Instructor", "Admin"};
 
-            return result;
+            result.AddRange(users
+                .Where(u => !string.IsNullOrWhiteSpace(u.Role) && validUserRoles.Contains(u.Role))
+                .Select(u => new PersonDto
+                {
+                    Id = u.IdUser, // id_user del JOIN
+                    Name = u.Name ?? "",
+                    FirstLastname = u.FirstLastname ?? "",
+                    SecondLastname = u.SecondLastname ?? "",
+                    Ci = u.Ci ?? "",
+                    DateBirth = u.DateBirth,
+                    Role = u.Role
+                }));
+
+            // Ordenar por nombre completo opcional
+            return result.OrderBy(p => p.Name).ThenBy(p => p.FirstLastname).ThenBy(p => p.SecondLastname).ToList();
         }
 
+        /// <summary>
+        /// Elimina un cliente por su Id.
+        /// </summary>
         public async Task<bool> DeleteClientAsync(int clientId)
         {
             return await _clientService.DeleteClient(clientId);
         }
 
+        /// <summary>
+        /// Elimina un usuario (Instructor/Admin) por su Id.
+        /// </summary>
         public async Task<bool> DeleteUserAsync(int userId)
         {
-            // Aquí podrías crear un método DeleteInstructorAsync en IUserService
-            // para manejar solo usuarios con rol Instructor/Admin
             return await _userService.DeleteUser(userId);
         }
     }

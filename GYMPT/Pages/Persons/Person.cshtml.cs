@@ -1,12 +1,11 @@
 using GYMPT.Application.DTO;
 using GYMPT.Application.Facades;
 using GYMPT.Application.Interfaces;
-using GYMPT.Domain.Entities;
 using GYMPT.Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using ServiceUser.Domain.Entities;
+using Microsoft.Extensions.Logging;
 
 namespace GYMPT.Pages.Persons
 {
@@ -15,61 +14,86 @@ namespace GYMPT.Pages.Persons
     {
         private readonly PersonFacade _personFacade;
         private readonly UrlTokenSingleton _urlTokenSingleton;
+        private readonly IUserContextService _userContextService;
+        private readonly ILogger<PersonModel> _logger; // <-- Logger agregado
 
         public List<PersonDto> PersonList { get; set; } = new();
         public Dictionary<int, string> PersonTokens { get; set; } = new();
 
-        public PersonModel(PersonFacade personFacade, UrlTokenSingleton urlTokenSingleton)
+        public PersonModel(
+            PersonFacade personFacade,
+            UrlTokenSingleton urlTokenSingleton,
+            IUserContextService userContextService,
+            ILogger<PersonModel> logger)  // <-- Logger inyectado
         {
             _personFacade = personFacade;
             _urlTokenSingleton = urlTokenSingleton;
+            _userContextService = userContextService;
+            _logger = logger;
         }
 
         public async Task OnGetAsync()
         {
-            // Obtener todos los usuarios + clientes mapeados a PersonDto
-            PersonList = await _personFacade.GetAllPersonsAsync();
+            var role = _userContextService.GetUserRole();
+            var userId = _userContextService.GetUserId();
 
-            // Generar tokens por cada persona
-            PersonTokens = PersonList.ToDictionary(p => p.Id, p => _urlTokenSingleton.GenerateToken(p.Id.ToString()));
+            // Obtener todas las personas
+            var allPersons = await _personFacade.GetAllPersonsAsync();
+
+            // Filtrar según rol
+            PersonList = role switch
+            {
+                "Admin" => allPersons,
+                "Instructor" when userId.HasValue => allPersons
+                    .Where(p => p.Role == "Client" || (p.Role == "Instructor" && p.Id == userId.Value))
+                    .ToList(),
+                "Client" when userId.HasValue => allPersons
+                    .Where(p => p.Id == userId.Value || p.Role == "Instructor")
+                    .ToList(),
+                _ => new List<PersonDto>()
+            };
+
+            // Detectar duplicados
+            var duplicateIds = PersonList
+                .GroupBy(p => p.Id)
+                .Where(g => g.Count() > 1)
+                .Select(g => g.Key)
+                .ToList();
+
+            if (duplicateIds.Any())
+            {
+                _logger.LogWarning("Se encontraron IDs duplicados en PersonList: {DuplicateIds}", string.Join(", ", duplicateIds));
+            }
+
+            // Generar tokens evitando duplicados
+            PersonTokens = PersonList
+                .GroupBy(p => p.Id)
+                .Select(g => g.First())
+                .ToDictionary(p => p.Id, p => _urlTokenSingleton.GenerateToken(p.Id.ToString()));
         }
 
         public async Task<IActionResult> OnPostDeleteAsync(int id)
         {
             try
             {
-                // Aquí dependerá de qué tipo sea la persona
                 var person = PersonList.FirstOrDefault(p => p.Id == id);
                 if (person == null)
                 {
-                    TempData["ErrorMessage"] = "La persona que intentas eliminar ya no existe.";
+                    TempData["ErrorMessage"] = "La persona ya no existe.";
                     return RedirectToPage();
                 }
 
-                bool success = false;
+                bool success = person.Role == "Client"
+                    ? await _personFacade.DeleteClientAsync(id)
+                    : await _personFacade.DeleteUserAsync(id);
 
-                // Llamar al servicio correspondiente según rol
-                if (person.Role == "Client")
-                {
-                    success = await _personFacade.DeleteClientAsync(id);
-                }
-                else
-                {
-                    success = await _personFacade.DeleteUserAsync(id);
-                }
-
-                if (success)
-                {
-                    TempData["SuccessMessage"] = $"La persona {person.Name} {person.FirstLastname} fue eliminada correctamente.";
-                }
-                else
-                {
-                    TempData["ErrorMessage"] = "No se pudo eliminar la persona. Es posible que ya haya sido eliminada.";
-                }
+                TempData["SuccessMessage"] = success
+                    ? $"Persona {person.Name} {person.FirstLastname} eliminada correctamente."
+                    : "No se pudo eliminar la persona.";
             }
             catch
             {
-                TempData["ErrorMessage"] = "Ocurrió un error inesperado al intentar eliminar la persona.";
+                TempData["ErrorMessage"] = "Ocurrió un error al eliminar la persona.";
             }
 
             return RedirectToPage();

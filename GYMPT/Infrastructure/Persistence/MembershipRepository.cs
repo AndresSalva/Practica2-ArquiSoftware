@@ -1,8 +1,11 @@
 ﻿using Dapper;
+using Npgsql;
 using GYMPT.Domain.Entities;
 using GYMPT.Domain.Ports;
 using GYMPT.Infrastructure.Services;
-using Npgsql;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace GYMPT.Infrastructure.Persistence
 {
@@ -18,63 +21,140 @@ namespace GYMPT.Infrastructure.Persistence
         public async Task<Membership> CreateAsync(Membership entity)
         {
             await RemoteLoggerSingleton.Instance.LogInfo($"Creating new membership: {entity.Name}");
-            var sql = @"INSERT INTO membership (name, price, description, monthly_sessions, created_at, last_modification, is_active) VALUES (@Name, @Price, @Description, @MonthlySessions, @CreatedAt, @LastModification, @IsActive) RETURNING id;";
+
+            var sql = @"
+        INSERT INTO membership 
+        (name, price, description, monthly_sessions, created_at, last_modification, is_active) 
+        VALUES (@Name, @Price, @Description, @MonthlySessions, @CreatedAt, @LastModification, @IsActive) 
+        RETURNING id;
+    ";
+
             using (var conn = new NpgsqlConnection(_postgresString))
             {
                 entity.CreatedAt = DateTime.UtcNow;
                 entity.LastModification = DateTime.UtcNow;
                 entity.IsActive = true;
-                var newId = await conn.QuerySingleAsync<short>(sql, entity);
-                entity.Id = newId;
+
+                // Convierte explícitamente de int a short (por SMALLSERIAL)
+                entity.Id = (short)await conn.ExecuteScalarAsync<int>(sql, entity);
             }
+
             return entity;
+        }
+
+
+        public async Task<Membership> UpdateAsync(Membership entity)
+        {
+            try
+            {
+                await RemoteLoggerSingleton.Instance.LogInfo($"Updating membership: {entity.Name}");
+                using var conn = new NpgsqlConnection(_postgresString);
+
+                const string sql = @"
+                    UPDATE membership 
+                    SET 
+                        name = @Name, 
+                        price = @Price, 
+                        description = @Description, 
+                        monthly_sessions = @MonthlySessions, 
+                        last_modification = @LastModification, 
+                        is_active = @IsActive
+                    WHERE id = @Id;";
+
+                entity.LastModification = DateTime.UtcNow;
+                var affected = await conn.ExecuteAsync(sql, entity);
+
+                if (affected == 0)
+                    throw new KeyNotFoundException($"No membership found with id {entity.Id} to update.");
+
+                return entity;
+            }
+            catch (Exception ex)
+            {
+                await RemoteLoggerSingleton.Instance.LogError($"Error updating membership '{entity.Name}': {ex.Message}", ex);
+                throw;
+            }
         }
 
         public async Task<bool> DeleteByIdAsync(int id)
         {
-            await RemoteLoggerSingleton.Instance.LogInfo($"Deleting membership with id: {id}.");
-            var sql = @"UPDATE membership SET is_active = false, last_modification = @LastModification WHERE id = @Id;";
-            using (var conn = new NpgsqlConnection(_postgresString))
+            try
             {
-                var affectedRows = await conn.ExecuteAsync(sql, new { Id = id, LastModification = DateTime.UtcNow });
-                return affectedRows > 0;
+                await RemoteLoggerSingleton.Instance.LogInfo($"Deactivating membership: {id}");
+                using var conn = new NpgsqlConnection(_postgresString);
+
+                const string sql = @"
+                    UPDATE membership 
+                    SET is_active = false, 
+                        last_modification = @LastModification 
+                    WHERE id = @Id;";
+
+                var affected = await conn.ExecuteAsync(sql, new { Id = id, LastModification = DateTime.UtcNow });
+                return affected > 0;
+            }
+            catch (Exception ex)
+            {
+                await RemoteLoggerSingleton.Instance.LogError($"Error deleting membership (Id: {id}): {ex.Message}", ex);
+                throw;
+            }
+        }
+
+        public async Task<Membership?> GetByIdAsync(int id)
+        {
+            try
+            {
+                await RemoteLoggerSingleton.Instance.LogInfo($"Retrieving membership by id: {id}");
+                using var conn = new NpgsqlConnection(_postgresString);
+
+                const string sql = @"
+                    SELECT 
+                        id, 
+                        name, 
+                        price, 
+                        description, 
+                        monthly_sessions AS MonthlySessions, 
+                        created_at AS CreatedAt, 
+                        last_modification AS LastModification, 
+                        is_active AS IsActive
+                    FROM membership
+                    WHERE id = @Id;";
+
+                return await conn.QuerySingleOrDefaultAsync<Membership>(sql, new { Id = id });
+            }
+            catch (Exception ex)
+            {
+                await RemoteLoggerSingleton.Instance.LogError($"Error retrieving membership (Id: {id}): {ex.Message}", ex);
+                throw;
             }
         }
 
         public async Task<IEnumerable<Membership>> GetAllAsync()
         {
-            await RemoteLoggerSingleton.Instance.LogInfo("Searching for membership list");
-            using (var conn = new NpgsqlConnection(_postgresString))
+            try
             {
-                var sql = @"SELECT id, name, price, description, monthly_sessions AS MonthlySessions, created_at AS CreatedAt, last_modification AS LastModification, is_active as IsActive FROM membership WHERE is_active = true;";
+                await RemoteLoggerSingleton.Instance.LogInfo("Retrieving all active memberships.");
+                using var conn = new NpgsqlConnection(_postgresString);
+
+                const string sql = @"
+                    SELECT 
+                        id, 
+                        name, 
+                        price, 
+                        description, 
+                        monthly_sessions AS MonthlySessions, 
+                        created_at AS CreatedAt, 
+                        last_modification AS LastModification, 
+                        is_active AS IsActive
+                    FROM membership
+                    WHERE is_active = true;";
+
                 return await conn.QueryAsync<Membership>(sql);
             }
-        }
-
-        public async Task<Membership> GetByIdAsync(int id)
-        {
-            await RemoteLoggerSingleton.Instance.LogInfo($"Searching for membership list with id: {id}");
-            using (var conn = new NpgsqlConnection(_postgresString))
+            catch (Exception ex)
             {
-                var sql = @"SELECT id, name, price, description, monthly_sessions AS MonthlySessions, created_at AS CreatedAt, last_modification AS LastModification, is_active as IsActive FROM membership WHERE id = @Id;";
-                return await conn.QuerySingleOrDefaultAsync<Membership>(sql, new { Id = id });
+                await RemoteLoggerSingleton.Instance.LogError($"Error retrieving memberships: {ex.Message}", ex);
+                throw;
             }
-        }
-
-        public async Task<Membership> UpdateAsync(Membership entity)
-        {
-            await RemoteLoggerSingleton.Instance.LogInfo($"Updating membershi[: {entity.Name}");
-            var sql = @"UPDATE membership SET name = @Name, price = @Price, description = @Description, monthly_sessions = @MonthlySessions, last_modification = @LastModification, is_active = @IsActive WHERE id = @Id;";
-            using (var conn = new NpgsqlConnection(_postgresString))
-            {
-                entity.LastModification = DateTime.UtcNow;
-                var affectedRows = await conn.ExecuteAsync(sql, entity);
-                if (affectedRows == 0)
-                {
-                    throw new KeyNotFoundException("We doesn't found a membership to update.");
-                }
-            }
-            return entity;
         }
     }
 }

@@ -14,7 +14,11 @@ namespace GYMPT.Pages.SpecificUserDetail
     {
         private readonly IUserService _instructorService;
         private readonly UrlTokenSingleton _urlTokenSingleton;
+
         public User Instructor { get; set; }
+
+        // ✅ Agregar propiedad Token
+        public string Token { get; set; }
 
         public InstructorDetailsModel(IUserService instructorService, UrlTokenSingleton urlTokenSingleton)
         {
@@ -24,12 +28,15 @@ namespace GYMPT.Pages.SpecificUserDetail
 
         public async Task<IActionResult> OnGetAsync(string token)
         {
+            Token = token; // Guardamos el token para la vista
+
             var idStr = _urlTokenSingleton.GetTokenData(token);
             if (!int.TryParse(idStr, out var id))
             {
                 TempData["ErrorMessage"] = "Token de URL inválido.";
                 return RedirectToPage("/Persons/Person");
             }
+
             Instructor = await _instructorService.GetUserById(id);
 
             if (Instructor == null)

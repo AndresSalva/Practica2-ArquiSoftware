@@ -4,6 +4,9 @@ using ServiceUser.Domain.Entities;
 using ServiceUser.Domain.Ports;
 using ServiceUser.Infrastructure.Provider;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ServiceUser.Infrastructure.Persistence
 {
@@ -12,65 +15,72 @@ namespace ServiceUser.Infrastructure.Persistence
         private readonly string _connectionString;
         private readonly ILogger<UserRepository> _logger;
 
-        // Constructor con Dependency Injection para el connection provider y logger
         public UserRepository(IUserConnectionProvider connectionProvider, ILogger<UserRepository> logger)
         {
             ArgumentNullException.ThrowIfNull(connectionProvider, nameof(connectionProvider));
             ArgumentNullException.ThrowIfNull(logger, nameof(logger));
 
-            var connectionString = connectionProvider.GetConnectionString();
-            if (string.IsNullOrWhiteSpace(connectionString))
-            {
-                throw new InvalidOperationException("El service de instructores requiere una cadena de conexión válida.");
-            }
-
-            _connectionString = connectionString;
+            _connectionString = connectionProvider.GetConnectionString()
+                                ?? throw new InvalidOperationException("El connection provider debe entregar una cadena válida.");
             _logger = logger;
         }
+
+        // ----------------------------
+        // Implementación de IRepository<User>
+        // ----------------------------
+
+        public async Task<IEnumerable<User>> GetAllAsync() => await GetAllUsersAsync();
 
         public async Task<User> GetByIdAsync(int id)
         {
             using var conn = new NpgsqlConnection(_connectionString);
+
             const string sql = @"
-                SELECT * FROM instructor_view
-                WHERE Id = @Id;";
+                SELECT 
+                    p.id AS IdUser,
+                    p.name AS Name,
+                    p.first_lastname AS FirstLastname,
+                    p.second_lastname AS SecondLastname,
+                    p.date_birth AS DateBirth,
+                    p.ci AS Ci,
+                    u.role AS Role,
+                    u.hire_date AS HireDate,
+                    u.monthly_salary AS MonthlySalary,
+                    u.specialization AS Specialization,
+                    u.email AS Email,
+                    u.password AS Password,
+                    u.must_change_password AS MustChangePassword
+                FROM person p
+                LEFT JOIN ""user"" u ON p.id = u.id_person
+                WHERE p.id = @Id;";
 
             return await conn.QuerySingleOrDefaultAsync<User>(sql, new { Id = id });
         }
 
-        public async Task<IEnumerable<User>> GetAllAsync()
-        {
-            using var conn = new NpgsqlConnection(_connectionString);
-            const string sql = @"
-                SELECT * FROM instructor_view   
-                WHERE Role = 'Instructor';";
-
-            return await conn.QueryAsync<User>(sql);
-        }
-
         public async Task<User> CreateAsync(User entity)
         {
-            await _logger.LogInformationAsync($"Creating instructor: {entity.Name}");
-
             using var conn = new NpgsqlConnection(_connectionString);
             await conn.OpenAsync();
             using var transaction = await conn.BeginTransactionAsync();
+
             try
             {
-                entity.Role = "Instructor";
                 entity.CreatedAt = DateTime.UtcNow;
                 entity.LastModification = DateTime.UtcNow;
                 entity.IsActive = true;
 
-                const string userSql = @"INSERT INTO ""user"" (name, first_lastname, second_lastname, date_birth, ci, role, created_at, last_modification, is_active) 
-                                         VALUES (@Name, @FirstLastname, @SecondLastname, @DateBirth, @Ci, @Role, @CreatedAt, @LastModification, @IsActive) RETURNING id;";
-                var newUserId = await conn.QuerySingleAsync<int>(userSql, entity, transaction);
-                entity.Id = newUserId;
-                entity.IdUser = newUserId;
+                const string personSql = @"
+                    INSERT INTO person (name, first_lastname, second_lastname, date_birth, ci, created_at, last_modification, is_active)
+                    VALUES (@Name, @FirstLastname, @SecondLastname, @DateBirth, @Ci, @CreatedAt, @LastModification, @IsActive)
+                    RETURNING id;";
 
-                const string instructorSql = @"INSERT INTO instructor (id_user, hire_date, monthly_salary, specialization,email,password) 
-                                               VALUES (@IdUser, @HireDate, @MonthlySalary, @Specialization,@Email,@Password);";
-                await conn.ExecuteAsync(instructorSql, entity, transaction);
+                entity.Id = await conn.ExecuteScalarAsync<int>(personSql, entity, transaction);
+
+                const string userSql = @"
+                    INSERT INTO ""user"" (id_person, role, hire_date, monthly_salary, specialization, email, password, must_change_password)
+                    VALUES (@Id, @Role, @HireDate, @MonthlySalary, @Specialization, @Email, @Password, @MustChangePassword);";
+
+                await conn.ExecuteAsync(userSql, entity, transaction);
 
                 await transaction.CommitAsync();
                 return entity;
@@ -78,7 +88,7 @@ namespace ServiceUser.Infrastructure.Persistence
             catch (Exception ex)
             {
                 await transaction.RollbackAsync();
-                await _logger.LogErrorAsync(ex, $"Error trying to create instructor {entity.Name}.");
+                _logger.LogError(ex, $"Error creando usuario {entity.Name}");
                 throw;
             }
         }
@@ -88,19 +98,34 @@ namespace ServiceUser.Infrastructure.Persistence
             using var conn = new NpgsqlConnection(_connectionString);
             await conn.OpenAsync();
             using var transaction = await conn.BeginTransactionAsync();
+
             try
             {
                 entity.LastModification = DateTime.UtcNow;
 
-                const string userSql = @"UPDATE ""user"" 
-                                         SET name = @Name, first_lastname = @FirstLastname, second_lastname = @SecondLastname, date_birth = @DateBirth, ci = @Ci, last_modification = @LastModification 
-                                         WHERE id = @Id;";
-                await conn.ExecuteAsync(userSql, entity, transaction);
+                const string personSql = @"
+            UPDATE person
+            SET name = @Name,
+                first_lastname = @FirstLastname,
+                second_lastname = @SecondLastname,
+                date_birth = @DateBirth,
+                ci = @Ci,
+                last_modification = @LastModification,
+                is_active = @IsActive
+            WHERE id = @Id;";
 
-                const string instructorSql = @"UPDATE instructor 
-                                               SET hire_date = @HireDate, monthly_salary = @MonthlySalary, specialization = @Specialization, email = @Email 
-                                               WHERE id_user = @Id;";
-                await conn.ExecuteAsync(instructorSql, entity, transaction);
+                await conn.ExecuteAsync(personSql, entity, transaction);
+
+                const string userSql = @"
+            UPDATE ""user""
+            SET role = @Role,
+                hire_date = @HireDate,
+                monthly_salary = @MonthlySalary,
+                specialization = @Specialization,
+                email = @Email
+            WHERE id_person = @Id;";
+
+                await conn.ExecuteAsync(userSql, entity, transaction);
 
                 await transaction.CommitAsync();
                 return entity;
@@ -108,23 +133,52 @@ namespace ServiceUser.Infrastructure.Persistence
             catch (Exception ex)
             {
                 await transaction.RollbackAsync();
-                await _logger.LogErrorAsync(ex, $"Error trying to update instructor {entity.Id}.");
+                _logger.LogError(ex, $"Error actualizando usuario {entity.Id}");
                 throw;
             }
         }
 
+
+
         public async Task<bool> DeleteByIdAsync(int id)
         {
             using var conn = new NpgsqlConnection(_connectionString);
-            const string sql = @"UPDATE ""user"" SET is_active = false, last_modification = @LastModification WHERE id = @Id;";
+
+            const string sql = @"
+                UPDATE person
+                SET is_active = false, last_modification = @LastModification
+                WHERE id = @Id;";
+
             var affectedRows = await conn.ExecuteAsync(sql, new { Id = id, LastModification = DateTime.UtcNow });
             return affectedRows > 0;
         }
 
+        // ----------------------------
+        // Implementación de IUserRepository
+        // ----------------------------
+
         public async Task<User> GetByEmailAsync(string email)
         {
             using var conn = new NpgsqlConnection(_connectionString);
-            const string sql = @"SELECT * FROM instructor_view WHERE email = @Email;";
+
+            const string sql = @"
+                SELECT 
+                    p.id AS IdUser,
+                    p.name AS Name,
+                    p.first_lastname AS FirstLastname,
+                    p.second_lastname AS SecondLastname,
+                    p.date_birth AS DateBirth,
+                    p.ci AS Ci,
+                    u.role AS Role,
+                    u.hire_date AS HireDate,
+                    u.monthly_salary AS MonthlySalary,
+                    u.specialization AS Specialization,
+                    u.email AS Email,
+                    u.password AS Password,
+                    u.must_change_password AS MustChangePassword
+                FROM person p
+                JOIN ""user"" u ON p.id = u.id_person
+                WHERE u.email = @Email;";
 
             return await conn.QuerySingleOrDefaultAsync<User>(sql, new { Email = email });
         }
@@ -132,27 +186,46 @@ namespace ServiceUser.Infrastructure.Persistence
         public async Task<bool> UpdatePasswordAsync(int id, string password)
         {
             using var conn = new NpgsqlConnection(_connectionString);
-            const string query = @"UPDATE instructor 
-                                   SET password = @Password, must_change_password = false 
-                                   WHERE id_user = @Id;";
-            var rowsChanged = await conn.ExecuteAsync(query, new { Password = password, Id = id });
-            return rowsChanged > 0;
-        }
-    }
 
-    // Extensiones para ILogger con Async
-    public static class LoggerExtensions
-    {
-        public static Task LogInformationAsync(this ILogger logger, string message)
-        {
-            logger.LogInformation(message);
-            return Task.CompletedTask;
+            const string sql = @"
+                UPDATE ""user""
+                SET password = @Password,
+                    must_change_password = false
+                WHERE id_person = @Id;";
+
+            var affectedRows = await conn.ExecuteAsync(sql, new { Id = id, Password = password });
+            return affectedRows > 0;
         }
 
-        public static Task LogErrorAsync(this ILogger logger, Exception ex, string message)
+        // ----------------------------
+        // Métodos auxiliares
+        // ----------------------------
+
+        private async Task<IEnumerable<User>> GetAllUsersAsync()
         {
-            logger.LogError(ex, message);
-            return Task.CompletedTask;
+            using var conn = new NpgsqlConnection(_connectionString);
+
+            // Trae solo usuarios que tienen rol (Instructor/Admin/Otros) y no clientes
+            const string sql = @"
+                SELECT 
+                    p.id AS IdUser,
+                    p.name AS Name,
+                    p.first_lastname AS FirstLastname,
+                    p.second_lastname AS SecondLastname,
+                    p.date_birth AS DateBirth,
+                    p.ci AS Ci,
+                    u.role AS Role,
+                    u.hire_date AS HireDate,
+                    u.monthly_salary AS MonthlySalary,
+                    u.specialization AS Specialization,
+                    u.email AS Email,
+                    u.password AS Password,
+                    u.must_change_password AS MustChangePassword
+                FROM ""user"" u
+                JOIN person p ON p.id = u.id_person
+                WHERE p.is_active = true;";
+
+            return await conn.QueryAsync<User>(sql);
         }
     }
 }

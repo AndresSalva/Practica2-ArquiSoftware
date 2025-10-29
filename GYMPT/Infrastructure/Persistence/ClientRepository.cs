@@ -3,6 +3,7 @@ using GYMPT.Domain.Entities;
 using GYMPT.Domain.Ports;
 using GYMPT.Infrastructure.Services;
 using Npgsql;
+using ServiceUser.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -23,22 +24,22 @@ namespace GYMPT.Infrastructure.Persistence
             using var conn = new NpgsqlConnection(_postgresString);
             const string sql = @"
                 SELECT 
-                    u.id AS Id,
-                    u.name AS Name,
-                    u.first_lastname AS FirstLastname,
-                    u.second_lastname AS SecondLastname,
-                    u.date_birth AS DateBirth,
-                    u.ci AS Ci,
-                    u.created_at AS CreatedAt,
-                    u.last_modification AS LastModification,
-                    u.is_active AS IsActive,
+                    p.id AS Id,
+                    p.name AS Name,
+                    p.first_lastname AS FirstLastname,
+                    p.second_lastname AS SecondLastname,
+                    p.date_birth AS DateBirth,
+                    p.ci AS Ci,
+                    p.created_at AS CreatedAt,
+                    p.last_modification AS LastModification,
+                    p.is_active AS IsActive,
                     c.fitness_level AS FitnessLevel,
                     c.initial_weight_kg AS InitialWeightKg,
                     c.current_weight_kg AS CurrentWeightKg,
                     c.emergency_contact_phone AS EmergencyContactPhone
-                FROM ""user"" u
-                INNER JOIN client c ON u.id = c.id_user
-                WHERE u.id = @Id AND u.is_active = true;";
+                FROM ""person"" p
+                INNER JOIN client c ON p.id = c.id_person
+                WHERE p.id = @Id AND p.is_active = true;";
 
             return await conn.QuerySingleOrDefaultAsync<Client>(sql, new { Id = id });
         }
@@ -48,29 +49,28 @@ namespace GYMPT.Infrastructure.Persistence
             using var conn = new NpgsqlConnection(_postgresString);
             const string sql = @"
                 SELECT 
-                    u.id AS Id,
-                    u.name AS Name,
-                    u.first_lastname AS FirstLastname,
-                    u.second_lastname AS SecondLastname,
-                    u.date_birth AS DateBirth,
-                    u.ci AS Ci,
-                    u.created_at AS CreatedAt,
-                    u.last_modification AS LastModification,
-                    u.is_active AS IsActive,
+                    p.id AS Id,
+                    p.name AS Name,
+                    p.first_lastname AS FirstLastname,
+                    p.second_lastname AS SecondLastname,
+                    p.date_birth AS DateBirth,
+                    p.ci AS Ci,
+                    p.created_at AS CreatedAt,
+                    p.last_modification AS LastModification,
+                    p.is_active AS IsActive,
                     c.fitness_level AS FitnessLevel,
                     c.initial_weight_kg AS InitialWeightKg,
                     c.current_weight_kg AS CurrentWeightKg,
                     c.emergency_contact_phone AS EmergencyContactPhone
-                FROM ""user"" u
-                INNER JOIN client c ON u.id = c.id_user
-                WHERE u.is_active = true;";
+                FROM ""person"" p
+                INNER JOIN client c ON p.id = c.id_person
+                WHERE p.is_active = true;";
 
             return await conn.QueryAsync<Client>(sql);
         }
 
         public async Task<Client> CreateAsync(Client entity)
         {
-            await RemoteLoggerSingleton.Instance.LogInfo($"Creating client: {entity.Name}");
             using var conn = new NpgsqlConnection(_postgresString);
             await conn.OpenAsync();
             using var transaction = await conn.BeginTransactionAsync();
@@ -80,22 +80,22 @@ namespace GYMPT.Infrastructure.Persistence
                 entity.LastModification = DateTime.UtcNow;
                 entity.IsActive = true;
 
-                // Insert en tabla "user"
-                var userSql = @"
-                    INSERT INTO ""user"" 
+                // Insert en tabla "person"
+                var personSql = @"
+                    INSERT INTO ""person"" 
                     (name, first_lastname, second_lastname, date_birth, ci, created_at, last_modification, is_active)
                     VALUES 
                     (@Name, @FirstLastname, @SecondLastname, @DateBirth, @Ci, @CreatedAt, @LastModification, @IsActive)
                     RETURNING id;";
 
-                var newUserId = await conn.QuerySingleAsync<int>(userSql, entity, transaction);
-                entity.Id = newUserId;
-                entity.IdUser = newUserId;
+                var newPersonId = await conn.QuerySingleAsync<int>(personSql, entity, transaction);
+                entity.Id = newPersonId;
+                entity.IdUser = newPersonId;
 
                 // Insert en tabla "client"
                 var clientSql = @"
                     INSERT INTO client 
-                    (id_user, fitness_level, initial_weight_kg, current_weight_kg, emergency_contact_phone) 
+                    (id_person, fitness_level, initial_weight_kg, current_weight_kg, emergency_contact_phone) 
                     VALUES 
                     (@IdUser, @FitnessLevel, @InitialWeightKg, @CurrentWeightKg, @EmergencyContactPhone);";
 
@@ -104,10 +104,9 @@ namespace GYMPT.Infrastructure.Persistence
                 await transaction.CommitAsync();
                 return entity;
             }
-            catch (Exception ex)
+            catch
             {
                 await transaction.RollbackAsync();
-                await RemoteLoggerSingleton.Instance.LogError($"Error creating client {entity.Name}.", ex);
                 throw;
             }
         }
@@ -121,9 +120,9 @@ namespace GYMPT.Infrastructure.Persistence
             {
                 entity.LastModification = DateTime.UtcNow;
 
-                // Actualizar tabla "user"
-                var userSql = @"
-                    UPDATE ""user"" 
+                // Actualizar tabla "person"
+                var personSql = @"
+                    UPDATE ""person"" 
                     SET name = @Name,
                         first_lastname = @FirstLastname,
                         second_lastname = @SecondLastname,
@@ -132,7 +131,7 @@ namespace GYMPT.Infrastructure.Persistence
                         last_modification = @LastModification
                     WHERE id = @Id;";
 
-                await conn.ExecuteAsync(userSql, entity, transaction);
+                await conn.ExecuteAsync(personSql, entity, transaction);
 
                 // Actualizar tabla "client"
                 var clientSql = @"
@@ -141,17 +140,16 @@ namespace GYMPT.Infrastructure.Persistence
                         initial_weight_kg = @InitialWeightKg,
                         current_weight_kg = @CurrentWeightKg,
                         emergency_contact_phone = @EmergencyContactPhone
-                    WHERE id_user = @Id;";
+                    WHERE id_person = @Id;";
 
                 await conn.ExecuteAsync(clientSql, entity, transaction);
 
                 await transaction.CommitAsync();
                 return entity;
             }
-            catch (Exception ex)
+            catch
             {
                 await transaction.RollbackAsync();
-                await RemoteLoggerSingleton.Instance.LogError($"Error updating client {entity.Id}.", ex);
                 throw;
             }
         }
@@ -160,7 +158,7 @@ namespace GYMPT.Infrastructure.Persistence
         {
             using var conn = new NpgsqlConnection(_postgresString);
             var sql = @"
-                UPDATE ""user"" 
+                UPDATE ""person"" 
                 SET is_active = false, 
                     last_modification = @LastModification 
                 WHERE id = @Id;";
@@ -170,3 +168,4 @@ namespace GYMPT.Infrastructure.Persistence
         }
     }
 }
+        
