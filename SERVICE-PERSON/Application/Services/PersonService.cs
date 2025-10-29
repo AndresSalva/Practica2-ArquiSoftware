@@ -1,6 +1,9 @@
 ﻿using ServicePerson.Application.Interfaces;
 using ServicePerson.Domain.Entities;
 using ServicePerson.Domain.Ports;
+using ServicePerson.Application.Common;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ServicePerson.Application.Services
 {
@@ -13,23 +16,43 @@ namespace ServicePerson.Application.Services
             _personRepository = personRepository;
         }
 
-        public Task<Person> GetUserById(int id) => _personRepository.GetByIdAsync(id);
-        public Task<IEnumerable<Person>> GetAllUsers() => _personRepository.GetAllAsync();
-        public Task<bool> DeleteUser(int id) => _personRepository.DeleteByIdAsync(id);
-
-        public Task<Person> GetPersonById(int id)
+        public async Task<IEnumerable<Person>> GetAllPeople()
         {
-            throw new NotImplementedException();
+            return await _personRepository.GetAllAsync();
         }
 
-        public Task<IEnumerable<Person>> GetAllPeople()
+        public async Task<Result<Person>> GetPersonById(int id)
         {
-            throw new NotImplementedException();
+            var person = await _personRepository.GetByIdAsync(id);
+            if (person == null)
+                return Result<Person>.Failure($"No se encontró la persona con ID {id}.");
+
+            return Result<Person>.Success(person);
         }
 
-        public Task<bool> DeletePerson(int id)
+        //public async Task<Result<Person>> CreateNewPerson(Person newPerson)
+        //{
+        //    await _personRepository.AddAsync(newPerson);
+        //    return Result<Person>.Success(newPerson);
+        //}
+
+        //public async Task<Result<Person>> UpdatePerson(Person personToUpdate)
+        //{
+        //    var existing = await _personRepository.GetByIdAsync(personToUpdate.Id);
+        //    if (existing == null)
+        //        return Result<Person>.Failure($"No se encontró la persona con ID {personToUpdate.Id}.");
+
+        //    await _personRepository.UpdateAsync(personToUpdate);
+        //    return Result<Person>.Success(personToUpdate);
+        //}
+
+        public async Task<Result<bool>> DeletePerson(int id)
         {
-            throw new NotImplementedException();
+            var deleted = await _personRepository.DeleteByIdAsync(id);
+            if (!deleted)
+                return Result<bool>.Failure($"No se pudo eliminar la persona con ID {id}.");
+
+            return Result<bool>.Success(true);
         }
     }
 }

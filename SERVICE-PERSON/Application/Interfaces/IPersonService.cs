@@ -1,13 +1,18 @@
-﻿using System;
+﻿using ServicePerson.Application.Common;
 using ServicePerson.Domain.Entities;
+using System;
 
 
 namespace ServicePerson.Application.Interfaces
 {
     public interface IPersonService
     {
-        Task<Person> GetPersonById(int id);
         Task<IEnumerable<Person>> GetAllPeople();
-        Task<bool> DeletePerson(int id);
+        Task<Result<Person>> GetPersonById(int id);
+        //Task<Result<Person>> CreateNewPerson(Person newPerson);
+        //Task<Result<Person>> UpdatePerson(Person personToUpdate);
+        Task<Result<bool>> DeletePerson(int id);
+        //Task AddAsync(Person person);
+        //Task UpdateAsync(Person person);
     }
 }
