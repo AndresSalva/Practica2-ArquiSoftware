@@ -4,9 +4,6 @@ using ServiceClient.Application.Interfaces;
 using ServiceClient.Domain.Entities;
 using ServiceClient.Domain.Ports;
 using ServiceClient.Domain.Rules;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 public class ClientService : IClientService
 {

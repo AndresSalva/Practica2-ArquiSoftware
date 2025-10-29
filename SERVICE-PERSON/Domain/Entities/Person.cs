@@ -1,4 +1,4 @@
-﻿namespace ServicePerson.Domain.Entities
+namespace ServicePerson.Domain.Entities
 {
     public class Person
     {

@@ -1,5 +1,4 @@
-﻿using System;
-using ServicePerson.Domain.Entities;
+﻿using ServicePerson.Domain.Entities;
 
 
 namespace ServicePerson.Application.Interfaces

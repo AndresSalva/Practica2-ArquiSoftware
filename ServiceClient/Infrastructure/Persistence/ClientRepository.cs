@@ -1,29 +1,26 @@
-﻿// Ruta: ServiceClient/Infrastructure/Persistence/ClientRepository.cs
-
-using Dapper;
+﻿using Dapper;
+using Npgsql;
+using ServiceCommon.Domain.Ports;
 using ServiceClient.Domain.Entities;
 using ServiceClient.Domain.Ports;
-using ServiceClient.Infrastructure.Providers;
-
 
 public class ClientRepository : IClientRepository
 {
-    private readonly IClientConnectionProvider _connectionProvider;
+    private readonly string _connString;
+    private readonly IConnectionStringProvider _connectionProvider;
 
-    public ClientRepository(IClientConnectionProvider connectionProvider)
+    public ClientRepository(IConnectionStringProvider connectionProvider)
     {
         _connectionProvider = connectionProvider;
+        _connString = _connectionProvider.GetPostgresConnection();
     }
 
     public async Task<Client> CreateAsync(Client client)
     {
-        using var conn = _connectionProvider.CreateConnection();
-        conn.Open();
+        using var conn = new NpgsqlConnection(_connString);
         using var transaction = conn.BeginTransaction();
         try
         {
-            // Esta consulta ya espera un valor para @CreatedAt.
-            // Gracias al cambio en ClientService, este valor ya no será nulo.
             const string personSql = @"
                 INSERT INTO public.person (name, first_lastname, second_lastname, date_birth, ci, is_active, created_at)
                 VALUES (@Name, @FirstLastname, @SecondLastname, @DateBirth, @Ci, @IsActive, @CreatedAt) RETURNING id;";
@@ -47,30 +44,29 @@ public class ClientRepository : IClientRepository
         }
     }
 
-    // --- El resto de los métodos del repositorio no cambian ---
     public async Task<IEnumerable<Client>> GetAllAsync()
     {
+        using var conn = new NpgsqlConnection(_connString);
         const string sql = @"
             SELECT p.id AS Id, p.created_at AS CreatedAt, p.last_modification AS LastModification, p.is_active AS IsActive, p.name AS Name, p.first_lastname AS FirstLastname, p.second_lastname AS SecondLastname, p.date_birth AS DateBirth, p.ci AS Ci, 'Client' AS Role, c.fitness_level AS FitnessLevel, c.initial_weight_kg AS InitialWeightKg, c.current_weight_kg AS CurrentWeightKg, c.emergency_contact_phone AS EmergencyContactPhone
             FROM public.person p INNER JOIN public.client c ON p.id = c.id_person;";
-        using var conn = _connectionProvider.CreateConnection();
         return await conn.QueryAsync<Client>(sql);
     }
 
     public async Task<Client?> GetByIdAsync(int id)
     {
+        using var conn = new NpgsqlConnection(_connString);
         const string sql = @"
             SELECT p.id AS Id, p.created_at AS CreatedAt, p.last_modification AS LastModification, p.is_active AS IsActive, p.name AS Name, p.first_lastname AS FirstLastname, p.second_lastname AS SecondLastname, p.date_birth AS DateBirth, p.ci AS Ci, 'Client' AS Role, c.fitness_level AS FitnessLevel, c.initial_weight_kg AS InitialWeightKg, c.current_weight_kg AS CurrentWeightKg, c.emergency_contact_phone AS EmergencyContactPhone
             FROM public.person p INNER JOIN public.client c ON p.id = c.id_person
             WHERE p.id = @Id;";
-        using var conn = _connectionProvider.CreateConnection();
         return await conn.QuerySingleOrDefaultAsync<Client>(sql, new { Id = id });
     }
 
     public async Task<Client?> UpdateAsync(Client client)
     {
+        using var conn = new NpgsqlConnection(_connString);
         client.LastModification = System.DateTime.UtcNow;
-        using var conn = _connectionProvider.CreateConnection();
         const string sql = @"
             UPDATE public.person SET name = @Name, first_lastname = @FirstLastname, second_lastname = @SecondLastname, date_birth = @DateBirth, ci = @Ci, last_modification = @LastModification WHERE id = @Id;
             UPDATE public.client SET fitness_level = @FitnessLevel, current_weight_kg = @CurrentWeightKg, emergency_contact_phone = @EmergencyContactPhone WHERE id_person = @Id;";
@@ -80,8 +76,8 @@ public class ClientRepository : IClientRepository
 
     public async Task<bool> DeleteByIdAsync(int id)
     {
+        using var conn = new NpgsqlConnection(_connString);
         const string sql = "DELETE FROM public.person WHERE id = @Id;";
-        using var conn = _connectionProvider.CreateConnection();
         var affectedRows = await conn.ExecuteAsync(sql, new { Id = id });
         return affectedRows > 0;
     }

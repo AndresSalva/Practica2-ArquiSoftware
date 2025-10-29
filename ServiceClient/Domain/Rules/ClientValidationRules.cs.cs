@@ -1,6 +1,5 @@
-﻿// Ruta: ServiceClient/Domain/Rules/ClientValidationRules.cs
-using ServiceClient.Application.Common; // Asegúrate de que el using apunte a tu clase Result
-using ServiceClient.Domain.Entities;
+﻿using ServiceClient.Domain.Entities;
+using ServiceCommon.Application;
 using System.Text.RegularExpressions;
 
 namespace ServiceClient.Domain.Rules

@@ -1,4 +1,4 @@
-﻿using ServicePerson.Domain.Entities;
+using ServicePerson.Domain.Entities;
 
 namespace ServiceClient.Domain.Entities
 {

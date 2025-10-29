@@ -1,0 +1,51 @@
+using GYMPT.Application.Interfaces;
+using GYMPT.Domain.Entities;
+using GYMPT.Infrastructure.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using ServiceUser.Application.Interfaces;
+using ServiceUser.Domain.Entities;
+
+namespace GYMPT.Pages.SpecificUserDetail
+{
+    [Authorize(Roles = "Admin")]
+    public class AdminDetailsModel : PageModel
+    {
+        private readonly IUserService _userService;
+        private readonly UrlTokenSingleton _urlTokenSingleton;
+
+        public User Admin { get; set; }
+
+        // Guardar token solo si necesitas pasarlo a otros enlaces en la vista
+        public string Token { get; set; }
+
+        public AdminDetailsModel(IUserService userService, UrlTokenSingleton urlTokenSingleton)
+        {
+            _userService = userService;
+            _urlTokenSingleton = urlTokenSingleton;
+        }
+
+        public async Task<IActionResult> OnGetAsync(string token)
+        {
+            Token = token;
+
+            var idStr = _urlTokenSingleton.GetTokenData(token);
+            if (!int.TryParse(idStr, out var id))
+            {
+                TempData["ErrorMessage"] = "Token de URL inválido.";
+                return RedirectToPage("/Persons/Person");
+            }
+
+            Admin = await _userService.GetUserById(id);
+
+            if (Admin == null)
+            {
+                TempData["ErrorMessage"] = "Administrador no encontrado.";
+                return RedirectToPage("/Persons/Person");
+            }
+
+            return Page();
+        }
+    }
+}

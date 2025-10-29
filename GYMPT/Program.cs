@@ -1,4 +1,4 @@
-﻿using GYMPT.Domain.Entities;
+using GYMPT.Domain.Entities;
 using GYMPT.Domain.Ports;
 using GYMPT.Application.Interfaces;
 using GYMPT.Application.Services;
@@ -7,6 +7,21 @@ using GYMPT.Infrastructure.Security;
 using ServiceCommon.Domain.Entities;
 using ServiceCommon.Infrastructure.Services;
 using ServiceCommon.Domain.Ports;
+using GYMPT.Application.Facades;
+using GYMPT.Application.Interfaces;
+using GYMPT.Application.Services;
+using GYMPT.Domain.Entities;
+using GYMPT.Domain.Ports;
+using GYMPT.Infrastructure.Facade;
+using GYMPT.Infrastructure.Factories;
+using GYMPT.Infrastructure.Security;
+using GYMPT.Infrastructure.Services;
+using ServiceUser.Application.Interfaces;
+using ServiceUser.Application.Services;
+using ServiceUser.Domain.Entities;
+using ServiceUser.Domain.Ports;
+using ServiceUser.Infrastructure.DependencyInjection;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -68,6 +83,16 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.Configure<SmtpOptions>(builder.Configuration.GetSection("Smtp"));
 builder.Services.AddTransient<EmailService>();
 builder.Services.AddRazorPages();
+
+//Conexion de user, servicios necesarios de user
+builder.Services.AddUserModule(_ => ConnectionStringSingleton.Instance.PostgresConnection);
+builder.Services.AddScoped<ISelectDataFacade, SelectDataFacade>();
+builder.Services.AddScoped<ISelectDataService, SelectDataService>();
+builder.Services.AddScoped<PersonFacade>();
+builder.Services.AddScoped<UserCreationFacade>();
+builder.Services.AddHttpContextAccessor(); // necesario para leer el contexto del usuario
+builder.Services.AddScoped<IUserContextService, UserContextService>();
+//
 
 builder.Services.AddAuthentication("Cookies")
     .AddCookie("Cookies", options =>

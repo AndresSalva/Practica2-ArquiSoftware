@@ -6,7 +6,6 @@ using ServiceCommon.Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-// Se necesita el 'using' del nuevo módulo para IUserService.
 using ServiceClient.Application.Interfaces;
 using ServiceClient.Application.Services;
 using System.Collections.Generic;
@@ -19,12 +18,12 @@ namespace GYMPT.Pages.Disciplines
     public class DisciplineModel : PageModel
     {
         private readonly IDisciplineService _disciplineService;
-        private readonly IUserService _userService;
-        private readonly ParameterProtector _urlTokenSingleton;
+        private readonly IPersonService _userService;
+        private readonly UrlTokenSingleton _urlTokenSingleton;
         public IEnumerable<Discipline> DisciplineList { get; set; } = new List<Discipline>();
         public Dictionary<long, string> InstructorNames { get; set; } = new Dictionary<long, string>();
 
-        public DisciplineModel(IDisciplineService disciplineService, IUserService userService, ParameterProtector urlTokenSingleton)
+        public DisciplineModel(IDisciplineService disciplineService, IPersonService userService, UrlTokenSingleton urlTokenSingleton)
         {
             _disciplineService = disciplineService;
             _userService = userService;

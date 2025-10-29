@@ -20,7 +20,7 @@ namespace GYMPT.Pages.DetailsUsers
     public class DetailsUsersModel : PageModel
     {
         private readonly IDetailUserService _detailUserService;
-        private readonly IUserService _userService;
+        private readonly IPersonService _userService;
         private readonly IMembershipService _membershipService;
         private readonly ISelectDataService _selectDataService;
 
@@ -35,7 +35,7 @@ namespace GYMPT.Pages.DetailsUsers
 
         public DetailsUsersModel(
             IDetailUserService detailUserService,
-            IUserService userService,
+            IPersonService userService,
             IMembershipService membershipService,
             ISelectDataService selectDataService)
         {

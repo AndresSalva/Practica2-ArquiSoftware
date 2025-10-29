@@ -13,23 +13,8 @@ namespace ServicePerson.Application.Services
             _personRepository = personRepository;
         }
 
-        public Task<Person> GetUserById(int id) => _personRepository.GetByIdAsync(id);
-        public Task<IEnumerable<Person>> GetAllUsers() => _personRepository.GetAllAsync();
-        public Task<bool> DeleteUser(int id) => _personRepository.DeleteByIdAsync(id);
-
-        public Task<Person> GetPersonById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<Person>> GetAllPeople()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> DeletePerson(int id)
-        {
-            throw new NotImplementedException();
-        }
+        public Task<Person> GetPersonById(int id) => _personRepository.GetByIdAsync(id);
+        public Task<IEnumerable<Person>> GetAllPeople() => _personRepository.GetAllAsync();
+        public Task<bool> DeletePerson(int id) => _personRepository.DeleteByIdAsync(id);
     }
 }
