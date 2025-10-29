@@ -4,11 +4,11 @@ namespace ServiceUser.Application.Interfaces
 {
     public interface IUserService
     {
-        Task<User> GetUserById(int id); // ahora devuelve cualquier User (Instructor/Admin)
-        Task<IEnumerable<User>> GetAllUsers(); // devuelve todos los usuarios con roles
-        Task CreateUser(User newUser);
-        Task UpdateUser(User userToUpdate);
-        Task<bool> DeleteUser(int userId); // nuevo
+        Task<User> GetUserById(int id);
+        Task<IEnumerable<User>> GetAllUsers();
+        Task<User> CreateUser(User newUser);
+        Task<User> UpdateUser(User userToUpdate); // <- devuelve el usuario actualizado
+        Task<bool> DeleteUser(int userId);
         Task<bool> UpdatePasswordAsync(int userId, string newHash);
     }
 }

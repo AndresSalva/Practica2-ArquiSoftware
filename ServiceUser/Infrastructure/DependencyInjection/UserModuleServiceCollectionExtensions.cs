@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using ServiceUser.Application.Interfaces;
-using ServiceUser.Application.Services;
 using ServiceUser.Domain.Ports;
 using ServiceUser.Infrastructure.Persistence;
 using ServiceUser.Infrastructure.Provider;

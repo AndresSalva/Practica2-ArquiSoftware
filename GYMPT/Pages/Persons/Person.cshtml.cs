@@ -76,27 +76,39 @@ namespace GYMPT.Pages.Persons
         {
             try
             {
-                var person = PersonList.FirstOrDefault(p => p.Id == id);
+                // Buscar la persona directamente desde la fachada
+                var allPersons = await _personFacade.GetAllPersonsAsync();
+                var person = allPersons.FirstOrDefault(p => p.Id == id);
+
                 if (person == null)
                 {
-                    TempData["ErrorMessage"] = "La persona ya no existe.";
+                    TempData["ErrorMessage"] = "La persona ya no existe o no se encontró.";
                     return RedirectToPage();
                 }
 
-                bool success = person.Role == "Client"
-                    ? await _personFacade.DeleteClientAsync(id)
-                    : await _personFacade.DeleteUserAsync(id);
+                bool success = false;
+
+                if (person.Role == "Cliente" || person.Role == "Client")
+                {
+                    success = await _personFacade.DeleteClientAsync(id);
+                }
+                else
+                {
+                    success = await _personFacade.DeleteUserAsync(id);
+                }
 
                 TempData["SuccessMessage"] = success
                     ? $"Persona {person.Name} {person.FirstLastname} eliminada correctamente."
                     : "No se pudo eliminar la persona.";
             }
-            catch
+            catch (Exception ex)
             {
+                _logger.LogError(ex, "Error al eliminar persona con ID {Id}", id);
                 TempData["ErrorMessage"] = "Ocurrió un error al eliminar la persona.";
             }
 
             return RedirectToPage();
         }
+
     }
 }

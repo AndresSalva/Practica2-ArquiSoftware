@@ -8,7 +8,6 @@ using GYMPT.Infrastructure.Factories;
 using GYMPT.Infrastructure.Security;
 using GYMPT.Infrastructure.Services;
 using ServiceUser.Application.Interfaces;
-using ServiceUser.Application.Services;
 using ServiceUser.Domain.Entities;
 using ServiceUser.Domain.Ports;
 using ServiceUser.Infrastructure.DependencyInjection;

@@ -101,6 +101,15 @@ namespace ServiceUser.Infrastructure.Persistence
 
             try
             {
+                // 1️⃣ Obtener el rol existente si el rol nuevo es null o vacío
+                if (string.IsNullOrWhiteSpace(entity.Role))
+                {
+                    const string existingRoleSql = @"SELECT role FROM ""user"" WHERE id_person = @Id;";
+                    var existingRole = await conn.ExecuteScalarAsync<string>(existingRoleSql, new { Id = entity.Id }, transaction);
+                    entity.Role = existingRole; // conservar el rol
+                }
+
+                // 2️⃣ Actualizar tabla person
                 entity.LastModification = DateTime.UtcNow;
 
                 const string personSql = @"
@@ -116,6 +125,7 @@ namespace ServiceUser.Infrastructure.Persistence
 
                 await conn.ExecuteAsync(personSql, entity, transaction);
 
+                // 3️⃣ Actualizar tabla user
                 const string userSql = @"
             UPDATE ""user""
             SET role = @Role,
@@ -127,6 +137,7 @@ namespace ServiceUser.Infrastructure.Persistence
 
                 await conn.ExecuteAsync(userSql, entity, transaction);
 
+                // 4️⃣ Commit
                 await transaction.CommitAsync();
                 return entity;
             }
@@ -137,7 +148,6 @@ namespace ServiceUser.Infrastructure.Persistence
                 throw;
             }
         }
-
 
 
         public async Task<bool> DeleteByIdAsync(int id)
@@ -191,7 +201,7 @@ namespace ServiceUser.Infrastructure.Persistence
                 UPDATE ""user""
                 SET password = @Password,
                     must_change_password = false
-                WHERE id_person = @Id;";
+                WHERE id_person = @IdUser;";
 
             var affectedRows = await conn.ExecuteAsync(sql, new { Id = id, Password = password });
             return affectedRows > 0;
