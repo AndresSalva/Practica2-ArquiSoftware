@@ -1,14 +1,15 @@
-﻿using GYMPT.Application.Interfaces;
+﻿using GYMPT.Application.Facades;
+using GYMPT.Application.Interfaces;
 using GYMPT.Application.Services;
+using GYMPT.Domain.Entities;
 using GYMPT.Domain.Ports;
 using GYMPT.Infrastructure.Factories;
-using GYMPT.Infrastructure.Services;
 using GYMPT.Infrastructure.Security;
-using GYMPT.Domain.Entities;
-using ServiceUser.Domain.Entities;
-using ServiceUser.Domain.Ports;
+using GYMPT.Infrastructure.Services;
 using ServiceUser.Application.Interfaces;
 using ServiceUser.Application.Services;
+using ServiceUser.Domain.Entities;
+using ServiceUser.Domain.Ports;
 using ServiceUser.Infrastructure.DependencyInjection;
 
 
@@ -59,7 +60,7 @@ builder.Services.AddScoped<IDetailUserRepository>(sp =>
 
 builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<IPersonService, PersonService>();
-/*builder.Services.AddScoped<IInstructorService, InstructorService>();*/
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IDisciplineService, DisciplineService>();
 builder.Services.AddScoped<IMembershipService, MembershipService>();
 builder.Services.AddScoped<IDetailUserService, DetailUserService>();
@@ -75,8 +76,11 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.Configure<SmtpOptions>(builder.Configuration.GetSection("Smtp"));
 builder.Services.AddTransient<EmailService>();
 builder.Services.AddRazorPages();
-
+//Conexion de user
 builder.Services.AddUserModule(_ => ConnectionStringSingleton.Instance.PostgresConnection);
+//Registrar la fachada en el contenedor de dependencias
+builder.Services.AddScoped<ISelectDataFacade, SelectDataFacade>();
+builder.Services.AddScoped<ISelectDataService, SelectDataService>();
 
 builder.Services.AddAuthentication("Cookies")
     .AddCookie("Cookies", options =>

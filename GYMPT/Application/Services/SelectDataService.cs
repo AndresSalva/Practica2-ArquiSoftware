@@ -1,47 +1,32 @@
-﻿using GYMPT.Application.Interfaces;
+﻿using GYMPT.Application.Facades;
+using GYMPT.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GYMPT.Application.Services
 {
     public class SelectDataService : ISelectDataService
     {
-        private readonly IPersonService _userService;
-        private readonly IMembershipService _membershipService;
+        private readonly ISelectDataFacade _facade;
 
-        public SelectDataService(IPersonService userService, IMembershipService membershipService)
+        public SelectDataService(ISelectDataFacade facade)
         {
-            _userService = userService;
-            _membershipService = membershipService;
+            _facade = facade;
         }
 
         public async Task<SelectList> GetUserOptionsAsync()
         {
-            var users = await _userService.GetAllUsers();
-            var userOptions = users
-                .Where(u => u.Role == "Client")
-                .Select(u => new {
-                u.Id,
-                FullName = $"{u.Name} {u.FirstLastname}"
-            });
-            return new SelectList(userOptions, "Id", "FullName");
+            // Ahora representa los CLIENTES (antes "users")
+            return await _facade.GetClientOptionsAsync();
         }
 
         public async Task<SelectList> GetMembershipOptionsAsync()
         {
-            var memberships = await _membershipService.GetAllMemberships();
-            return new SelectList(memberships, "Id", "Name");
+            return await _facade.GetMembershipOptionsAsync();
         }
 
         public async Task<SelectList> GetInstructorOptionsAsync()
         {
-            var users = await _userService.GetAllUsers();
-            var instructors = users
-                .Where(u => u.Role == "Instructor")
-                .Select(u => new {
-                    Id = (long)u.Id,
-                    FullName = $"{u.Name} {u.FirstLastname}"
-                });
-            return new SelectList(instructors, "Id", "FullName");
+            return await _facade.GetInstructorOptionsAsync();
         }
     }
 }
