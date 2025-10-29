@@ -12,7 +12,5 @@ namespace ServicePerson.Application.Interfaces
         //Task<Result<Person>> CreateNewPerson(Person newPerson);
         //Task<Result<Person>> UpdatePerson(Person personToUpdate);
         Task<Result<bool>> DeletePerson(int id);
-        //Task AddAsync(Person person);
-        //Task UpdateAsync(Person person);
     }
 }

@@ -25,7 +25,7 @@ namespace ServicePerson.Domain.Rules
             }
             if (!AllowedCharsRegex.IsMatch(person.Name))
             {
-                return Result<Person>.Failure("El nombre de la disciplina contiene caracteres no permitidos.");
+                return Result<Person>.Failure("El nombre de la persona contiene caracteres no permitidos.");
             }
             return Result<Person>.Success(person);
         }
