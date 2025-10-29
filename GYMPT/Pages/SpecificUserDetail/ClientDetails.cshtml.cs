@@ -1,6 +1,6 @@
 using GYMPT.Application.Interfaces;
 using GYMPT.Domain.Entities;
-using GYMPT.Infrastructure.Services;
+using ServiceCommon.Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -11,10 +11,10 @@ namespace GYMPT.Pages.SpecificUserDetail
     public class ClientDetailsModel : PageModel
     {
         private readonly IClientService _clientService;
-        private readonly UrlTokenSingleton _urlTokenSingleton;
+        private readonly ParameterProtector _urlTokenSingleton;
         public Client Client { get; set; }
 
-        public ClientDetailsModel(IClientService clientService, UrlTokenSingleton urlTokenSingleton)
+        public ClientDetailsModel(IClientService clientService, ParameterProtector urlTokenSingleton)
         {
             _clientService = clientService;
             _urlTokenSingleton = urlTokenSingleton;
@@ -22,7 +22,7 @@ namespace GYMPT.Pages.SpecificUserDetail
 
         public async Task<IActionResult> OnGetAsync(string token)
         {
-            var idStr = _urlTokenSingleton.GetTokenData(token);
+            var idStr = _urlTokenSingleton.Unprotect(token);
             if (!int.TryParse(idStr, out var id))
             {
                 TempData["ErrorMessage"] = "Token de URL inválido.";

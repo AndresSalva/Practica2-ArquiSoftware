@@ -2,19 +2,19 @@ using Microsoft.AspNetCore.DataProtection;
 
 namespace ServiceCommon.Infrastructure.Services
 {
-    public class UrlProtector
+    public class ParameterProtector
     {
         private readonly IDataProtector _urlProtector;
-        
-        public UrlProtector(IDataProtectionProvider provider)
+
+        public ParameterProtector(IDataProtectionProvider provider)
         {
             _urlProtector = provider.CreateProtector("UrlTokenProtector");
         }
 
-        public string ProtectUrl(string value)
+        public string Protect(string value)
             => _urlProtector.Protect(value);
 
-        public string? UnprotectUrl(string token)
+        public string? Unprotect(string token)
         {
             try
             {

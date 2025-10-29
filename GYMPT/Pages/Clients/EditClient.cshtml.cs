@@ -1,6 +1,6 @@
 using GYMPT.Application.Interfaces;
 using GYMPT.Domain.Entities;
-using GYMPT.Infrastructure.Services;
+using ServiceCommon.Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -11,12 +11,12 @@ namespace GYMPT.Pages.Clients
     public class EditModel : PageModel
     {
         private readonly IClientService _clientService;
-        private readonly UrlTokenSingleton _urlTokenSingleton;
+        private readonly ParameterProtector _urlTokenSingleton;
 
         [BindProperty]
         public Client Client { get; set; }
 
-        public EditModel(IClientService clientService, UrlTokenSingleton urlTokenSingleton)
+        public EditModel(IClientService clientService, ParameterProtector urlTokenSingleton)
         {
             _clientService = clientService;
             _urlTokenSingleton = urlTokenSingleton;
@@ -26,7 +26,7 @@ namespace GYMPT.Pages.Clients
         public async Task<IActionResult> OnGetAsync(string token)
         {
             // Decode token to original id
-            var idStr = _urlTokenSingleton.GetTokenData(token);
+            var idStr = _urlTokenSingleton.Unprotect(token);
             if (!int.TryParse(idStr, out var id))
             {
                 TempData["ErrorMessage"] = "Token de URL inválido.";

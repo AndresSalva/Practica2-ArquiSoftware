@@ -1,6 +1,6 @@
 ﻿using GYMPT.Application.Interfaces;
-using GYMPT.Infrastructure.Services;
 using GYMPT.Domain.Entities;
+using ServiceCommon.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -13,13 +13,13 @@ namespace GYMPT.Pages.Disciplines
     {
         private readonly IDisciplineService _disciplineService;
         private readonly IUserService _userService;
-        private readonly UrlTokenSingleton _urlTokenSingleton;
+        private readonly ParameterProtector _urlTokenSingleton;
 
         [BindProperty]
         public Discipline Discipline { get; set; }
         public SelectList InstructorOptions { get; set; }
 
-        public DisciplineEditModel(IDisciplineService disciplineService, IUserService userService, UrlTokenSingleton urlTokenSingleton)
+        public DisciplineEditModel(IDisciplineService disciplineService, IUserService userService, ParameterProtector urlTokenSingleton)
         {
             _disciplineService = disciplineService;
             _userService = userService;
@@ -27,7 +27,7 @@ namespace GYMPT.Pages.Disciplines
         }
         public async Task<IActionResult> OnGetAsync(string token)
         {
-            var tokenId = _urlTokenSingleton.GetTokenData(token);
+            var tokenId = _urlTokenSingleton.Unprotect(token);
             if (tokenId == null)
             {
                 TempData["ErrorMessage"] = "Token invalido.";

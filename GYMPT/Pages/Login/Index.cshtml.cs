@@ -2,8 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using GYMPT.Application.Services;
 using GYMPT.Infrastructure.Security;
-using GYMPT.Domain.Entities;
-using GYMPT.Infrastructure.Services;
+using ServiceCommon.Infrastructure.Services;
 
 namespace GYMPT.Pages.Login;
 
@@ -11,7 +10,7 @@ public class IndexModel : PageModel
 {
     private readonly LoginService _loginService;
     private readonly CookieAuthService _authService;
-    private readonly UrlTokenSingleton _urlTokenService;
+    private readonly ParameterProtector _urlTokenService;
 
     [BindProperty]
     public string Email { get; set; } = string.Empty;
@@ -21,7 +20,7 @@ public class IndexModel : PageModel
 
     public string ErrorMessage { get; set; } = string.Empty;
 
-    public IndexModel(LoginService loginService, CookieAuthService authService, UrlTokenSingleton urlToken)
+    public IndexModel(LoginService loginService, CookieAuthService authService, ParameterProtector urlToken)
     {
         _loginService = loginService;
         _authService = authService;
@@ -49,7 +48,7 @@ public class IndexModel : PageModel
         if (user.MustChangePassword)
         {
             await _authService.SignInAsync(user);
-            string token = _urlTokenService.GenerateToken(user.Id.ToString());
+            string token = _urlTokenService.Protect(user.Id.ToString());
             return RedirectToPage("/Instructors/ChangePassword", new { token });
         }
 

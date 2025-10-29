@@ -1,8 +1,8 @@
 using GYMPT.Application.Interfaces;
 using GYMPT.Domain.Entities;
+using ServiceCommon.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using GYMPT.Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 
 namespace GYMPT.Pages.Users
@@ -14,9 +14,9 @@ namespace GYMPT.Pages.Users
 
         public IEnumerable<User> UserList { get; set; } = new List<User>();
         public Dictionary<int, string> UserTokens { get; set; } = new Dictionary<int, string>();
-        private readonly UrlTokenSingleton _urlTokenSingleton;
+        private readonly ParameterProtector _urlTokenSingleton;
 
-        public UserModel(IUserService userService, UrlTokenSingleton urlTokenSingleton)
+        public UserModel(IUserService userService, ParameterProtector urlTokenSingleton)
         {
             _userService = userService;
             _urlTokenSingleton = urlTokenSingleton;
@@ -25,7 +25,7 @@ namespace GYMPT.Pages.Users
         public async Task OnGetAsync()
         {
             UserList = await _userService.GetAllUsers();
-            UserTokens = UserList.ToDictionary(u => u.Id, u => _urlTokenSingleton.GenerateToken(u.Id.ToString()));
+            UserTokens = UserList.ToDictionary(u => u.Id, u => _urlTokenSingleton.Protect(u.Id.ToString()));
         }
 
         public async Task<IActionResult> OnPostDeleteAsync(int id)

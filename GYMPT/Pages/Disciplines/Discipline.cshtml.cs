@@ -1,6 +1,6 @@
 using GYMPT.Application.Interfaces;
 using GYMPT.Domain.Entities;
-using GYMPT.Infrastructure.Services;
+using ServiceCommon.Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -12,11 +12,11 @@ namespace GYMPT.Pages.Disciplines
     {
         private readonly IDisciplineService _disciplineService;
         private readonly IUserService _userService;
-        private readonly UrlTokenSingleton _urlTokenSingleton;
+        private readonly ParameterProtector _urlTokenSingleton;
         public IEnumerable<Discipline> DisciplineList { get; set; } = new List<Discipline>();
         public Dictionary<long, string> InstructorNames { get; set; } = new Dictionary<long, string>();
 
-        public DisciplineModel(IDisciplineService disciplineService, IUserService userService, UrlTokenSingleton urlTokenSingleton)
+        public DisciplineModel(IDisciplineService disciplineService, IUserService userService, ParameterProtector urlTokenSingleton)
         {
             _disciplineService = disciplineService;
             _userService = userService;
@@ -33,7 +33,7 @@ namespace GYMPT.Pages.Disciplines
         public async Task<IActionResult> OnPostEditAsync(int id)
         {
             // Generate a route token using the UrlTokenSingleton and redirect to the edit page
-            string token = _urlTokenSingleton.GenerateToken(id.ToString());
+            string token = _urlTokenSingleton.Protect(id.ToString());
             return RedirectToPage("/Disciplines/DisciplineEdit", new { token });
         }
 

@@ -1,7 +1,7 @@
 using Dapper;
 using GYMPT.Domain.Entities;
 using GYMPT.Domain.Ports;
-using GYMPT.Infrastructure.Services;
+using ServiceCommon.Domain.Ports; // importante: para IConnectionStringProvider
 using Npgsql;
 
 namespace GYMPT.Infrastructure.Persistence
@@ -9,17 +9,19 @@ namespace GYMPT.Infrastructure.Persistence
     public class UserRepository : IUserRepository
     {
         private readonly string _postgresString;
+        private readonly IRemoteLogger _remoteLogger;
 
-        public UserRepository()
+        public UserRepository(IConnectionStringProvider connectionStringProvider, IRemoteLogger remoteLogger)
         {
-            _postgresString = ConnectionStringSingleton.Instance.PostgresConnection;
+            _postgresString = connectionStringProvider.GetPostgresConnection();
+            _remoteLogger = remoteLogger;
         }
 
         public async Task<User> CreateAsync(User entity)
         {
             try
             {
-                await RemoteLoggerSingleton.Instance.LogInfo($"Creating new user: {entity.Name} {entity.FirstLastname}");
+                await _remoteLogger.LogInfo($"Creating new user: {entity.Name} {entity.FirstLastname}", entity.Name);
                 using var conn = new NpgsqlConnection(_postgresString);
                 var sql = @"INSERT INTO ""user"" (name, first_lastname, second_lastname, date_birth, ci, ""role"", created_at, last_modification, is_active) VALUES (@Name, @FirstLastname, @SecondLastname, @DateBirth, @Ci, @Role, @CreatedAt, @LastModification, @IsActive) RETURNING id;";
 
@@ -32,7 +34,7 @@ namespace GYMPT.Infrastructure.Persistence
             }
             catch (Exception ex)
             {
-                await RemoteLoggerSingleton.Instance.LogError($"Error trying to create user '{entity.Name}': {ex.Message}", ex);
+                await _remoteLogger.LogError($"Error trying to create user '{entity.Name}': {ex.Message}", entity.Name, ex);
                 throw;
             }
         }
@@ -41,7 +43,7 @@ namespace GYMPT.Infrastructure.Persistence
         {
             try
             {
-                await RemoteLoggerSingleton.Instance.LogInfo($"Deleting user: {id}");
+                await _remoteLogger.LogInfo($"Deleting user: {id}");
                 using var conn = new NpgsqlConnection(_postgresString);
                 var sql = @"UPDATE ""user"" SET is_active = false, last_modification = @LastModification WHERE id = @Id;";
                 var affected = await conn.ExecuteAsync(sql, new { Id = id, LastModification = DateTime.UtcNow });

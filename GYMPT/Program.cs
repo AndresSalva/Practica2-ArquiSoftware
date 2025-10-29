@@ -1,20 +1,22 @@
-﻿using GYMPT.Application.Interfaces;
-using GYMPT.Application.Services;
+﻿using GYMPT.Domain.Entities;
 using GYMPT.Domain.Ports;
+using GYMPT.Application.Interfaces;
+using GYMPT.Application.Services;
 using GYMPT.Infrastructure.Factories;
-using GYMPT.Infrastructure.Services;
 using GYMPT.Infrastructure.Security;
-using GYMPT.Domain.Entities;
+using ServiceCommon.Domain.Entities;
+using ServiceCommon.Infrastructure.Services;
+using ServiceCommon.Domain.Ports;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Ensures correct configuration of the url token singleton.
 builder.Services.AddDataProtection();
-builder.Services.AddSingleton<UrlTokenSingleton>();
+builder.Services.AddSingleton<ParameterProtector >();
 
 builder.Services.AddScoped<RepositoryFactory>();
 
-builder.Services.AddScoped<IUserRepository>(sp =>
+builder.Services.AddScoped(sp =>
 {
     var factory = sp.GetRequiredService<RepositoryFactory>();
     return (IUserRepository)factory.CreateRepository<User>();
@@ -83,9 +85,7 @@ builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
-
-RemoteLoggerSingleton.Configure();
-
+builder.Services.AddSingleton<IRemoteLogger, RemoteLogger>();
 
 if (!app.Environment.IsDevelopment())
 {

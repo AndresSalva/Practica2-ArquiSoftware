@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using GYMPT.Application.Interfaces;
-using GYMPT.Infrastructure.Services;
+using ServiceCommon.Infrastructure.Services;
 
 namespace GYMPT.Pages.Instructors
 {
@@ -11,7 +11,7 @@ namespace GYMPT.Pages.Instructors
     {
         private readonly IInstructorService _instructorService;
         private readonly IPasswordHasher _passwordHasher;
-        private readonly UrlTokenSingleton _urlTokenService;
+        private readonly ParameterProtector _urlTokenService;
         [BindProperty]
         public int UserId { get; set; }
 
@@ -22,7 +22,7 @@ namespace GYMPT.Pages.Instructors
 
         public string Message { get; set; } = string.Empty;
 
-        public ChangePasswordModel(IInstructorService instructorService, IPasswordHasher passwordHasher, UrlTokenSingleton urlToken)
+        public ChangePasswordModel(IInstructorService instructorService, IPasswordHasher passwordHasher, ParameterProtector urlToken)
         {
             _instructorService = instructorService;
             _passwordHasher = passwordHasher;
@@ -31,7 +31,7 @@ namespace GYMPT.Pages.Instructors
 
         public async void OnGetAsync(string token)
         {
-            var id = _urlTokenService.GetTokenData(token);
+            var id = _urlTokenService.Unprotect(token);
             UserId = int.Parse(id);
         }
 

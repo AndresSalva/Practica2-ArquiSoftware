@@ -1,6 +1,6 @@
 using GYMPT.Application.Interfaces;
 using GYMPT.Domain.Entities;
-using GYMPT.Infrastructure.Services;
+using ServiceCommon.Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -11,12 +11,12 @@ namespace GYMPT.Pages.Memberships
     public class MembershipEditModel : PageModel
     {
         private readonly IMembershipService _membershipService;
-        private readonly UrlTokenSingleton _urlTokenSingleton;
+        private readonly ParameterProtector _urlTokenSingleton;
 
         [BindProperty]
         public Membership Membership { get; set; }
 
-        public MembershipEditModel(IMembershipService membershipService, UrlTokenSingleton urlTokenSingleton)
+        public MembershipEditModel(IMembershipService membershipService, ParameterProtector urlTokenSingleton)
         {
             _membershipService = membershipService;
             _urlTokenSingleton = urlTokenSingleton;
@@ -25,7 +25,7 @@ namespace GYMPT.Pages.Memberships
         // --- ESTE METODO CARGA LOS DATOS EN EL FORMULARIO ---
         public async Task<IActionResult> OnGetAsync(string token)
         {
-            var tokenId = _urlTokenSingleton.GetTokenData(token);
+            var tokenId = _urlTokenSingleton.Unprotect(token);
             if (tokenId == null)
             {
                 TempData["ErrorMessage"] = "Token invalido.";
