@@ -2,9 +2,8 @@
 
 public class LogEntry
 {
-    public int Id { get; set; }
-    public DateTime? CreatedAt { get; set; }
-    public string? Level { get; set; }
-    public string? Message { get; set; }
-    public string? ClientIdentifier { get; set; }
+    public DateTime CreatedAt { get; set; }
+    public string Level { get; set; } = string.Empty;
+    public string Message { get; set; } = string.Empty;
+    public string ClientIdentifier { get; set; } = string.Empty;
 }
