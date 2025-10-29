@@ -1,5 +1,4 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36511.14
 MinimumVisualStudioVersion = 10.0.40219.1
@@ -14,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceCommon", "ServiceCom
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServicePerson", "SERVICE-PERSON\ServicePerson.csproj", "{21FB596E-30B8-4770-B0C0-BE6E151BCFE5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceUser", "ServiceUser\ServiceUser.csproj", "{C81FD4CB-08F5-4D4A-B2F8-221D4A153A0E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceDiscipline", "ServiceDiscipline\ServiceDiscipline.csproj", "{2314A835-C56D-49BB-A8FE-2C8DC9FCC746}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +42,10 @@ Global
 		{C81FD4CB-08F5-4D4A-B2F8-221D4A153A0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C81FD4CB-08F5-4D4A-B2F8-221D4A153A0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C81FD4CB-08F5-4D4A-B2F8-221D4A153A0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2314A835-C56D-49BB-A8FE-2C8DC9FCC746}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2314A835-C56D-49BB-A8FE-2C8DC9FCC746}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2314A835-C56D-49BB-A8FE-2C8DC9FCC746}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2314A835-C56D-49BB-A8FE-2C8DC9FCC746}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

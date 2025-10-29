@@ -1,8 +1,8 @@
-// --- CAMBIO 1: Corregir las directivas 'using' ---
-// AÚN necesitamos los 'usings' antiguos para los servicios que no se han movido.
-using GYMPT.Application.Interfaces;
+using ServiceDiscipline.Application.Interfaces;
+using ServiceDiscipline.Domain.Entities;
+using GYMPT.Infrastructure.Services;
 using GYMPT.Domain.Entities;
-using ServiceCommon.Infrastructure.Services;
+using GYMPT.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -47,15 +47,17 @@ namespace GYMPT.Pages.Disciplines
 
         public async Task<IActionResult> OnPostDeleteAsync(int id)
         {
-            // --- CAMBIO 2 (Continuación): Estandarizar la llamada al método ---
-            var success = await _disciplineService.DeleteByIdAsync(id); // Asumiendo que el método estándar es DeleteByIdAsync
-            if (success)
+            var result = await _disciplineService.DeleteDiscipline(id);
+
+            if (result.IsFailure)
             {
-                TempData["SuccessMessage"] = "La disciplina ha sido eliminada correctamente.";
+                TempData["ErrorMessage"] = "No se pudo eliminar la disciplina.";
+                ModelState.AddModelError(string.Empty, result.Error);
             }
             else
             {
-                TempData["ErrorMessage"] = "No se pudo eliminar la disciplina.";
+                TempData["SuccessMessage"] = "Disciplina eliminada exitosamente.";
+
             }
             return RedirectToPage();
         }

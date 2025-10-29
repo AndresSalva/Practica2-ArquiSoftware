@@ -14,8 +14,9 @@ namespace ServiceUser.Infrastructure.Persistence
 
         public UserRepository(IConnectionStringProvider connectionProvider, IRemoteLogger logger)
         {
-            _connectionString = connectionProvider.GetPostgresConnection();
+            _connectionStringProvider = connectionProvider;
             _logger = logger;
+            _connectionString = connectionProvider.GetPostgresConnection();
         }
 
         public async Task<IEnumerable<User>> GetAllAsync() => await GetAllUsersAsync();

@@ -1,6 +1,8 @@
 ﻿// Los usings que tienes ya están correctos para esta página.
 using GYMPT.Application.Interfaces;
 using GYMPT.Domain.Entities;
+using ServiceDiscipline.Application.Interfaces;
+using ServiceDiscipline.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -27,7 +29,7 @@ namespace GYMPT.Pages.Disciplines
 
         public async Task<IActionResult> OnGetAsync()
         {
-            InstructorOptions = await _selectDataService.GetInstructorOptionsAsync();
+            await PopulateInstructorOptionsAsync();
             return Page();
         }
 
@@ -35,15 +37,28 @@ namespace GYMPT.Pages.Disciplines
         {
             if (!ModelState.IsValid)
             {
-                InstructorOptions = await _selectDataService.GetInstructorOptionsAsync();
+                await PopulateInstructorOptionsAsync();
                 return Page();
             }
 
-            // --- CAMBIO: Usar el nombre de método correcto del nuevo contrato ---
-            await _disciplineService.CreateAsync(Discipline); // El método correcto es CreateAsync
+            var result = await _disciplineService.CreateNewDiscipline(Discipline);
 
-            TempData["SuccessMessage"] = $"La disciplina '{Discipline.Name}' ha sido creada exitosamente.";
+            if (result.IsFailure)
+            {
+                ModelState.AddModelError(string.Empty, result.Error);
+                await PopulateInstructorOptionsAsync();
+                return Page();
+
+            }
+
+            TempData["SuccessMessage"] = $"Disciplina '{result.Value.Name}' creada exitosamente.";
             return RedirectToPage("./Discipline");
+        }
+
+        // La lógica para poblar el dropdown centralizada.
+        private async Task PopulateInstructorOptionsAsync()
+        {
+            InstructorOptions = await _selectDataService.GetInstructorOptionsAsync();
         }
     }
 }

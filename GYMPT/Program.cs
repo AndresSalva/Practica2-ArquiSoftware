@@ -22,6 +22,15 @@ using ServiceUser.Domain.Entities;
 using ServiceUser.Domain.Ports;
 using ServiceUser.Infrastructure.DependencyInjection;
 
+﻿using GYMPT.Application.Interfaces;
+using GYMPT.Application.Services;
+using GYMPT.Domain.Entities;
+using GYMPT.Domain.Ports;
+using GYMPT.Infrastructure.Factories;
+using GYMPT.Infrastructure.Security;
+using GYMPT.Infrastructure.Services;
+using ServiceDiscipline.Infrastructure.DependencyInjection;
+using ServiceDiscipline.Application.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -52,6 +61,14 @@ builder.Services.AddScoped<IDisciplineRepository>(sp =>
     var factory = sp.GetRequiredService<RepositoryFactory>();
     return (IDisciplineRepository)factory.CreateRepository<Discipline>();
 });
+
+builder.Services.AddScoped<IClientRepository>(sp =>
+{
+    var factory = sp.GetRequiredService<RepositoryFactory>();
+    return (IClientRepository)factory.CreateRepository<Client>();
+});
+
+
 builder.Services.AddScoped<IMembershipRepository>(sp =>
 {
     var factory = sp.GetRequiredService<RepositoryFactory>();
@@ -65,7 +82,6 @@ builder.Services.AddScoped<IDetailUserRepository>(sp =>
 
 // Servicios de aplicación restantes.
 builder.Services.AddScoped<IInstructorService, InstructorService>();
-builder.Services.AddScoped<IDisciplineService, DisciplineService>();
 builder.Services.AddScoped<IMembershipService, MembershipService>();
 builder.Services.AddScoped<IDetailUserService, DetailUserService>();
 builder.Services.AddScoped<ISelectDataService, SelectDataService>();
@@ -81,8 +97,10 @@ builder.Services.AddScoped<CookieAuthService>();
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.Configure<SmtpOptions>(builder.Configuration.GetSection("Smtp"));
-builder.Services.AddTransient<EmailService>();
+builder.Services.AddTransient<EmailService>();  
 builder.Services.AddRazorPages();
+// Discipline Service
+builder.Services.AddDisciplineModule(_ => ConnectionStringSingleton.Instance.PostgresConnection);
 
 //Conexion de user, servicios necesarios de user
 builder.Services.AddUserModule(_ => ConnectionStringSingleton.Instance.PostgresConnection);
