@@ -12,14 +12,14 @@ namespace GYMPT.Pages.Disciplines
     public class DisciplineEditModel : PageModel
     {
         private readonly IDisciplineService _disciplineService;
-        private readonly IUserService _userService;
+        private readonly IPersonService _userService;
         private readonly UrlTokenSingleton _urlTokenSingleton;
 
         [BindProperty]
         public Discipline Discipline { get; set; }
         public SelectList InstructorOptions { get; set; }
 
-        public DisciplineEditModel(IDisciplineService disciplineService, IUserService userService, UrlTokenSingleton urlTokenSingleton)
+        public DisciplineEditModel(IDisciplineService disciplineService, IPersonService userService, UrlTokenSingleton urlTokenSingleton)
         {
             _disciplineService = disciplineService;
             _userService = userService;

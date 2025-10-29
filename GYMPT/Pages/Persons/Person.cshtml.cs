@@ -6,18 +6,18 @@ using GYMPT.Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using ServiceUser.Domain.Entities;
 
-namespace GYMPT.Pages.Users
+namespace GYMPT.Pages.Persons
 {
     [Authorize]
-    public class UserModel : PageModel
+    public class PersonModel : PageModel
     {
-        private readonly IUserService _userService;
+        private readonly IPersonService _userService;
 
-        public IEnumerable<User> UserList { get; set; } = new List<User>();
+        public IEnumerable<Person> UserList { get; set; } = new List<Person>();
         public Dictionary<int, string> UserTokens { get; set; } = new Dictionary<int, string>();
         private readonly UrlTokenSingleton _urlTokenSingleton;
 
-        public UserModel(IUserService userService, UrlTokenSingleton urlTokenSingleton)
+        public PersonModel(IPersonService userService, UrlTokenSingleton urlTokenSingleton)
         {
             _userService = userService;
             _urlTokenSingleton = urlTokenSingleton;

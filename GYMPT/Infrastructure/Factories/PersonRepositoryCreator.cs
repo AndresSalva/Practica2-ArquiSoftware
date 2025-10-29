@@ -6,11 +6,11 @@ using ServiceUser.Domain.Ports;
 
 namespace GYMPT.Infrastructure.Factories
 {
-    public class UserRepositoryCreator : RepositoryCreator<User>
+    public class PersonRepositoryCreator : RepositoryCreator<Person>
     {
-        public override IRepository<User> CreateRepository()
+        public override IRepository<Person> CreateRepository()
         {
-            return new UserRepository();
+            return new PersonRepository();
         }
     }
 }

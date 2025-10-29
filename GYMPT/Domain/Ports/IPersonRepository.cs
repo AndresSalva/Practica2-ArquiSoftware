@@ -4,7 +4,7 @@ using ServiceUser.Domain.Entities;
 
 namespace GYMPT.Domain.Ports
 {
-    public interface IUserRepository : IRepository<User>
+    public interface IPersonRepository : IRepository<Person>
     {
     }
 }

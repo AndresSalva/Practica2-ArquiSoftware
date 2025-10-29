@@ -10,7 +10,7 @@ namespace GYMPT.Pages.Instructors
     [Authorize]
     public class ChangePasswordModel : PageModel
     {
-        private readonly IInstructorService _instructorService;
+        private readonly IUserService _instructorService;
         private readonly IPasswordHasher _passwordHasher;
         private readonly UrlTokenSingleton _urlTokenService;
         [BindProperty]
@@ -23,7 +23,7 @@ namespace GYMPT.Pages.Instructors
 
         public string Message { get; set; } = string.Empty;
 
-        public ChangePasswordModel(IInstructorService instructorService, IPasswordHasher passwordHasher, UrlTokenSingleton urlToken)
+        public ChangePasswordModel(IUserService instructorService, IPasswordHasher passwordHasher, UrlTokenSingleton urlToken)
         {
             _instructorService = instructorService;
             _passwordHasher = passwordHasher;

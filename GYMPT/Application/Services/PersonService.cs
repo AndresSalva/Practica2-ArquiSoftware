@@ -7,17 +7,17 @@ using ServiceUser.Infrastructure.Persistence;
 
 namespace GYMPT.Application.Services
 {
-    public class UserService : IUserService
+    public class PersonService : IPersonService
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IPersonRepository _userRepository;
 
-        public UserService(IUserRepository userRepository)
+        public PersonService(IPersonRepository userRepository)
         {
             _userRepository = userRepository;
         }
 
-        public Task<User> GetUserById(int id) => _userRepository.GetByIdAsync(id);
-        public Task<IEnumerable<User>> GetAllUsers() => _userRepository.GetAllAsync();
+        public Task<Person> GetUserById(int id) => _userRepository.GetByIdAsync(id);
+        public Task<IEnumerable<Person>> GetAllUsers() => _userRepository.GetAllAsync();
         public Task<bool> DeleteUser(int id) => _userRepository.DeleteByIdAsync(id);
     }
 }

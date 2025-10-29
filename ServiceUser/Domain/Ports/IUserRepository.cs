@@ -3,9 +3,9 @@ using ServiceUser.Domain.Ports;
 
 namespace ServiceUser.Domain.Ports
 {
-    public interface IInstructorRepository : IRepository<Instructor>
+    public interface IUserRepository : IRepository<User>
     {
-        Task<Instructor> GetByEmailAsync(string email);
+        Task<User> GetByEmailAsync(string email);
         Task<bool> UpdatePasswordAsync(int id, string password);
     }
 }

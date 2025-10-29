@@ -1,16 +1,14 @@
 ﻿namespace ServiceUser.Domain.Entities
 {
-    public class User
+    public class User : Person
     {
-        public int Id { get; set; }
-        public DateTime? CreatedAt { get; set; }
-        public DateTime? LastModification { get; set; }
-        public bool IsActive { get; set; } = true;
-        public string? Name { get; set; }
-        public string? FirstLastname { get; set; }
-        public string? SecondLastname { get; set; }
-        public DateTime? DateBirth { get; set; }
-        public string? Ci { get; set; }
-        public string? Role { get; set; }
+        public int IdUser { get; set; }
+        public DateTime? HireDate { get; set; }
+        public decimal? MonthlySalary { get; set; }
+        public string? Specialization { get; set; }
+        public string? Email { get; set; }
+        public string? Password { get; set; }
+        public bool MustChangePassword { get; set; }
+        public string? Role { get; set; } //instructor o admin
     }
 }

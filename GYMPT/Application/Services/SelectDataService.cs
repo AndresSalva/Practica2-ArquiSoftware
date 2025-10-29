@@ -5,10 +5,10 @@ namespace GYMPT.Application.Services
 {
     public class SelectDataService : ISelectDataService
     {
-        private readonly IUserService _userService;
+        private readonly IPersonService _userService;
         private readonly IMembershipService _membershipService;
 
-        public SelectDataService(IUserService userService, IMembershipService membershipService)
+        public SelectDataService(IPersonService userService, IMembershipService membershipService)
         {
             _userService = userService;
             _membershipService = membershipService;

@@ -11,7 +11,7 @@ namespace GYMPT.Pages.DetailsUsers
     public class DetailsUsersModel : PageModel
     {
         private readonly IDetailUserService _detailUserService;
-        private readonly IUserService _userService;
+        private readonly IPersonService _userService;
         private readonly IMembershipService _membershipService;
 
         // Servicio especializado para preparar datos para la UI.
@@ -30,7 +30,7 @@ namespace GYMPT.Pages.DetailsUsers
         // Inyectamos todas las dependencias que la p�gina necesita, incluyendo el nuevo servicio.
         public DetailsUsersModel(
             IDetailUserService detailUserService,
-            IUserService userService,
+            IPersonService userService,
             IMembershipService membershipService,
             ISelectDataService selectDataService)
         {

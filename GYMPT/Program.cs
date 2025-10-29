@@ -20,10 +20,10 @@ builder.Services.AddSingleton<UrlTokenSingleton>();
 
 builder.Services.AddScoped<RepositoryFactory>();
 
-builder.Services.AddScoped<IUserRepository>(sp =>
+builder.Services.AddScoped<IPersonRepository>(sp =>
 {
     var factory = sp.GetRequiredService<RepositoryFactory>();
-    return (IUserRepository)factory.CreateRepository<User>();
+    return (IPersonRepository)factory.CreateRepository<Person>();
 });
 
 /*builder.Services.AddScoped<IInstructorRepository>(sp =>
@@ -58,7 +58,7 @@ builder.Services.AddScoped<IDetailUserRepository>(sp =>
 });
 
 builder.Services.AddScoped<IClientService, ClientService>();
-builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IPersonService, PersonService>();
 /*builder.Services.AddScoped<IInstructorService, InstructorService>();*/
 builder.Services.AddScoped<IDisciplineService, DisciplineService>();
 builder.Services.AddScoped<IMembershipService, MembershipService>();

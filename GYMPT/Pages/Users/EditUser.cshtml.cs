@@ -13,13 +13,13 @@ namespace GYMPT.Pages.Instructors
     [Authorize(Roles = "Admin")]
     public class EditModel : PageModel
     {
-        private readonly IInstructorService _instructorService;
+        private readonly IUserService _instructorService;
         private readonly UrlTokenSingleton _urlTokenSingleton;
 
         [BindProperty]
-        public Instructor Instructor { get; set; }
+        public User Instructor { get; set; }
 
-        public EditModel(IInstructorService instructorService, UrlTokenSingleton urlTokenSingleton)
+        public EditModel(IUserService instructorService, UrlTokenSingleton urlTokenSingleton)
         {
             _instructorService = instructorService;
             _urlTokenSingleton = urlTokenSingleton;

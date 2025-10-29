@@ -7,16 +7,16 @@ using ServiceUser.Domain.Entities;
 
 namespace GYMPT.Infrastructure.Persistence
 {
-    public class UserRepository : IUserRepository
+    public class PersonRepository : IPersonRepository
     {
         private readonly string _postgresString;
 
-        public UserRepository()
+        public PersonRepository()
         {
             _postgresString = ConnectionStringSingleton.Instance.PostgresConnection;
         }
 
-        public async Task<User> CreateAsync(User entity)
+        public async Task<Person> CreateAsync(Person entity)
         {
             try
             {
@@ -55,14 +55,14 @@ namespace GYMPT.Infrastructure.Persistence
             }
         }
 
-        public async Task<IEnumerable<User>> GetAllAsync()
+        public async Task<IEnumerable<Person>> GetAllAsync()
         {
             try
             {
                 await RemoteLoggerSingleton.Instance.LogInfo("Trying to obtain full list");
                 using var conn = new NpgsqlConnection(_postgresString);
                 var sql = @"SELECT id, created_at AS CreatedAt, last_modification AS LastModification, is_active AS IsActive, name, first_lastname AS FirstLastname, second_lastname AS SecondLastname, date_birth AS DateBirth, ci, ""role"" AS Role FROM ""user"" WHERE is_active = true;";
-                return await conn.QueryAsync<User>(sql);
+                return await conn.QueryAsync<Person>(sql);
             }
             catch (Exception ex)
             {
@@ -71,14 +71,14 @@ namespace GYMPT.Infrastructure.Persistence
             }
         }
 
-        public async Task<User> GetByIdAsync(int id)
+        public async Task<Person> GetByIdAsync(int id)
         {
             try
             {
                 await RemoteLoggerSingleton.Instance.LogInfo($"Trying to obtain user with id: {id} con Dapper.");
                 using var conn = new NpgsqlConnection(_postgresString);
                 var sql = @"SELECT id, name, first_lastname AS FirstLastname, second_lastname AS SecondLastname, date_birth AS DateBirth, ci, ""role"" AS Role, created_at AS CreatedAt, last_modification AS LastModification, is_active as IsActive FROM ""user"" WHERE id = @Id AND is_active = true;";
-                return await conn.QuerySingleOrDefaultAsync<User>(sql, new { Id = id });
+                return await conn.QuerySingleOrDefaultAsync<Person>(sql, new { Id = id });
             }
             catch (Exception ex)
             {
@@ -87,7 +87,7 @@ namespace GYMPT.Infrastructure.Persistence
             }
         }
 
-        public async Task<User> UpdateAsync(User entity)
+        public async Task<Person> UpdateAsync(Person entity)
         {
             try
             {

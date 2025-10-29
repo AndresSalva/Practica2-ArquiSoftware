@@ -10,12 +10,12 @@ namespace GYMPT.Pages.Users
     [Authorize]
     public class DeleteUserModel : PageModel
     {
-        private readonly IUserService _userService;
+        private readonly IPersonService _userService;
 
         [BindProperty]
-        public User User { get; set; }
+        public Person User { get; set; }
 
-        public DeleteUserModel(IUserService userService)
+        public DeleteUserModel(IPersonService userService)
         {
             _userService = userService;
         }

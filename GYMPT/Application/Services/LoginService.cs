@@ -6,16 +6,16 @@ namespace GYMPT.Application.Services
 {
     public class LoginService
     {
-        private readonly IInstructorRepository _instructorRepository;
+        private readonly IUserRepository _instructorRepository;
         private readonly IPasswordHasher _passwordHasher;
 
-        public LoginService(IInstructorRepository instructorRepository, IPasswordHasher passwordHasher)
+        public LoginService(IUserRepository instructorRepository, IPasswordHasher passwordHasher)
         {
             _instructorRepository = instructorRepository;
             _passwordHasher = passwordHasher;
         }
 
-        public async Task<Instructor> AuthenticateAsync(string email, string password)
+        public async Task<User> AuthenticateAsync(string email, string password)
         {
             var instructor = await _instructorRepository.GetByEmailAsync(email);
             if (instructor != null && _passwordHasher.Verify(instructor.Password, password))

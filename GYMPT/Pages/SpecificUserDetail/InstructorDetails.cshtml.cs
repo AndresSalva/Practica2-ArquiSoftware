@@ -12,11 +12,11 @@ namespace GYMPT.Pages.SpecificUserDetail
     [Authorize(Roles = "Admin")]
     public class InstructorDetailsModel : PageModel
     {
-        private readonly IInstructorService _instructorService;
+        private readonly IUserService _instructorService;
         private readonly UrlTokenSingleton _urlTokenSingleton;
-        public Instructor Instructor { get; set; }
+        public User Instructor { get; set; }
 
-        public InstructorDetailsModel(IInstructorService instructorService, UrlTokenSingleton urlTokenSingleton)
+        public InstructorDetailsModel(IUserService instructorService, UrlTokenSingleton urlTokenSingleton)
         {
             _instructorService = instructorService;
             _urlTokenSingleton = urlTokenSingleton;

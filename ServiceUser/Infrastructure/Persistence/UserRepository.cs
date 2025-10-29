@@ -7,13 +7,13 @@ using Microsoft.Extensions.Logging;
 
 namespace ServiceUser.Infrastructure.Persistence
 {
-    public class InstructorRepository : IInstructorRepository
+    public class UserRepository : IUserRepository
     {
         private readonly string _connectionString;
-        private readonly ILogger<InstructorRepository> _logger;
+        private readonly ILogger<UserRepository> _logger;
 
         // Constructor con Dependency Injection para el connection provider y logger
-        public InstructorRepository(IUserConnectionProvider connectionProvider, ILogger<InstructorRepository> logger)
+        public UserRepository(IUserConnectionProvider connectionProvider, ILogger<UserRepository> logger)
         {
             ArgumentNullException.ThrowIfNull(connectionProvider, nameof(connectionProvider));
             ArgumentNullException.ThrowIfNull(logger, nameof(logger));
@@ -28,27 +28,27 @@ namespace ServiceUser.Infrastructure.Persistence
             _logger = logger;
         }
 
-        public async Task<Instructor> GetByIdAsync(int id)
+        public async Task<User> GetByIdAsync(int id)
         {
             using var conn = new NpgsqlConnection(_connectionString);
             const string sql = @"
                 SELECT * FROM instructor_view
                 WHERE Id = @Id;";
 
-            return await conn.QuerySingleOrDefaultAsync<Instructor>(sql, new { Id = id });
+            return await conn.QuerySingleOrDefaultAsync<User>(sql, new { Id = id });
         }
 
-        public async Task<IEnumerable<Instructor>> GetAllAsync()
+        public async Task<IEnumerable<User>> GetAllAsync()
         {
             using var conn = new NpgsqlConnection(_connectionString);
             const string sql = @"
                 SELECT * FROM instructor_view   
                 WHERE Role = 'Instructor';";
 
-            return await conn.QueryAsync<Instructor>(sql);
+            return await conn.QueryAsync<User>(sql);
         }
 
-        public async Task<Instructor> CreateAsync(Instructor entity)
+        public async Task<User> CreateAsync(User entity)
         {
             await _logger.LogInformationAsync($"Creating instructor: {entity.Name}");
 
@@ -83,7 +83,7 @@ namespace ServiceUser.Infrastructure.Persistence
             }
         }
 
-        public async Task<Instructor> UpdateAsync(Instructor entity)
+        public async Task<User> UpdateAsync(User entity)
         {
             using var conn = new NpgsqlConnection(_connectionString);
             await conn.OpenAsync();
@@ -121,12 +121,12 @@ namespace ServiceUser.Infrastructure.Persistence
             return affectedRows > 0;
         }
 
-        public async Task<Instructor> GetByEmailAsync(string email)
+        public async Task<User> GetByEmailAsync(string email)
         {
             using var conn = new NpgsqlConnection(_connectionString);
             const string sql = @"SELECT * FROM instructor_view WHERE email = @Email;";
 
-            return await conn.QuerySingleOrDefaultAsync<Instructor>(sql, new { Email = email });
+            return await conn.QuerySingleOrDefaultAsync<User>(sql, new { Email = email });
         }
 
         public async Task<bool> UpdatePasswordAsync(int id, string password)

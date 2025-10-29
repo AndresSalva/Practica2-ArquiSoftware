@@ -14,7 +14,7 @@ public class CookieAuthService
         _httpContextAccessor = httpContextAccessor;
     }
 
-    public async Task SignInAsync(Instructor user)
+    public async Task SignInAsync(User user)
     {
         var claims = new List<Claim>
         {

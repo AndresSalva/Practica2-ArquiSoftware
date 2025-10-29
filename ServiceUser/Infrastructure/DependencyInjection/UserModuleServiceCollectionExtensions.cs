@@ -35,8 +35,8 @@ namespace ServiceUser.Infrastructure.DependencyInjection
 
         private static IServiceCollection AddUserCore(this IServiceCollection services)
         {
-            services.AddScoped<IInstructorRepository, InstructorRepository>();
-            services.AddScoped<IInstructorService, InstructorService>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
 
             return services;
         }

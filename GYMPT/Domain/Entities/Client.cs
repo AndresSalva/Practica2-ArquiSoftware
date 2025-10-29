@@ -2,7 +2,7 @@
 
 namespace GYMPT.Domain.Entities
 {
-    public class Client : User
+    public class Client : Person
     {
         public int IdUser { get; set; }
         public string? FitnessLevel { get; set; }

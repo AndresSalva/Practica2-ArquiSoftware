@@ -3,10 +3,10 @@ using ServiceUser.Domain.Entities;
 
 namespace GYMPT.Application.Interfaces
 {
-    public interface IUserService
+    public interface IPersonService
     {
-        Task<User> GetUserById(int id);
-        Task<IEnumerable<User>> GetAllUsers();
+        Task<Person> GetUserById(int id);
+        Task<IEnumerable<Person>> GetAllUsers();
         Task<bool> DeleteUser(int id);
     }
 }

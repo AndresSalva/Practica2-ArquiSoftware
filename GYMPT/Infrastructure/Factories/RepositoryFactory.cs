@@ -20,8 +20,8 @@ namespace GYMPT.Infrastructure.Factories
 
         private RepositoryCreator<T>? GetCreator<T>() where T : class
         {
-            if (typeof(T) == typeof(User))
-                return (RepositoryCreator<T>)(object)new UserRepositoryCreator();
+            if (typeof(T) == typeof(Person))
+                return (RepositoryCreator<T>)(object)new PersonRepositoryCreator();
 
             if (typeof(T) == typeof(Client))
                 return (    RepositoryCreator<T>)(object)new ClientRepositoryCreator();
