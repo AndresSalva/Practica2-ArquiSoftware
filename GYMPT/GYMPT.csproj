@@ -30,7 +30,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../ServiceCommon/ServiceCommon.csproj" />
+    <ProjectReference Include="..\ServiceCommon\ServiceCommon.csproj" />
+    <ProjectReference Include="..\SERVICE-PERSON\ServicePerson.csproj" />
   </ItemGroup>
 
 </Project>

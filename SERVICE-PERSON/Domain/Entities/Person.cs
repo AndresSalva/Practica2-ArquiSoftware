@@ -1,6 +1,6 @@
-﻿namespace GYMPT.Domain.Entities
+﻿namespace ServicePerson.Domain.Entities
 {
-    public class User
+    public class Person
     {
         public int Id { get; set; }
         public DateTime? CreatedAt { get; set; }
@@ -11,6 +11,5 @@
         public string? SecondLastname { get; set; }
         public DateTime? DateBirth { get; set; }
         public string? Ci { get; set; }
-        public string? Role { get; set; }
     }
 }
