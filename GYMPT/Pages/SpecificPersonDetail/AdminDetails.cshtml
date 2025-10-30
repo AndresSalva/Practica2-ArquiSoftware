@@ -1,0 +1,46 @@
+﻿@page "{token}"
+@model GYMPT.Pages.SpecificUserDetail.AdminDetailsModel
+
+@{
+    ViewData["Title"] = "Detalles del Administrador";
+}
+
+@if (Model.Admin != null)
+{
+    <h1>Detalles de: @Model.Admin.Name @Model.Admin.FirstLastname @Model.Admin.SecondLastname</h1>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">Nombre completo</dt>
+        <dd class="col-sm-9">@Model.Admin.Name @Model.Admin.FirstLastname @Model.Admin.SecondLastname</dd>
+
+        <dt class="col-sm-3">Rol</dt>
+        <dd class="col-sm-9">@Model.Admin.Role</dd>
+
+        <dt class="col-sm-3">CI</dt>
+        <dd class="col-sm-9">@Model.Admin.Ci</dd>
+
+        <dt class="col-sm-3">Fecha de Nacimiento</dt>
+        <dd class="col-sm-9">@Model.Admin.DateBirth?.ToShortDateString()</dd>
+
+        <dt class="col-sm-3">Especialización</dt>
+        <dd class="col-sm-9">@Model.Admin.Specialization</dd>
+
+        <dt class="col-sm-3">Fecha de Contratación</dt>
+        <dd class="col-sm-9">@Model.Admin.HireDate?.ToShortDateString()</dd>
+
+        <dt class="col-sm-3">Sueldo Mensual</dt>
+        <dd class="col-sm-9">@Model.Admin.MonthlySalary?.ToString("C")</dd>
+
+        <dt class="col-sm-3">Correo Electrónico</dt>
+        <dd class="col-sm-9">@Model.Admin.Email</dd>
+    </dl>
+}
+else
+{
+    <h1 class="text-danger">Administrador no encontrado</h1>
+    <p>El usuario con el ID especificado no existe o no tiene el rol de administrador.</p>
+}
+
+<div class="mt-4">
+    <a asp-page="/Persons/Person" class="btn btn-secondary">← Volver a la Lista de Usuarios</a>
+</div>

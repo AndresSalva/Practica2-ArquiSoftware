@@ -1,23 +1,21 @@
-using GYMPT.Domain.Ports;
-using GYMPT.Domain.Entities;
+using ServiceUser.Domain.Entities;
+using ServiceUser.Domain.Ports;
 
 namespace GYMPT.Application.Services
 {
     public class LoginService
     {
-        private readonly IInstructorRepository _instructorRepository;
-        private readonly IPasswordHasher _passwordHasher;
+        private readonly IUserRepository _instructorRepository;
 
-        public LoginService(IInstructorRepository instructorRepository, IPasswordHasher passwordHasher)
+        public LoginService(IUserRepository instructorRepository)
         {
             _instructorRepository = instructorRepository;
-            _passwordHasher = passwordHasher;
         }
 
-        public async Task<Instructor> AuthenticateAsync(string email, string password)
+        public async Task<User> AuthenticateAsync(string email, string password)
         {
             var instructor = await _instructorRepository.GetByEmailAsync(email);
-            if (instructor != null && _passwordHasher.Verify(instructor.Password, password))
+            if (instructor != null)
             {
                 return instructor;
             }

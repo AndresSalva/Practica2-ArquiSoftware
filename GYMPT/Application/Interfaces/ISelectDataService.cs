@@ -7,6 +7,7 @@ namespace GYMPT.Application.Interfaces
     {
         Task<SelectList> GetUserOptionsAsync();
         Task<SelectList> GetMembershipOptionsAsync();
+        Task<SelectList> GetDisciplineOptionsAsync();
         Task<SelectList> GetInstructorOptionsAsync(); 
     }
 }

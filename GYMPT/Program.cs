@@ -1,74 +1,65 @@
-﻿using GYMPT.Application.Interfaces;
+using ServiceUser.Infrastructure.DependencyInjection;
+using ServiceClient.Infrastructure.DependencyInjection;
+using ServiceDiscipline.Infrastructure.DependencyInjection;
+using ServiceMembership.Infrastructure.DependencyInjection;
+using ServiceCommon.Domain.Ports;
+using ServiceCommon.Infrastructure.Services;
 using GYMPT.Application.Services;
-using GYMPT.Domain.Ports;
-using GYMPT.Infrastructure.Factories;
-using GYMPT.Infrastructure.Services;
 using GYMPT.Infrastructure.Security;
-using GYMPT.Domain.Entities;
+using GYMPT.Application.Facades;
+using ServiceCommon.Domain.Entities;
+using GYMPT.Infrastructure.Facade;
+using GYMPT.Application.Interfaces;
+using GYMPT.Infrastructure.Providers;
+using QuestPDF.Infrastructure;
+using ReportService.Application.Interfaces;
+using ReportService.Application.Services;
+using ReportService.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Ensures correct configuration of the url token singleton.
+// Configuración base
 builder.Services.AddDataProtection();
-builder.Services.AddSingleton<UrlTokenSingleton>();
-
-builder.Services.AddScoped<RepositoryFactory>();
-
-builder.Services.AddScoped<IUserRepository>(sp =>
-{
-    var factory = sp.GetRequiredService<RepositoryFactory>();
-    return (IUserRepository)factory.CreateRepository<User>();
-});
-
-builder.Services.AddScoped<IInstructorRepository>(sp =>
-{
-    var factory = sp.GetRequiredService<RepositoryFactory>();
-    return (IInstructorRepository)factory.CreateRepository<Instructor>();
-});
-
-builder.Services.AddScoped<IClientRepository>(sp =>
-{
-    var factory = sp.GetRequiredService<RepositoryFactory>();
-    return (IClientRepository)factory.CreateRepository<Client>();
-});
-
-builder.Services.AddScoped<IDisciplineRepository>(sp =>
-{
-    var factory = sp.GetRequiredService<RepositoryFactory>();
-    return (IDisciplineRepository)factory.CreateRepository<Discipline>();
-});
-
-builder.Services.AddScoped<IMembershipRepository>(sp =>
-{
-    var factory = sp.GetRequiredService<RepositoryFactory>();
-    return (IMembershipRepository)factory.CreateRepository<Membership>();
-});
-
-builder.Services.AddScoped<IDetailUserRepository>(sp =>
-{
-    var factory = sp.GetRequiredService<RepositoryFactory>();
-    return (IDetailUserRepository)factory.CreateRepository<DetailsUser>();
-});
-
-builder.Services.AddScoped<IClientService, ClientService>();
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IInstructorService, InstructorService>();
-builder.Services.AddScoped<IDisciplineService, DisciplineService>();
-builder.Services.AddScoped<IMembershipService, MembershipService>();
-builder.Services.AddScoped<IDetailUserService, DetailUserService>();
-builder.Services.AddScoped<ISelectDataService, SelectDataService>();
-
-// Login Related Services
-builder.Services.AddScoped<IPasswordHasher, BcryptPasswordHasher>();
-builder.Services.AddScoped<LoginService>();
-builder.Services.AddScoped<CookieAuthService>();
+builder.Services.AddSingleton<ParameterProtector>();
+builder.Services.AddSingleton<IConnectionStringProvider, ConnectionStringProvider>();
+builder.Services.AddSingleton<ConnectionStringProvider>();
 builder.Services.AddHttpContextAccessor();
-
-// Email Credentials Related Services
 builder.Services.Configure<SmtpOptions>(builder.Configuration.GetSection("Smtp"));
 builder.Services.AddTransient<EmailService>();
-builder.Services.AddRazorPages();
 
+// Helper para obtener la conexión desde DI
+string GetConnectionString(IServiceProvider sp) =>
+    sp.GetRequiredService<ConnectionStringProvider>().GetPostgresConnection();
+
+// Módulos independientes
+builder.Services.AddUserModule(GetConnectionString);
+builder.Services.AddClientModule(GetConnectionString);
+builder.Services.AddDisciplineModule(GetConnectionString);
+builder.Services.AddMembershipModule(GetConnectionString);
+
+// === NUEVA CONFIGURACIÓN PARA REPORTES ===
+builder.Services.AddScoped<ILogoProvider, LogoProvider>();
+builder.Services.AddScoped<IPdfReportBuilder, InstructorPerformancePdfBuilder>();
+builder.Services.AddScoped<IReportService, ReportService.Application.Services.ReportService>();
+
+// Configurar QuestPDF (solo una vez al inicio)
+QuestPDF.Settings.License = LicenseType.Community;
+
+// Si tienes un módulo de reportes, puedes agregarlo así:
+// builder.Services.AddReportsModule(GetConnectionString);
+
+// Facades
+builder.Services.AddScoped<ISelectDataFacade, SelectDataFacade>();
+builder.Services.AddScoped<GYMPT.Application.Interfaces.ISelectDataService, GYMPT.Application.Services.SelectDataService>();
+builder.Services.AddScoped<PersonFacade>();
+builder.Services.AddScoped<UserCreationFacade>();
+
+// Servicios transversales (seguridad, login, hashing, etc.)
+builder.Services.AddScoped<LoginService>();
+builder.Services.AddScoped<CookieAuthService>();
+builder.Services.AddScoped<ISelectDataFacade, SelectDataFacade>();
+
+// Autenticación y autorización
 builder.Services.AddAuthentication("Cookies")
     .AddCookie("Cookies", options =>
     {
@@ -81,24 +72,35 @@ builder.Services.AddAuthentication("Cookies")
 
 builder.Services.AddAuthorization();
 
+// UI
+builder.Services.AddRazorPages();
+
+// === NUEVO: Controlador para los endpoints de reportes ===
+builder.Services.AddControllers(); // Necesario para los endpoints API de reportes
+
+// Loggs Terminal
+builder.Services.AddSingleton<IRemoteLogger>(sp =>
+{
+    var connProvider = sp.GetRequiredService<ConnectionStringProvider>();
+    var connString = connProvider.GetPostgresConnection();
+    return new RemoteLogger(connString);
+});
+
+// Construcción del pipeline HTTP
 var app = builder.Build();
-
-
-RemoteLoggerSingleton.Configure();
-
 
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
 }
+
 app.UseStaticFiles();
-
 app.UseRouting();
-
 app.UseAuthentication();
-
 app.UseAuthorization();
 
+// === NUEVO: Mapear controladores para los endpoints de reportes ===
+app.MapControllers(); // Esto permite que funcionen los endpoints API
 app.MapRazorPages();
 
 app.Run();

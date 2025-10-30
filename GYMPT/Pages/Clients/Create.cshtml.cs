@@ -1,28 +1,25 @@
-using GYMPT.Application.Interfaces;
-using GYMPT.Domain.Entities;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Threading.Tasks;
+using ServiceClient.Application.Interfaces;
+using ServiceClient.Domain.Entities;
 
 namespace GYMPT.Pages.Clients
 {
-    [Authorize]
     public class CreateModel : PageModel
     {
         private readonly IClientService _clientService;
-
-        [BindProperty]
-        public Client Client { get; set; } = new();
 
         public CreateModel(IClientService clientService)
         {
             _clientService = clientService;
         }
 
-        public void OnGet()
+        [BindProperty]
+        public Client Client { get; set; } = new Client(); // Es buena pr�ctica inicializarlo
+
+        public IActionResult OnGet()
         {
-            Client.Role = "Client";
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -31,12 +28,22 @@ namespace GYMPT.Pages.Clients
             {
                 return Page();
             }
-
-            Client.Role = "Client";
-            await _clientService.CreateNewClient(Client);
-
-            TempData["SuccessMessage"] = $"El cliente '{Client.Name} {Client.FirstLastname}' ha sido creado exitosamente.";
-            return RedirectToPage("/Users/User");
+            try
+            {
+                await _clientService.CreateAsync(Client);
+                return RedirectToPage("./Index");
+            }
+            catch (ArgumentException ex)
+            {
+                ModelState.AddModelError(string.Empty, ex.Message);
+                return Page();
+            }
+            // Opcional: Podr�as atrapar otras excepciones m�s gen�ricas si la base de datos falla.
+            // catch (Exception ex)
+            // {
+            //     ModelState.AddModelError(string.Empty, "Ocurri� un error inesperado en el servidor. Por favor, intente de nuevo.");
+            //     return Page();
+            // }
         }
     }
 }

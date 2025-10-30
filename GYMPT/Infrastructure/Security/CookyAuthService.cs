@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
-using GYMPT.Domain.Entities;
-
+using ServiceUser.Domain.Entities;
 namespace GYMPT.Infrastructure.Security;
 
 public class CookieAuthService
@@ -14,7 +13,7 @@ public class CookieAuthService
         _httpContextAccessor = httpContextAccessor;
     }
 
-    public async Task SignInAsync(Instructor user)
+    public async Task SignInAsync(User user)
     {
         var claims = new List<Claim>
         {

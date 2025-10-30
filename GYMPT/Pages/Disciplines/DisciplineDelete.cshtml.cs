@@ -1,8 +1,8 @@
-﻿using GYMPT.Application.Interfaces;
-using GYMPT.Domain.Entities;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using ServiceDiscipline.Application.Interfaces;
+using ServiceDiscipline.Domain.Entities;
 
 namespace GYMPT.Pages.Disciplines
 {
@@ -21,13 +21,14 @@ namespace GYMPT.Pages.Disciplines
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            Discipline = await _disciplineService.GetDisciplineById(id);
-
-            if (Discipline == null)
+            var result = await _disciplineService.GetDisciplineById(id);
+            if (result.IsFailure)
             {
-                TempData["ErrorMessage"] = "La disciplina que intentas eliminar no fue encontrada.";
+                TempData["ErrorMessage"] = "No se pudo cargar la disciplina.";
                 return RedirectToPage("/Disciplines/Discipline");
             }
+
+            Discipline = result.Value;
 
             return Page();
         }
@@ -40,6 +41,7 @@ namespace GYMPT.Pages.Disciplines
             }
 
             await _disciplineService.DeleteDiscipline(Discipline.Id);
+
             TempData["SuccessMessage"] = "Disciplina eliminada correctamente.";
             return RedirectToPage("/Disciplines/Discipline");
         }

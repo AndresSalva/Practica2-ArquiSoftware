@@ -1,10 +1,11 @@
-﻿using GYMPT.Application.Interfaces;
-using GYMPT.Infrastructure.Services;
-using GYMPT.Domain.Entities;
+using GYMPT.Application.Facades;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Authorization;
+using ServiceCommon.Infrastructure.Services;
+using ServiceDiscipline.Application.Interfaces;
+using ServiceDiscipline.Domain.Entities;
 
 namespace GYMPT.Pages.Disciplines
 {
@@ -12,76 +13,74 @@ namespace GYMPT.Pages.Disciplines
     public class DisciplineEditModel : PageModel
     {
         private readonly IDisciplineService _disciplineService;
-        private readonly IUserService _userService;
-        private readonly UrlTokenSingleton _urlTokenSingleton;
+        private readonly SelectDataFacade _facade;
+        private readonly ParameterProtector _urlTokenSingleton;
 
         [BindProperty]
-        public Discipline Discipline { get; set; }
-        public SelectList InstructorOptions { get; set; }
+        public Discipline Discipline { get; set; } = default!;
+        public SelectList InstructorOptions { get; set; } = default!;
 
-        public DisciplineEditModel(IDisciplineService disciplineService, IUserService userService, UrlTokenSingleton urlTokenSingleton)
+        public DisciplineEditModel(
+            IDisciplineService disciplineService,
+            SelectDataFacade facade,
+            ParameterProtector urlTokenSingleton)
         {
             _disciplineService = disciplineService;
-            _userService = userService;
+            _facade = facade;
             _urlTokenSingleton = urlTokenSingleton;
         }
+
         public async Task<IActionResult> OnGetAsync(string token)
         {
-            var tokenId = _urlTokenSingleton.GetTokenData(token);
+            var tokenId = _urlTokenSingleton.Unprotect(token);
             if (tokenId == null)
             {
-                TempData["ErrorMessage"] = "Token invalido.";
-                return RedirectToPage("./Discipline");
-            }
-            int id = int.Parse(tokenId); 
-            Discipline = await _disciplineService.GetDisciplineById(id);
-            if (Discipline == null)
-            {
-                TempData["ErrorMessage"] = "Disciplina no encontrada.";
+                TempData["ErrorMessage"] = "Token inválido.";
                 return RedirectToPage("./Discipline");
             }
 
-            // Prepara el menú desplegable de instructores.
+            int id = int.Parse(tokenId);
+            var result = await _disciplineService.GetDisciplineById(id);
+            if (result.IsFailure)
+            {
+                TempData["ErrorMessage"] = result.Error;
+                return RedirectToPage("./Discipline");
+            }
+            Discipline = result.Value;
             await PopulateInstructorsDropDownList();
             return Page();
         }
 
-        // Este método se ejecuta al guardar el formulario.
         public async Task<IActionResult> OnPostAsync()
         {
-            // Si los datos del formulario no son válidos, vuelve a mostrar el formulario con los errores.
             if (!ModelState.IsValid)
             {
                 await PopulateInstructorsDropDownList();
                 return Page();
             }
 
-            // Llama al servicio para actualizar los datos.
-            var success = await _disciplineService.UpdateDisciplineData(Discipline);
+            var result = await _disciplineService.UpdateDiscipline(Discipline);
 
-            if (success)
+            if (result.IsSuccess)
             {
                 TempData["SuccessMessage"] = "Los datos de la disciplina han sido actualizados.";
-            }
-            else
-            {
-                TempData["ErrorMessage"] = "No se pudo actualizar la disciplina.";
+                return RedirectToPage("./Discipline");
             }
 
-            // Redirige de vuelta a la lista principal.
-            return RedirectToPage("./Discipline");
+            TempData["ErrorMessage"] = result.Error ?? "No se pudo actualizar la disciplina.";
+            await PopulateInstructorsDropDownList();
+            return Page();
         }
 
-        // Método auxiliar para no repetir código.
         private async Task PopulateInstructorsDropDownList()
         {
-            var users = await _userService.GetAllUsers();
-            var instructors = users
-                .Where(u => u.Role == "Instructor") // Asumiendo que el rol se llama "Instructor"
-                .Select(u => new { Id = (long)u.Id, FullName = $"{u.Name} {u.FirstLastname}" });
-
-            // Crea el SelectList, pasando el IdInstructor actual para que aparezca seleccionado.
-            InstructorOptions = new SelectList(instructors, "Id", "FullName", Discipline?.IdInstructor);
+            var instructors = await _facade.GetInstructorOptionsAsync();
+            InstructorOptions = new SelectList(
+                instructors,
+                "Id",
+                "FullName",
+                Discipline?.IdInstructor
+            );
         }
     }
 }
