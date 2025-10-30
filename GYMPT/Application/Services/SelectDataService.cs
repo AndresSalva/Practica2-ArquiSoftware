@@ -2,6 +2,7 @@
 using System.Linq;
 using GYMPT.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using ServiceDiscipline.Application.Interfaces;
 using ServiceMembership.Application.Interfaces;
 
 namespace GYMPT.Application.Services

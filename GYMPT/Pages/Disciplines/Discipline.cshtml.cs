@@ -1,6 +1,8 @@
-using GYMPT.Application.Interfaces;
-using GYMPT.Domain.Entities;
+using ServiceDiscipline.Application.Interfaces;
+using ServiceDiscipline.Domain.Entities;
 using GYMPT.Infrastructure.Services;
+using GYMPT.Domain.Entities;
+using GYMPT.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -40,14 +42,17 @@ namespace GYMPT.Pages.Disciplines
         // El m�todo recibe un 'int' desde la vista
         public async Task<IActionResult> OnPostDeleteAsync(int id)
         {
-            var success = await _disciplineService.DeleteDiscipline(id);
-            if (success)
+            var result = await _disciplineService.DeleteDiscipline(id);
+
+            if (result.IsFailure)
             {
-                TempData["SuccessMessage"] = "La disciplina ha sido eliminada correctamente.";
+                TempData["ErrorMessage"] = "No se pudo eliminar la disciplina.";
+                ModelState.AddModelError(string.Empty, result.Error);
             }
             else
             {
-                TempData["ErrorMessage"] = "No se pudo eliminar la disciplina.";
+                TempData["SuccessMessage"] = "Disciplina eliminada exitosamente.";
+
             }
             return RedirectToPage();
         }

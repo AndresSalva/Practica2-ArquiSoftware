@@ -1,11 +1,17 @@
 ﻿using GYMPT.Application.Interfaces;
 using GYMPT.Application.Services;
+using GYMPT.Domain.Entities;
 using GYMPT.Domain.Ports;
 using GYMPT.Infrastructure.Factories;
-using GYMPT.Infrastructure.Services;
 using GYMPT.Infrastructure.Security;
 using GYMPT.Domain.Entities;
 using ServiceMembership.Infrastructure.DependencyInjection;
+using GYMPT.Infrastructure.Services;
+using ServiceDiscipline.Infrastructure.DependencyInjection;
+using ServiceDiscipline.Application.Interfaces;
+using ServiceMembership.Application.Interfaces;
+using ServiceDiscipline.Application.Services;
+using ServiceMembership.Application.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,16 +39,13 @@ builder.Services.AddScoped<IClientRepository>(sp =>
     return (IClientRepository)factory.CreateRepository<Client>();
 });
 
-builder.Services.AddScoped<IDisciplineRepository>(sp =>
-{
-    var factory = sp.GetRequiredService<RepositoryFactory>();
-    return (IDisciplineRepository)factory.CreateRepository<Discipline>();
-});
 
 builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IInstructorService, InstructorService>();
 builder.Services.AddScoped<IDisciplineService, DisciplineService>();
+builder.Services.AddScoped<IMembershipService, MembershipService>();
+builder.Services.AddScoped<IDetailUserService, DetailUserService>();
 builder.Services.AddScoped<ISelectDataService, SelectDataService>();
 builder.Services.AddMembershipModule(_ => ConnectionStringSingleton.Instance.PostgresConnection);
 
@@ -54,8 +57,10 @@ builder.Services.AddHttpContextAccessor();
 
 // Email Credentials Related Services
 builder.Services.Configure<SmtpOptions>(builder.Configuration.GetSection("Smtp"));
-builder.Services.AddTransient<EmailService>();
+builder.Services.AddTransient<EmailService>();  
 builder.Services.AddRazorPages();
+// Discipline Service
+builder.Services.AddDisciplineModule(_ => ConnectionStringSingleton.Instance.PostgresConnection);
 
 builder.Services.AddAuthentication("Cookies")
     .AddCookie("Cookies", options =>

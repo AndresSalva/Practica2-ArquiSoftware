@@ -6,6 +6,7 @@ using GYMPT.Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using ServiceDiscipline.Application.Interfaces;
 using ServiceMembership.Application.Interfaces;
 using ServiceMembership.Domain.Entities;
 

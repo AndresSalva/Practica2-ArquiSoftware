@@ -1,5 +1,7 @@
 using GYMPT.Domain.Entities;
 using GYMPT.Domain.Ports;
+using ServiceDiscipline.Domain.Entities;
+using ServiceMembership.Domain.Entities;
 
 namespace GYMPT.Infrastructure.Factories
 {
@@ -26,8 +28,13 @@ namespace GYMPT.Infrastructure.Factories
             if (typeof(T) == typeof(Client))
                 return (RepositoryCreator<T>)(object)new ClientRepositoryCreator();
 
-            if (typeof(T) == typeof(Discipline))
-                return (RepositoryCreator<T>)(object)new DisciplineRepositoryCreator();
+            // if (typeof(T) == typeof(Discipline))
+            //     return (RepositoryCreator<T>)(object)new DisciplineRepositoryCreato();
+            // if (typeof(T) == typeof(Membership))
+            //     return (RepositoryCreator<T>)(object)new MembershipRepositoryCreator();
+
+            // if (typeof(T) == typeof(DetailsUser))
+            //     return (RepositoryCreator<T>)(object)new DetailUserRepositoryCreator();
 
             return null;
         }

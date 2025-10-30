@@ -1,4 +1,5 @@
-namespace GYMPT.Domain.Entities
+using System.ComponentModel.DataAnnotations;
+namespace ServiceDiscipline.Domain.Entities
 {
     public class Discipline
     {
