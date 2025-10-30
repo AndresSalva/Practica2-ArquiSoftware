@@ -31,9 +31,18 @@ namespace ServicePerson.Application.Services
         }
 
 
-        public Task<Person> CreateNewPerson(Person newPerson) => _personRepository.CreateAsync(newPerson);
+        public async Task<Result<Person>> CreateNewPerson(Person newPerson)
+        {
+            var person = await _personRepository.CreateAsync(newPerson);
+            return Result<Person>.Success(person);
+        }
 
-        public Task<Person> UpdatePerson(Person personToUpdate) => _personRepository.UpdateAsync(personToUpdate);
+
+        public async Task<Result<Person>> UpdatePerson(Person personToUpdate)
+        {
+            var updatedPerson = await _personRepository.UpdateAsync(personToUpdate);
+            return Result<Person>.Success(updatedPerson);
+        }
 
         public async Task<Result<bool>> DeletePerson(int id)
         {
