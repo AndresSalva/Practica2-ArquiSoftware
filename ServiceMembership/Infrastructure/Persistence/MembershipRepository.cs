@@ -34,10 +34,10 @@ public class MembershipRepository : IMembershipRepository
         _logger.LogInformation("Creating membership {MembershipName}", entity.Name);
 
         const string sql = """
-            INSERT INTO membership (name, price, description, monthly_sessions, created_at, last_modification, is_active)
-            VALUES (@Name, @Price, @Description, @MonthlySessions, @CreatedAt, @LastModification, @IsActive)
-            RETURNING id;
-            """;
+        INSERT INTO membership (name, price, description, monthly_sessions, created_at, last_modification, is_active)
+        VALUES (@Name, @Price, @Description, @MonthlySessions, @CreatedAt, @LastModification, @IsActive)
+        RETURNING id;
+        """;
 
         await using var conn = new NpgsqlConnection(_connectionString);
 
@@ -56,11 +56,11 @@ public class MembershipRepository : IMembershipRepository
         _logger.LogInformation("Soft deleting membership {MembershipId}", id);
 
         const string sql = """
-            UPDATE membership
-            SET is_active = false,
-                last_modification = @LastModification
-            WHERE id = @Id;
-            """;
+        UPDATE membership
+        SET is_active = false,
+            last_modification = @LastModification
+        WHERE id = @Id;
+        """;
 
         await using var conn = new NpgsqlConnection(_connectionString);
 
@@ -78,17 +78,17 @@ public class MembershipRepository : IMembershipRepository
         _logger.LogInformation("Fetching active membership list");
 
         const string sql = """
-            SELECT id,
-                   name,
-                   price,
-                   description,
-                   monthly_sessions AS MonthlySessions,
-                   created_at AS CreatedAt,
-                   last_modification AS LastModification,
-                   is_active AS IsActive
-            FROM membership
-            WHERE is_active = true;
-            """;
+        SELECT id,
+               name,
+               price,
+               description,
+               monthly_sessions AS MonthlySessions,
+               created_at AS CreatedAt,
+               last_modification AS LastModification,
+               is_active AS IsActive
+        FROM membership
+        WHERE is_active = true;
+        """;
 
         await using var conn = new NpgsqlConnection(_connectionString);
         return await conn.QueryAsync<Membership>(sql);
@@ -99,17 +99,17 @@ public class MembershipRepository : IMembershipRepository
         _logger.LogInformation("Fetching membership {MembershipId}", id);
 
         const string sql = """
-            SELECT id,
-                   name,
-                   price,
-                   description,
-                   monthly_sessions AS MonthlySessions,
-                   created_at AS CreatedAt,
-                   last_modification AS LastModification,
-                   is_active AS IsActive
-            FROM membership
-            WHERE id = @Id;
-            """;
+        SELECT id,
+               name,
+               price,
+               description,
+               monthly_sessions AS MonthlySessions,
+               created_at AS CreatedAt,
+               last_modification AS LastModification,
+               is_active AS IsActive
+        FROM membership
+        WHERE id = @Id;
+        """;
 
         await using var conn = new NpgsqlConnection(_connectionString);
         return await conn.QuerySingleOrDefaultAsync<Membership>(sql, new { Id = id });
@@ -122,15 +122,15 @@ public class MembershipRepository : IMembershipRepository
         _logger.LogInformation("Updating membership {MembershipId}", entity.Id);
 
         const string sql = """
-            UPDATE membership
-            SET name = @Name,
-                price = @Price,
-                description = @Description,
-                monthly_sessions = @MonthlySessions,
-                last_modification = @LastModification,
-                is_active = @IsActive
-            WHERE id = @Id;
-            """;
+        UPDATE membership
+        SET name = @Name,
+            price = @Price,
+            description = @Description,
+            monthly_sessions = @MonthlySessions,
+            last_modification = @LastModification,
+            is_active = @IsActive
+        WHERE id = @Id;
+        """;
 
         await using var conn = new NpgsqlConnection(_connectionString);
 
@@ -141,5 +141,3 @@ public class MembershipRepository : IMembershipRepository
         return affectedRows > 0 ? entity : null;
     }
 }
-
-

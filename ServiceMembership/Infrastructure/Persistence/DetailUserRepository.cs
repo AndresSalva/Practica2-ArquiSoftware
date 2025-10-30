@@ -33,26 +33,26 @@ public class DetailUserRepository : IDetailUserRepository
 
         _logger.LogInformation("Creating details user for user {UserId} with membership {MembershipId}", entity.IdUser, entity.IdMembership);
 
-        const string userExistsSql = @"SELECT COUNT(1) FROM ""user"" WHERE id = @UserId AND is_active = true;";
+        const string userExistsSql = @"SELECT COUNT(1) FROM client WHERE id_person = @UserId AND is_active = true;";
         const string membershipExistsSql = @"SELECT COUNT(1) FROM membership WHERE id = @MembershipId AND is_active = true;";
         const string insertSql = """
-            INSERT INTO details_user (id_user, id_membership, start_date, end_date, sessions_left, created_at, last_modification, is_active)
-            VALUES (@IdUser, @IdMembership, @StartDate, @EndDate, @SessionsLeft, @CreatedAt, @LastModification, @IsActive)
-            RETURNING id;
-            """;
+        INSERT INTO client_membership (id_client, id_membership, start_date, end_date, sessions_left, created_at, last_modification, is_active)
+        VALUES (@IdUser, @IdMembership, @StartDate, @EndDate, @SessionsLeft, @CreatedAt, @LastModification, @IsActive)
+        RETURNING id;
+        """;
 
         await using var conn = new NpgsqlConnection(_connectionString);
 
         var userExists = await conn.ExecuteScalarAsync<bool>(userExistsSql, new { UserId = entity.IdUser });
         if (!userExists)
         {
-            throw new ArgumentException($"El usuario con identificador {entity.IdUser} no existe o está inactivo.");
+            throw new ArgumentException($"El cliente con identificador {entity.IdUser} no existe o está inactivo.");
         }
 
         var membershipExists = await conn.ExecuteScalarAsync<bool>(membershipExistsSql, new { MembershipId = entity.IdMembership });
         if (!membershipExists)
         {
-            throw new ArgumentException($"La membresía con identificador {entity.IdMembership} no existe o está inactivo.");
+            throw new ArgumentException($"La membresía con identificador {entity.IdMembership} no existe o está inactiva.");
         }
 
         entity.CreatedAt = DateTime.UtcNow;
@@ -69,11 +69,11 @@ public class DetailUserRepository : IDetailUserRepository
         _logger.LogInformation("Soft deleting details user {DetailsUserId}", id);
 
         const string sql = """
-            UPDATE details_user
-            SET is_active = false,
-                last_modification = @LastModification
-            WHERE id = @Id;
-            """;
+        UPDATE client_membership
+        SET is_active = false,
+            last_modification = @LastModification
+        WHERE id = @Id;
+        """;
 
         await using var conn = new NpgsqlConnection(_connectionString);
         var affected = await conn.ExecuteAsync(sql, new { Id = id, LastModification = DateTime.UtcNow });
@@ -85,18 +85,18 @@ public class DetailUserRepository : IDetailUserRepository
         _logger.LogInformation("Fetching active details users");
 
         const string sql = """
-            SELECT id,
-                   id_user AS IdUser,
-                   id_membership AS IdMembership,
-                   start_date AS StartDate,
-                   end_date AS EndDate,
-                   sessions_left AS SessionsLeft,
-                   created_at AS CreatedAt,
-                   last_modification AS LastModification,
-                   is_active AS IsActive
-            FROM details_user
-            WHERE is_active = true;
-            """;
+        SELECT id,
+               id_client AS IdUser,
+               id_membership AS IdMembership,
+               start_date AS StartDate,
+               end_date AS EndDate,
+               sessions_left AS SessionsLeft,
+               created_at AS CreatedAt,
+               last_modification AS LastModification,
+               is_active AS IsActive
+        FROM client_membership
+        WHERE is_active = true;
+        """;
 
         await using var conn = new NpgsqlConnection(_connectionString);
         return await conn.QueryAsync<DetailsUser>(sql);
@@ -107,18 +107,18 @@ public class DetailUserRepository : IDetailUserRepository
         _logger.LogInformation("Fetching details user {DetailsUserId}", id);
 
         const string sql = """
-            SELECT id,
-                   id_user AS IdUser,
-                   id_membership AS IdMembership,
-                   start_date AS StartDate,
-                   end_date AS EndDate,
-                   sessions_left AS SessionsLeft,
-                   created_at AS CreatedAt,
-                   last_modification AS LastModification,
-                   is_active AS IsActive
-            FROM details_user
-            WHERE id = @Id;
-            """;
+        SELECT id,
+               id_client AS IdUser,
+               id_membership AS IdMembership,
+               start_date AS StartDate,
+               end_date AS EndDate,
+               sessions_left AS SessionsLeft,
+               created_at AS CreatedAt,
+               last_modification AS LastModification,
+               is_active AS IsActive
+        FROM client_membership
+        WHERE id = @Id;
+        """;
 
         await using var conn = new NpgsqlConnection(_connectionString);
         return await conn.QuerySingleOrDefaultAsync<DetailsUser>(sql, new { Id = id });
@@ -131,16 +131,16 @@ public class DetailUserRepository : IDetailUserRepository
         _logger.LogInformation("Updating details user {DetailsUserId}", entity.Id);
 
         const string sql = """
-            UPDATE details_user
-            SET id_user = @IdUser,
-                id_membership = @IdMembership,
-                start_date = @StartDate,
-                end_date = @EndDate,
-                sessions_left = @SessionsLeft,
-                last_modification = @LastModification,
-                is_active = @IsActive
-            WHERE id = @Id;
-            """;
+        UPDATE client_membership
+        SET id_client = @IdUser,
+            id_membership = @IdMembership,
+            start_date = @StartDate,
+            end_date = @EndDate,
+            sessions_left = @SessionsLeft,
+            last_modification = @LastModification,
+            is_active = @IsActive
+        WHERE id = @Id;
+        """;
 
         await using var conn = new NpgsqlConnection(_connectionString);
 
@@ -150,5 +150,3 @@ public class DetailUserRepository : IDetailUserRepository
         return affectedRows > 0 ? entity : null;
     }
 }
-
-

@@ -35,8 +35,8 @@ public class DetailMembershipRepository : IDetailMembershipRepository
 
         const string membershipExistsSql = @"SELECT COUNT(1) FROM membership WHERE id = @IdMembership AND is_active = true;";
         const string disciplineExistsSql = @"SELECT COUNT(1) FROM discipline WHERE id = @IdDiscipline AND is_active = true;";
-        const string combinationExistsSql = @"SELECT COUNT(1) FROM details_membership WHERE id_membership = @IdMembership AND id_discipline = @IdDiscipline;";
-        const string insertSql = @"INSERT INTO details_membership (id_membership, id_discipline) VALUES (@IdMembership, @IdDiscipline);";
+        const string combinationExistsSql = @"SELECT COUNT(1) FROM membership_disciplines WHERE id_membership = @IdMembership AND id_discipline = @IdDiscipline;";
+        const string insertSql = @"INSERT INTO membership_disciplines (id_membership, id_discipline) VALUES (@IdMembership, @IdDiscipline);";
 
         await using var conn = new NpgsqlConnection(_connectionString);
         await conn.OpenAsync();
@@ -68,10 +68,10 @@ public class DetailMembershipRepository : IDetailMembershipRepository
         _logger.LogInformation("Deleting membership-detail link for membership {MembershipId} and discipline {DisciplineId}", membershipId, disciplineId);
 
         const string sql = """
-            DELETE FROM details_membership
-            WHERE id_membership = @IdMembership
-              AND id_discipline = @IdDiscipline;
-            """;
+        DELETE FROM membership_disciplines
+        WHERE id_membership = @IdMembership
+          AND id_discipline = @IdDiscipline;
+        """;
 
         await using var conn = new NpgsqlConnection(_connectionString);
         var affected = await conn.ExecuteAsync(sql, new { IdMembership = membershipId, IdDiscipline = disciplineId });
@@ -83,9 +83,9 @@ public class DetailMembershipRepository : IDetailMembershipRepository
         _logger.LogInformation("Deleting all membership-detail links for membership {MembershipId}", membershipId);
 
         const string sql = """
-            DELETE FROM details_membership
-            WHERE id_membership = @IdMembership;
-            """;
+        DELETE FROM membership_disciplines
+        WHERE id_membership = @IdMembership;
+        """;
 
         await using var conn = new NpgsqlConnection(_connectionString);
         var affected = await conn.ExecuteAsync(sql, new { IdMembership = membershipId });
@@ -97,10 +97,10 @@ public class DetailMembershipRepository : IDetailMembershipRepository
         _logger.LogInformation("Fetching all membership-detail links");
 
         const string sql = """
-            SELECT id_membership AS IdMembership,
-                   id_discipline AS IdDiscipline
-            FROM details_membership;
-            """;
+        SELECT id_membership AS IdMembership,
+               id_discipline AS IdDiscipline
+        FROM membership_disciplines;
+        """;
 
         await using var conn = new NpgsqlConnection(_connectionString);
         return await conn.QueryAsync<DetailsMembership>(sql);
@@ -111,11 +111,11 @@ public class DetailMembershipRepository : IDetailMembershipRepository
         _logger.LogInformation("Fetching membership-detail links for membership {MembershipId}", membershipId);
 
         const string sql = """
-            SELECT id_membership AS IdMembership,
-                   id_discipline AS IdDiscipline
-            FROM details_membership
-            WHERE id_membership = @IdMembership;
-            """;
+        SELECT id_membership AS IdMembership,
+               id_discipline AS IdDiscipline
+        FROM membership_disciplines
+        WHERE id_membership = @IdMembership;
+        """;
 
         await using var conn = new NpgsqlConnection(_connectionString);
         return await conn.QueryAsync<DetailsMembership>(sql, new { IdMembership = membershipId });
@@ -126,12 +126,12 @@ public class DetailMembershipRepository : IDetailMembershipRepository
         _logger.LogInformation("Fetching membership-detail link for membership {MembershipId} and discipline {DisciplineId}", membershipId, disciplineId);
 
         const string sql = """
-            SELECT id_membership AS IdMembership,
-                   id_discipline AS IdDiscipline
-            FROM details_membership
-            WHERE id_membership = @IdMembership
-              AND id_discipline = @IdDiscipline;
-            """;
+        SELECT id_membership AS IdMembership,
+               id_discipline AS IdDiscipline
+        FROM membership_disciplines
+        WHERE id_membership = @IdMembership
+          AND id_discipline = @IdDiscipline;
+        """;
 
         await using var conn = new NpgsqlConnection(_connectionString);
         return await conn.QuerySingleOrDefaultAsync<DetailsMembership>(sql, new { IdMembership = membershipId, IdDiscipline = disciplineId });
@@ -148,25 +148,19 @@ public class DetailMembershipRepository : IDetailMembershipRepository
             entity.IdMembership,
             entity.IdDiscipline);
 
-        const string existingCombinationSql = @"SELECT COUNT(1) FROM details_membership WHERE id_membership = @IdMembership AND id_discipline = @IdDiscipline;";
+        const string existingCombinationSql = @"SELECT COUNT(1) FROM membership_disciplines WHERE id_membership = @IdMembership AND id_discipline = @IdDiscipline;";
         const string membershipExistsSql = @"SELECT COUNT(1) FROM membership WHERE id = @IdMembership AND is_active = true;";
         const string disciplineExistsSql = @"SELECT COUNT(1) FROM discipline WHERE id = @IdDiscipline AND is_active = true;";
         const string updateSql = """
-            UPDATE details_membership
-            SET id_membership = @NewIdMembership,
-                id_discipline = @NewIdDiscipline
-            WHERE id_membership = @IdMembership
-              AND id_discipline = @IdDiscipline;
-            """;
+        UPDATE membership_disciplines
+        SET id_membership = @NewIdMembership,
+            id_discipline = @NewIdDiscipline
+        WHERE id_membership = @IdMembership
+          AND id_discipline = @IdDiscipline;
+        """;
 
         await using var conn = new NpgsqlConnection(_connectionString);
         await conn.OpenAsync();
-
-        var currentExists = await conn.ExecuteScalarAsync<bool>(existingCombinationSql, new { IdMembership = membershipId, IdDiscipline = disciplineId });
-        if (!currentExists)
-        {
-            return null;
-        }
 
         var membershipExists = await conn.ExecuteScalarAsync<bool>(membershipExistsSql, new { IdMembership = entity.IdMembership });
         if (!membershipExists)
@@ -180,27 +174,20 @@ public class DetailMembershipRepository : IDetailMembershipRepository
             throw new ArgumentException($"La disciplina con identificador {entity.IdDiscipline} no existe o está inactiva.");
         }
 
-        var isSameCombination = membershipId == entity.IdMembership && disciplineId == entity.IdDiscipline;
-        if (!isSameCombination)
+        var combinationExists = await conn.ExecuteScalarAsync<bool>(existingCombinationSql, new { IdMembership = entity.IdMembership, IdDiscipline = entity.IdDiscipline });
+        if (combinationExists)
         {
-            var targetExists = await conn.ExecuteScalarAsync<bool>(existingCombinationSql, new { IdMembership = entity.IdMembership, IdDiscipline = entity.IdDiscipline });
-            if (targetExists)
-            {
-                throw new InvalidOperationException("La membresía de destino ya contiene la disciplina especificada.");
-            }
+            throw new InvalidOperationException("La nueva combinación de membresía y disciplina ya existe.");
         }
 
         var affectedRows = await conn.ExecuteAsync(updateSql, new
         {
-            IdMembership = membershipId,
-            IdDiscipline = disciplineId,
             NewIdMembership = entity.IdMembership,
-            NewIdDiscipline = entity.IdDiscipline
+            NewIdDiscipline = entity.IdDiscipline,
+            IdMembership = membershipId,
+            IdDiscipline = disciplineId
         });
 
         return affectedRows > 0 ? entity : null;
     }
 }
-
-
-
