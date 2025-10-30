@@ -30,21 +30,10 @@ namespace ServicePerson.Application.Services
             return Result<Person>.Success(person);
         }
 
-        //public async Task<Result<Person>> CreateNewPerson(Person newPerson)
-        //{
-        //    await _personRepository.AddAsync(newPerson);
-        //    return Result<Person>.Success(newPerson);
-        //}
 
-        //public async Task<Result<Person>> UpdatePerson(Person personToUpdate)
-        //{
-        //    var existing = await _personRepository.GetByIdAsync(personToUpdate.Id);
-        //    if (existing == null)
-        //        return Result<Person>.Failure($"No se encontró la persona con ID {personToUpdate.Id}.");
+        public Task<Person> CreateNewPerson(Person newPerson) => _personRepository.CreateAsync(newPerson);
 
-        //    await _personRepository.UpdateAsync(personToUpdate);
-        //    return Result<Person>.Success(personToUpdate);
-        //}
+        public Task<Person> UpdatePerson(Person personToUpdate) => _personRepository.UpdateAsync(personToUpdate);
 
         public async Task<Result<bool>> DeletePerson(int id)
         {
