@@ -1,5 +1,4 @@
 using Dapper;
-using Microsoft.Extensions.Logging;
 using ServiceDiscipline.Domain.Entities;
 using ServiceDiscipline.Domain.Ports;
 using ServiceDiscipline.Infrastructure.Provider;
@@ -19,7 +18,7 @@ namespace ServiceDiscipline.Infrastructure.Persistence
             var connectionString = connectionProvider.GetConnectionString();
             if (string.IsNullOrWhiteSpace(connectionString))
             {
-                throw new InvalidOperationException("El service de Disciplinas requiere una cadena de conexiÛn v·lida.");
+                throw new InvalidOperationException("El service de Disciplinas requiere una cadena de conexi√≥n v√°lida.");
             }
 
             _connectionString = connectionString;
@@ -32,8 +31,8 @@ namespace ServiceDiscipline.Infrastructure.Persistence
 
             //await _logger.LogInfo($"Creating new discipline: {entity.Name}.");
             const string sql = """
-                INSERT INTO discipline (name, id_instructor, start_time, end_time, created_at, last_modification, is_active) 
-                VALUES (@Name, @IdInstructor, @StartTime, @EndTime, @CreatedAt, @LastModification, @IsActive) 
+                INSERT INTO discipline (name, id_user, start_time, end_time, created_at, last_modification, is_active) 
+                VALUES (@Name, @IdUser, @StartTime, @EndTime, @CreatedAt, @LastModification, @IsActive) 
                 RETURNING id;
                 """;
 
@@ -67,7 +66,8 @@ namespace ServiceDiscipline.Infrastructure.Persistence
         {
             //await _logger.LogInfo($"Fetching active discipline list");
             const string sql = """
-                SELECT id, name, id_instructor AS IdInstructor, start_time AS StartTime, end_time AS EndTime, created_at AS CreatedAt, last_modification AS LastModification, is_active as IsActive 
+                SELECT id, name, id_user AS IdUser, start_time AS StartTime, end_time AS EndTime, 
+                       created_at AS CreatedAt, last_modification AS LastModification, is_active as IsActive 
                 FROM discipline 
                 WHERE is_active = true
                 ORDER BY name ASC;
@@ -82,8 +82,8 @@ namespace ServiceDiscipline.Infrastructure.Persistence
             //await _logger.LogInfo($"Fetching discipline with id: {id}.");
 
             const string sql = """
-                SELECT id, name, id_instructor AS IdInstructor, start_time AS StartTime, end_time AS EndTime, 
-                created_at AS CreatedAt, last_modification AS LastModification, is_active as IsActive 
+                SELECT id, name, id_user AS IdUser, start_time AS StartTime, end_time AS EndTime, 
+                       created_at AS CreatedAt, last_modification AS LastModification, is_active as IsActive 
                 FROM discipline WHERE id = @Id;
                 """;
             await using var conn = new NpgsqlConnection(_connectionString);
@@ -94,11 +94,12 @@ namespace ServiceDiscipline.Infrastructure.Persistence
         {
             ArgumentNullException.ThrowIfNull(entity, nameof(entity));
 
-            //await _logger.LogInfo($"Deleting discipline with id: {entity.Id}.");
+            //await _logger.LogInfo($"Updating discipline with id: {entity.Id}.");
 
             const string sql = """
-                UPDATE discipline SET name = @Name, id_instructor = @IdInstructor, start_time = @StartTime, 
-                end_time = @EndTime, last_modification = @LastModification, is_active = @IsActive 
+                UPDATE discipline 
+                SET name = @Name, id_user = @IdUser, start_time = @StartTime, 
+                    end_time = @EndTime, last_modification = @LastModification, is_active = @IsActive 
                 WHERE id = @Id;
                 """;
             await using var conn = new NpgsqlConnection(_connectionString);
