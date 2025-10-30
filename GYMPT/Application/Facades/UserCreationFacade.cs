@@ -1,10 +1,9 @@
-﻿using GYMPT.Application.Interfaces;
+﻿using GYMPT.Application.DTO;
+using GYMPT.Application.Interfaces;
 using GYMPT.Domain.Entities;
 using GYMPT.Infrastructure.Services;
-using GYMPT.Pages.Users;
 using ServiceUser.Application.Interfaces;
 using ServiceUser.Domain.Entities;
-using GYMPT.Application.DTO;
 
 namespace GYMPT.Infrastructure.Facade
 {
@@ -27,6 +26,9 @@ namespace GYMPT.Infrastructure.Facade
             _emailService = emailService;
         }
 
+        // =====================================================
+        // 🧩 CREAR USUARIO (Instructor o Cliente)
+        // =====================================================
         public async Task<bool> CreateUserAsync(UserInputModel input)
         {
             if (input.Role == "Client")
@@ -66,22 +68,62 @@ namespace GYMPT.Infrastructure.Facade
 
                 await _userService.CreateUser(instructor);
 
-                string subject = "Tu cuenta GYMPT fue creada";
-                string body = $@"
-                    <h3>¡Bienvenido/a {input.Name}!</h3>
-                    <p>Tu cuenta ha sido creada correctamente.</p>
-                    <p><strong>Correo:</strong> {input.Email}</p>
-                    <p><strong>Contraseña:</strong> gympt.{input.Ci}</p>
-                    <p>Por seguridad, cambia tu contraseña al iniciar sesión.</p>
-                    <hr>
-                    <p>© GYMPT, 2025</p>
-                ";
+                // Envío de correo es OPCIONAL
+                if (!string.IsNullOrWhiteSpace(input.Email))
+                {
+                    string subject = "Tu cuenta GYMPT fue creada";
+                    string body = $@"
+                        <h3>¡Bienvenido/a {input.Name}!</h3>
+                        <p>Tu cuenta ha sido creada correctamente.</p>
+                        <p><strong>Correo:</strong> {input.Email}</p>
+                        <p><strong>Contraseña:</strong> gympt.{input.Ci}</p>
+                        <p>Por seguridad, cambia tu contraseña al iniciar sesión.</p>
+                        <hr>
+                        <p>© GYMPT, 2025</p>
+                    ";
 
-                await _emailService.SendEmailAsync(input.Email, subject, body);
+                    //await _emailService.SendEmailAsync(input.Email, subject, body);
+                }
+
                 return true;
             }
 
             return false;
+        }
+
+        // =====================================================
+        // 🔍 OBTENER USUARIO POR ID
+        // =====================================================
+        public async Task<User?> GetUserByIdAsync(int id)
+        {
+            return await _userService.GetUserById(id);
+        }
+
+        // =====================================================
+        // 🔄 ACTUALIZAR USUARIO EXISTENTE (Instructor)
+        // =====================================================
+        public async Task<bool> UpdateUserAsync(User updatedUser)
+        {
+            if (updatedUser == null)
+                return false;
+
+            var existingUser = await _userService.GetUserById(updatedUser.Id);
+            if (existingUser == null)
+                return false;
+
+            // Actualizamos campos
+            existingUser.Name = updatedUser.Name;
+            existingUser.FirstLastname = updatedUser.FirstLastname;
+            existingUser.SecondLastname = updatedUser.SecondLastname;
+            existingUser.Ci = updatedUser.Ci;
+            existingUser.DateBirth = updatedUser.DateBirth;
+            existingUser.Specialization = updatedUser.Specialization;
+            existingUser.HireDate = updatedUser.HireDate;
+            existingUser.MonthlySalary = updatedUser.MonthlySalary;
+            existingUser.Email = updatedUser.Email;
+
+            await _userService.UpdateUser(existingUser);
+            return true;
         }
     }
 }

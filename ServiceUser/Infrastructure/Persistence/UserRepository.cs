@@ -37,7 +37,7 @@ namespace ServiceUser.Infrastructure.Persistence
 
             const string sql = @"
                 SELECT 
-                    p.id AS IdUser,
+                    p.id AS Id,
                     p.name AS Name,
                     p.first_lastname AS FirstLastname,
                     p.second_lastname AS SecondLastname,
@@ -121,7 +121,7 @@ namespace ServiceUser.Infrastructure.Persistence
                 ci = @Ci,
                 last_modification = @LastModification,
                 is_active = @IsActive
-            WHERE id = @Id;";
+            WHERE id = @Id;"; 
 
                 await conn.ExecuteAsync(personSql, entity, transaction);
 
@@ -173,7 +173,7 @@ namespace ServiceUser.Infrastructure.Persistence
 
             const string sql = @"
                 SELECT 
-                    p.id AS IdUser,
+                    p.id AS Id,
                     p.name AS Name,
                     p.first_lastname AS FirstLastname,
                     p.second_lastname AS SecondLastname,
@@ -218,7 +218,7 @@ namespace ServiceUser.Infrastructure.Persistence
             // Trae solo usuarios que tienen rol (Instructor/Admin/Otros) y no clientes
             const string sql = @"
                 SELECT 
-                    p.id AS IdUser,
+                    p.id AS Id,
                     p.name AS Name,
                     p.first_lastname AS FirstLastname,
                     p.second_lastname AS SecondLastname,

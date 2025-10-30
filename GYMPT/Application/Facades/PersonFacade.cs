@@ -48,7 +48,7 @@ namespace GYMPT.Application.Facades
                 .Where(u => !string.IsNullOrWhiteSpace(u.Role) && validUserRoles.Contains(u.Role))
                 .Select(u => new PersonDto
                 {
-                    Id = u.IdUser, // id_user del JOIN
+                    Id = u.Id, // id_user del JOIN
                     Name = u.Name ?? "",
                     FirstLastname = u.FirstLastname ?? "",
                     SecondLastname = u.SecondLastname ?? "",

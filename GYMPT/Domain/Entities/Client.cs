@@ -4,7 +4,6 @@ namespace GYMPT.Domain.Entities
 {
     public class Client : Person
     {
-        public int IdUser { get; set; }
         public string? FitnessLevel { get; set; }
         public decimal? InitialWeightKg { get; set; }
         public decimal? CurrentWeightKg { get; set; }

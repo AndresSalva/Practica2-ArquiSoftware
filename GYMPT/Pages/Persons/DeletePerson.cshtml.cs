@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ServiceUser.Domain.Entities;
 
-namespace GYMPT.Pages.Users
+namespace GYMPT.Pages.Persons
 {
     [Authorize]
     public class DeleteUserModel : PageModel

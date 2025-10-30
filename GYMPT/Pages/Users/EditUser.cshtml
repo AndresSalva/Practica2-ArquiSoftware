@@ -1,5 +1,5 @@
 ﻿@page "{token}"
-@model GYMPT.Pages.Instructors.EditModel
+@model GYMPT.Pages.Users.EditModel
 @{
     ViewData["Title"] = "Editar Instructor";
 }
@@ -12,8 +12,8 @@
             </div>
             <div class="card-body">
                 <form method="post">
-                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
-                    <input type="hidden" asp-for="Instructor.IdUser" />
+                    <div asp-validation-summary="All" class="text-danger mb-3"></div>
+                    <input type="hidden" asp-for="Instructor.Id" />
 
                     <h5 class="mt-4 mb-3">Información Personal</h5>
                     <div class="row">

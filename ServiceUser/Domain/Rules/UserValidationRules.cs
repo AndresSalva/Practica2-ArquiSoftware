@@ -1,115 +1,127 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ServiceUser.Application.Common;
+using ServiceUser.Domain.Entities;
+using System;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace ServiceUser.Domain.Rules
 {
-    internal class UserValidationRules
+    internal static class UserValidationRules
     {
-            // Nombre completo obligatorio, mínimo 2 letras, solo letras y espacios
-            public static bool EsNombreCompletoValido(string? nombreCompleto)
-            {
-                if (string.IsNullOrWhiteSpace(nombreCompleto)) return false;
-                if (nombreCompleto.Length < 2) return false;
-                return Regex.IsMatch(nombreCompleto, @"^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$");
-            }
+        // Nombre completo obligatorio, mínimo 2 letras, solo letras y espacios
+        public static Result<string> ValidarNombreCompleto(string? nombreCompleto)
+        {
+            if (string.IsNullOrWhiteSpace(nombreCompleto))
+                return Result<string>.Failure("El nombre completo es obligatorio.");
 
-            // CI solo números o letras, opcional
-            public static bool EsCiValido(string? ci)
-            {
-                if (string.IsNullOrWhiteSpace(ci)) return true; // Opcional
-                return Regex.IsMatch(ci, @"^[0-9A-Za-z]+$");
-            }
+            if (nombreCompleto.Length < 2)
+                return Result<string>.Failure("El nombre completo debe tener al menos 2 caracteres.");
 
-            // Fecha de nacimiento no futura
-            public static bool EsFechaNacimientoValida(DateTime? fecha)
-            {
-                if (fecha == null) return true;
-                return fecha <= DateTime.Today;
-            }
+            if (!Regex.IsMatch(nombreCompleto, @"^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$"))
+                return Result<string>.Failure("El nombre solo puede contener letras y espacios.");
 
-            // Fecha de contratación no futura
-            public static bool EsFechaContratacionValida(DateTime? hireDate, DateTime? dateBirth)
-            {
-                if (!hireDate.HasValue || !dateBirth.HasValue)
-                    return false; // Si alguno es null, no es válido
+            return Result<string>.Success(nombreCompleto);
+        }
 
-                DateTime fechaContratacion = hireDate.Value;
-                DateTime nacimiento = dateBirth.Value;
+        // CI solo números o letras, obligatorio y longitud entre 6 y 15
+        public static Result<string> ValidarCi(string? ci)
+        {
+            if (string.IsNullOrWhiteSpace(ci))
+                return Result<string>.Failure("El CI es obligatorio.");
 
-                // No puede ser en el futuro
-                if (fechaContratacion > DateTime.Today)
-                    return false;
+            if (!Regex.IsMatch(ci, @"^[0-9A-Za-z]{6,15}$"))
+                return Result<string>.Failure("El CI debe contener solo letras y números, entre 6 y 15 caracteres.");
 
-                // Debe ser posterior a la fecha de nacimiento
-                if (fechaContratacion <= nacimiento)
-                    return false;
+            return Result<string>.Success(ci);
+        }
 
-                // Debe tener al menos 18 años
-                int edadAlContratar = fechaContratacion.Year - nacimiento.Year;
-                if (fechaContratacion < nacimiento.AddYears(edadAlContratar))
-                    edadAlContratar--;
+        // Fecha de nacimiento no futura y ≥ 18 años
+        public static Result<DateTime?> ValidarFechaNacimiento(DateTime? fecha)
+        {
+            if (!fecha.HasValue)
+                return Result<DateTime?>.Failure("La fecha de nacimiento es obligatoria.");
 
-                return edadAlContratar >= 18;
-            }
+            if (fecha > DateTime.Today)
+                return Result<DateTime?>.Failure("La fecha de nacimiento no puede ser futura.");
 
+            var edad = DateTime.Today.Year - fecha.Value.Year;
+            if (fecha.Value.AddYears(edad) > DateTime.Today) edad--;
 
-            // Rol válido
-            public static bool EsRoleValido(string? role)
-            {
-                if (string.IsNullOrWhiteSpace(role)) return false;
-                string[] rolesValidos = { "Client", "Instructor", "Admin" };
-                return Array.Exists(rolesValidos, r => r.Equals(role, StringComparison.OrdinalIgnoreCase));
-            }
+            if (edad < 18)
+                return Result<DateTime?>.Failure("El usuario debe tener al menos 18 años.");
 
-            // Especialización (solo para Instructor), opcional pero mínimo 3 caracteres si existe
-            public static bool EsEspecializacionValida(string? especializacion)
-            {
-                if (string.IsNullOrWhiteSpace(especializacion)) return true;
-                return especializacion.Length >= 3;
-            }
+            return Result<DateTime?>.Success(fecha);
+        }
 
-            // Peso inicial y peso actual (solo Client)
-            public static bool EsPesoValido(decimal? peso)
-            {
-                if (peso == null) return true;
-                return peso > 0;
-            }
+        // Fecha de contratación no futura y ≥ fecha nacimiento + 18 años
+        public static Result<DateTime?> ValidarFechaContratacion(DateTime? hireDate, DateTime? dateBirth)
+        {
+            if (!hireDate.HasValue || !dateBirth.HasValue)
+                return Result<DateTime?>.Failure("Las fechas de contratación y nacimiento son obligatorias.");
 
-            // Peso actual ≥ peso inicial
-            public static bool EsPesoActualValido(decimal? pesoInicial, decimal? pesoActual)
-            {
-                if (pesoActual == null || pesoInicial == null) return true;
-                return pesoActual >= pesoInicial;
-            }
+            if (hireDate > DateTime.Today)
+                return Result<DateTime?>.Failure("La fecha de contratación no puede ser futura.");
 
-            // Nivel de fitness
-            public static bool EsNivelFitnessValido(string nivel)
-            {
-                return nivel == "Principiante" || nivel == "Intermedio" || nivel == "Avanzado";
-            }
+            if (hireDate <= dateBirth)
+                return Result<DateTime?>.Failure("La fecha de contratación debe ser posterior a la fecha de nacimiento.");
 
-            // Teléfono de emergencia (solo números, mínimo 7 dígitos)
-            public static bool EsTelefonoEmergenciaValido(string? telefono)
-            {
-                if (string.IsNullOrWhiteSpace(telefono)) return true;
-                return Regex.IsMatch(telefono, @"^\d{7,}$");
-            }
+            int edad = hireDate.Value.Year - dateBirth.Value.Year;
+            if (hireDate.Value < dateBirth.Value.AddYears(edad)) edad--;
 
-            public static bool EsSalarioValido(decimal? salario)
-            {
-                if (!salario.HasValue) return false;
-                // Salario mínimo 0
-                return salario.Value >= 0;
-            }
-            public static bool EsTelefonoValido(string telefono)
-            {
-                if (string.IsNullOrWhiteSpace(telefono)) return false;
-                return telefono.All(char.IsDigit) && telefono.Length >= 7; // mínimo 7 dígitos
-            }
+            if (edad < 18)
+                return Result<DateTime?>.Failure("El empleado debe tener al menos 18 años al ser contratado.");
 
+            return Result<DateTime?>.Success(hireDate);
+        }
+
+        // Rol válido
+        public static Result<string> ValidarRol(string? role)
+        {
+            if (string.IsNullOrWhiteSpace(role))
+                return Result<string>.Failure("El rol es obligatorio.");
+
+            string[] rolesValidos = { "Instructor", "Admin" };
+            if (!rolesValidos.Contains(role, StringComparer.OrdinalIgnoreCase))
+                return Result<string>.Failure("El rol debe ser Instructor o Admin.");
+
+            return Result<string>.Success(role);
+        }
+
+        // Especialización mínima 3 caracteres
+        public static Result<string> ValidarEspecializacion(string? especializacion)
+        {
+            if (string.IsNullOrWhiteSpace(especializacion))
+                return Result<string>.Failure("La especialización es obligatoria.");
+
+            if (especializacion.Length < 3)
+                return Result<string>.Failure("La especialización debe tener al menos 3 caracteres.");
+
+            return Result<string>.Success(especializacion);
+        }
+
+        // Salario obligatorio ≥ 0
+        public static Result<decimal> ValidarSalario(decimal? salario)
+        {
+            if (!salario.HasValue)
+                return Result<decimal>.Failure("El salario es obligatorio.");
+
+            if (salario.Value < 0)
+                return Result<decimal>.Failure("El salario no puede ser negativo.");
+
+            return Result<decimal>.Success(salario.Value);
+        }
+
+        // Email obligatorio y formato válido
+        public static Result<string> ValidarEmail(string? email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+                return Result<string>.Failure("El correo electrónico es obligatorio.");
+
+            string patronEmail = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+            if (!Regex.IsMatch(email, patronEmail))
+                return Result<string>.Failure("El formato del correo electrónico no es válido.");
+
+            return Result<string>.Success(email);
+        }
     }
 }

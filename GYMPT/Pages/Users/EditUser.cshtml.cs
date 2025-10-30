@@ -1,74 +1,114 @@
-    using GYMPT.Application.Interfaces;
-    using GYMPT.Infrastructure.Services;
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.RazorPages;
-    using ServiceUser.Application.Interfaces;
-    using ServiceUser.Domain.Entities;
-    using System.Threading.Tasks;
+using GYMPT.Infrastructure.Facade;
+using GYMPT.Infrastructure.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Logging;
+using ServiceUser.Application.Common;
+using ServiceUser.Domain.Entities;
+using ServiceUser.Domain.Rules;
 
-    namespace GYMPT.Pages.Instructors
+namespace GYMPT.Pages.Users
+{
+    [Authorize(Roles = "Admin")]
+    public class EditModel : PageModel
     {
-        [Authorize(Roles = "Admin")]
-        public class EditModel : PageModel
-        {
-            private readonly IUserService _userService;
-            private readonly UrlTokenSingleton _urlTokenSingleton;
-            private readonly ILogger<EditModel> _logger;   
+        private readonly UserCreationFacade _userFacade;
+        private readonly UrlTokenSingleton _urlTokenSingleton;
+        private readonly ILogger<EditModel> _logger;
 
-            [BindProperty]
-            public User Instructor { get; set; }
+        [BindProperty]
+        public User Instructor { get; set; } = new();
 
-        public EditModel(IUserService userService, UrlTokenSingleton urlTokenSingleton, ILogger<EditModel> logger)
+        public EditModel(UserCreationFacade userFacade, UrlTokenSingleton urlTokenSingleton, ILogger<EditModel> logger)
         {
-            _userService = userService;
+            _userFacade = userFacade;
             _urlTokenSingleton = urlTokenSingleton;
             _logger = logger;
         }
 
-
-        // Este método se ejecuta al cargar la página para rellenar el formulario
+        // ==============================
+        // GET: Cargar datos del Instructor
+        // ==============================
         public async Task<IActionResult> OnGetAsync(string token)
+        {
+            if (string.IsNullOrWhiteSpace(token))
+                return RedirectToPage("/Persons/Person");
+
+            var idStr = _urlTokenSingleton.GetTokenData(token);
+            if (!int.TryParse(idStr, out var id))
             {
-                if (string.IsNullOrEmpty(token))
-                    return RedirectToPage("/Persons/Person");
-
-                // Decode token to original id
-                var idStr = _urlTokenSingleton.GetTokenData(token);
-                if (!int.TryParse(idStr, out var id))
-                {
-                    TempData["ErrorMessage"] = "Token inválido.";
-                    return RedirectToPage("/Persons/Person");
-                }
-
-                Instructor = await _userService.GetUserById(id);
-
-                if (Instructor == null)
-                {
-                    TempData["ErrorMessage"] = "Instructor no encontrado.";
-                    return RedirectToPage("/Persons/Person");
-                }
-
-                return Page();
+                TempData["ErrorMessage"] = "Token inválido.";
+                return RedirectToPage("/Persons/Person");
             }
 
-        // Este método se ejecuta al guardar los cambios
+            var instructor = await _userFacade.GetUserByIdAsync(id);
+            if (instructor == null)
+            {
+                TempData["ErrorMessage"] = "Instructor no encontrado.";
+                return RedirectToPage("/Persons/Person");
+            }
+
+            Instructor = instructor;
+            return Page();
+        }
+
+        // ==============================
+        // POST: Editar Instructor
+        // ==============================
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
+                return Page();
+
+            if (Instructor.Role?.Equals("Instructor", StringComparison.OrdinalIgnoreCase) == true)
             {
+                var validationResult = UserValidator.Validar(Instructor);
+
+                if (validationResult.IsFailure)
+                {
+                    var errors = validationResult.Error.Split('\n', StringSplitOptions.RemoveEmptyEntries);
+
+                    foreach (var error in errors)
+                    {
+                        _logger.LogWarning("Error de validación al editar Instructor: {Error}", error);
+
+                        if (error.Contains("fecha de contratación", StringComparison.OrdinalIgnoreCase))
+                            ModelState.AddModelError(nameof(Instructor.HireDate), error.Trim());
+                        else if (error.Contains("18 años", StringComparison.OrdinalIgnoreCase) ||
+                                 error.Contains("nacimiento", StringComparison.OrdinalIgnoreCase))
+                            ModelState.AddModelError(nameof(Instructor.DateBirth), error.Trim());
+                        else if (error.Contains("CI", StringComparison.OrdinalIgnoreCase))
+                            ModelState.AddModelError(nameof(Instructor.Ci), error.Trim());
+                        else if (error.Contains("Especialización", StringComparison.OrdinalIgnoreCase))
+                            ModelState.AddModelError(nameof(Instructor.Specialization), error.Trim());
+                        else if (error.Contains("Sueldo", StringComparison.OrdinalIgnoreCase) ||
+                                 error.Contains("salario", StringComparison.OrdinalIgnoreCase))
+                            ModelState.AddModelError(nameof(Instructor.MonthlySalary), error.Trim());
+                        else if (error.Contains("correo", StringComparison.OrdinalIgnoreCase))
+                            ModelState.AddModelError(nameof(Instructor.Email), error.Trim());
+                        else
+                            ModelState.AddModelError(string.Empty, error.Trim());
+                    }
+
+                    return Page();
+                }
+            }
+
+            // Actualización del usuario
+            var updatedResult = await _userFacade.UpdateUserAsync(Instructor);
+
+            if (!updatedResult)
+            {
+                TempData["ErrorMessage"] = "No se pudo actualizar el instructor. Intente nuevamente.";
+                _logger.LogWarning("Error al actualizar instructor con ID {Id}", Instructor.Id);
                 return Page();
             }
 
-            // Actualizar el usuario y guardar el resultado
-            var updated = await _userService.UpdateUser(Instructor);
+            TempData["SuccessMessage"] = $"Los datos de '{Instructor.Name} {Instructor.FirstLastname}' fueron actualizados correctamente.";
+            _logger.LogInformation("Instructor actualizado correctamente: {Name} {Lastname}", Instructor.Name, Instructor.FirstLastname);
 
-            // Log para verificar qué se guardó
-            _logger.LogInformation("Usuario actualizado: {@updated}", updated);
-
-            TempData["SuccessMessage"] = "Datos actualizados correctamente.";
             return RedirectToPage("/Persons/Person");
         }
-
     }
 }

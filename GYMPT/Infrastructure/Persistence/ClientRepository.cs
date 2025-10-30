@@ -90,7 +90,7 @@ namespace GYMPT.Infrastructure.Persistence
 
                 var newPersonId = await conn.QuerySingleAsync<int>(personSql, entity, transaction);
                 entity.Id = newPersonId;
-                entity.IdUser = newPersonId;
+                entity.Id = newPersonId;
 
                 // Insert en tabla "client"
                 var clientSql = @"

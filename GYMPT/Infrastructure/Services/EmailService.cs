@@ -24,11 +24,11 @@ namespace GYMPT.Infrastructure.Services
             var builder = new BodyBuilder { HtmlBody = bodyHtml };
             message.Body = builder.ToMessageBody();
 
-            using var client = new SmtpClient();
+            /* using var client = new SmtpClient();
             await client.ConnectAsync(_options.Host, _options.Port, _options.UseSsl);
             await client.AuthenticateAsync(_options.Username, _options.Password);
             await client.SendAsync(message);
-            await client.DisconnectAsync(true);
+            await client.DisconnectAsync(true);*/
         }
     }
 }
