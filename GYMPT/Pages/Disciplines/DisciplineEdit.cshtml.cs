@@ -1,10 +1,10 @@
-﻿using GYMPT.Application.Interfaces;
 using GYMPT.Infrastructure.Services;
 using ServiceDiscipline.Domain.Entities;
 using ServiceDiscipline.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using ServiceClient.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 
 namespace GYMPT.Pages.Disciplines
@@ -17,8 +17,8 @@ namespace GYMPT.Pages.Disciplines
         private readonly UrlTokenSingleton _urlTokenSingleton;
 
         [BindProperty]
-        public Discipline Discipline { get; set; }
-        public SelectList InstructorOptions { get; set; }
+        public Discipline Discipline { get; set; } = default!;
+        public SelectList InstructorOptions { get; set; } = default!;
 
         public DisciplineEditModel(IDisciplineService disciplineService, IUserService userService, UrlTokenSingleton urlTokenSingleton)
         {
@@ -26,12 +26,13 @@ namespace GYMPT.Pages.Disciplines
             _userService = userService;
             _urlTokenSingleton = urlTokenSingleton;
         }
+
         public async Task<IActionResult> OnGetAsync(string token)
         {
             var tokenId = _urlTokenSingleton.GetTokenData(token);
-            if (tokenId == null)
+            if (tokenId == null || !int.TryParse(tokenId, out var id))
             {
-                TempData["ErrorMessage"] = "Token invalido.";
+                TempData["ErrorMessage"] = "Token inválido.";
                 return RedirectToPage("./Discipline");
             }
             int id = int.Parse(tokenId);
@@ -72,7 +73,8 @@ namespace GYMPT.Pages.Disciplines
 
         private async Task PopulateInstructorsDropDownList()
         {
-            var users = await _userService.GetAllUsers();
+            // --- CAMBIO 2 (Continuación): Estandarizar la llamada al método ---
+            var users = await _userService.GetAllAsync(); // El método correcto es GetAllAsync
             var instructors = users
                 .Where(u => u.Role == "Instructor")
                 .Select(u => new { Id = u.Id, FullName = $"{u.Name} {u.FirstLastname}" });

@@ -1,4 +1,5 @@
-﻿using GYMPT.Application.Interfaces;
+﻿// Los usings que tienes ya están correctos para esta página.
+using GYMPT.Application.Interfaces;
 using GYMPT.Domain.Entities;
 using ServiceDiscipline.Application.Interfaces;
 using ServiceDiscipline.Domain.Entities;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
+using System.Threading.Tasks; // <-- Añadido para consistencia
 
 namespace GYMPT.Pages.Disciplines
 {
@@ -13,11 +15,11 @@ namespace GYMPT.Pages.Disciplines
     public class DisciplineCreateModel : PageModel
     {
         private readonly IDisciplineService _disciplineService;
-        private readonly ISelectDataService _selectDataService; // <-- Se usa el servicio especializado
+        private readonly ISelectDataService _selectDataService;
 
         [BindProperty]
         public Discipline Discipline { get; set; } = new();
-        public SelectList InstructorOptions { get; set; }
+        public SelectList InstructorOptions { get; set; } = default!;
 
         public DisciplineCreateModel(IDisciplineService disciplineService, ISelectDataService selectDataService)
         {

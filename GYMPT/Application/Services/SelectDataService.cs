@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Linq;
 using GYMPT.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using ServiceClient.Application.Interfaces;
 using ServiceDiscipline.Application.Interfaces;
 using ServiceMembership.Application.Interfaces;
 
@@ -9,7 +10,9 @@ namespace GYMPT.Application.Services
 {
     public class SelectDataService : ISelectDataService
     {
+        // Este IUserService ahora apunta correctamente a ServiceClient.Application.Interfaces.IUserService
         private readonly IUserService _userService;
+        // Este IMembershipService apunta correctamente a GYMPT.Application.Interfaces.IMembershipService
         private readonly IMembershipService _membershipService;
         private readonly IDisciplineService _disciplineService;
 
@@ -22,7 +25,9 @@ namespace GYMPT.Application.Services
 
         public async Task<SelectList> GetUserOptionsAsync()
         {
-            var users = await _userService.GetAllUsers();
+            // --- CAMBIO 2: Usar el nombre de método correcto del nuevo contrato ---
+            var users = await _userService.GetAllAsync(); // El método ahora se llama GetAllAsync
+
             var userOptions = users
                 .Where(u => u.Role == "Client")
                 .Select(u => new
@@ -52,7 +57,9 @@ namespace GYMPT.Application.Services
 
         public async Task<SelectList> GetInstructorOptionsAsync()
         {
-            var users = await _userService.GetAllUsers();
+            // --- CAMBIO 2 (Repetido): Usar el nombre de método correcto del nuevo contrato ---
+            var users = await _userService.GetAllAsync(); // El método ahora se llama GetAllAsync
+
             var instructors = users
                 .Where(u => u.Role == "Instructor")
                 .Select(u => new

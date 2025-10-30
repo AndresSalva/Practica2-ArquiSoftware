@@ -1,11 +1,15 @@
 using ServiceDiscipline.Application.Interfaces;
 using ServiceDiscipline.Domain.Entities;
 using GYMPT.Infrastructure.Services;
-using GYMPT.Domain.Entities;
 using GYMPT.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using ServiceClient.Application.Interfaces;
+using ServiceClient.Application.Services;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace GYMPT.Pages.Disciplines
 {
@@ -15,6 +19,7 @@ namespace GYMPT.Pages.Disciplines
         private readonly IDisciplineService _disciplineService;
         private readonly IUserService _userService;
         private readonly UrlTokenSingleton _urlTokenSingleton;
+
         public IEnumerable<Discipline> DisciplineList { get; set; } = new List<Discipline>();
         public Dictionary<long, string> InstructorNames { get; set; } = new Dictionary<long, string>();
 
@@ -27,19 +32,18 @@ namespace GYMPT.Pages.Disciplines
 
         public async Task OnGetAsync()
         {
-            DisciplineList = await _disciplineService.GetAllDisciplines();
-            var users = await _userService.GetAllUsers();
+            // --- CAMBIO 2: Estandarizar las llamadas a los métodos ---
+            DisciplineList = await _disciplineService.GetAllAsync(); // Asumiendo que el método estándar es GetAllAsync
+            var users = await _userService.GetAllAsync();           // El método correcto es GetAllAsync
             InstructorNames = users.ToDictionary(u => (long)u.Id, u => $"{u.Name} {u.FirstLastname}");
         }
 
-        public async Task<IActionResult> OnPostEditAsync(int id)
+        public IActionResult OnPostEditAsync(int id) // No necesita 'async' porque no hay 'await'
         {
-            // Generate a route token using the UrlTokenSingleton and redirect to the edit page
             string token = _urlTokenSingleton.GenerateToken(id.ToString());
             return RedirectToPage("/Disciplines/DisciplineEdit", new { token });
         }
 
-        // El m�todo recibe un 'int' desde la vista
         public async Task<IActionResult> OnPostDeleteAsync(int id)
         {
             var result = await _disciplineService.DeleteDiscipline(id);

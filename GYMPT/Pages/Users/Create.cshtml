@@ -44,7 +44,8 @@
                     <h5 class="mb-3">Tipo de Usuario</h5>
                     <div class="form-group mb-4">
                         <label asp-for="Input.Role" class="form-label fw-bold">Tipo Usuario</label>
-                        <select id="roleSelector" asp-for="Input.Role" class="form-select form-select-lg">
+                        <!-- CAMBIO AQUI: Se eliminó la clase 'form-select-lg' para que tenga el tamaño estándar -->
+                        <select id="roleSelector" asp-for="Input.Role" class="form-select">
                             <option value="" disabled selected>-- Ninguno --</option>
                             <option value="Client">Cliente</option>
                             @if (User.Identity != null && User.Identity.IsAuthenticated)
@@ -113,8 +114,10 @@
                     </div>
 
                     <div class="d-grid gap-2 d-md-flex justify-content-md-center mt-4">
-                        <button type="submit" class="btn btn-primary">Registrar Usuario</button>
-                        <a asp-page="/Users/User" class="btn btn-secondary">Cancelar</a>
+                        <!-- CAMBIO AQUI: Se añadió la clase 'btn-sm' para hacer el botón más pequeño -->
+                        <button type="submit" class="btn btn-primary btn-sm">Registrar Usuario</button>
+                        <!-- CAMBIO AQUI: Se añadió la clase 'btn-sm' para hacer el botón más pequeño -->
+                        <a asp-page="/Users/User" class="btn btn-secondary btn-sm">Cancelar</a>
                     </div>
                 </form>
             </div>
@@ -124,6 +127,7 @@
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
+        // El script de JavaScript no necesita cambios
         document.addEventListener('DOMContentLoaded', function () {
             const roleSelector = document.getElementById('roleSelector');
             const clientFields = document.getElementById('clientFields');

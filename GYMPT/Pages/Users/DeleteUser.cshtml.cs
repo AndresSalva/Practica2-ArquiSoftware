@@ -1,8 +1,12 @@
-using GYMPT.Application.Interfaces;
-using GYMPT.Domain.Entities;
+// --- CAMBIO 1: Corregir las directivas 'using' ---
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Threading.Tasks;
+
+// Se necesita el 'using' del nuevo módulo para IUserService y User.
+using ServiceClient.Application.Interfaces;
+using ServiceClient.Domain.Entities;
 
 namespace GYMPT.Pages.Users
 {
@@ -12,7 +16,7 @@ namespace GYMPT.Pages.Users
         private readonly IUserService _userService;
 
         [BindProperty]
-        public User User { get; set; }
+        public User User { get; set; } = default!;
 
         public DeleteUserModel(IUserService userService)
         {
@@ -26,7 +30,8 @@ namespace GYMPT.Pages.Users
                 return RedirectToPage("/Users/User");
             }
 
-            User = await _userService.GetUserById(id);
+            // --- CAMBIO 2: Estandarizar la llamada al método ---
+            User = await _userService.GetByIdAsync(id); // El método correcto es GetByIdAsync
 
             if (User == null)
             {
@@ -44,7 +49,8 @@ namespace GYMPT.Pages.Users
                 return RedirectToPage("/Users/User");
             }
 
-            await _userService.DeleteUser(User.Id);
+            // --- CAMBIO 2 (Continuación): Estandarizar la llamada al método ---
+            await _userService.DeleteByIdAsync(User.Id); // El método correcto es DeleteByIdAsync
 
             TempData["SuccessMessage"] = $"Usuario '{User.Name}' eliminado correctamente.";
             return RedirectToPage("/Users/User");
