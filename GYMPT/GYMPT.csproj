@@ -137,6 +137,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ReportService\ReportService.csproj" />
     <ProjectReference Include="..\ServiceDiscipline\ServiceDiscipline.csproj" />
     <ProjectReference Include="..\ServiceMembership\ServiceMembership.csproj" />
 		<ProjectReference Include="..\ServiceClient\ServiceClient.csproj" />

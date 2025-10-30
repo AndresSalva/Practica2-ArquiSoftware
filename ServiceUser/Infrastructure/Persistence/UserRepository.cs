@@ -203,7 +203,7 @@ namespace ServiceUser.Infrastructure.Persistence
                     must_change_password = false
                 WHERE id_person = @IdUser;";
 
-            var affectedRows = await conn.ExecuteAsync(sql, new { Id = id, Password = password });
+            var affectedRows = await conn.ExecuteAsync(sql, new { IdUser = id, Password = password });
             return affectedRows > 0;
         }
 
