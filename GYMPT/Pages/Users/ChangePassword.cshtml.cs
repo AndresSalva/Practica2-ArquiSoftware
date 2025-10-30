@@ -7,7 +7,7 @@ using ServiceUser.Application.Interfaces;
 using ServiceUser.Domain.Rules; // 👈 Importante
 using ServiceUser.Application.Common; // Para Result<T>
 
-namespace GYMPT.Pages.Instructors
+namespace GYMPT.Pages.Users
 {
     [Authorize]
     public class ChangePasswordModel : PageModel
