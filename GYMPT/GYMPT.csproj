@@ -33,6 +33,6 @@
     <ProjectReference Include="..\ServiceMembership\ServiceMembership.csproj" />
 		<ProjectReference Include="..\ServiceClient\ServiceClient.csproj" />
     <ProjectReference Include="../ServiceCommon/ServiceCommon.csproj" />
-  </ItemGroup>
-
+    <ProjectReference Include="..\SERVICE-PERSON\ServicePerson.csproj" />
+	</ItemGroup>
 </Project>

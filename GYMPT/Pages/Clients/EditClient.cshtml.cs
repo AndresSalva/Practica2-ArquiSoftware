@@ -1,3 +1,6 @@
+using GYMPT.Application.Interfaces;
+using GYMPT.Domain.Entities;
+using ServiceCommon.Infrastructure.Services;
 // --- CAMBIO 1: Actualizar las directivas 'using' ---
 // Ya no usamos las interfaces y entidades de GYMPT, sino las del nuevo módulo ServiceClient.
 using Microsoft.AspNetCore.Authorization;
@@ -27,6 +30,8 @@ namespace GYMPT.Pages.Clients
 
         public async Task<IActionResult> OnGetAsync(string token)
         {
+            // Decode token to original id
+            var idStr = _urlTokenSingleton.Unprotect(token);
             var idStr = _urlTokenSingleton.GetTokenData(token);
             if (!int.TryParse(idStr, out var id))
             {

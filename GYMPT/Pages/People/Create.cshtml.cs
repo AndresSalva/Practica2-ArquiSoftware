@@ -1,3 +1,5 @@
+// Ruta: GYMPT/Pages/Users/CreateModel.cshtml.cs
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Authorization;

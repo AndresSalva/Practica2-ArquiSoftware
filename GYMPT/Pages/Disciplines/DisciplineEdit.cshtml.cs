@@ -1,6 +1,8 @@
-using GYMPT.Infrastructure.Services;
-using ServiceDiscipline.Domain.Entities;
-using ServiceDiscipline.Application.Interfaces;
+using GYMPT.Application.Interfaces;
+using GYMPT.Domain.Entities;
+using ServiceCommon.Infrastructure.Services;
+// --- CAMBIO 1: Corregir las directivas 'using' ---
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -29,8 +31,8 @@ namespace GYMPT.Pages.Disciplines
 
         public async Task<IActionResult> OnGetAsync(string token)
         {
-            var tokenId = _urlTokenSingleton.GetTokenData(token);
-            if (tokenId == null || !int.TryParse(tokenId, out var id))
+            var tokenId = _urlTokenSingleton.Unprotect(token);
+            if (tokenId == null)
             {
                 TempData["ErrorMessage"] = "Token inválido.";
                 return RedirectToPage("./Discipline");

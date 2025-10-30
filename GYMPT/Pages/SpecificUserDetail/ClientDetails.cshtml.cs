@@ -1,3 +1,6 @@
+using GYMPT.Application.Interfaces;
+using GYMPT.Domain.Entities;
+using ServiceCommon.Infrastructure.Services;
 // --- CAMBIO 1: Actualizar las directivas 'using' ---
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,9 +16,8 @@ namespace GYMPT.Pages.SpecificUserDetail
     public class ClientDetailsModel : PageModel
     {
         private readonly IClientService _clientService;
-        private readonly UrlTokenSingleton _urlTokenSingleton;
-
-        public Client Client { get; set; } = default!;
+        private readonly ParameterProtector _urlTokenSingleton;
+        public Client Client { get; set; }
 
         public ClientDetailsModel(IClientService clientService, ParameterProtector urlTokenSingleton)
         {

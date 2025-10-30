@@ -18,8 +18,7 @@ namespace GYMPT.Pages.Disciplines
     {
         private readonly IDisciplineService _disciplineService;
         private readonly IUserService _userService;
-        private readonly UrlTokenSingleton _urlTokenSingleton;
-
+        private readonly ParameterProtector _urlTokenSingleton;
         public IEnumerable<Discipline> DisciplineList { get; set; } = new List<Discipline>();
         public Dictionary<long, string> InstructorNames { get; set; } = new Dictionary<long, string>();
 
@@ -40,7 +39,8 @@ namespace GYMPT.Pages.Disciplines
 
         public IActionResult OnPostEditAsync(int id) // No necesita 'async' porque no hay 'await'
         {
-            string token = _urlTokenSingleton.GenerateToken(id.ToString());
+            // Generate a route token using the UrlTokenSingleton and redirect to the edit page
+            string token = _urlTokenSingleton.Protect(id.ToString());
             return RedirectToPage("/Disciplines/DisciplineEdit", new { token });
         }
 

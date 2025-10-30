@@ -1,32 +1,18 @@
-using GYMPT.Application.Interfaces;
-using GYMPT.Application.Services;
-using GYMPT.Domain.Entities;
-using GYMPT.Domain.Entities;
+﻿using GYMPT.Domain.Entities;
 using GYMPT.Domain.Ports;
 using GYMPT.Application.Interfaces;
 using GYMPT.Application.Services;
 using GYMPT.Infrastructure.Factories;
 using GYMPT.Infrastructure.Security;
-using GYMPT.Domain.Entities;
-using ServiceMembership.Infrastructure.DependencyInjection;
-using GYMPT.Infrastructure.Services;
-using ServiceDiscipline.Infrastructure.DependencyInjection;
-using ServiceDiscipline.Application.Interfaces;
-using ServiceMembership.Application.Interfaces;
-using ServiceDiscipline.Application.Services;
-using ServiceMembership.Application.Services;
-using ServiceClient.Infrastructure.DependencyInjection;
+using ServiceCommon.Domain.Entities;
+using ServiceCommon.Infrastructure.Services;
+using ServiceCommon.Domain.Ports;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// --- 1. INTEGRACIÓN DEL MÓDULO ServiceClient ---
-// Esta única línea registra IClientRepository, IUserRepository, IClientService, IUserService
-// y toda la configuración de conexión necesaria para el módulo de cliente.
-builder.Services.AddClientModule(provider =>
-    // <-- CAMBIO REALIZADO AQUÍ
-    // Se cambió "PostgresConnection" por "Postgres" para que coincida con tu appsettings.json
-    builder.Configuration.GetConnectionString("Postgres")
-    ?? throw new InvalidOperationException("La cadena de conexión 'Postgres' no se encontró."));
+// Ensures correct configuration of the url token singleton.
+builder.Services.AddDataProtection();
+builder.Services.AddSingleton<ParameterProtector >();
 
 
 // --- 2. SERVICIOS QUE PERMANECEN EN GYMPT ---
@@ -35,7 +21,12 @@ builder.Services.AddClientModule(provider =>
 // Factoría de repositorios para las entidades restantes.
 builder.Services.AddScoped<RepositoryFactory>();
 
-// Repositorios restantes (Instructor, Disciplina, etc.)
+builder.Services.AddScoped(sp =>
+{
+    var factory = sp.GetRequiredService<RepositoryFactory>();
+    return (IUserRepository)factory.CreateRepository<User>();
+});
+
 builder.Services.AddScoped<IInstructorRepository>(sp =>
 {
     var factory = sp.GetRequiredService<RepositoryFactory>();
@@ -103,6 +94,8 @@ builder.Services.AddAuthorization();
 
 // --- 4. CONFIGURACIÓN DEL PIPELINE HTTP (Se mantiene sin cambios) ---
 var app = builder.Build();
+
+builder.Services.AddSingleton<IRemoteLogger, RemoteLogger>();
 
 if (!app.Environment.IsDevelopment())
 {
