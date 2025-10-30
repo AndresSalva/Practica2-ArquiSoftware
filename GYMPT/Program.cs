@@ -1,4 +1,4 @@
-﻿using GYMPT.Domain.Entities;
+using GYMPT.Domain.Entities;
 using GYMPT.Domain.Ports;
 using GYMPT.Application.Interfaces;
 using GYMPT.Application.Services;
@@ -7,6 +7,19 @@ using GYMPT.Infrastructure.Security;
 using ServiceCommon.Domain.Entities;
 using ServiceCommon.Infrastructure.Services;
 using ServiceCommon.Domain.Ports;
+using GYMPT.Application.Facades;
+using GYMPT.Application.Interfaces;
+using GYMPT.Application.Services;
+using GYMPT.Domain.Entities;
+using GYMPT.Domain.Ports;
+using GYMPT.Infrastructure.Facade;
+using GYMPT.Infrastructure.Factories;
+using GYMPT.Infrastructure.Security;
+using GYMPT.Infrastructure.Services;
+using ServiceUser.Application.Interfaces;
+using ServiceUser.Domain.Entities;
+using ServiceUser.Domain.Ports;
+using ServiceUser.Infrastructure.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,16 +35,18 @@ builder.Services.AddSingleton<ParameterProtector >();
 builder.Services.AddScoped<RepositoryFactory>();
 
 builder.Services.AddScoped(sp =>
+builder.Services.AddScoped<IPersonRepository>(sp =>
+{
+    var factory = sp.GetRequiredService<RepositoryFactory>();
+    return (IPersonRepository)factory.CreateRepository<Person>();
+});
+
+builder.Services.AddScoped<IUserRepository>(sp =>
 {
     var factory = sp.GetRequiredService<RepositoryFactory>();
     return (IUserRepository)factory.CreateRepository<User>();
 });
 
-builder.Services.AddScoped<IInstructorRepository>(sp =>
-{
-    var factory = sp.GetRequiredService<RepositoryFactory>();
-    return (IInstructorRepository)factory.CreateRepository<Instructor>();
-});
 
 builder.Services.AddScoped<IClientRepository>(sp =>
 {
@@ -57,6 +72,10 @@ builder.Services.AddScoped<IDetailUserRepository>(sp =>
 
 // Servicios de aplicación restantes.
 builder.Services.AddScoped<IInstructorService, InstructorService>();
+//Servicios de los demas servicios
+builder.Services.AddScoped<IClientService, ClientService>();
+builder.Services.AddScoped<IPersonService, PersonService>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IDisciplineService, DisciplineService>();
 builder.Services.AddScoped<IMembershipService, MembershipService>();
 builder.Services.AddScoped<IDetailUserService, DetailUserService>();
@@ -78,6 +97,16 @@ builder.Services.AddTransient<EmailService>();
 builder.Services.AddRazorPages();
 // Discipline Service
 builder.Services.AddDisciplineModule(_ => ConnectionStringSingleton.Instance.PostgresConnection);
+
+//Conexion de user, servicios necesarios de user
+builder.Services.AddUserModule(_ => ConnectionStringSingleton.Instance.PostgresConnection);
+builder.Services.AddScoped<ISelectDataFacade, SelectDataFacade>();
+builder.Services.AddScoped<ISelectDataService, SelectDataService>();
+builder.Services.AddScoped<PersonFacade>();
+builder.Services.AddScoped<UserCreationFacade>();
+builder.Services.AddHttpContextAccessor(); // necesario para leer el contexto del usuario
+builder.Services.AddScoped<IUserContextService, UserContextService>();
+//
 
 builder.Services.AddAuthentication("Cookies")
     .AddCookie("Cookies", options =>

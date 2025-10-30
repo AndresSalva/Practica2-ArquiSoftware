@@ -1,9 +1,15 @@
 using GYMPT.Domain.Entities;
 using GYMPT.Domain.Ports;
+<<<<<<< HEAD
 using ServiceClient.Domain.Entities;
 using ServiceDiscipline.Domain.Entities;
 using ServiceMembership.Domain.Entities;
 // Ya no necesitamos usings de ServiceClient aqu�, porque esta f�brica ya no lo conoce.
+=======
+using ServiceUser.Domain.Ports;
+using ServiceUser.Domain.Entities;
+
+>>>>>>> Service-Usuario
 
 namespace GYMPT.Infrastructure.Factories
 {
@@ -21,6 +27,7 @@ namespace GYMPT.Infrastructure.Factories
 
         private RepositoryCreator<T>? GetCreator<T>() where T : class
         {
+<<<<<<< HEAD
             // --- L�gica para User y Client ELIMINADA ---
             // La creaci�n de UserRepository y ClientRepository ahora es responsabilidad
             // exclusiva del m�dulo ServiceClient, a trav�s de la inyecci�n de dependencias.
@@ -30,9 +37,13 @@ namespace GYMPT.Infrastructure.Factories
 
             if (typeof(T) == typeof(User))
                 return (RepositoryCreator<T>)(object)new UseRep();
+=======
+            if (typeof(T) == typeof(Person))
+                return (RepositoryCreator<T>)(object)new PersonRepositoryCreator();
+>>>>>>> Service-Usuario
 
             if (typeof(T) == typeof(Client))
-                return (RepositoryCreator<T>)(object)new ClientRepositoryCreator();
+                return (    RepositoryCreator<T>)(object)new ClientRepositoryCreator();
 
             // if (typeof(T) == typeof(Discipline))
             //     return (RepositoryCreator<T>)(object)new DisciplineRepositoryCreato();

@@ -36,7 +36,7 @@ namespace GYMPT.Pages.Clients
             if (!int.TryParse(idStr, out var id))
             {
                 TempData["ErrorMessage"] = "Token de URL inválido.";
-                return RedirectToPage("/Users/User");
+                return RedirectToPage("/Persons/Person");
             }
 
             // --- CAMBIO 2: Usar el nombre de método correcto del nuevo contrato ---
@@ -46,7 +46,7 @@ namespace GYMPT.Pages.Clients
             if (Client == null)
             {
                 TempData["ErrorMessage"] = "Cliente no encontrado.";
-                return RedirectToPage("/Users/User");
+                return RedirectToPage("/Persons/Person");
             }
             return Page();
         }
@@ -63,7 +63,7 @@ namespace GYMPT.Pages.Clients
             await _clientService.UpdateAsync(Client);
 
             TempData["SuccessMessage"] = "Los datos del cliente han sido actualizados exitosamente.";
-            return RedirectToPage("/Users/User");
+            return RedirectToPage("/Persons/Person");
         }
     }
 }

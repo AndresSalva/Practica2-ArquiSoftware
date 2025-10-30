@@ -1,13 +1,11 @@
+using GYMPT.Application.Facades;
 using GYMPT.Application.Interfaces;
 using GYMPT.Domain.Entities;
-using ServiceCommon.Infrastructure.Services;
-// --- CAMBIO 1: Corregir las directivas 'using' ---
+using GYMPT.Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using ServiceClient.Application.Interfaces;
-using Microsoft.AspNetCore.Authorization;
 
 namespace GYMPT.Pages.Disciplines
 {
@@ -15,17 +13,20 @@ namespace GYMPT.Pages.Disciplines
     public class DisciplineEditModel : PageModel
     {
         private readonly IDisciplineService _disciplineService;
-        private readonly IUserService _userService;
-        private readonly ParameterProtector _urlTokenSingleton;
+        private readonly SelectDataFacade _facade;
+        private readonly UrlTokenSingleton _urlTokenSingleton;
 
         [BindProperty]
         public Discipline Discipline { get; set; } = default!;
         public SelectList InstructorOptions { get; set; } = default!;
 
-        public DisciplineEditModel(IDisciplineService disciplineService, IUserService userService, ParameterProtector urlTokenSingleton)
+        public DisciplineEditModel(
+            IDisciplineService disciplineService,
+            SelectDataFacade facade,
+            UrlTokenSingleton urlTokenSingleton)
         {
             _disciplineService = disciplineService;
-            _userService = userService;
+            _facade = facade;
             _urlTokenSingleton = urlTokenSingleton;
         }
 
@@ -37,16 +38,14 @@ namespace GYMPT.Pages.Disciplines
                 TempData["ErrorMessage"] = "Token inválido.";
                 return RedirectToPage("./Discipline");
             }
-            int id = int.Parse(tokenId);
-            var result = await _disciplineService.GetDisciplineById(id);
 
-            if (result.IsFailure)
+            int id = int.Parse(tokenId);
+            Discipline = await _disciplineService.GetDisciplineById(id);
+            if (Discipline == null)
             {
                 TempData["ErrorMessage"] = result.Error;
                 return RedirectToPage("./Discipline");
             }
-
-            Discipline = result.Value;
 
             await PopulateInstructorsDropDownList();
             return Page();
@@ -60,28 +59,24 @@ namespace GYMPT.Pages.Disciplines
                 return Page();
             }
 
-            var result = await _disciplineService.UpdateDiscipline(Discipline);
+            var success = await _disciplineService.UpdateDisciplineData(Discipline);
 
-            if (result.IsFailure)
-            {
-                ModelState.AddModelError(string.Empty, result.Error);
-                await PopulateInstructorsDropDownList();
-                return Page();
-            }
+            TempData[success ? "SuccessMessage" : "ErrorMessage"] =
+                success ? "Los datos de la disciplina han sido actualizados."
+                        : "No se pudo actualizar la disciplina.";
 
-            TempData["SuccessMessage"] = "Los datos de la disciplina han sido actualizados.";
             return RedirectToPage("./Discipline");
         }
 
         private async Task PopulateInstructorsDropDownList()
         {
-            // --- CAMBIO 2 (Continuación): Estandarizar la llamada al método ---
-            var users = await _userService.GetAllAsync(); // El método correcto es GetAllAsync
-            var instructors = users
-                .Where(u => u.Role == "Instructor")
-                .Select(u => new { Id = u.Id, FullName = $"{u.Name} {u.FirstLastname}" });
-
-            InstructorOptions = new SelectList(instructors, "Id", "FullName", Discipline?.IdInstructor);
+            var instructors = await _facade.GetInstructorOptionsAsync();
+            InstructorOptions = new SelectList(
+                instructors,
+                "Id",
+                "FullName",
+                Discipline?.IdInstructor
+            );
         }
     }
 }

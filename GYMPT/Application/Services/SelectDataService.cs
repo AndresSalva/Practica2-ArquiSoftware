@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 using System;
 using System.Linq;
+=======
+﻿using GYMPT.Application.Facades;
+>>>>>>> Service-Usuario
 using GYMPT.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ServiceClient.Application.Interfaces;
@@ -10,6 +14,7 @@ namespace GYMPT.Application.Services
 {
     public class SelectDataService : ISelectDataService
     {
+<<<<<<< HEAD
         // Este IUserService ahora apunta correctamente a ServiceClient.Application.Interfaces.IUserService
         private readonly IUserService _userService;
         // Este IMembershipService apunta correctamente a GYMPT.Application.Interfaces.IMembershipService
@@ -21,10 +26,18 @@ namespace GYMPT.Application.Services
             _userService = userService;
             _membershipService = membershipService;
             _disciplineService = disciplineService;
+=======
+        private readonly ISelectDataFacade _facade;
+
+        public SelectDataService(ISelectDataFacade facade)
+        {
+            _facade = facade;
+>>>>>>> Service-Usuario
         }
 
         public async Task<SelectList> GetUserOptionsAsync()
         {
+<<<<<<< HEAD
             // --- CAMBIO 2: Usar el nombre de método correcto del nuevo contrato ---
             var users = await _userService.GetAllAsync(); // El método ahora se llama GetAllAsync
 
@@ -36,10 +49,15 @@ namespace GYMPT.Application.Services
                     FullName = $"{u.Name} {u.FirstLastname}"
                 });
             return new SelectList(userOptions, "Id", "FullName");
+=======
+            // Ahora representa los CLIENTES (antes "users")
+            return await _facade.GetClientOptionsAsync();
+>>>>>>> Service-Usuario
         }
 
         public async Task<SelectList> GetMembershipOptionsAsync()
         {
+<<<<<<< HEAD
             var membershipResult = await _membershipService.GetAllMemberships();
             if (membershipResult.IsFailure || membershipResult.Value is null)
             {
@@ -53,10 +71,14 @@ namespace GYMPT.Application.Services
         {
             var disciplines = await _disciplineService.GetAllDisciplines();
             return new SelectList(disciplines, "Id", "Name");
+=======
+            return await _facade.GetMembershipOptionsAsync();
+>>>>>>> Service-Usuario
         }
 
         public async Task<SelectList> GetInstructorOptionsAsync()
         {
+<<<<<<< HEAD
             // --- CAMBIO 2 (Repetido): Usar el nombre de método correcto del nuevo contrato ---
             var users = await _userService.GetAllAsync(); // El método ahora se llama GetAllAsync
 
@@ -68,6 +90,9 @@ namespace GYMPT.Application.Services
                     FullName = $"{u.Name} {u.FirstLastname}"
                 });
             return new SelectList(instructors, "Id", "FullName");
+=======
+            return await _facade.GetInstructorOptionsAsync();
+>>>>>>> Service-Usuario
         }
     }
 }

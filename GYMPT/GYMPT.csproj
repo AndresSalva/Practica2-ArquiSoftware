@@ -14,6 +14,114 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Application\wwwroot\css\site.css" />
+    <Content Include="Application\wwwroot\favicon.ico" />
+    <Content Include="Application\wwwroot\images\about\img-1.jpg" />
+    <Content Include="Application\wwwroot\images\about\img-3.jpg" />
+    <Content Include="Application\wwwroot\images\about\img-4.jpg" />
+    <Content Include="Application\wwwroot\images\about\img-5.jpg" />
+    <Content Include="Application\wwwroot\images\about\img-6.jpg" />
+    <Content Include="Application\wwwroot\images\about\img-7.jpg" />
+    <Content Include="Application\wwwroot\images\bg\bg-5.jpg" />
+    <Content Include="Application\wwwroot\images\bg\bg-7.jpg" />
+    <Content Include="Application\wwwroot\images\bg\bg-cta.jpg" />
+    <Content Include="Application\wwwroot\images\bg\bg-image-2-1.jpg" />
+    <Content Include="Application\wwwroot\images\bg\slide2.jpg" />
+    <Content Include="Application\wwwroot\images\blog\blog-post-5.jpg" />
+    <Content Include="Application\wwwroot\images\blog\blog-post-6.jpg" />
+    <Content Include="Application\wwwroot\images\blog\gym-single.jpg" />
+    <Content Include="Application\wwwroot\images\blog\post-1.jpg" />
+    <Content Include="Application\wwwroot\images\blog\post-2.jpg" />
+    <Content Include="Application\wwwroot\images\blog\post1.jpg" />
+    <Content Include="Application\wwwroot\images\blog\post2.jpg" />
+    <Content Include="Application\wwwroot\images\blog\post3.jpg" />
+    <Content Include="Application\wwwroot\images\blog\post4.jpg" />
+    <Content Include="Application\wwwroot\images\blog\post5.jpg" />
+    <Content Include="Application\wwwroot\images\blog\post6.jpg" />
+    <Content Include="Application\wwwroot\images\gallery\course-1.jpg" />
+    <Content Include="Application\wwwroot\images\gallery\course-2.jpg" />
+    <Content Include="Application\wwwroot\images\gallery\course-3.jpg" />
+    <Content Include="Application\wwwroot\images\gallery\gallery-01.jpg" />
+    <Content Include="Application\wwwroot\images\gallery\gallery-02.jpg" />
+    <Content Include="Application\wwwroot\images\gallery\gallery-03.jpg" />
+    <Content Include="Application\wwwroot\images\gallery\gallery-04.jpg" />
+    <Content Include="Application\wwwroot\images\gallery\gallery-05.jpg" />
+    <Content Include="Application\wwwroot\images\gallery\gallery-06.jpg" />
+    <Content Include="Application\wwwroot\images\gallery\gallery-07.jpg" />
+    <Content Include="Application\wwwroot\images\gallery\gallery-08.jpg" />
+    <Content Include="Application\wwwroot\images\logo.jpeg" />
+    <Content Include="Application\wwwroot\images\marker.png" />
+    <Content Include="Application\wwwroot\images\services\service-1.jpg" />
+    <Content Include="Application\wwwroot\images\services\service-2.jpg" />
+    <Content Include="Application\wwwroot\images\services\service-3.jpg" />
+    <Content Include="Application\wwwroot\images\services\service-4.jpg" />
+    <Content Include="Application\wwwroot\images\services\service-5.jpg" />
+    <Content Include="Application\wwwroot\images\services\service-6.jpg" />
+    <Content Include="Application\wwwroot\images\team\team-1.jpg" />
+    <Content Include="Application\wwwroot\images\team\team-2.jpg" />
+    <Content Include="Application\wwwroot\images\team\team-3.jpg" />
+    <Content Include="Application\wwwroot\images\team\team-4.jpg" />
+    <Content Include="Application\wwwroot\js\site.js" />
+    <Content Include="Application\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css" />
+    <Content Include="Application\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map" />
+    <Content Include="Application\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css" />
+    <Content Include="Application\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css.map" />
+    <Content Include="Application\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.css" />
+    <Content Include="Application\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.css.map" />
+    <Content Include="Application\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.min.css" />
+    <Content Include="Application\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.min.css.map" />
+    <Content Include="Application\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css" />
+    <Content Include="Application\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css.map" />
+    <Content Include="Application\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css" />
+    <Content Include="Application\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css.map" />
+    <Content Include="Application\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.css" />
+    <Content Include="Application\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.css.map" />
+    <Content Include="Application\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.min.css" />
+    <Content Include="Application\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.min.css.map" />
+    <Content Include="Application\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.css" />
+    <Content Include="Application\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.css.map" />
+    <Content Include="Application\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.min.css" />
+    <Content Include="Application\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.min.css.map" />
+    <Content Include="Application\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.css" />
+    <Content Include="Application\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.css.map" />
+    <Content Include="Application\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.min.css" />
+    <Content Include="Application\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.min.css.map" />
+    <Content Include="Application\wwwroot\lib\bootstrap\dist\css\bootstrap.css" />
+    <Content Include="Application\wwwroot\lib\bootstrap\dist\css\bootstrap.css.map" />
+    <Content Include="Application\wwwroot\lib\bootstrap\dist\css\bootstrap.min.css" />
+    <Content Include="Application\wwwroot\lib\bootstrap\dist\css\bootstrap.min.css.map" />
+    <Content Include="Application\wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.css" />
+    <Content Include="Application\wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.css.map" />
+    <Content Include="Application\wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.min.css" />
+    <Content Include="Application\wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.min.css.map" />
+    <Content Include="Application\wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js" />
+    <Content Include="Application\wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js.map" />
+    <Content Include="Application\wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js" />
+    <Content Include="Application\wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js.map" />
+    <Content Include="Application\wwwroot\lib\bootstrap\dist\js\bootstrap.esm.js" />
+    <Content Include="Application\wwwroot\lib\bootstrap\dist\js\bootstrap.esm.js.map" />
+    <Content Include="Application\wwwroot\lib\bootstrap\dist\js\bootstrap.esm.min.js" />
+    <Content Include="Application\wwwroot\lib\bootstrap\dist\js\bootstrap.esm.min.js.map" />
+    <Content Include="Application\wwwroot\lib\bootstrap\dist\js\bootstrap.js" />
+    <Content Include="Application\wwwroot\lib\bootstrap\dist\js\bootstrap.js.map" />
+    <Content Include="Application\wwwroot\lib\bootstrap\dist\js\bootstrap.min.js" />
+    <Content Include="Application\wwwroot\lib\bootstrap\dist\js\bootstrap.min.js.map" />
+    <Content Include="Application\wwwroot\lib\bootstrap\LICENSE" />
+    <Content Include="Application\wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.js" />
+    <Content Include="Application\wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Application\wwwroot\lib\jquery-validation-unobtrusive\LICENSE.txt" />
+    <Content Include="Application\wwwroot\lib\jquery-validation\dist\additional-methods.js" />
+    <Content Include="Application\wwwroot\lib\jquery-validation\dist\additional-methods.min.js" />
+    <Content Include="Application\wwwroot\lib\jquery-validation\dist\jquery.validate.js" />
+    <Content Include="Application\wwwroot\lib\jquery-validation\dist\jquery.validate.min.js" />
+    <Content Include="Application\wwwroot\lib\jquery-validation\LICENSE.md" />
+    <Content Include="Application\wwwroot\lib\jquery\dist\jquery.js" />
+    <Content Include="Application\wwwroot\lib\jquery\dist\jquery.min.js" />
+    <Content Include="Application\wwwroot\lib\jquery\dist\jquery.min.map" />
+    <Content Include="Application\wwwroot\lib\jquery\LICENSE.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
     <PackageReference Include="Dapper" Version="2.1.66" />
     <PackageReference Include="MailKit" Version="4.14.1" />
@@ -32,7 +140,9 @@
     <ProjectReference Include="..\ServiceDiscipline\ServiceDiscipline.csproj" />
     <ProjectReference Include="..\ServiceMembership\ServiceMembership.csproj" />
 		<ProjectReference Include="..\ServiceClient\ServiceClient.csproj" />
-    <ProjectReference Include="../ServiceCommon/ServiceCommon.csproj" />
+    <ProjectReference Include="..\ServiceCommon\ServiceCommon.csproj" />
     <ProjectReference Include="..\SERVICE-PERSON\ServicePerson.csproj" />
-	</ItemGroup>
+    <ProjectReference Include="..\ServiceUser\ServiceUser.csproj" />
+  </ItemGroup>
+
 </Project>
