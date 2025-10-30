@@ -1,32 +1,25 @@
-// Ruta: GYMPT/Pages/Users/CreateModel.cshtml.cs
-
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Authorization;
 using ServiceClient.Application.Interfaces;
 using ServiceClient.Domain.Entities;
-using GYMPT.Application.Interfaces;
-using GYMPT.Domain.Entities;
-using GYMPT.Infrastructure.Services;
-using System.Threading.Tasks;
-using System;
+using ServiceCommon.Domain.Ports;
+using ServiceUser.Application.Interfaces;
 
-namespace GYMPT.Pages.Users
+namespace GYMPT.Pages.People
 {
     [Authorize]
     public class CreateModel : PageModel
     {
-        private readonly IClientService _clientService;
-        private readonly IInstructorService _instructorService;
-        private readonly IPasswordHasher _passwordHasher;
-        private readonly IEmailSender _email;
+        private readonly IClientService _clientsService;
+        private readonly IUserService _usersService;
+        private readonly IEmailSender _emailService;
 
-        public CreateModel(IClientService clientService, IInstructorService instructorService, IPasswordHasher passwordHasher, IEmailSender email)
+        public CreateModel(IClientService clientService, IUserService userService, IEmailSender emailService)
         {
-            _clientService = clientService;
-            _instructorService = instructorService;
-            _passwordHasher = passwordHasher;
-            _email = email;
+            _clientsService = clientService;
+            _usersService = userService;
+            _emailService = emailService;
         }
 
         [BindProperty]
@@ -52,15 +45,13 @@ namespace GYMPT.Pages.Users
                         SecondLastname = Input.SecondLastname,
                         Ci = Input.Ci,
                         DateBirth = Input.DateBirth,
-                        Role = "Client",
                         FitnessLevel = string.IsNullOrWhiteSpace(Input.FitnessLevel) ? null : Input.FitnessLevel,
                         EmergencyContactPhone = string.IsNullOrWhiteSpace(Input.EmergencyContactPhone) ? null : Input.EmergencyContactPhone,
                         InitialWeightKg = Input.InitialWeightKg,
                         CurrentWeightKg = Input.CurrentWeightKg
-                        // Nota: CreatedAt aquí es null, lo cual es correcto para esta capa.
                     };
 
-                    await _clientService.CreateAsync(newClient);
+                    await _clientsService.CreateAsync(newClient);
                     TempData["SuccessMessage"] = $"El cliente '{newClient.Name} {newClient.FirstLastname}' ha sido creado exitosamente.";
                 }
                 catch (ArgumentException ex)

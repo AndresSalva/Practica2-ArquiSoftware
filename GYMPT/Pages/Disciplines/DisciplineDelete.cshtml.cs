@@ -1,11 +1,8 @@
-﻿// Los usings que tienes ya están correctos para esta página.
-using GYMPT.Application.Interfaces;
-using GYMPT.Domain.Entities;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using ServiceDiscipline.Application.Interfaces;
 using ServiceDiscipline.Domain.Entities;
-using System.Threading.Tasks; // <-- Añadido para consistencia
 
 namespace GYMPT.Pages.Disciplines
 {
@@ -24,14 +21,14 @@ namespace GYMPT.Pages.Disciplines
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            // --- CAMBIO: Usar el nombre de método correcto del nuevo contrato ---
-            Discipline = await _disciplineService.GetByIdAsync(id); // El método correcto es GetByIdAsync
-
-            if (Discipline == null)
+            var result = await _disciplineService.GetDisciplineById(id);
+            if (result.IsFailure)
             {
-                TempData["ErrorMessage"] = "La disciplina que intentas eliminar no fue encontrada.";
+                TempData["ErrorMessage"] = "No se pudo cargar la disciplina.";
                 return RedirectToPage("/Disciplines/Discipline");
             }
+
+            Discipline = result.Value;
 
             return Page();
         }
@@ -43,8 +40,7 @@ namespace GYMPT.Pages.Disciplines
                 return Page();
             }
 
-            // --- CAMBIO: Usar el nombre de método correcto del nuevo contrato ---
-            await _disciplineService.DeleteByIdAsync(Discipline.Id); // El método correcto es DeleteByIdAsync
+            await _disciplineService.DeleteDiscipline(Discipline.Id);
 
             TempData["SuccessMessage"] = "Disciplina eliminada correctamente.";
             return RedirectToPage("/Disciplines/Discipline");

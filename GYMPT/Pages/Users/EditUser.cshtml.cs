@@ -1,10 +1,8 @@
 using GYMPT.Infrastructure.Facade;
-using GYMPT.Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
-using ServiceUser.Application.Common;
+using ServiceCommon.Infrastructure.Services;
 using ServiceUser.Domain.Entities;
 using ServiceUser.Domain.Rules;
 
@@ -14,28 +12,25 @@ namespace GYMPT.Pages.Users
     public class EditModel : PageModel
     {
         private readonly UserCreationFacade _userFacade;
-        private readonly UrlTokenSingleton _urlTokenSingleton;
+        private readonly ParameterProtector _urlTokenSingleton;
         private readonly ILogger<EditModel> _logger;
 
         [BindProperty]
         public User Instructor { get; set; } = new();
 
-        public EditModel(UserCreationFacade userFacade, UrlTokenSingleton urlTokenSingleton, ILogger<EditModel> logger)
+        public EditModel(UserCreationFacade userFacade, ParameterProtector urlTokenSingleton, ILogger<EditModel> logger)
         {
             _userFacade = userFacade;
             _urlTokenSingleton = urlTokenSingleton;
             _logger = logger;
         }
 
-        // ==============================
-        // GET: Cargar datos del Instructor
-        // ==============================
         public async Task<IActionResult> OnGetAsync(string token)
         {
             if (string.IsNullOrWhiteSpace(token))
                 return RedirectToPage("/Persons/Person");
 
-            var idStr = _urlTokenSingleton.GetTokenData(token);
+            var idStr = _urlTokenSingleton.Unprotect(token);
             if (!int.TryParse(idStr, out var id))
             {
                 TempData["ErrorMessage"] = "Token inválido.";
@@ -53,9 +48,6 @@ namespace GYMPT.Pages.Users
             return Page();
         }
 
-        // ==============================
-        // POST: Editar Instructor
-        // ==============================
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -95,7 +87,6 @@ namespace GYMPT.Pages.Users
                 }
             }
 
-            // Actualización del usuario
             var updatedResult = await _userFacade.UpdateUserAsync(Instructor);
 
             if (!updatedResult)

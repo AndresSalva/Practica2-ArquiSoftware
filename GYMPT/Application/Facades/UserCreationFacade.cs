@@ -1,7 +1,7 @@
 ﻿using GYMPT.Application.DTO;
-using GYMPT.Application.Interfaces;
-using GYMPT.Domain.Entities;
-using GYMPT.Infrastructure.Services;
+using ServiceClient.Application.Interfaces;
+using ServiceClient.Domain.Entities;
+using ServiceCommon.Infrastructure.Services;
 using ServiceUser.Application.Interfaces;
 using ServiceUser.Domain.Entities;
 
@@ -11,18 +11,15 @@ namespace GYMPT.Infrastructure.Facade
     {
         private readonly IClientService _clientService;
         private readonly IUserService _userService;
-        private readonly IPasswordHasher _passwordHasher;
         private readonly EmailService _emailService;
 
         public UserCreationFacade(
             IClientService clientService,
             IUserService userService,
-            IPasswordHasher passwordHasher,
             EmailService emailService)
         {
             _clientService = clientService;
             _userService = userService;
-            _passwordHasher = passwordHasher;
             _emailService = emailService;
         }
 
@@ -46,7 +43,7 @@ namespace GYMPT.Infrastructure.Facade
                     CurrentWeightKg = input.CurrentWeightKg
                 };
 
-                await _clientService.CreateNewClient(client);
+                await _clientService.CreateAsync(client);
                 return true;
             }
             else if (input.Role == "Instructor")
@@ -60,7 +57,7 @@ namespace GYMPT.Infrastructure.Facade
                     DateBirth = input.DateBirth,
                     Role = "Instructor",
                     Email = input.Email,
-                    Password = _passwordHasher.Hash("gympt." + input.Ci),
+                    Password = "gympt." + input.Ci,
                     Specialization = input.Specialization,
                     HireDate = input.HireDate ?? DateTime.MinValue,
                     MonthlySalary = input.MonthlySalary ?? 0m
@@ -68,7 +65,6 @@ namespace GYMPT.Infrastructure.Facade
 
                 await _userService.CreateUser(instructor);
 
-                // Envío de correo es OPCIONAL
                 if (!string.IsNullOrWhiteSpace(input.Email))
                 {
                     string subject = "Tu cuenta GYMPT fue creada";
@@ -81,8 +77,8 @@ namespace GYMPT.Infrastructure.Facade
                         <hr>
                         <p>© GYMPT, 2025</p>
                     ";
-
-                    //await _emailService.SendEmailAsync(input.Email, subject, body);
+                    // TODO
+                    // await _emailService.SendEmailAsync(input.Email, subject, body);
                 }
 
                 return true;

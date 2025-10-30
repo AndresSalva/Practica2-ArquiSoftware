@@ -3,7 +3,6 @@ using GYMPT.Infrastructure.Facade;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using ServiceUser.Application.Common;
 using ServiceUser.Domain.Entities;
 using ServiceUser.Domain.Rules;
 
@@ -31,7 +30,6 @@ namespace GYMPT.Pages.Persons
             if (!ModelState.IsValid)
                 return Page();
 
-            // Solo validamos Instructor
             if (Input.Role?.Equals("Instructor", StringComparison.OrdinalIgnoreCase) == true)
             {
                 var instructorUser = new User
@@ -52,7 +50,6 @@ namespace GYMPT.Pages.Persons
 
                 if (validationResult.IsFailure)
                 {
-                    // Dividimos los errores por salto de línea
                     var errors = validationResult.Error.Split('\n', StringSplitOptions.RemoveEmptyEntries);
 
                     foreach (var error in errors)
@@ -79,7 +76,6 @@ namespace GYMPT.Pages.Persons
                  }
             }
 
-            // Crear usuario
             var result = await _userCreationFacade.CreateUserAsync(Input);
 
             if (result)

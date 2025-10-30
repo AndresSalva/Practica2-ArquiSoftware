@@ -1,13 +1,10 @@
-﻿// Los usings que tienes ya están correctos para esta página.
-using GYMPT.Application.Interfaces;
-using GYMPT.Domain.Entities;
+﻿using GYMPT.Application.Interfaces;
 using ServiceDiscipline.Application.Interfaces;
 using ServiceDiscipline.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
-using System.Threading.Tasks; // <-- Añadido para consistencia
 
 namespace GYMPT.Pages.Disciplines
 {
@@ -54,8 +51,7 @@ namespace GYMPT.Pages.Disciplines
             TempData["SuccessMessage"] = $"Disciplina '{result.Value.Name}' creada exitosamente.";
             return RedirectToPage("./Discipline");
         }
-
-        // La lógica para poblar el dropdown centralizada.
+        
         private async Task PopulateInstructorOptionsAsync()
         {
             InstructorOptions = await _selectDataService.GetInstructorOptionsAsync();

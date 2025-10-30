@@ -1,9 +1,7 @@
-using GYMPT.Application.Interfaces;
-using GYMPT.Domain.Entities;
-using GYMPT.Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using ServiceCommon.Infrastructure.Services;
 using ServiceUser.Application.Interfaces;
 using ServiceUser.Domain.Entities;
 
@@ -13,14 +11,14 @@ namespace GYMPT.Pages.SpecificUserDetail
     public class AdminDetailsModel : PageModel
     {
         private readonly IUserService _userService;
-        private readonly UrlTokenSingleton _urlTokenSingleton;
+        private readonly ParameterProtector _urlTokenSingleton;
 
         public User Admin { get; set; }
 
         // Guardar token solo si necesitas pasarlo a otros enlaces en la vista
         public string Token { get; set; }
 
-        public AdminDetailsModel(IUserService userService, UrlTokenSingleton urlTokenSingleton)
+        public AdminDetailsModel(IUserService userService, ParameterProtector urlTokenSingleton)
         {
             _userService = userService;
             _urlTokenSingleton = urlTokenSingleton;
@@ -30,7 +28,7 @@ namespace GYMPT.Pages.SpecificUserDetail
         {
             Token = token;
 
-            var idStr = _urlTokenSingleton.GetTokenData(token);
+            var idStr = _urlTokenSingleton.Unprotect(token);
             if (!int.TryParse(idStr, out var id))
             {
                 TempData["ErrorMessage"] = "Token de URL inválido.";

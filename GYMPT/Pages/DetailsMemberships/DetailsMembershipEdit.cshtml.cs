@@ -1,13 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using GYMPT.Application.Interfaces;
-using GYMPT.Infrastructure.Services;
+﻿using GYMPT.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ServiceMembership.Application.Interfaces;
 using ServiceMembership.Application.Common;
+using ServiceCommon.Infrastructure.Services;
 
 namespace GYMPT.Pages.DetailsMemberships;
 
@@ -17,7 +15,7 @@ public class DetailsMembershipEditModel : PageModel
     private readonly IDetailMembershipService _detailMembershipService;
     private readonly ISelectDataService _selectDataService;
     private readonly IMembershipService _membershipService;
-    private readonly UrlTokenSingleton _urlTokenSingleton;
+    private readonly ParameterProtector _urlTokenSingleton;
 
     [BindProperty]
     public short MembershipId { get; set; }
@@ -40,7 +38,7 @@ public class DetailsMembershipEditModel : PageModel
         IDetailMembershipService detailMembershipService,
         ISelectDataService selectDataService,
         IMembershipService membershipService,
-        UrlTokenSingleton urlTokenSingleton)
+        ParameterProtector urlTokenSingleton)
     {
         _detailMembershipService = detailMembershipService;
         _selectDataService = selectDataService;
@@ -55,7 +53,7 @@ public class DetailsMembershipEditModel : PageModel
             return NotFound();
         }
 
-        var decoded = _urlTokenSingleton.GetTokenData(token);
+        var decoded = _urlTokenSingleton.Unprotect(token);
         if (!short.TryParse(decoded, out var membershipId) || membershipId <= 0)
         {
             return NotFound();

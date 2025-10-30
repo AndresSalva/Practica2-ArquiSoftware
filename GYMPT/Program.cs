@@ -1,113 +1,40 @@
-using GYMPT.Domain.Entities;
-using GYMPT.Domain.Ports;
-using GYMPT.Application.Interfaces;
-using GYMPT.Application.Services;
-using GYMPT.Infrastructure.Factories;
-using GYMPT.Infrastructure.Security;
-using ServiceCommon.Domain.Entities;
-using ServiceCommon.Infrastructure.Services;
-using ServiceCommon.Domain.Ports;
-using GYMPT.Application.Facades;
-using GYMPT.Application.Interfaces;
-using GYMPT.Application.Services;
-using GYMPT.Domain.Entities;
-using GYMPT.Domain.Ports;
-using GYMPT.Infrastructure.Facade;
-using GYMPT.Infrastructure.Factories;
-using GYMPT.Infrastructure.Security;
-using GYMPT.Infrastructure.Services;
-using ServiceUser.Application.Interfaces;
-using ServiceUser.Domain.Entities;
-using ServiceUser.Domain.Ports;
 using ServiceUser.Infrastructure.DependencyInjection;
+using ServiceClient.Infrastructure.DependencyInjection;
+using ServiceDiscipline.Infrastructure.DependencyInjection;
+using ServiceMembership.Infrastructure.DependencyInjection;
+using ServiceCommon.Domain.Ports;
+using ServiceCommon.Infrastructure.Services;
+using GYMPT.Application.Services;
+using GYMPT.Infrastructure.Security;
+using GYMPT.Application.Facades;
+using ServiceCommon.Domain.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Ensures correct configuration of the url token singleton.
+// Configuración base
 builder.Services.AddDataProtection();
-builder.Services.AddSingleton<ParameterProtector >();
+builder.Services.AddSingleton<ParameterProtector>();
+builder.Services.AddSingleton<ConnectionStringProvider>();
+builder.Services.AddHttpContextAccessor();
+builder.Services.Configure<SmtpOptions>(builder.Configuration.GetSection("Smtp"));
+builder.Services.AddTransient<EmailService>();
 
+// Helper para obtener la conexión desde DI
+string GetConnectionString(IServiceProvider sp) =>
+    sp.GetRequiredService<ConnectionStringProvider>().GetPostgresConnection();
 
-// --- 2. SERVICIOS QUE PERMANECEN EN GYMPT ---
-// Estos son los servicios que AÚN no se han movido a sus propios módulos.
+// Módulos independientes
+builder.Services.AddUserModule(GetConnectionString);
+builder.Services.AddClientModule(GetConnectionString);
+builder.Services.AddDisciplineModule(GetConnectionString);
+builder.Services.AddMembershipModule(GetConnectionString);
 
-// Factoría de repositorios para las entidades restantes.
-builder.Services.AddScoped<RepositoryFactory>();
-
-builder.Services.AddScoped(sp =>
-builder.Services.AddScoped<IPersonRepository>(sp =>
-{
-    var factory = sp.GetRequiredService<RepositoryFactory>();
-    return (IPersonRepository)factory.CreateRepository<Person>();
-});
-
-builder.Services.AddScoped<IUserRepository>(sp =>
-{
-    var factory = sp.GetRequiredService<RepositoryFactory>();
-    return (IUserRepository)factory.CreateRepository<User>();
-});
-
-
-builder.Services.AddScoped<IClientRepository>(sp =>
-{
-    var factory = sp.GetRequiredService<RepositoryFactory>();
-    return (IClientRepository)factory.CreateRepository<Client>();
-});
-
-builder.Services.AddScoped<IDisciplineRepository>(sp =>
-{
-    var factory = sp.GetRequiredService<RepositoryFactory>();
-    return (IDisciplineRepository)factory.CreateRepository<Discipline>();
-});
-builder.Services.AddScoped<IMembershipRepository>(sp =>
-{
-    var factory = sp.GetRequiredService<RepositoryFactory>();
-    return (IMembershipRepository)factory.CreateRepository<Membership>();
-});
-builder.Services.AddScoped<IDetailUserRepository>(sp =>
-{
-    var factory = sp.GetRequiredService<RepositoryFactory>();
-    return (IDetailUserRepository)factory.CreateRepository<DetailsUser>();
-});
-
-// Servicios de aplicación restantes.
-builder.Services.AddScoped<IInstructorService, InstructorService>();
-//Servicios de los demas servicios
-builder.Services.AddScoped<IClientService, ClientService>();
-builder.Services.AddScoped<IPersonService, PersonService>();
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IDisciplineService, DisciplineService>();
-builder.Services.AddScoped<IMembershipService, MembershipService>();
-builder.Services.AddScoped<IDetailUserService, DetailUserService>();
-builder.Services.AddScoped<ISelectDataService, SelectDataService>();
-builder.Services.AddMembershipModule(_ => ConnectionStringSingleton.Instance.PostgresConnection);
-
-
-// --- 3. SERVICIOS DE UI Y SEGURIDAD (Se mantienen sin cambios) ---
-builder.Services.AddDataProtection();
-builder.Services.AddSingleton<UrlTokenSingleton>();
-
-builder.Services.AddScoped<IPasswordHasher, BcryptPasswordHasher>();
+// Servicios transversales (seguridad, login, hashing, etc.)
 builder.Services.AddScoped<LoginService>();
 builder.Services.AddScoped<CookieAuthService>();
-builder.Services.AddHttpContextAccessor();
-
-builder.Services.Configure<SmtpOptions>(builder.Configuration.GetSection("Smtp"));
-builder.Services.AddTransient<EmailService>();  
-builder.Services.AddRazorPages();
-// Discipline Service
-builder.Services.AddDisciplineModule(_ => ConnectionStringSingleton.Instance.PostgresConnection);
-
-//Conexion de user, servicios necesarios de user
-builder.Services.AddUserModule(_ => ConnectionStringSingleton.Instance.PostgresConnection);
 builder.Services.AddScoped<ISelectDataFacade, SelectDataFacade>();
-builder.Services.AddScoped<ISelectDataService, SelectDataService>();
-builder.Services.AddScoped<PersonFacade>();
-builder.Services.AddScoped<UserCreationFacade>();
-builder.Services.AddHttpContextAccessor(); // necesario para leer el contexto del usuario
-builder.Services.AddScoped<IUserContextService, UserContextService>();
-//
 
+// Autenticación y autorización
 builder.Services.AddAuthentication("Cookies")
     .AddCookie("Cookies", options =>
     {
@@ -120,16 +47,25 @@ builder.Services.AddAuthentication("Cookies")
 
 builder.Services.AddAuthorization();
 
+// UI
+builder.Services.AddRazorPages();
 
-// --- 4. CONFIGURACIÓN DEL PIPELINE HTTP (Se mantiene sin cambios) ---
+// Loggs Terminal
+builder.Services.AddSingleton<IRemoteLogger>(sp =>
+{
+    var connProvider = sp.GetRequiredService<ConnectionStringProvider>();
+    var connString = connProvider.GetPostgresConnection();
+    return new RemoteLogger(connString);
+});
+
+// Construcción del pipeline HTTP
 var app = builder.Build();
-
-builder.Services.AddSingleton<IRemoteLogger, RemoteLogger>();
 
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
 }
+
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();

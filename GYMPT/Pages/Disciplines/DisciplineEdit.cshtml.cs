@@ -1,11 +1,11 @@
 using GYMPT.Application.Facades;
-using GYMPT.Application.Interfaces;
-using GYMPT.Domain.Entities;
-using GYMPT.Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using ServiceCommon.Infrastructure.Services;
+using ServiceDiscipline.Application.Interfaces;
+using ServiceDiscipline.Domain.Entities;
 
 namespace GYMPT.Pages.Disciplines
 {
@@ -14,7 +14,7 @@ namespace GYMPT.Pages.Disciplines
     {
         private readonly IDisciplineService _disciplineService;
         private readonly SelectDataFacade _facade;
-        private readonly UrlTokenSingleton _urlTokenSingleton;
+        private readonly ParameterProtector _urlTokenSingleton;
 
         [BindProperty]
         public Discipline Discipline { get; set; } = default!;
@@ -23,7 +23,7 @@ namespace GYMPT.Pages.Disciplines
         public DisciplineEditModel(
             IDisciplineService disciplineService,
             SelectDataFacade facade,
-            UrlTokenSingleton urlTokenSingleton)
+            ParameterProtector urlTokenSingleton)
         {
             _disciplineService = disciplineService;
             _facade = facade;
@@ -40,13 +40,13 @@ namespace GYMPT.Pages.Disciplines
             }
 
             int id = int.Parse(tokenId);
-            Discipline = await _disciplineService.GetDisciplineById(id);
-            if (Discipline == null)
+            var result = await _disciplineService.GetDisciplineById(id);
+            if (result.IsFailure)
             {
                 TempData["ErrorMessage"] = result.Error;
                 return RedirectToPage("./Discipline");
             }
-
+            Discipline = result.Value;
             await PopulateInstructorsDropDownList();
             return Page();
         }
@@ -59,13 +59,17 @@ namespace GYMPT.Pages.Disciplines
                 return Page();
             }
 
-            var success = await _disciplineService.UpdateDisciplineData(Discipline);
+            var result = await _disciplineService.UpdateDiscipline(Discipline);
 
-            TempData[success ? "SuccessMessage" : "ErrorMessage"] =
-                success ? "Los datos de la disciplina han sido actualizados."
-                        : "No se pudo actualizar la disciplina.";
+            if (result.IsSuccess)
+            {
+                TempData["SuccessMessage"] = "Los datos de la disciplina han sido actualizados.";
+                return RedirectToPage("./Discipline");
+            }
 
-            return RedirectToPage("./Discipline");
+            TempData["ErrorMessage"] = result.Error ?? "No se pudo actualizar la disciplina.";
+            await PopulateInstructorsDropDownList();
+            return Page();
         }
 
         private async Task PopulateInstructorsDropDownList()

@@ -1,7 +1,5 @@
 ﻿using ServicePerson.Application.Common;
 using ServicePerson.Domain.Entities;
-using System;
-
 
 namespace ServicePerson.Application.Interfaces
 {

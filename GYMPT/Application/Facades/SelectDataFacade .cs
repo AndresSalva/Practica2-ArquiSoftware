@@ -1,5 +1,6 @@
-﻿using GYMPT.Application.Interfaces;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using ServiceClient.Application.Interfaces;
+using ServiceMembership.Application.Interfaces;
 using ServiceUser.Application.Interfaces;
 
 namespace GYMPT.Application.Facades
@@ -37,7 +38,7 @@ namespace GYMPT.Application.Facades
 
         public async Task<SelectList> GetClientOptionsAsync()
         {
-            var clients = await _clientService.GetAllClients();
+            var clients = await _clientService.GetAllAsync();
             var clientOptions = clients.Select(c => new
             {
                 c.Id, // 'person.id'
@@ -51,7 +52,7 @@ namespace GYMPT.Application.Facades
         public async Task<SelectList> GetMembershipOptionsAsync()
         {
             var memberships = await _membershipService.GetAllMemberships();
-            var options = memberships.Select(m => new
+            var options = memberships.Value.Select(m => new
             {
                 m.Id,
                 m.Name

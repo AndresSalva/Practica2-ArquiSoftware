@@ -1,9 +1,7 @@
-using System;
-using System.Linq;
-using GYMPT.Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using ServiceCommon.Infrastructure.Services;
 using ServiceMembership.Application.Interfaces;
 using ServiceMembership.Domain.Entities;
 
@@ -26,7 +24,7 @@ namespace GYMPT.Pages.Memberships
 
         public async Task<IActionResult> OnGetAsync(string token)
         {
-            var tokenData = _urlTokenSingleton.GetTokenData(token);
+            var tokenData = _urlTokenSingleton.Unprotect(token);
             if (tokenData is null)
             {
                 TempData["ErrorMessage"] = "Token inválido.";

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using ServiceClient.Application.Interfaces;
 using ServiceMembership.Application.Interfaces;
 using ServiceMembership.Domain.Entities;
+using ServicePerson.Application.Interfaces;
 
 namespace GYMPT.Pages.DetailsUsers
 {
@@ -13,7 +14,7 @@ namespace GYMPT.Pages.DetailsUsers
     public class DetailsUsersModel : PageModel
     {
         private readonly IDetailUserService _detailUserService;
-        private readonly IPersonService _userService;
+        private readonly IClientService _userService;
         private readonly IMembershipService _membershipService;
         private readonly ISelectDataService _selectDataService;
 
@@ -31,7 +32,7 @@ namespace GYMPT.Pages.DetailsUsers
 
         public DetailsUsersModel(
             IDetailUserService detailUserService,
-            IPersonService userService,
+            IClientService userService,
             IMembershipService membershipService,
             ISelectDataService selectDataService)
         {
@@ -105,7 +106,7 @@ namespace GYMPT.Pages.DetailsUsers
                 MembershipOptions = new SelectList(Enumerable.Empty<SelectListItem>());
             }
 
-            var users = await _userService.GetAllUsers();
+            var users = await _userService.GetAllAsync();
             var membershipsResult = await _membershipService.GetAllMemberships();
 
             UserNames = users.ToDictionary(u => u.Id, u => $"{u.Name} {u.FirstLastname}");
@@ -130,8 +131,6 @@ namespace GYMPT.Pages.DetailsUsers
             
             if (!ModelState.IsValid)
             {
-                // Si hay un error de validación, es difícil mostrarlo en el modal sin
-                // una lógica de cliente más compleja. Por ahora, redirigimos con un error genérico.
                 TempData["ErrorMessage"] = "Los datos proporcionados no son válidos. Por favor, inténtelo de nuevo.";
                 return RedirectToPage();
             }

@@ -1,11 +1,10 @@
 using GYMPT.Application.DTO;
 using GYMPT.Application.Facades;
 using GYMPT.Application.Interfaces;
-using GYMPT.Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
+using ServiceCommon.Infrastructure.Services;
 
 namespace GYMPT.Pages.Persons
 {
@@ -13,18 +12,18 @@ namespace GYMPT.Pages.Persons
     public class PersonModel : PageModel
     {
         private readonly PersonFacade _personFacade;
-        private readonly UrlTokenSingleton _urlTokenSingleton;
+        private readonly ParameterProtector _urlTokenSingleton;
         private readonly IUserContextService _userContextService;
-        private readonly ILogger<PersonModel> _logger; // <-- Logger agregado
+        private readonly ILogger<PersonModel> _logger;
 
         public List<PersonDto> PersonList { get; set; } = new();
         public Dictionary<int, string> PersonTokens { get; set; } = new();
 
         public PersonModel(
             PersonFacade personFacade,
-            UrlTokenSingleton urlTokenSingleton,
+            ParameterProtector urlTokenSingleton,
             IUserContextService userContextService,
-            ILogger<PersonModel> logger)  // <-- Logger inyectado
+            ILogger<PersonModel> logger)
         {
             _personFacade = personFacade;
             _urlTokenSingleton = urlTokenSingleton;
@@ -37,10 +36,8 @@ namespace GYMPT.Pages.Persons
             var role = _userContextService.GetUserRole();
             var userId = _userContextService.GetUserId();
 
-            // Obtener todas las personas
             var allPersons = await _personFacade.GetAllPersonsAsync();
 
-            // Filtrar según rol
             PersonList = role switch
             {
                 "Admin" => allPersons,
@@ -53,7 +50,6 @@ namespace GYMPT.Pages.Persons
                 _ => new List<PersonDto>()
             };
 
-            // Detectar duplicados
             var duplicateIds = PersonList
                 .GroupBy(p => p.Id)
                 .Where(g => g.Count() > 1)
@@ -65,18 +61,16 @@ namespace GYMPT.Pages.Persons
                 _logger.LogWarning("Se encontraron IDs duplicados en PersonList: {DuplicateIds}", string.Join(", ", duplicateIds));
             }
 
-            // Generar tokens evitando duplicados
             PersonTokens = PersonList
                 .GroupBy(p => p.Id)
                 .Select(g => g.First())
-                .ToDictionary(p => p.Id, p => _urlTokenSingleton.GenerateToken(p.Id.ToString()));
+                .ToDictionary(p => p.Id, p => _urlTokenSingleton.Protect(p.Id.ToString()));
         }
 
         public async Task<IActionResult> OnPostDeleteAsync(int id)
         {
             try
             {
-                // Buscar la persona directamente desde la fachada
                 var allPersons = await _personFacade.GetAllPersonsAsync();
                 var person = allPersons.FirstOrDefault(p => p.Id == id);
 

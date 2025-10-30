@@ -1,15 +1,9 @@
-using GYMPT.Application.Interfaces;
-using GYMPT.Domain.Entities;
 using ServiceCommon.Infrastructure.Services;
-// --- CAMBIO 1: Actualizar las directivas 'using' ---
-// Ya no usamos las interfaces y entidades de GYMPT, sino las del nuevo módulo ServiceClient.
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using ServiceClient.Application.Interfaces; // <-- Usamos la nueva interfaz
-using ServiceClient.Domain.Entities;      // <-- Usamos la nueva entidad
-using GYMPT.Infrastructure.Services;      // Mantenemos esto para UrlTokenSingleton
-using System.Threading.Tasks;             // Necesario para tareas asíncronas
+using ServiceClient.Application.Interfaces;
+using ServiceClient.Domain.Entities;
 
 namespace GYMPT.Pages.Clients
 {
@@ -30,17 +24,13 @@ namespace GYMPT.Pages.Clients
 
         public async Task<IActionResult> OnGetAsync(string token)
         {
-            // Decode token to original id
             var idStr = _urlTokenSingleton.Unprotect(token);
-            var idStr = _urlTokenSingleton.GetTokenData(token);
             if (!int.TryParse(idStr, out var id))
             {
                 TempData["ErrorMessage"] = "Token de URL inválido.";
                 return RedirectToPage("/Persons/Person");
             }
 
-            // --- CAMBIO 2: Usar el nombre de método correcto del nuevo contrato ---
-            // El método ahora se llama GetByIdAsync
             Client = await _clientService.GetByIdAsync(id);
 
             if (Client == null)
@@ -58,8 +48,6 @@ namespace GYMPT.Pages.Clients
                 return Page();
             }
 
-            // --- CAMBIO 3: Usar el nombre de método correcto del nuevo contrato ---
-            // El método ahora se llama UpdateAsync
             await _clientService.UpdateAsync(Client);
 
             TempData["SuccessMessage"] = "Los datos del cliente han sido actualizados exitosamente.";

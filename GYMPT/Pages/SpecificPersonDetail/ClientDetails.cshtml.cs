@@ -1,14 +1,9 @@
-using GYMPT.Application.Interfaces;
-using GYMPT.Domain.Entities;
 using ServiceCommon.Infrastructure.Services;
-// --- CAMBIO 1: Actualizar las directivas 'using' ---
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using ServiceClient.Application.Interfaces; // <-- Apuntar a la nueva interfaz
-using ServiceClient.Domain.Entities;      // <-- Apuntar a la nueva entidad
-using GYMPT.Infrastructure.Services;      // Esto se mantiene para UrlTokenSingleton
-using System.Threading.Tasks;             // Necesario para métodos asíncronos
+using ServiceClient.Application.Interfaces;
+using ServiceClient.Domain.Entities;
 
 namespace GYMPT.Pages.SpecificUserDetail
 {

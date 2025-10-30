@@ -3,11 +3,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Authorization;
 using ServiceClient.Application.Interfaces;
 using ServiceClient.Domain.Entities;
-using GYMPT.Application.Interfaces;
-using GYMPT.Domain.Entities;
-using GYMPT.Infrastructure.Services;
-using System.Threading.Tasks;
-using System;
+using ServiceUser.Domain.Entities;
+using ServiceUser.Application.Interfaces;
+using ServiceCommon.Domain.Ports;
 
 namespace GYMPT.Pages.Users
 {
@@ -15,15 +13,13 @@ namespace GYMPT.Pages.Users
     public class CreateModel : PageModel
     {
         private readonly IClientService _clientService;
-        private readonly IInstructorService _instructorService;
-        private readonly IPasswordHasher _passwordHasher;
+        private readonly IUserService _instructorService;
         private readonly IEmailSender _email;
 
-        public CreateModel(IClientService clientService, IInstructorService instructorService, IPasswordHasher passwordHasher, IEmailSender email)
+        public CreateModel(IClientService clientService, IUserService instructorService, IEmailSender email)
         {
             _clientService = clientService;
             _instructorService = instructorService;
-            _passwordHasher = passwordHasher;
             _email = email;
         }
 
@@ -50,12 +46,10 @@ namespace GYMPT.Pages.Users
                         SecondLastname = Input.SecondLastname,
                         Ci = Input.Ci,
                         DateBirth = Input.DateBirth,
-                        Role = "Client",
                         FitnessLevel = string.IsNullOrWhiteSpace(Input.FitnessLevel) ? null : Input.FitnessLevel,
                         EmergencyContactPhone = string.IsNullOrWhiteSpace(Input.EmergencyContactPhone) ? null : Input.EmergencyContactPhone,
                         InitialWeightKg = Input.InitialWeightKg,
                         CurrentWeightKg = Input.CurrentWeightKg
-                        // Nota: CreatedAt aquí es null, lo cual es correcto para esta capa.
                     };
 
                     await _clientService.CreateAsync(newClient);
@@ -69,14 +63,36 @@ namespace GYMPT.Pages.Users
             }
             else if (Input.Role == "Instructor")
             {
-                // ... Lógica para crear instructor ...
+                try
+                {
+                    var newInstructor = new User
+                    {
+                        Name = Input.Name,
+                        FirstLastname = Input.FirstLastname,
+                        SecondLastname = Input.SecondLastname,
+                        Ci = Input.Ci,
+                        DateBirth = Input.DateBirth,
+                        Role = Input.Role,
+                        Specialization = Input.Specialization,
+                        HireDate = Input.HireDate,
+                        MonthlySalary = Input.MonthlySalary,
+                        Email = Input.Email,
+                    };
+
+                    await _instructorService.CreateUser(newInstructor);
+                    TempData["SuccessMessage"] = $"El instructor '{newInstructor.Name} {newInstructor.FirstLastname}' ha sido creado exitosamente.";
+                }
+                catch (ArgumentException ex)
+                {
+                    ModelState.AddModelError(string.Empty, ex.Message);
+                    return Page();
+                }
             }
 
             return RedirectToPage("/Users/User");
         }
     }
 
-    // Modelo de entrada para el formulario
     public class UserInputModel
     {
         public string? Role { get; set; }

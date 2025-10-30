@@ -1,5 +1,4 @@
 ﻿using GYMPT.Application.Interfaces;
-using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 
 namespace GYMPT.Infrastructure.Services

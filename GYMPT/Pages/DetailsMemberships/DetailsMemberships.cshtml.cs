@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using GYMPT.Application.Interfaces;
-using GYMPT.Infrastructure.Services;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using ServiceCommon.Infrastructure.Services;
 using ServiceDiscipline.Application.Interfaces;
 using ServiceMembership.Application.Interfaces;
 using ServiceMembership.Domain.Entities;
@@ -18,7 +14,7 @@ public class DetailsMembershipsModel : PageModel
     private readonly IDetailMembershipService _detailMembershipService;
     private readonly IMembershipService _membershipService;
     private readonly IDisciplineService _disciplineService;
-    private readonly UrlTokenSingleton _urlTokenSingleton;
+    private readonly ParameterProtector _urlTokenSingleton;
 
     public IEnumerable<DetailsMembership> DetailsMembershipList { get; private set; } = new List<DetailsMembership>();
     public Dictionary<short, string> MembershipNames { get; private set; } = new();
@@ -29,7 +25,7 @@ public class DetailsMembershipsModel : PageModel
         IDetailMembershipService detailMembershipService,
         IMembershipService membershipService,
         IDisciplineService disciplineService,
-        UrlTokenSingleton urlTokenSingleton)
+        ParameterProtector urlTokenSingleton)
     {
         _detailMembershipService = detailMembershipService;
         _membershipService = membershipService;
@@ -74,7 +70,7 @@ public class DetailsMembershipsModel : PageModel
         return RedirectToPage();
     }
 
-    public string GetEncodedToken(short membershipId) => _urlTokenSingleton.GenerateToken(membershipId.ToString());
+    public string GetEncodedToken(short membershipId) => _urlTokenSingleton.Protect(membershipId.ToString());
 
     private async Task LoadReferenceDataAsync()
     {

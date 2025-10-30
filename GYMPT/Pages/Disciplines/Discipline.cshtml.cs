@@ -1,15 +1,10 @@
 using ServiceDiscipline.Application.Interfaces;
 using ServiceDiscipline.Domain.Entities;
-using GYMPT.Infrastructure.Services;
-using GYMPT.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ServiceClient.Application.Interfaces;
-using ServiceClient.Application.Services;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using ServiceCommon.Infrastructure.Services;
 
 namespace GYMPT.Pages.Disciplines
 {
@@ -17,21 +12,12 @@ namespace GYMPT.Pages.Disciplines
     public class DisciplineModel : PageModel
     {
         private readonly IDisciplineService _disciplineService;
-<<<<<<< HEAD
-        private readonly IUserService _userService;
+        private readonly IClientService _userService;
         private readonly ParameterProtector _urlTokenSingleton;
         public IEnumerable<Discipline> DisciplineList { get; set; } = new List<Discipline>();
         public Dictionary<long, string> InstructorNames { get; set; } = new Dictionary<long, string>();
 
-        public DisciplineModel(IDisciplineService disciplineService, IUserService userService, ParameterProtector urlTokenSingleton)
-=======
-        private readonly IPersonService _userService;
-        private readonly UrlTokenSingleton _urlTokenSingleton;
-        public IEnumerable<Discipline> DisciplineList { get; set; } = new List<Discipline>();
-        public Dictionary<long, string> InstructorNames { get; set; } = new Dictionary<long, string>();
-
-        public DisciplineModel(IDisciplineService disciplineService, IPersonService userService, UrlTokenSingleton urlTokenSingleton)
->>>>>>> Service-Usuario
+        public DisciplineModel(IDisciplineService disciplineService, IClientService userService, ParameterProtector urlTokenSingleton)
         {
             _disciplineService = disciplineService;
             _userService = userService;
@@ -40,15 +26,13 @@ namespace GYMPT.Pages.Disciplines
 
         public async Task OnGetAsync()
         {
-            // --- CAMBIO 2: Estandarizar las llamadas a los métodos ---
-            DisciplineList = await _disciplineService.GetAllAsync(); // Asumiendo que el método estándar es GetAllAsync
-            var users = await _userService.GetAllAsync();           // El método correcto es GetAllAsync
+            DisciplineList = await _disciplineService.GetAllDisciplines();
+            var users = await _userService.GetAllAsync();
             InstructorNames = users.ToDictionary(u => (long)u.Id, u => $"{u.Name} {u.FirstLastname}");
         }
 
-        public IActionResult OnPostEditAsync(int id) // No necesita 'async' porque no hay 'await'
+        public IActionResult OnPostEditAsync(int id)
         {
-            // Generate a route token using the UrlTokenSingleton and redirect to the edit page
             string token = _urlTokenSingleton.Protect(id.ToString());
             return RedirectToPage("/Disciplines/DisciplineEdit", new { token });
         }

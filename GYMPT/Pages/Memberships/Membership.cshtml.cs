@@ -1,9 +1,7 @@
-using System.Collections.Generic;
-using System.Linq;
-using GYMPT.Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using ServiceCommon.Infrastructure.Services;
 using ServiceMembership.Application.Interfaces;
 using ServiceMembership.Domain.Entities;
 
@@ -51,7 +49,7 @@ namespace GYMPT.Pages.Memberships
 
         public IActionResult OnPostEditAsync(int id)
         {
-            string token = _urlTokenSingleton.GenerateToken(id.ToString());
+            string token = _urlTokenSingleton.Protect(id.ToString());
             return RedirectToPage("./MembershipEdit", new { token });
         }
     }

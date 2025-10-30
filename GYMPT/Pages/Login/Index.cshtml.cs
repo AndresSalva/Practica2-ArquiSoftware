@@ -48,13 +48,8 @@ public class IndexModel : PageModel
         if (user.MustChangePassword)
         {
             await _authService.SignInAsync(user);
-<<<<<<< HEAD
             string token = _urlTokenService.Protect(user.Id.ToString());
-            return RedirectToPage("/Instructors/ChangePassword", new { token });
-=======
-            string token = _urlTokenService.GenerateToken(user.Id.ToString());
             return RedirectToPage("/Users/ChangePassword", new { token });
->>>>>>> Service-Usuario
         }
 
         await _authService.SignInAsync(user);
