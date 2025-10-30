@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-using GYMPT.Application.Interfaces;
-using GYMPT.Domain.Entities;
-using ServiceCommon.Infrastructure.Services;
-=======
-// Ruta: GYMPT/Pages/Users/UserModel.cs
-
->>>>>>> Service-Client
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Authorization;
@@ -27,23 +19,14 @@ namespace GYMPT.Pages.Users
     {
         // --- CORRECCIÓN: Inyectamos ambos servicios ---
         private readonly IUserService _userService;
-<<<<<<< HEAD
-
-        public IEnumerable<User> UserList { get; set; } = new List<User>();
-        public Dictionary<int, string> UserTokens { get; set; } = new Dictionary<int, string>();
-        private readonly ParameterProtector _urlTokenSingleton;
-
-        public UserModel(IUserService userService, ParameterProtector urlTokenSingleton)
-=======
         private readonly IClientService _clientService;
-        private readonly UrlTokenSingleton _urlTokenSingleton;
+        private readonly ParameterProtector _urlTokenSingleton;
 
         // Esta lista contendrá a TODOS: Clientes, Instructores y Admins.
         public IEnumerable<User> UserList { get; set; } = new List<User>();
         public Dictionary<int, string> UserTokens { get; set; } = new Dictionary<int, string>();
 
-        public UserModel(IUserService userService, IClientService clientService, UrlTokenSingleton urlTokenSingleton)
->>>>>>> Service-Client
+        public UserModel(IUserService userService, IClientService clientService, ParameterProtector urlTokenSingleton)
         {
             _userService = userService;
             _clientService = clientService; // Se inyecta el servicio de clientes
@@ -52,10 +35,6 @@ namespace GYMPT.Pages.Users
 
         public async Task OnGetAsync()
         {
-<<<<<<< HEAD
-            UserList = await _userService.GetAllUsers();
-            UserTokens = UserList.ToDictionary(u => u.Id, u => _urlTokenSingleton.Protect(u.Id.ToString()));
-=======
             // --- ¡ESTA ES LA LÓGICA DE UNIFICACIÓN! ---
 
             // 1. Obtenemos la lista de usuarios del sistema (Instructores, Admins).
@@ -75,7 +54,6 @@ namespace GYMPT.Pages.Users
 
             // 5. Generamos los tokens para todos en la lista unificada.
             UserTokens = UserList.ToDictionary(u => u.Id, u => _urlTokenSingleton.GenerateToken(u.Id.ToString()));
->>>>>>> Service-Client
         }
 
         // Tu lógica de eliminación ya es correcta para los usuarios del sistema.

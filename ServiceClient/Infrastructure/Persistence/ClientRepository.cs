@@ -4,6 +4,7 @@ using ServiceCommon.Domain.Ports;
 using ServiceClient.Domain.Entities;
 using ServiceClient.Domain.Ports;
 
+namespace ServiceClient.Infrastructure.Persistence;
 public class ClientRepository : IClientRepository
 {
     private readonly string _connString;

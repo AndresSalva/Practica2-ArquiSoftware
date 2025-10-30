@@ -2,12 +2,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using GYMPT.Application.Interfaces;
-<<<<<<< HEAD:GYMPT/Pages/Instructors/ChangePassword.cshtml.cs
-using ServiceCommon.Infrastructure.Services;
-=======
 using GYMPT.Infrastructure.Services;
+using ServiceCommon.Infrastructure.Services;
 using ServiceUser.Application.Interfaces;
->>>>>>> Service-Usuario:GYMPT/Pages/Users/ChangePassword.cshtml.cs
 
 namespace GYMPT.Pages.Instructors
 {
@@ -27,11 +24,7 @@ namespace GYMPT.Pages.Instructors
 
         public string Message { get; set; } = string.Empty;
 
-<<<<<<< HEAD:GYMPT/Pages/Instructors/ChangePassword.cshtml.cs
-        public ChangePasswordModel(IInstructorService instructorService, IPasswordHasher passwordHasher, ParameterProtector urlToken)
-=======
-        public ChangePasswordModel(IUserService instructorService, IPasswordHasher passwordHasher, UrlTokenSingleton urlToken)
->>>>>>> Service-Usuario:GYMPT/Pages/Users/ChangePassword.cshtml.cs
+        public ChangePasswordModel(IUserService instructorService, IPasswordHasher passwordHasher, ParameterProtector urlToken)
         {
             _instructorService = instructorService;
             _passwordHasher = passwordHasher;

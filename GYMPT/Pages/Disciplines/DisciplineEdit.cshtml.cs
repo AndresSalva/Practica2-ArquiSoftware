@@ -1,14 +1,11 @@
-using GYMPT.Application.Interfaces;
-using GYMPT.Domain.Entities;
 using ServiceCommon.Infrastructure.Services;
 using GYMPT.Application.Facades;
-using GYMPT.Application.Interfaces;
-using GYMPT.Infrastructure.Services;
 using ServiceDiscipline.Domain.Entities;
 using ServiceDiscipline.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GYMPT.Pages.Disciplines
 {
@@ -17,7 +14,7 @@ namespace GYMPT.Pages.Disciplines
     {
         private readonly IDisciplineService _disciplineService;
         private readonly SelectDataFacade _facade;
-        private readonly UrlTokenSingleton _urlTokenSingleton;
+        private readonly ParameterProtector _urlTokenSingleton;
 
         [BindProperty]
         public Discipline Discipline { get; set; } = default!;
@@ -26,7 +23,7 @@ namespace GYMPT.Pages.Disciplines
         public DisciplineEditModel(
             IDisciplineService disciplineService,
             SelectDataFacade facade,
-            UrlTokenSingleton urlTokenSingleton)
+            ParameterProtector urlTokenSingleton)
         {
             _disciplineService = disciplineService;
             _facade = facade;

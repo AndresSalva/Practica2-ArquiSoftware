@@ -1,9 +1,9 @@
-﻿// Ruta: ServiceClient/Application/Services/ClientService.cs
-
-using ServiceClient.Application.Interfaces;
+﻿using ServiceClient.Application.Interfaces;
 using ServiceClient.Domain.Entities;
 using ServiceClient.Domain.Ports;
 using ServiceClient.Domain.Rules;
+
+namespace ServiceClient.Application.Services;
 
 public class ClientService : IClientService
 {

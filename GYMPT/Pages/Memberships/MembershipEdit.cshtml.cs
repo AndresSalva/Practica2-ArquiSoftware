@@ -1,12 +1,4 @@
-<<<<<<< HEAD
-using GYMPT.Application.Interfaces;
-using GYMPT.Domain.Entities;
 using ServiceCommon.Infrastructure.Services;
-=======
-﻿using System;
-using System.Linq;
-using GYMPT.Infrastructure.Services;
->>>>>>> Modulo_Membership
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -32,13 +24,8 @@ namespace GYMPT.Pages.Memberships
 
         public async Task<IActionResult> OnGetAsync(string token)
         {
-<<<<<<< HEAD
-            var tokenId = _urlTokenSingleton.Unprotect(token);
-            if (tokenId == null)
-=======
-            var tokenData = _urlTokenSingleton.GetTokenData(token);
+            var tokenData = _urlTokenSingleton.Unprotect(token);
             if (tokenData is null)
->>>>>>> Modulo_Membership
             {
                 TempData["ErrorMessage"] = "Token inválido.";
                 return RedirectToPage("/Memberships/Membership");

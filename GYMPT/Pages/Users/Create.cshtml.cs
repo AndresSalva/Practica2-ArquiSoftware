@@ -1,18 +1,11 @@
-<<<<<<< HEAD
-using GYMPT.Application.Interfaces;
-using GYMPT.Domain.Entities;
-using ServiceCommon.Domain.Ports;
-=======
 // Ruta: GYMPT/Pages/Users/CreateModel.cshtml.cs
 
->>>>>>> Service-Client
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Authorization;
 using ServiceClient.Application.Interfaces;
 using ServiceClient.Domain.Entities;
 using GYMPT.Application.Interfaces;
-using GYMPT.Domain.Entities;
 using GYMPT.Infrastructure.Services;
 using System.Threading.Tasks;
 using System;

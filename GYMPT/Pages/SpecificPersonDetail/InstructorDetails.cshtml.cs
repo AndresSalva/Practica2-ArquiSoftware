@@ -12,13 +12,6 @@ namespace GYMPT.Pages.SpecificUserDetail
     [Authorize(Roles = "Admin")]
     public class InstructorDetailsModel : PageModel
     {
-<<<<<<< HEAD:GYMPT/Pages/SpecificUserDetail/InstructorDetails.cshtml.cs
-        private readonly IInstructorService _instructorService;
-        private readonly ParameterProtector _urlTokenSingleton;
-        public Instructor Instructor { get; set; }
-
-        public InstructorDetailsModel(IInstructorService instructorService, ParameterProtector urlTokenSingleton)
-=======
         private readonly IUserService _instructorService;
         private readonly UrlTokenSingleton _urlTokenSingleton;
 
@@ -28,7 +21,6 @@ namespace GYMPT.Pages.SpecificUserDetail
         public string Token { get; set; }
 
         public InstructorDetailsModel(IUserService instructorService, UrlTokenSingleton urlTokenSingleton)
->>>>>>> Service-Usuario:GYMPT/Pages/SpecificPersonDetail/InstructorDetails.cshtml.cs
         {
             _instructorService = instructorService;
             _urlTokenSingleton = urlTokenSingleton;
@@ -36,13 +28,9 @@ namespace GYMPT.Pages.SpecificUserDetail
 
         public async Task<IActionResult> OnGetAsync(string token)
         {
-<<<<<<< HEAD:GYMPT/Pages/SpecificUserDetail/InstructorDetails.cshtml.cs
-            var idStr = _urlTokenSingleton.Unprotect(token);
-=======
             Token = token; // Guardamos el token para la vista
 
             var idStr = _urlTokenSingleton.GetTokenData(token);
->>>>>>> Service-Usuario:GYMPT/Pages/SpecificPersonDetail/InstructorDetails.cshtml.cs
             if (!int.TryParse(idStr, out var id))
             {
                 TempData["ErrorMessage"] = "Token de URL inválido.";

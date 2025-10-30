@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
-using GYMPT.Domain.Entities;
 using ServiceUser.Domain.Entities;
 namespace GYMPT.Infrastructure.Security;
 

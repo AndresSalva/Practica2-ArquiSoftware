@@ -1,12 +1,6 @@
-<<<<<<< HEAD
-using GYMPT.Application.Interfaces;
-using GYMPT.Domain.Entities;
-using ServiceCommon.Infrastructure.Services;
-=======
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using GYMPT.Infrastructure.Services;
->>>>>>> Modulo_Membership
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -57,12 +51,7 @@ namespace GYMPT.Pages.Memberships
 
         public IActionResult OnPostEditAsync(int id)
         {
-<<<<<<< HEAD
-            // Generate a route token using the UrlTokenSingleton and redirect to the edit page
             string token = _urlTokenSingleton.Protect(id.ToString());
-=======
-            string token = _urlTokenSingleton.GenerateToken(id.ToString());
->>>>>>> Modulo_Membership
             return RedirectToPage("./MembershipEdit", new { token });
         }
     }

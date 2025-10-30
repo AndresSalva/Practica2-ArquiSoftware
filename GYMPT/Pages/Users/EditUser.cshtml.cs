@@ -1,10 +1,6 @@
 using GYMPT.Application.Interfaces;
-<<<<<<< HEAD:GYMPT/Pages/Instructors/EditInstructor.cshtml.cs
-using GYMPT.Domain.Entities;
 using ServiceCommon.Infrastructure.Services;
-=======
 using GYMPT.Infrastructure.Services;
->>>>>>> Service-Usuario:GYMPT/Pages/Users/EditUser.cshtml.cs
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -17,22 +13,13 @@ namespace GYMPT.Pages.Instructors
     [Authorize(Roles = "Admin")]
     public class EditModel : PageModel
     {
-<<<<<<< HEAD:GYMPT/Pages/Instructors/EditInstructor.cshtml.cs
-        private readonly IInstructorService _instructorService;
-        private readonly ParameterProtector _urlTokenSingleton;
-=======
         private readonly IUserService _userService;
-        private readonly UrlTokenSingleton _urlTokenSingleton;
->>>>>>> Service-Usuario:GYMPT/Pages/Users/EditUser.cshtml.cs
+        private readonly ParameterProtector _urlTokenSingleton;
 
         [BindProperty]
         public User Instructor { get; set; }
 
-<<<<<<< HEAD:GYMPT/Pages/Instructors/EditInstructor.cshtml.cs
-        public EditModel(IInstructorService instructorService, ParameterProtector urlTokenSingleton)
-=======
-        public EditModel(IUserService userService, UrlTokenSingleton urlTokenSingleton)
->>>>>>> Service-Usuario:GYMPT/Pages/Users/EditUser.cshtml.cs
+        public EditModel(IUserService userService, ParameterProtector urlTokenSingleton)
         {
             _userService = userService;
             _urlTokenSingleton = urlTokenSingleton;
@@ -41,15 +28,11 @@ namespace GYMPT.Pages.Instructors
         // Este método se ejecuta al cargar la página para rellenar el formulario
         public async Task<IActionResult> OnGetAsync(string token)
         {
-<<<<<<< HEAD:GYMPT/Pages/Instructors/EditInstructor.cshtml.cs
-            var idStr = _urlTokenSingleton.Unprotect(token);
-=======
             if (string.IsNullOrEmpty(token))
                 return RedirectToPage("/Persons/Person");
 
             // Decode token to original id
-            var idStr = _urlTokenSingleton.GetTokenData(token);
->>>>>>> Service-Usuario:GYMPT/Pages/Users/EditUser.cshtml.cs
+            var idStr = _urlTokenSingleton.Unprotect(token);
             if (!int.TryParse(idStr, out var id))
             {
                 TempData["ErrorMessage"] = "Token inválido.";

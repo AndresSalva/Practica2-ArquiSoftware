@@ -1,6 +1,5 @@
 ﻿using ServicePerson.Domain.Entities;
 
-
 namespace ServicePerson.Application.Interfaces
 {
     public interface IPersonService

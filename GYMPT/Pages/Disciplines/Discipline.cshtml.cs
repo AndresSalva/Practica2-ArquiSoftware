@@ -1,7 +1,5 @@
 using ServiceDiscipline.Application.Interfaces;
 using ServiceDiscipline.Domain.Entities;
-using GYMPT.Infrastructure.Services;
-using GYMPT.Domain.Entities;
 using GYMPT.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +9,7 @@ using ServiceClient.Application.Services;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ServiceCommon.Infrastructure.Services;
 
 namespace GYMPT.Pages.Disciplines
 {
@@ -19,11 +18,11 @@ namespace GYMPT.Pages.Disciplines
     {
         private readonly IDisciplineService _disciplineService;
         private readonly IPersonService _userService;
-        private readonly UrlTokenSingleton _urlTokenSingleton;
+        private readonly ParameterProtector _urlTokenSingleton;
         public IEnumerable<Discipline> DisciplineList { get; set; } = new List<Discipline>();
         public Dictionary<long, string> InstructorNames { get; set; } = new Dictionary<long, string>();
 
-        public DisciplineModel(IDisciplineService disciplineService, IPersonService userService, UrlTokenSingleton urlTokenSingleton)
+        public DisciplineModel(IDisciplineService disciplineService, IPersonService userService, ParameterProtector urlTokenSingleton)
         {
             _disciplineService = disciplineService;
             _userService = userService;
