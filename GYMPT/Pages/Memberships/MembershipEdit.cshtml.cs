@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using GYMPT.Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -13,12 +13,12 @@ namespace GYMPT.Pages.Memberships
     public class MembershipEditModel : PageModel
     {
         private readonly IMembershipService _membershipService;
-        private readonly UrlTokenSingleton _urlTokenSingleton;
+        private readonly ParameterProtector _urlTokenSingleton;
 
         [BindProperty]
         public Membership Membership { get; set; } = new();
 
-        public MembershipEditModel(IMembershipService membershipService, UrlTokenSingleton urlTokenSingleton)
+        public MembershipEditModel(IMembershipService membershipService, ParameterProtector urlTokenSingleton)
         {
             _membershipService = membershipService;
             _urlTokenSingleton = urlTokenSingleton;

@@ -1,6 +1,6 @@
 using GYMPT.Application.Interfaces;
 using GYMPT.Domain.Entities;
-using GYMPT.Infrastructure.Services;
+using ServiceCommon.Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -11,12 +11,12 @@ namespace GYMPT.Pages.Instructors
     public class EditModel : PageModel
     {
         private readonly IInstructorService _instructorService;
-        private readonly UrlTokenSingleton _urlTokenSingleton;
+        private readonly ParameterProtector _urlTokenSingleton;
 
         [BindProperty]
         public Instructor Instructor { get; set; }
 
-        public EditModel(IInstructorService instructorService, UrlTokenSingleton urlTokenSingleton)
+        public EditModel(IInstructorService instructorService, ParameterProtector urlTokenSingleton)
         {
             _instructorService = instructorService;
             _urlTokenSingleton = urlTokenSingleton;
@@ -24,7 +24,7 @@ namespace GYMPT.Pages.Instructors
 
         public async Task<IActionResult> OnGetAsync(string token)
         {
-            var idStr = _urlTokenSingleton.GetTokenData(token);
+            var idStr = _urlTokenSingleton.Unprotect(token);
             if (!int.TryParse(idStr, out var id))
             {
                 TempData["ErrorMessage"] = "Token de URL inválido.";

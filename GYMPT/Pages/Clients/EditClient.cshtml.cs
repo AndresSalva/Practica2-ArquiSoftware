@@ -14,12 +14,12 @@ namespace GYMPT.Pages.Clients
     public class EditModel : PageModel
     {
         private readonly IClientService _clientService;
-        private readonly UrlTokenSingleton _urlTokenSingleton;
+        private readonly ParameterProtector _urlTokenSingleton;
 
         [BindProperty]
         public Client Client { get; set; } = default!;
 
-        public EditModel(IClientService clientService, UrlTokenSingleton urlTokenSingleton)
+        public EditModel(IClientService clientService, ParameterProtector urlTokenSingleton)
         {
             _clientService = clientService;
             _urlTokenSingleton = urlTokenSingleton;

@@ -30,12 +30,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ServiceDiscipline\ServiceDiscipline.csproj" />
+    <ProjectReference Include="..\ServiceMembership\ServiceMembership.csproj" />
+		<ProjectReference Include="..\ServiceClient\ServiceClient.csproj" />
+    <ProjectReference Include="../ServiceCommon/ServiceCommon.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\ServiceMembership\ServiceMembership.csproj" />
-  </ItemGroup>
-	<ItemGroup>
-		<ProjectReference Include="..\ServiceClient\ServiceClient.csproj" />
-	</ItemGroup>
 </Project>

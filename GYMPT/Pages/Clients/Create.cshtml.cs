@@ -19,7 +19,7 @@ namespace GYMPT.Pages.Clients
         }
 
         [BindProperty]
-        public Client Client { get; set; } = new Client(); // Es buena práctica inicializarlo
+        public Client Client { get; set; } = new Client(); // Es buena prï¿½ctica inicializarlo
 
         public IActionResult OnGet()
         {
@@ -28,39 +28,39 @@ namespace GYMPT.Pages.Clients
 
         public async Task<IActionResult> OnPostAsync()
         {
-            // La validación del lado del cliente (y atributos como [Required]) se comprueba aquí.
+            // La validaciï¿½n del lado del cliente (y atributos como [Required]) se comprueba aquï¿½.
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            // --- ¡AQUÍ ESTÁ LA LÓGICA DE MANEJO DE ERRORES! ---
+            // --- ï¿½AQUï¿½ ESTï¿½ LA Lï¿½GICA DE MANEJO DE ERRORES! ---
             try
             {
-                // 1. Intentamos ejecutar la lógica de negocio.
-                // Esta es la línea que lanzará la ArgumentException si la validación del dominio falla.
+                // 1. Intentamos ejecutar la lï¿½gica de negocio.
+                // Esta es la lï¿½nea que lanzarï¿½ la ArgumentException si la validaciï¿½n del dominio falla.
                 await _clientService.CreateAsync(Client);
 
-                // 2. Si no hay excepción, la operación fue exitosa. Redirigimos al usuario.
+                // 2. Si no hay excepciï¿½n, la operaciï¿½n fue exitosa. Redirigimos al usuario.
                 return RedirectToPage("./Index");
             }
             catch (ArgumentException ex)
             {
-                // 3. Si atrapamos una ArgumentException, sabemos que fue un error de validación
-                //    lanzado a propósito desde nuestro ClientService.
+                // 3. Si atrapamos una ArgumentException, sabemos que fue un error de validaciï¿½n
+                //    lanzado a propï¿½sito desde nuestro ClientService.
 
-                // Añadimos el mensaje de error de la excepción al estado del modelo.
+                // Aï¿½adimos el mensaje de error de la excepciï¿½n al estado del modelo.
                 // Esto permite que el error se muestre en la vista.
                 ModelState.AddModelError(string.Empty, ex.Message);
 
-                // 4. Devolvemos la misma página. El usuario verá el formulario con los datos que
-                //    ingresó y el mensaje de error en la parte superior.
+                // 4. Devolvemos la misma pï¿½gina. El usuario verï¿½ el formulario con los datos que
+                //    ingresï¿½ y el mensaje de error en la parte superior.
                 return Page();
             }
-            // Opcional: Podrías atrapar otras excepciones más genéricas si la base de datos falla.
+            // Opcional: Podrï¿½as atrapar otras excepciones mï¿½s genï¿½ricas si la base de datos falla.
             // catch (Exception ex)
             // {
-            //     ModelState.AddModelError(string.Empty, "Ocurrió un error inesperado en el servidor. Por favor, intente de nuevo.");
+            //     ModelState.AddModelError(string.Empty, "Ocurriï¿½ un error inesperado en el servidor. Por favor, intente de nuevo.");
             //     return Page();
             // }
         }

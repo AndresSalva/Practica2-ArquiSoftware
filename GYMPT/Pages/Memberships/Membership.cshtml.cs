@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using GYMPT.Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -13,10 +13,10 @@ namespace GYMPT.Pages.Memberships
     public class MembershipModel : PageModel
     {
         private readonly IMembershipService _membershipService;
-        private readonly UrlTokenSingleton _urlTokenSingleton;
+        private readonly ParameterProtector _urlTokenSingleton;
         public IEnumerable<Membership> MembershipList { get; set; } = new List<Membership>();
 
-        public MembershipModel(IMembershipService membershipService, UrlTokenSingleton urlTokenSingleton)
+        public MembershipModel(IMembershipService membershipService, ParameterProtector urlTokenSingleton)
         {
             _membershipService = membershipService;
             _urlTokenSingleton = urlTokenSingleton;

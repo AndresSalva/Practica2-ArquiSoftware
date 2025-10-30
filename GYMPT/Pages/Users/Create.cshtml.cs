@@ -19,9 +19,9 @@ namespace GYMPT.Pages.Users
         private readonly IClientService _clientService;
         private readonly IInstructorService _instructorService;
         private readonly IPasswordHasher _passwordHasher;
-        private readonly EmailService _email;
+        private readonly IEmailSender _email;
 
-        public CreateModel(IClientService clientService, IInstructorService instructorService, IPasswordHasher passwordHasher, EmailService email)
+        public CreateModel(IClientService clientService, IInstructorService instructorService, IPasswordHasher passwordHasher, IEmailSender email)
         {
             _clientService = clientService;
             _instructorService = instructorService;

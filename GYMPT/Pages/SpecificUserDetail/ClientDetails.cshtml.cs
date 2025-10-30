@@ -17,7 +17,7 @@ namespace GYMPT.Pages.SpecificUserDetail
 
         public Client Client { get; set; } = default!;
 
-        public ClientDetailsModel(IClientService clientService, UrlTokenSingleton urlTokenSingleton)
+        public ClientDetailsModel(IClientService clientService, ParameterProtector urlTokenSingleton)
         {
             _clientService = clientService;
             _urlTokenSingleton = urlTokenSingleton;
@@ -25,7 +25,7 @@ namespace GYMPT.Pages.SpecificUserDetail
 
         public async Task<IActionResult> OnGetAsync(string token)
         {
-            var idStr = _urlTokenSingleton.GetTokenData(token);
+            var idStr = _urlTokenSingleton.Unprotect(token);
             if (!int.TryParse(idStr, out var id))
             {
                 TempData["ErrorMessage"] = "Token de URL inválido.";

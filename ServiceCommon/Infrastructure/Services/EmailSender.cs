@@ -1,9 +1,10 @@
-﻿using MailKit.Net.Smtp;
+using MailKit.Net.Smtp;
 using MimeKit;
 using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.Identity.UI.Services;
+using ServiceCommon.Domain.Entities;
+using ServiceCommon.Domain.Ports;
 
-namespace GYMPT.Infrastructure.Services
+namespace ServiceCommon.Infrastructure.Services
 {
     public class EmailService : IEmailSender
     {
