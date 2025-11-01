@@ -15,6 +15,7 @@ using QuestPDF.Infrastructure;
 using ReportService.Application.Interfaces;
 using ReportService.Application.Services;
 using ReportService.Infrastructure;
+using GYMPT.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,6 +42,7 @@ builder.Services.AddMembershipModule(GetConnectionString);
 builder.Services.AddScoped<ILogoProvider, LogoProvider>();
 builder.Services.AddScoped<IPdfReportBuilder, InstructorPerformancePdfBuilder>();
 builder.Services.AddScoped<IReportService, ReportService.Application.Services.ReportService>();
+builder.Services.AddScoped<IUserContextService, UserContextService>();
 
 // Configurar QuestPDF (solo una vez al inicio)
 QuestPDF.Settings.License = LicenseType.Community;
