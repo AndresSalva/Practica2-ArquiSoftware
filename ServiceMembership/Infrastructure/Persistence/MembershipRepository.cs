@@ -87,7 +87,8 @@ public class MembershipRepository : IMembershipRepository
                last_modification AS LastModification,
                is_active AS IsActive
         FROM membership
-        WHERE is_active = true;
+        WHERE is_active = true
+        ORDER by name ASC;
         """;
 
         await using var conn = new NpgsqlConnection(_connectionString);

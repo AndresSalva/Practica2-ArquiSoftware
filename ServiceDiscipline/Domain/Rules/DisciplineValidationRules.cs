@@ -75,6 +75,14 @@ namespace ServiceDiscipline.Domain.Rules
             {
                 return Result<Discipline>.Failure("La duración de la disciplina no puede exceder las 2 horas.");
             }
+            TimeSpan HoraApertura = new TimeSpan(8, 0, 0); // 08:00 AM
+            TimeSpan HoraCierre = new TimeSpan(19, 0, 0);  // 07:00 PM
+
+            // Comprobamos si la hora de inicio o la de finalización están fuera del rango permitido.
+            if (discipline.StartTime < HoraApertura || discipline.EndTime > HoraCierre)
+            {
+                return Result<Discipline>.Failure("El horario de la disciplina debe estar entre las 08:00 AM y las 07:00 PM.");
+            }
 
             // Si todas las validaciones pasan, devolvemos un resultado exitoso.
             return Result<Discipline>.Success(discipline);
