@@ -32,10 +32,10 @@
                     <tr>
                         <td class="fw-bold">@discipline.Name</td>
                         <td>
-                            @if (discipline.IdInstructor.HasValue &&
-                                                    Model.InstructorNames.ContainsKey(discipline.IdInstructor.Value))
+                            @if (discipline.IdUser.HasValue &&
+                                                    Model.InstructorNames.ContainsKey(discipline.IdUser.Value))
                             {
-                                @Model.InstructorNames[discipline.IdInstructor.Value]
+                                @Model.InstructorNames[discipline.IdUser.Value]
                             }
                             else
                             {

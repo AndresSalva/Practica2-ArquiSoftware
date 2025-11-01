@@ -8,7 +8,7 @@ namespace ServiceDiscipline.Domain.Entities
         public DateTime? LastModification { get; set; }
         public bool IsActive { get; set; } = true;
         public string? Name { get; set; }
-        public long? IdInstructor { get; set; }
+        public long? IdUser { get; set; }
         public TimeSpan? StartTime { get; set; }
         public TimeSpan? EndTime { get; set; }
     }

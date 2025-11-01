@@ -79,7 +79,7 @@ namespace GYMPT.Pages.Disciplines
                 instructors,
                 "Id",
                 "FullName",
-                Discipline?.IdInstructor
+                Discipline?.IdUser
             );
         }
     }
