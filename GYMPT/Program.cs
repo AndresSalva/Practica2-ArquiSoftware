@@ -49,7 +49,7 @@ QuestPDF.Settings.License = LicenseType.Community;
 // builder.Services.AddReportsModule(GetConnectionString);
 
 // Facades
-builder.Services.AddScoped<ISelectDataFacade, SelectDataFacade>();
+builder.Services.AddScoped<ISelectDataService, SelectDataService>();
 builder.Services.AddScoped<GYMPT.Application.Interfaces.ISelectDataService, GYMPT.Application.Services.SelectDataService>();
 builder.Services.AddScoped<PersonFacade>();
 builder.Services.AddScoped<UserCreationFacade>();

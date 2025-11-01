@@ -13,7 +13,7 @@ namespace GYMPT.Pages.Disciplines
     public class DisciplineEditModel : PageModel
     {
         private readonly IDisciplineService _disciplineService;
-        private readonly SelectDataFacade _facade;
+        private readonly ISelectDataFacade _facade;
         private readonly ParameterProtector _urlTokenSingleton;
 
         [BindProperty]
@@ -22,7 +22,7 @@ namespace GYMPT.Pages.Disciplines
 
         public DisciplineEditModel(
             IDisciplineService disciplineService,
-            SelectDataFacade facade,
+            ISelectDataFacade facade,
             ParameterProtector urlTokenSingleton)
         {
             _disciplineService = disciplineService;
