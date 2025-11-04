@@ -127,9 +127,9 @@ VALUES
 -- Disciplinas
 INSERT INTO public.discipline (name, id_user, start_time, end_time)
 VALUES
-('Crossfit', 1, '07:30:00', '09:30:00'),
-('Zumba', 1, '07:00:00', '09:00:00'),
-('Test Dis', 1, '00:00:00', '13:00:00');
+('Crossfit', 1, '08:30:00', '09:30:00'),
+('Zumba', 1, '08:00:00', '09:00:00'),
+('Test Dis', 1, '10:10:00', '12:00:00');
 
 -- Asociación membresía-disciplinas
 INSERT INTO public.membership_disciplines (id_membership, id_discipline)
