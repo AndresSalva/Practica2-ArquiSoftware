@@ -7,6 +7,8 @@ using ServiceClient.Infrastructure.Providers;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
+namespace ServiceClient.Infrastructure.Persistence;
+
 public class ClientRepository : IClientRepository
 {
     private readonly IClientConnectionProvider _connectionProvider;

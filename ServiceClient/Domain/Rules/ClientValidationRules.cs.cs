@@ -64,7 +64,7 @@ namespace ServiceClient.Domain.Rules
             var today = DateTime.Today;
             var age = today.Year - dateBirth.Value.Year;
             if (dateBirth.Value.Date > today.AddYears(-age)) age--;
-            return age >= 18 && age <= 50;
+            return age >= 18;
         }
     }
 }

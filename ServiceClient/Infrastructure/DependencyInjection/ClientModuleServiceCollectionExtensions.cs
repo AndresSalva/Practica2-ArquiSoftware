@@ -33,10 +33,7 @@ namespace ServiceClient.Infrastructure.DependencyInjection
         private static IServiceCollection AddClientCore(this IServiceCollection services)
         {
             services.AddScoped<IClientService, ClientService>();
-            services.AddScoped<IDetailClientService, DetailClientService>();
-
             services.AddScoped<IClientRepository, ClientRepository>();
-            services.AddScoped<IDetailClientRepository, DetailClientRepository>();
 
             return services;
         }
