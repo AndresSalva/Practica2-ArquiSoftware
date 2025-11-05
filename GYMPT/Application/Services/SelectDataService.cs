@@ -27,7 +27,7 @@ namespace GYMPT.Application.Services
 
         public async Task<SelectList> GetUserOptionsAsync()
         {
-            var users = await _clientsService.GetAllAsync();
+            var users = await _clientsService.GetAllClients();
             if (users == null || !users.Any())
             {
                 return new SelectList(Enumerable.Empty<SelectListItem>());
@@ -41,7 +41,6 @@ namespace GYMPT.Application.Services
                 })
                 .ToList(); 
 
-            // 4. Usa la NUEVA lista proyectada para crear el SelectList.
             return new SelectList(userOptions, "Id", "FullName");
         }
 
@@ -64,8 +63,7 @@ namespace GYMPT.Application.Services
 
         public async Task<SelectList> GetInstructorOptionsAsync()
         {
-            // --- CAMBIO 2 (Repetido): Usar el nombre de método correcto del nuevo contrato ---
-            var users = await _userService.GetAllUsers(); // El método ahora se llama GetAllAsync
+            var users = await _userService.GetAllUsers();
 
             var instructors = users
                 .Where(u => u.Role == "Instructor")

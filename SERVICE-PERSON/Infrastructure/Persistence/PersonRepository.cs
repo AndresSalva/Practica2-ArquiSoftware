@@ -64,7 +64,7 @@ namespace ServicePerson.Infraestructure.Persistence
             {
                 //await _logger.LogInfo("Trying to obtain full list");
                 using var conn = new NpgsqlConnection(_postgresString);
-                var sql = @"SELECT id, created_at AS CreatedAt, last_modification AS LastModification, is_active AS IsActive, name, first_lastname AS FirstLastname, second_lastname AS SecondLastname, date_birth AS DateBirth, ci, ""role"" AS Role FROM person WHERE is_active = true;";
+                var sql = @"SELECT id, created_at AS CreatedAt, last_modification AS LastModification, is_active AS IsActive, name, first_lastname AS FirstLastname, second_lastname AS SecondLastname, date_birth AS DateBirth, ci, ""role"" AS Role FROM person WHERE is_active = true ORDER BY name ASC;";
                 return await conn.QueryAsync<Person>(sql);
             }
             catch (Exception ex)

@@ -15,7 +15,7 @@ public class ClientService : IClientService
         _clientRepository = clientRepository;
     }
 
-    public async Task<Result<Client>> CreateAsync(Client client)
+    public async Task<Result<Client>> CreateNewClient(Client client)
     {
         var validationResult = ClientValidationRules.Validate(client);
         if (validationResult.IsFailure)
@@ -30,29 +30,50 @@ public class ClientService : IClientService
         return Result<Client>.Success(createdClient);
     }
 
-    // --- El resto de los métodos no cambian ---
-    public async Task<IEnumerable<Client>> GetAllAsync()
+    public async Task<IEnumerable<Client>> GetAllClients()
     {
         return await _clientRepository.GetAllAsync();
     }
 
-    public async Task<Client?> GetByIdAsync(int id)
+    public async Task<Result<Client>> GetClientById(int id)
     {
-        return await _clientRepository.GetByIdAsync(id);
+        var client = await _clientRepository.GetByIdAsync(id);
+
+        if (client == null)
+        {
+            return Result<Client>.Failure($"No se encontró el cliente con ID {id}.");
+        }
+
+        return Result<Client>.Success(client);
     }
 
-    public async Task<Client?> UpdateAsync(Client client)
+    public async Task<Result<Client>> UpdateClient(Client client)
     {
         var validationResult = ClientValidationRules.Validate(client);
         if (validationResult.IsFailure)
         {
-            throw new ArgumentException(validationResult.Error);
+            return validationResult;
         }
-        return await _clientRepository.UpdateAsync(client);
+
+        var updatedClient = await _clientRepository.UpdateAsync(client);
+
+        if (updatedClient == null)
+        {
+            return Result<Client>.Failure($"No se encontró el cliente con ID {client.Id} para actualizar.");
+        }
+
+        return Result<Client>.Success(updatedClient);
     }
 
-    public async Task<bool> DeleteByIdAsync(int id)
+    public async Task<Result<bool>> DeleteClient(int id)
     {
-        return await _clientRepository.DeleteByIdAsync(id);
+        var success = await _clientRepository.DeleteByIdAsync(id);
+
+        if (!success)
+        {
+            return Result<bool>.Failure($"No se pudo eliminar el cliente con ID {id} (probablemente no se encontró).");
+        }
+
+        return Result<bool>.Success(true);
     }
 }

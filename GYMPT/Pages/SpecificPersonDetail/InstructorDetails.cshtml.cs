@@ -34,14 +34,14 @@ namespace GYMPT.Pages.SpecificUserDetail
                 return RedirectToPage("/Persons/Person");
             }
 
-            Instructor = await _instructorService.GetUserById(id);
+            var instructorResult= await _instructorService.GetUserById(id);
 
-            if (Instructor == null)
+            if (instructorResult.IsFailure)
             {
                 TempData["ErrorMessage"] = "Instructor no encontrado.";
                 return RedirectToPage("/Persons/Person");
             }
-
+            Instructor = instructorResult.Value;
             return Page();
         }
     }

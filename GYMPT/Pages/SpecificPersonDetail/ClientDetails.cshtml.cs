@@ -29,15 +29,14 @@ namespace GYMPT.Pages.SpecificUserDetail
                 return RedirectToPage("/Persons/Person");
             }
 
-            // --- CAMBIO 2: Usar el nombre de método correcto del nuevo contrato ---
-            Client = await _clientService.GetByIdAsync(id);
+            var clientResult = await _clientService.GetClientById(id);
 
-            if (Client == null)
+            if (clientResult.IsFailure)
             {
                 TempData["ErrorMessage"] = "Cliente no encontrado.";
                 return RedirectToPage("/Persons/Person");
             }
-
+            Client = clientResult.Value;
             return Page();
         }
     }

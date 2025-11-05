@@ -106,7 +106,7 @@ namespace GYMPT.Pages.DetailsUsers
                 MembershipOptions = new SelectList(Enumerable.Empty<SelectListItem>());
             }
 
-            var users = await _userService.GetAllAsync();
+            var users = await _userService.GetAllClients();
             var membershipsResult = await _membershipService.GetAllMemberships();
 
             UserNames = users.ToDictionary(u => u.Id, u => $"{u.Name} {u.FirstLastname}");
