@@ -18,6 +18,9 @@ namespace ServiceUser.Domain.Rules
             var primerApellidoResult = UserValidationRules.ValidarNombreCompleto(user.FirstLastname);
             if (primerApellidoResult.IsFailure) return Result<User>.Failure("Primer apellido: " + primerApellidoResult.Error);
 
+            var segundoApellidoResult = UserValidationRules.ValidarSegundoApellido(user.SecondLastname);
+            if (segundoApellidoResult.IsFailure) return Result<User>.Failure("Segundo apellido: " + segundoApellidoResult.Error);
+
             var ciResult = UserValidationRules.ValidarCi(user.Ci);
             if (ciResult.IsFailure) return Result<User>.Failure(ciResult.Error);
 

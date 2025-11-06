@@ -23,7 +23,29 @@ namespace ServiceUser.Domain.Rules
 
             return Result<string>.Success(nombreCompleto);
         }
+        public static Result<string> ValidarSegundoApellido(string? segundoApellido)
+        {
+            // 1. Comprobar si el campo es opcional y está vacío.
+            //    Si es así, es un caso de éxito y no se valida nada más.
+            if (string.IsNullOrWhiteSpace(segundoApellido))
+            {
+                return Result<string>.Success(segundoApellido);
+            }
 
+            // 2. Si el campo NO está vacío, entonces aplicamos las reglas.
+            if (segundoApellido.Length < 3)
+            {
+                return Result<string>.Failure("debe tener al menos 3 caracteres.");
+            }
+
+            if (!LettersAndSpacesRegex.IsMatch(segundoApellido))
+            {
+                return Result<string>.Failure("solo puede contener letras y espacios.");
+            }
+
+            // 3. Si las reglas pasan, es un caso de éxito.
+            return Result<string>.Success(segundoApellido);
+        }
         // CI solo números o letras, obligatorio y longitud entre 8 y 15
         public static Result<string> ValidarCi(string? ci)
         {

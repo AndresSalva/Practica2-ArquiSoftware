@@ -17,7 +17,7 @@
 
         // Instructor
         public string? Specialization { get; set; }
-        public DateTime? HireDate { get; set; }
+        public DateTime HireDate { get; set; }
         public decimal? MonthlySalary { get; set; }
         public string? Email { get; set; }
     }
