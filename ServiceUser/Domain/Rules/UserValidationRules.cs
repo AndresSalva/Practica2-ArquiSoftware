@@ -8,6 +8,7 @@ namespace ServiceUser.Domain.Rules
 {
     internal static class UserValidationRules
     {
+        private static readonly Regex LettersAndSpacesRegex = new Regex(@"^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$");
         // Nombre completo obligatorio, mínimo 2 letras, solo letras y espacios
         public static Result<string> ValidarNombreCompleto(string? nombreCompleto)
         {
@@ -23,14 +24,14 @@ namespace ServiceUser.Domain.Rules
             return Result<string>.Success(nombreCompleto);
         }
 
-        // CI solo números o letras, obligatorio y longitud entre 6 y 15
+        // CI solo números o letras, obligatorio y longitud entre 8 y 15
         public static Result<string> ValidarCi(string? ci)
         {
             if (string.IsNullOrWhiteSpace(ci))
                 return Result<string>.Failure("El CI es obligatorio.");
 
-            if (!Regex.IsMatch(ci, @"^[0-9A-Za-z]{6,15}$"))
-                return Result<string>.Failure("El CI debe contener solo letras y números, entre 6 y 15 caracteres.");
+            if (!Regex.IsMatch(ci, @"^[0-9A-Za-z]{8,}$"))
+                return Result<string>.Failure("El CI debe contener solo letras y números, y 8 caracteres.");
 
             return Result<string>.Success(ci);
         }
@@ -49,6 +50,9 @@ namespace ServiceUser.Domain.Rules
 
             if (edad < 18)
                 return Result<DateTime?>.Failure("El usuario debe tener al menos 18 años.");
+
+            if (edad > 60)
+                return Result<DateTime?>.Failure("El usuario no puede tener más de 60 años.");
 
             return Result<DateTime?>.Success(fecha);
         }
@@ -84,6 +88,9 @@ namespace ServiceUser.Domain.Rules
             if (especializacion.Length < 3)
                 return Result<string>.Failure("La especialización debe tener al menos 3 caracteres.");
 
+            if(!LettersAndSpacesRegex.IsMatch(especializacion))
+                return Result<string>.Failure("La especialización solo puede contener letras y espacios.");
+
             return Result<string>.Success(especializacion);
         }
 
@@ -93,8 +100,8 @@ namespace ServiceUser.Domain.Rules
             if (!salario.HasValue)
                 return Result<decimal>.Failure("El salario es obligatorio.");
 
-            if (salario.Value < 0)
-                return Result<decimal>.Failure("El salario no puede ser negativo.");
+            if (salario.Value <= 0)
+                return Result<decimal>.Failure("El salario no puede ser negativo o cero.");
 
             return Result<decimal>.Success(salario.Value);
         }

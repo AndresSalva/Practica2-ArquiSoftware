@@ -40,7 +40,7 @@ namespace ServiceClient.Domain.Rules
             if (string.IsNullOrWhiteSpace(client.Ci)) return Result<Client>.Failure("La cédula de identidad es obligatoria.");
             if (!OnlyNumbersRegex.IsMatch(client.Ci)) return Result<Client>.Failure("La cédula de identidad solo puede contener números.");
             // NUEVA REGLA: El CI debe tener exactamente 8 caracteres.
-            if (client.Ci.Length != 8) return Result<Client>.Failure("La cédula de identidad debe tener exactamente 8 caracteres.");
+            if (client.Ci.Length != 8) return Result<Client>.Failure("La cédula de identidad debe tener mínimamente 8 caracteres.");
 
             // Validación de Fecha de Nacimiento
             if (client.DateBirth == null) return Result<Client>.Failure("La fecha de nacimiento es obligatoria.");
