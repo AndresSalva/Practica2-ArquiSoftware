@@ -74,18 +74,6 @@ namespace ServiceUser.Domain.Rules
             return Result<DateTime?>.Success(hireDate);
         }
 
-        // Rol válido
-        public static Result<string> ValidarRol(string? role)
-        {
-            if (string.IsNullOrWhiteSpace(role))
-                return Result<string>.Failure("El rol es obligatorio.");
-
-            string[] rolesValidos = { "Instructor", "Admin" };
-            if (!rolesValidos.Contains(role, StringComparer.OrdinalIgnoreCase))
-                return Result<string>.Failure("El rol debe ser Instructor o Admin.");
-
-            return Result<string>.Success(role);
-        }
 
         // Especialización mínima 3 caracteres
         public static Result<string> ValidarEspecializacion(string? especializacion)

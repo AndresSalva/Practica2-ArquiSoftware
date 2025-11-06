@@ -33,11 +33,8 @@ namespace ServicePerson.Domain.Rules
                 return Result<Person>.Failure("El primer apellido contiene caracteres no permitidos.");
             if (person.FirstLastname.Length < 2 || person.FirstLastname.Length > 50)
                 return Result<Person>.Failure("El primer apellido debe tener entre 2 y 50 caracteres.");
-            if (!string.IsNullOrWhiteSpace(person.SecondLastname))
-            {
-                if (!AllowedCharsRegex.IsMatch(person.SecondLastname))
-                    return Result<Person>.Failure("El segundo apellido contiene caracteres no permitidos.");
-            }
+            if (!AllowedCharsRegex.IsMatch(person.SecondLastname))
+                return Result<Person>.Failure("El segundo apellido contiene caracteres no permitidos.");
             if (string.IsNullOrWhiteSpace(person.Ci))
                 return Result<Person>.Failure("El número de CI es obligatorio.");
             if (!Regex.IsMatch(person.Ci, @"^[A-Za-z0-9]+$"))

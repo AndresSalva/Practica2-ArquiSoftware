@@ -28,9 +28,13 @@ namespace ServiceClient.Domain.Rules
             if (!OnlyLettersAndSpacesRegex.IsMatch(client.FirstLastname)) return Result<Client>.Failure("El primer apellido solo puede contener letras y espacios.");
 
             // Validación del Segundo Apellido (opcional)
-            if (!string.IsNullOrEmpty(client.SecondLastname) && !OnlyLettersAndSpacesRegex.IsMatch(client.SecondLastname))
+            if(!string.IsNullOrWhiteSpace(client.SecondLastname))
             {
-                return Result<Client>.Failure("El segundo apellido solo puede contener letras y espacios.");
+                // Si se proporcionó un segundo apellido, validamos su contenido.
+                if (!OnlyLettersAndSpacesRegex.IsMatch(client.SecondLastname))
+                {
+                    return Result<Client>.Failure("El segundo apellido solo puede contener letras y espacios.");
+                }
             }
 
             // Validación de CI

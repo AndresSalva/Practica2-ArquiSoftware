@@ -48,9 +48,12 @@ namespace GYMPT.Pages.Clients
             {
                 return Page();
             }
-
-            await _clientService.UpdateClient(Client);
-
+            var result = await _clientService.UpdateClient(Client);
+            if (!result.IsSuccess)
+            {
+                ModelState.AddModelError(string.Empty, result.Error);
+                return Page();
+            }
             TempData["SuccessMessage"] = "Los datos del cliente han sido actualizados exitosamente.";
             return RedirectToPage("/Persons/Person");
         }
