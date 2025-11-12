@@ -18,11 +18,8 @@ namespace ServiceUser.Domain.Rules
             var primerApellidoResult = UserValidationRules.ValidarNombreCompleto(user.FirstLastname);
             if (primerApellidoResult.IsFailure) return Result<User>.Failure("Primer apellido: " + primerApellidoResult.Error);
 
-            if (!string.IsNullOrWhiteSpace(user.SecondLastname))
-            {
-                var segundoApellidoResult = UserValidationRules.ValidarNombreCompleto(user.SecondLastname);
-                if (segundoApellidoResult.IsFailure) return Result<User>.Failure("Segundo apellido: " + segundoApellidoResult.Error);
-            }
+            var segundoApellidoResult = UserValidationRules.ValidarSegundoApellido(user.SecondLastname);
+            if (segundoApellidoResult.IsFailure) return Result<User>.Failure("Segundo apellido: " + segundoApellidoResult.Error);
 
             var ciResult = UserValidationRules.ValidarCi(user.Ci);
             if (ciResult.IsFailure) return Result<User>.Failure(ciResult.Error);
@@ -30,8 +27,6 @@ namespace ServiceUser.Domain.Rules
             var fechaNacResult = UserValidationRules.ValidarFechaNacimiento(user.DateBirth);
             if (fechaNacResult.IsFailure) return Result<User>.Failure(fechaNacResult.Error);
 
-            var rolResult = UserValidationRules.ValidarRol(user.Role);
-            if (rolResult.IsFailure) return Result<User>.Failure(rolResult.Error);
 
             if (user.HireDate.HasValue)
             {

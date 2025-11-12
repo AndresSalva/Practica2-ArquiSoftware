@@ -31,13 +31,14 @@ namespace GYMPT.Pages.Clients
                 return RedirectToPage("/Persons/Person");
             }
 
-            Client = await _clientService.GetByIdAsync(id);
+            var clientResult = await _clientService.GetClientById(id);
 
-            if (Client == null)
+            if (clientResult.IsFailure)
             {
                 TempData["ErrorMessage"] = "Cliente no encontrado.";
                 return RedirectToPage("/Persons/Person");
             }
+            Client = clientResult.Value;
             return Page();
         }
 
@@ -47,9 +48,12 @@ namespace GYMPT.Pages.Clients
             {
                 return Page();
             }
-
-            await _clientService.UpdateAsync(Client);
-
+            var result = await _clientService.UpdateClient(Client);
+            if (!result.IsSuccess)
+            {
+                ModelState.AddModelError(string.Empty, result.Error);
+                return Page();
+            }
             TempData["SuccessMessage"] = "Los datos del cliente han sido actualizados exitosamente.";
             return RedirectToPage("/Persons/Person");
         }

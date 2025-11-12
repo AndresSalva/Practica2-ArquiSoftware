@@ -1,53 +1,37 @@
 ﻿using GYMPT.Application.DTO;
-using ServiceClient.Application.Interfaces;
-using ServiceClient.Domain.Entities;
 using ServiceCommon.Infrastructure.Services;
 using ServiceUser.Application.Interfaces;
+using ServiceUser.Application.Common;
 using ServiceUser.Domain.Entities;
-
-namespace GYMPT.Infrastructure.Facade
+namespace GYMPT.Application.Facade
 {
     public class UserCreationFacade
     {
-        private readonly IClientService _clientService;
         private readonly IUserService _userService;
-        private readonly EmailService _emailService;
+        private readonly EmailService _emailService; // Asumiendo que este servicio no necesita refactorización por ahora
 
         public UserCreationFacade(
-            IClientService clientService,
             IUserService userService,
             EmailService emailService)
         {
-            _clientService = clientService;
             _userService = userService;
             _emailService = emailService;
         }
 
         // =====================================================
-        // 🧩 CREAR USUARIO (Instructor o Cliente)
+        // 🧩 CREAR USUARIO (Refactorizado con Patrón Result)
         // =====================================================
-        public async Task<bool> CreateUserAsync(UserInputModel input)
+        public async Task<Result<User>> CreateUserAsync(UserInputModel input)
         {
-            if (input.Role == "Client")
+            try
             {
-                var client = new Client
+                // Validación de rol. Este método podría manejar 'Instructor', 'Admin', etc.
+                if (input.Role != "Instructor")
                 {
-                    Name = input.Name,
-                    FirstLastname = input.FirstLastname,
-                    SecondLastname = input.SecondLastname,
-                    Ci = input.Ci,
-                    DateBirth = input.DateBirth,
-                    FitnessLevel = input.FitnessLevel,
-                    EmergencyContactPhone = input.EmergencyContactPhone,
-                    InitialWeightKg = input.InitialWeightKg,
-                    CurrentWeightKg = input.CurrentWeightKg
-                };
+                    return Result<User>.Failure("El rol especificado no es 'Instructor'.");
+                }
 
-                await _clientService.CreateAsync(client);
-                return true;
-            }
-            else if (input.Role == "Instructor")
-            {
+                // 1. Mapear el input a la entidad User
                 var instructor = new User
                 {
                     Name = input.Name,
@@ -57,69 +41,57 @@ namespace GYMPT.Infrastructure.Facade
                     DateBirth = input.DateBirth,
                     Role = "Instructor",
                     Email = input.Email,
-                    Password = "gympt." + input.Ci,
+                    Password = "gympt." + input.Ci, // Generación de contraseña temporal
                     Specialization = input.Specialization,
-                    HireDate = input.HireDate ?? DateTime.MinValue,
-                    MonthlySalary = input.MonthlySalary ?? 0m
+                    HireDate = input.HireDate,
+                    MonthlySalary = input.MonthlySalary
                 };
 
-                await _userService.CreateUser(instructor);
+                // 2. Llamar al servicio de usuario.
+                var userResult = await _userService.CreateUser(instructor);
 
-                if (!string.IsNullOrWhiteSpace(input.Email))
+                // 3. Si la creación falla, devolver el error inmediatamente.
+                if (userResult.IsFailure)
                 {
-                    string subject = "Tu cuenta GYMPT fue creada";
-                    string body = $@"
-                        <h3>¡Bienvenido/a {input.Name}!</h3>
-                        <p>Tu cuenta ha sido creada correctamente.</p>
-                        <p><strong>Correo:</strong> {input.Email}</p>
-                        <p><strong>Contraseña:</strong> gympt.{input.Ci}</p>
-                        <p>Por seguridad, cambia tu contraseña al iniciar sesión.</p>
-                        <hr>
-                        <p>© GYMPT, 2025</p>
-                    ";
-                    // TODO
-                    // await _emailService.SendEmailAsync(input.Email, subject, body);
+                    return userResult;
                 }
 
-                return true;
-            }
+                // 4. Si la creación es exitosa, proceder con acciones adicionales (como enviar correo).
+                if (!string.IsNullOrWhiteSpace(input.Email))
+                {
+                    // Aquí iría tu código para enviar el correo de bienvenida con la contraseña temporal.
+                    // Ejemplo: await _emailService.SendWelcomeEmailAsync(userResult.Value);
+                }
 
-            return false;
+                // 5. Devolver el resultado exitoso.
+                return userResult;
+            }
+            catch (Exception ex)
+            {
+                // Captura cualquier error inesperado
+                return Result<User>.Failure($"Ocurrió un error inesperado al crear el usuario: {ex.Message}");
+            }
         }
 
         // =====================================================
-        // 🔍 OBTENER USUARIO POR ID
+        // 🔍 OBTENER USUARIO POR ID (Refactorizado)
         // =====================================================
-        public async Task<User?> GetUserByIdAsync(int id)
+        public async Task<Result<User>> GetUserByIdAsync(int id)
         {
+            // Simplemente delegamos la llamada y devolvemos el Result del servicio.
             return await _userService.GetUserById(id);
         }
 
         // =====================================================
-        // 🔄 ACTUALIZAR USUARIO EXISTENTE (Instructor)
+        // 🔄 ACTUALIZAR USUARIO EXISTENTE (Refactorizado)
         // =====================================================
-        public async Task<bool> UpdateUserAsync(User updatedUser)
+        public async Task<Result<User>> UpdateUserAsync(User updatedUser)
         {
-            if (updatedUser == null)
-                return false;
+            ArgumentNullException.ThrowIfNull(updatedUser, nameof(updatedUser));
 
-            var existingUser = await _userService.GetUserById(updatedUser.Id);
-            if (existingUser == null)
-                return false;
-
-            // Actualizamos campos
-            existingUser.Name = updatedUser.Name;
-            existingUser.FirstLastname = updatedUser.FirstLastname;
-            existingUser.SecondLastname = updatedUser.SecondLastname;
-            existingUser.Ci = updatedUser.Ci;
-            existingUser.DateBirth = updatedUser.DateBirth;
-            existingUser.Specialization = updatedUser.Specialization;
-            existingUser.HireDate = updatedUser.HireDate;
-            existingUser.MonthlySalary = updatedUser.MonthlySalary;
-            existingUser.Email = updatedUser.Email;
-
-            await _userService.UpdateUser(existingUser);
-            return true;
+            // Simplemente delegamos la llamada. El servicio se encargará de validar
+            // y comprobar si el usuario existe antes de actualizar.
+            return await _userService.UpdateUser(updatedUser);
         }
     }
 }

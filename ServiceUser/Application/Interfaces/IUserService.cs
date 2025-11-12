@@ -1,14 +1,15 @@
-﻿using ServiceUser.Domain.Entities;
+﻿using ServiceUser.Application.Common; 
+using ServiceUser.Domain.Entities;
 
 namespace ServiceUser.Application.Interfaces
 {
     public interface IUserService
     {
-        Task<User> GetUserById(int id);
-        Task<IEnumerable<User>> GetAllUsers();
-        Task<User> CreateUser(User newUser);
-        Task<User> UpdateUser(User userToUpdate); // <- devuelve el usuario actualizado
-        Task<bool> DeleteUser(int userId);
-        Task<bool> UpdatePasswordAsync(int userId, string newHash);
+        Task<Result<User>> GetUserById(int id);
+        Task<IEnumerable<User>> GetAllUsers(); 
+        Task<Result<User>> CreateUser(User newUser);
+        Task<Result<User>> UpdateUser(User userToUpdate);
+        Task<Result<bool>> DeleteUser(int userId);
+        Task<Result<bool>> UpdatePassword(int userId, string newPassword);
     }
 }

@@ -35,14 +35,14 @@ namespace GYMPT.Pages.SpecificUserDetail
                 return RedirectToPage("/Persons/Person");
             }
 
-            Admin = await _userService.GetUserById(id);
+            var adminResult = await _userService.GetUserById(id);
 
-            if (Admin == null)
+            if (adminResult.IsFailure)
             {
                 TempData["ErrorMessage"] = "Administrador no encontrado.";
                 return RedirectToPage("/Persons/Person");
             }
-
+            Admin = adminResult.Value;
             return Page();
         }
     }

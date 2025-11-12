@@ -8,6 +8,7 @@ namespace ServiceUser.Domain.Rules
 {
     internal static class UserValidationRules
     {
+        private static readonly Regex LettersAndSpacesRegex = new Regex(@"^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$");
         // Nombre completo obligatorio, mínimo 2 letras, solo letras y espacios
         public static Result<string> ValidarNombreCompleto(string? nombreCompleto)
         {
@@ -22,15 +23,37 @@ namespace ServiceUser.Domain.Rules
 
             return Result<string>.Success(nombreCompleto);
         }
+        public static Result<string> ValidarSegundoApellido(string? segundoApellido)
+        {
+            // 1. Comprobar si el campo es opcional y está vacío.
+            //    Si es así, es un caso de éxito y no se valida nada más.
+            if (string.IsNullOrWhiteSpace(segundoApellido))
+            {
+                return Result<string>.Success(segundoApellido);
+            }
 
-        // CI solo números o letras, obligatorio y longitud entre 6 y 15
+            // 2. Si el campo NO está vacío, entonces aplicamos las reglas.
+            if (segundoApellido.Length < 3)
+            {
+                return Result<string>.Failure("debe tener al menos 3 caracteres.");
+            }
+
+            if (!LettersAndSpacesRegex.IsMatch(segundoApellido))
+            {
+                return Result<string>.Failure("solo puede contener letras y espacios.");
+            }
+
+            // 3. Si las reglas pasan, es un caso de éxito.
+            return Result<string>.Success(segundoApellido);
+        }
+        // CI solo números o letras, obligatorio y longitud entre 8 y 15
         public static Result<string> ValidarCi(string? ci)
         {
             if (string.IsNullOrWhiteSpace(ci))
                 return Result<string>.Failure("El CI es obligatorio.");
 
-            if (!Regex.IsMatch(ci, @"^[0-9A-Za-z]{6,15}$"))
-                return Result<string>.Failure("El CI debe contener solo letras y números, entre 6 y 15 caracteres.");
+            if (!Regex.IsMatch(ci, @"^[0-9A-Za-z]{8,}$"))
+                return Result<string>.Failure("El CI debe contener solo letras y números, y 8 caracteres.");
 
             return Result<string>.Success(ci);
         }
@@ -49,6 +72,9 @@ namespace ServiceUser.Domain.Rules
 
             if (edad < 18)
                 return Result<DateTime?>.Failure("El usuario debe tener al menos 18 años.");
+
+            if (edad > 60)
+                return Result<DateTime?>.Failure("El usuario no puede tener más de 60 años.");
 
             return Result<DateTime?>.Success(fecha);
         }
@@ -74,18 +100,6 @@ namespace ServiceUser.Domain.Rules
             return Result<DateTime?>.Success(hireDate);
         }
 
-        // Rol válido
-        public static Result<string> ValidarRol(string? role)
-        {
-            if (string.IsNullOrWhiteSpace(role))
-                return Result<string>.Failure("El rol es obligatorio.");
-
-            string[] rolesValidos = { "Instructor", "Admin" };
-            if (!rolesValidos.Contains(role, StringComparer.OrdinalIgnoreCase))
-                return Result<string>.Failure("El rol debe ser Instructor o Admin.");
-
-            return Result<string>.Success(role);
-        }
 
         // Especialización mínima 3 caracteres
         public static Result<string> ValidarEspecializacion(string? especializacion)
@@ -96,6 +110,9 @@ namespace ServiceUser.Domain.Rules
             if (especializacion.Length < 3)
                 return Result<string>.Failure("La especialización debe tener al menos 3 caracteres.");
 
+            if(!LettersAndSpacesRegex.IsMatch(especializacion))
+                return Result<string>.Failure("La especialización solo puede contener letras y espacios.");
+
             return Result<string>.Success(especializacion);
         }
 
@@ -105,8 +122,8 @@ namespace ServiceUser.Domain.Rules
             if (!salario.HasValue)
                 return Result<decimal>.Failure("El salario es obligatorio.");
 
-            if (salario.Value < 0)
-                return Result<decimal>.Failure("El salario no puede ser negativo.");
+            if (salario.Value <= 0)
+                return Result<decimal>.Failure("El salario no puede ser negativo o cero.");
 
             return Result<decimal>.Success(salario.Value);
         }

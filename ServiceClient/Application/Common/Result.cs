@@ -4,21 +4,22 @@ using System.Linq;
 
 namespace ServiceClient.Application.Common
 {
-    public class Result
+    public class Result<T>
     {
         public bool IsSuccess { get; }
         public bool IsFailure => !IsSuccess;
-        public string? Error { get; }
-        protected Result(bool isSuccess, string? error) { IsSuccess = isSuccess; Error = error; }
-        public static Result Success() => new(true, null);
-        public static Result Failure(string error) => new(false, error);
-    }
+        public T Value { get; }
+        public string Error { get; }
 
-    public sealed class Result<T> : Result
-    {
-        public T? Value { get; }
-        private Result(bool isSuccess, string? error, T? value) : base(isSuccess, error) { Value = value; }
-        public static Result<T> Success(T value) => new(true, null, value);
-        public static new Result<T> Failure(string error) => new(false, error, default);
+        // El constructor es privado para forzar el uso de los métodos de fábrica
+        private Result(bool isSuccess, T value, string error)
+        {
+            IsSuccess = isSuccess;
+            Value = value;
+            Error = error;
+        }
+
+        public static Result<T> Success(T value) => new Result<T>(true, value, string.Empty);
+        public static Result<T> Failure(string error) => new Result<T>(false, default(T), error);
     }
 }

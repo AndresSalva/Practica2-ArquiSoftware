@@ -5,7 +5,7 @@
         public string Role { get; set; } = "";
         public string Name { get; set; } = "";
         public string FirstLastname { get; set; } = "";
-        public string SecondLastname { get; set; } = "";
+        public string? SecondLastname { get; set; } = "";
         public string Ci { get; set; } = "";
         public DateTime DateBirth { get; set; }
 
@@ -17,7 +17,7 @@
 
         // Instructor
         public string? Specialization { get; set; }
-        public DateTime? HireDate { get; set; }
+        public DateTime HireDate { get; set; }
         public decimal? MonthlySalary { get; set; }
         public string? Email { get; set; }
     }

@@ -1,4 +1,4 @@
-using GYMPT.Infrastructure.Facade;
+using GYMPT.Application.Facade;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -38,13 +38,14 @@ namespace GYMPT.Pages.Users
             }
 
             var instructor = await _userFacade.GetUserByIdAsync(id);
-            if (instructor == null)
+            if (instructor.IsFailure)
             {
+                ModelState.AddModelError(string.Empty, instructor.Error);
                 TempData["ErrorMessage"] = "Instructor no encontrado.";
                 return RedirectToPage("/Persons/Person");
             }
 
-            Instructor = instructor;
+            Instructor = instructor.Value;
             return Page();
         }
 
@@ -53,52 +54,18 @@ namespace GYMPT.Pages.Users
             if (!ModelState.IsValid)
                 return Page();
 
-            if (Instructor.Role?.Equals("Instructor", StringComparison.OrdinalIgnoreCase) == true)
-            {
-                var validationResult = UserValidator.Validar(Instructor);
-
-                if (validationResult.IsFailure)
-                {
-                    var errors = validationResult.Error.Split('\n', StringSplitOptions.RemoveEmptyEntries);
-
-                    foreach (var error in errors)
-                    {
-                        _logger.LogWarning("Error de validación al editar Instructor: {Error}", error);
-
-                        if (error.Contains("fecha de contratación", StringComparison.OrdinalIgnoreCase))
-                            ModelState.AddModelError(nameof(Instructor.HireDate), error.Trim());
-                        else if (error.Contains("18 años", StringComparison.OrdinalIgnoreCase) ||
-                                 error.Contains("nacimiento", StringComparison.OrdinalIgnoreCase))
-                            ModelState.AddModelError(nameof(Instructor.DateBirth), error.Trim());
-                        else if (error.Contains("CI", StringComparison.OrdinalIgnoreCase))
-                            ModelState.AddModelError(nameof(Instructor.Ci), error.Trim());
-                        else if (error.Contains("Especialización", StringComparison.OrdinalIgnoreCase))
-                            ModelState.AddModelError(nameof(Instructor.Specialization), error.Trim());
-                        else if (error.Contains("Sueldo", StringComparison.OrdinalIgnoreCase) ||
-                                 error.Contains("salario", StringComparison.OrdinalIgnoreCase))
-                            ModelState.AddModelError(nameof(Instructor.MonthlySalary), error.Trim());
-                        else if (error.Contains("correo", StringComparison.OrdinalIgnoreCase))
-                            ModelState.AddModelError(nameof(Instructor.Email), error.Trim());
-                        else
-                            ModelState.AddModelError(string.Empty, error.Trim());
-                    }
-
-                    return Page();
-                }
-            }
 
             var updatedResult = await _userFacade.UpdateUserAsync(Instructor);
 
-            if (!updatedResult)
+            if (updatedResult.IsFailure)
             {
-                TempData["ErrorMessage"] = "No se pudo actualizar el instructor. Intente nuevamente.";
+                ModelState.AddModelError(string.Empty, updatedResult.Error);
                 _logger.LogWarning("Error al actualizar instructor con ID {Id}", Instructor.Id);
                 return Page();
             }
 
             TempData["SuccessMessage"] = $"Los datos de '{Instructor.Name} {Instructor.FirstLastname}' fueron actualizados correctamente.";
             _logger.LogInformation("Instructor actualizado correctamente: {Name} {Lastname}", Instructor.Name, Instructor.FirstLastname);
-
             return RedirectToPage("/Persons/Person");
         }
     }

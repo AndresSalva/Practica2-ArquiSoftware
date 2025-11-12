@@ -33,7 +33,11 @@ public class DetailUserRepository : IDetailUserRepository
 
         _logger.LogInformation("Creating details user for user {UserId} with membership {MembershipId}", entity.IdUser, entity.IdMembership);
 
-        const string userExistsSql = @"SELECT COUNT(1) FROM client WHERE id_person = @UserId AND is_active = true;";
+        const string userExistsSql = @"
+            SELECT p.is_active 
+            FROM client c
+            INNER JOIN person p ON c.id_person = p.id
+            WHERE c.id_person = @UserId";
         const string membershipExistsSql = @"SELECT COUNT(1) FROM membership WHERE id = @MembershipId AND is_active = true;";
         const string insertSql = """
         INSERT INTO client_membership (id_client, id_membership, start_date, end_date, sessions_left, created_at, last_modification, is_active)

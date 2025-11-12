@@ -21,7 +21,6 @@ namespace GYMPT.Application.Facades
             _membershipService = membershipService;
         }
 
-        // 🔹 Listar instructores (user.role = 'Instructor')
         public async Task<SelectList> GetInstructorOptionsAsync()
         {
             var users = await _userService.GetAllUsers();
@@ -29,7 +28,6 @@ namespace GYMPT.Application.Facades
                 .Where(u => u.Role != null && u.Role.Equals("Instructor", StringComparison.OrdinalIgnoreCase))
                 .Select(u => new
                 {
-                    u.Id, // en la tabla 'user' el PK es id_person → corresponde con 'person.id'
                     FullName = $"{u.Name} {u.FirstLastname}"
                 });
 
@@ -38,7 +36,7 @@ namespace GYMPT.Application.Facades
 
         public async Task<SelectList> GetClientOptionsAsync()
         {
-            var clients = await _clientService.GetAllAsync();
+            var clients = await _clientService.GetAllClients();
             var clientOptions = clients.Select(c => new
             {
                 c.Id, // 'person.id'
@@ -48,7 +46,6 @@ namespace GYMPT.Application.Facades
             return new SelectList(clientOptions, "Id", "FullName");
         }
 
-        // 🔹 Listar membresías
         public async Task<SelectList> GetMembershipOptionsAsync()
         {
             var memberships = await _membershipService.GetAllMemberships();

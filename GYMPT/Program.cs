@@ -8,13 +8,14 @@ using GYMPT.Application.Services;
 using GYMPT.Infrastructure.Security;
 using GYMPT.Application.Facades;
 using ServiceCommon.Domain.Entities;
-using GYMPT.Infrastructure.Facade;
+using GYMPT.Application.Facade;
 using GYMPT.Application.Interfaces;
 using GYMPT.Infrastructure.Providers;
 using QuestPDF.Infrastructure;
 using ReportService.Application.Interfaces;
 using ReportService.Application.Services;
 using ReportService.Infrastructure;
+using GYMPT.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,6 +42,7 @@ builder.Services.AddMembershipModule(GetConnectionString);
 builder.Services.AddScoped<ILogoProvider, LogoProvider>();
 builder.Services.AddScoped<IPdfReportBuilder, InstructorPerformancePdfBuilder>();
 builder.Services.AddScoped<IReportService, ReportService.Application.Services.ReportService>();
+builder.Services.AddScoped<IUserContextService, UserContextService>();
 
 // Configurar QuestPDF (solo una vez al inicio)
 QuestPDF.Settings.License = LicenseType.Community;
@@ -49,10 +51,11 @@ QuestPDF.Settings.License = LicenseType.Community;
 // builder.Services.AddReportsModule(GetConnectionString);
 
 // Facades
-builder.Services.AddScoped<ISelectDataFacade, SelectDataFacade>();
-builder.Services.AddScoped<GYMPT.Application.Interfaces.ISelectDataService, GYMPT.Application.Services.SelectDataService>();
+builder.Services.AddScoped<ISelectDataService, SelectDataService>();
 builder.Services.AddScoped<PersonFacade>();
 builder.Services.AddScoped<UserCreationFacade>();
+builder.Services.AddScoped<ClientCreationFacade>();
+
 
 // Servicios transversales (seguridad, login, hashing, etc.)
 builder.Services.AddScoped<LoginService>();

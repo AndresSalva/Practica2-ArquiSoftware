@@ -52,11 +52,12 @@ namespace GYMPT.Pages.Users
                 return Page();
             }
 
-            var success = await _instructorService.UpdatePasswordAsync(UserId, NewPassword);
-
-            Message = success
-                ? "Contraseña actualizada correctamente."
-                : "Error al actualizar la contraseña. Intenta nuevamente.";
+            var success = await _instructorService.UpdatePassword(UserId, NewPassword);
+            if (success.IsFailure)
+            {
+                Message =  "Error al actualizar la contraseña. Intenta nuevamente.";
+            }
+            Message = "Contraseña actualizada correctamente.";
 
             return Page();
         }

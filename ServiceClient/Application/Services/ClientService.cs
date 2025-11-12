@@ -1,12 +1,10 @@
 ﻿// Ruta: ServiceClient/Application/Services/ClientService.cs
 
+using ServiceClient.Application.Common;
 using ServiceClient.Application.Interfaces;
 using ServiceClient.Domain.Entities;
 using ServiceClient.Domain.Ports;
 using ServiceClient.Domain.Rules;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 public class ClientService : IClientService
 {
@@ -17,50 +15,65 @@ public class ClientService : IClientService
         _clientRepository = clientRepository;
     }
 
-    public async Task<Client> CreateAsync(Client client)
+    public async Task<Result<Client>> CreateNewClient(Client client)
     {
-        // Primero, se valida el objeto que llega desde la capa de presentación.
         var validationResult = ClientValidationRules.Validate(client);
-
         if (validationResult.IsFailure)
         {
-            throw new ArgumentException(validationResult.Error);
+            return Result<Client>.Failure(validationResult.Error);
         }
 
-        // --- ¡ESTA ES LA LÍNEA DE LA SOLUCIÓN! ---
-        // Se asigna la fecha de creación ANTES de pasarlo a la capa de persistencia.
-        // Usar UtcNow es la mejor práctica para evitar problemas de zona horaria en el servidor.
         client.CreatedAt = DateTime.UtcNow;
-        client.IsActive = true; // También es un buen lugar para establecer valores por defecto.
-        // ------------------------------------------
+        client.IsActive = true;
 
-        // Ahora el objeto 'client' se envía al repositorio con el valor de 'CreatedAt' ya establecido.
-        return await _clientRepository.CreateAsync(client);
+        var createdClient = await _clientRepository.CreateAsync(client);
+        return Result<Client>.Success(createdClient);
     }
 
-    // --- El resto de los métodos no cambian ---
-    public async Task<IEnumerable<Client>> GetAllAsync()
+    public async Task<IEnumerable<Client>> GetAllClients()
     {
         return await _clientRepository.GetAllAsync();
     }
 
-    public async Task<Client?> GetByIdAsync(int id)
+    public async Task<Result<Client>> GetClientById(int id)
     {
-        return await _clientRepository.GetByIdAsync(id);
+        var client = await _clientRepository.GetByIdAsync(id);
+
+        if (client == null)
+        {
+            return Result<Client>.Failure($"No se encontró el cliente con ID {id}.");
+        }
+
+        return Result<Client>.Success(client);
     }
 
-    public async Task<Client?> UpdateAsync(Client client)
+    public async Task<Result<Client>> UpdateClient(Client client)
     {
         var validationResult = ClientValidationRules.Validate(client);
         if (validationResult.IsFailure)
         {
-            throw new ArgumentException(validationResult.Error);
+            return validationResult;
         }
-        return await _clientRepository.UpdateAsync(client);
+
+        var updatedClient = await _clientRepository.UpdateAsync(client);
+
+        if (updatedClient == null)
+        {
+            return Result<Client>.Failure($"No se encontró el cliente con ID {client.Id} para actualizar.");
+        }
+
+        return Result<Client>.Success(updatedClient);
     }
 
-    public async Task<bool> DeleteByIdAsync(int id)
+    public async Task<Result<bool>> DeleteClient(int id)
     {
-        return await _clientRepository.DeleteByIdAsync(id);
+        var success = await _clientRepository.DeleteByIdAsync(id);
+
+        if (!success)
+        {
+            return Result<bool>.Failure($"No se pudo eliminar el cliente con ID {id} (probablemente no se encontró).");
+        }
+
+        return Result<bool>.Success(true);
     }
 }

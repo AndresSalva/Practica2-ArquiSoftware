@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using ServiceDiscipline.Application.Interfaces;
 using ServiceMembership.Application.Interfaces;
 using ServiceUser.Application.Interfaces;
+using ServiceClient.Application.Interfaces;
 
 namespace GYMPT.Application.Services
 {
@@ -13,26 +14,33 @@ namespace GYMPT.Application.Services
         // Este IMembershipService apunta correctamente a GYMPT.Application.Interfaces.IMembershipService
         private readonly IMembershipService _membershipService;
         private readonly IDisciplineService _disciplineService;
+        private readonly IClientService _clientsService;
 
-        public SelectDataService(IUserService userService, IMembershipService membershipService, IDisciplineService disciplineService)
+
+        public SelectDataService(IUserService userService, IMembershipService membershipService, IDisciplineService disciplineService, IClientService clientService)
         {
             _userService = userService;
             _membershipService = membershipService;
             _disciplineService = disciplineService;
+            _clientsService = clientService;
         }
 
         public async Task<SelectList> GetUserOptionsAsync()
         {
-            // --- CAMBIO 2: Usar el nombre de método correcto del nuevo contrato ---
-            var users = await _userService.GetAllUsers(); // El método ahora se llama GetAllAsync
+            var users = await _clientsService.GetAllClients();
+            if (users == null || !users.Any())
+            {
+                return new SelectList(Enumerable.Empty<SelectListItem>());
+            }
 
             var userOptions = users
-                .Where(u => u.Role == "Client")
                 .Select(u => new
                 {
                     u.Id,
-                    FullName = $"{u.Name} {u.FirstLastname}"
-                });
+                    FullName = $"{u.Name ?? ""} {u.FirstLastname ?? ""}".Trim()
+                })
+                .ToList(); 
+
             return new SelectList(userOptions, "Id", "FullName");
         }
 
@@ -55,8 +63,7 @@ namespace GYMPT.Application.Services
 
         public async Task<SelectList> GetInstructorOptionsAsync()
         {
-            // --- CAMBIO 2 (Repetido): Usar el nombre de método correcto del nuevo contrato ---
-            var users = await _userService.GetAllUsers(); // El método ahora se llama GetAllAsync
+            var users = await _userService.GetAllUsers();
 
             var instructors = users
                 .Where(u => u.Role == "Instructor")

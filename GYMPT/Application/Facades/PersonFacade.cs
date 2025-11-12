@@ -1,5 +1,6 @@
 ﻿using GYMPT.Application.DTO;
 using ServiceClient.Application.Interfaces;
+using ServiceClient.Domain.Entities;
 using ServiceUser.Application.Interfaces;
 
 namespace GYMPT.Application.Facades
@@ -15,14 +16,10 @@ namespace GYMPT.Application.Facades
             _clientService = clientService;
         }
 
-        /// <summary>
-        /// Obtiene todos los registros de personas (clientes y usuarios), opcionalmente filtrando por rol.
-        /// </summary>
-        /// <param name="roleFilter">Si se indica, solo devuelve personas con este rol ("Client", "Instructor", "Admin", etc.)</param>
         public async Task<List<PersonDto>> GetAllPersonsAsync()
         {
             var users = await _userService.GetAllUsers();
-            var clients = await _clientService.GetAllAsync();
+            var clients = await _clientService.GetAllClients();
 
             var result = new List<PersonDto>();
 
@@ -55,20 +52,25 @@ namespace GYMPT.Application.Facades
             return result.OrderBy(p => p.Name).ThenBy(p => p.FirstLastname).ThenBy(p => p.SecondLastname).ToList();
         }
 
-        /// <summary>
-        /// Elimina un cliente por su Id.
-        /// </summary>
         public async Task<bool> DeleteClientAsync(int clientId)
         {
-            return await _clientService.DeleteByIdAsync(clientId);
+            var result = await _clientService.DeleteClient(clientId);
+            if (result.IsSuccess)
+            {
+                return true;
+            }
+            return false;
         }
 
-        /// <summary>
-        /// Elimina un usuario (Instructor/Admin) por su Id.
-        /// </summary>
+
         public async Task<bool> DeleteUserAsync(int userId)
         {
-            return await _userService.DeleteUser(userId);
+            var result = await _userService.DeleteUser(userId);
+            if (result.IsSuccess)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }
