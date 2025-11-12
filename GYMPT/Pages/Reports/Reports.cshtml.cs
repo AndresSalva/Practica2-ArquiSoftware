@@ -8,11 +8,13 @@ namespace GYMPT.Pages.Reports
     {
         private readonly IReportService _reportService;
         private readonly ILogger<IndexModel> _logger;
+        private readonly IWebHostEnvironment _env;
 
-        public IndexModel(IReportService reportService, ILogger<IndexModel> logger)
+        public IndexModel(IReportService reportService, ILogger<IndexModel> logger, IWebHostEnvironment env)
         {
             _reportService = reportService;
             _logger = logger;
+            _env = env;
         }
 
         [BindProperty]
@@ -27,15 +29,14 @@ namespace GYMPT.Pages.Reports
         [TempData]
         public string ErrorMessage { get; set; }
 
-        // Nueva propiedad para almacenar el reporte generado
-        public byte[] GeneratedReport { get; set; }
-        public string ContentType { get; set; }
+        [BindProperty(SupportsGet = true)]
         public string FileName { get; set; }
-        public bool ShowPreview { get; set; }
+
+        public bool ShowPreview => !string.IsNullOrEmpty(FileName);
 
         public void OnGet()
         {
-            // Inicializar valores por defecto si es necesario
+            // Si hay un archivo temporal existente, simplemente mostrar el preview
         }
 
         public async Task<IActionResult> OnPostGenerateReportAsync()
@@ -45,66 +46,93 @@ namespace GYMPT.Pages.Reports
                 if (string.IsNullOrEmpty(ReportType) || string.IsNullOrEmpty(Format))
                 {
                     ErrorMessage = "Por favor, seleccione el tipo de reporte y formato.";
-                    return Page();
+                    return RedirectToPage();
                 }
+
+                string reportsDir = Path.Combine(_env.WebRootPath, "temp", "reports");
+                if (!Directory.Exists(reportsDir))
+                    Directory.CreateDirectory(reportsDir);
+
+                byte[] reportBytes;
+                string contentType;
+                string extension;
 
                 switch (ReportType.ToLower())
                 {
                     case "instructorperformance":
                         var pdfReport = await _reportService.GenerateInstructorPerformanceReportAsync();
-                        GeneratedReport = pdfReport.Content;
-                        ContentType = "application/pdf";
-                        FileName = $"Reporte_Instructores_{DateTime.UtcNow:yyyyMMdd_HHmmss}.pdf";
-                        SuccessMessage = "Reporte de rendimiento de instructores generado exitosamente.";
+                        reportBytes = pdfReport.Content;
+                        contentType = "application/pdf";
+                        extension = "pdf";
                         break;
 
                     default:
                         ErrorMessage = "Tipo de reporte no implementado.";
-                        return Page();
+                        return RedirectToPage();
                 }
 
-                // En lugar de descargar, mostrar preview
-                ShowPreview = true;
-                return Page();
+                string fileName = $"Reporte_{ReportType}_{DateTime.UtcNow:yyyyMMdd_HHmmss}.{extension}";
+                string filePath = Path.Combine(reportsDir, fileName);
+
+                await System.IO.File.WriteAllBytesAsync(filePath, reportBytes);
+
+                SuccessMessage = "Reporte generado exitosamente.";
+                return RedirectToPage(new { fileName });
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error generando reporte: {ReportType}, Formato: {Format}", 
-                    ReportType, Format);
-                
+                _logger.LogError(ex, "Error generando reporte: {ReportType}, {Format}", ReportType, Format);
                 ErrorMessage = $"Error al generar el reporte: {ex.Message}";
-                return Page();
+                return RedirectToPage();
             }
         }
 
-        // Nuevo método para descargar el reporte
-        public IActionResult OnGetDownloadReport()
+        public IActionResult OnGetDownloadReport(string fileName)
         {
             try
             {
-                if (GeneratedReport == null || GeneratedReport.Length == 0)
+                if (string.IsNullOrEmpty(fileName))
                 {
-                    ErrorMessage = "No hay reporte generado para descargar.";
+                    ErrorMessage = "No se especificó el archivo para descargar.";
                     return RedirectToPage();
                 }
 
-                return File(GeneratedReport, ContentType, FileName);
+                string filePath = Path.Combine(_env.WebRootPath, "temp", "reports", fileName);
+                if (!System.IO.File.Exists(filePath))
+                {
+                    ErrorMessage = "El archivo solicitado no existe o ha expirado.";
+                    return RedirectToPage();
+                }
+
+                var fileBytes = System.IO.File.ReadAllBytes(filePath);
+                return File(fileBytes, "application/pdf", fileName);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error descargando reporte");
+                _logger.LogError(ex, "Error descargando reporte {FileName}", fileName);
                 ErrorMessage = $"Error al descargar el reporte: {ex.Message}";
                 return RedirectToPage();
             }
         }
 
-        // Método para obtener el PDF como base64 para el preview
         public string GetReportBase64()
         {
-            if (GeneratedReport == null || GeneratedReport.Length == 0)
-                return string.Empty;
+            try
+            {
+                if (string.IsNullOrEmpty(FileName))
+                    return string.Empty;
 
-            return Convert.ToBase64String(GeneratedReport);
+                string fullPath = Path.Combine(_env.WebRootPath, "temp", "reports", FileName);
+                if (!System.IO.File.Exists(fullPath))
+                    return string.Empty;
+
+                var bytes = System.IO.File.ReadAllBytes(fullPath);
+                return Convert.ToBase64String(bytes);
+            }
+            catch
+            {
+                return string.Empty;
+            }
         }
     }
 }
